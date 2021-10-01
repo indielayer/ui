@@ -1,0 +1,38 @@
+html, body {
+  height: 100%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .text-2xs {
+    font-size: 0.625rem;
+    line-height: 1rem;
+  }
+
+  .text-h1 {
+    @apply text-5xl font-black
+  }
+  .text-h2 {
+    @apply text-4xl font-black
+  }
+  .text-h3 {
+    @apply text-2xl font-black
+  }
+  .text-h4 {
+    @apply text-xl font-black
+  }
+
+  .text-overline {
+    @apply tracking-widest uppercase text-2xs
+  }
+}
+
+.inset-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

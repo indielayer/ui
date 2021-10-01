@@ -1,0 +1,39 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "yarn && lerna bootstrap --force-local",
+    "bootstrap-build": "yarn bootstrap-root && lerna bootstrap -- --frozen-lockfile --non-interactive",
+    "bootstrap-prod": "yarn bootstrap-root && lerna bootstrap -- --frozen-lockfile --non-interactive --production && cd apps/ui && yarn --frozen-lockfile --non-interactive --production",
+    "bootstrap-root": "yarn install --frozen-lockfile --non-interactive --production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "cd packages/ui && yarn dev",
+    "docs": "cd packages/docs && yarn dev",
+    "build": "cd packages/ui && yarn build",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indielayer/ui.git"
+  },
+  "author": "João Teixeira (https://indielayer.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/indielayer/ui/issues"
+  },
+  "homepage": "https://github.com/indielayer/ui#readme",
+  "dependencies": {
+    "@indielayer/eslint-config-vue": "^2.1.2",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.26.0",
+    "eslint-plugin-vue": "^7.9.0",
+    "lerna": "^4.0.0",
+    "typescript": "^4.2.4"
+  }
+}

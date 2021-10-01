@@ -1,0 +1,72 @@
+{
+  "name": "@indielayer/ui",
+  "version": "0.0.0",
+  "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
+  "author": {
+    "name": "João Teixeira",
+    "url": "https://indielayer.com/"
+  },
+  "keywords": [
+    "vue",
+    "tailwindcss",
+    "components",
+    "ui framework",
+    "component framework",
+    "ui library",
+    "component library",
+    "indielayer"
+  ],
+  "files": [
+    "lib",
+    "types"
+  ],
+  "main": "lib/cjs/src",
+  "module": "lib/esm/src",
+  "browser": "lib/umd",
+  "exports": {
+    ".": {
+      "import": "./lib/esm/src/index.js",
+      "require": "./lib/cjs/src/index.js"
+    },
+    "./tailwind.preset": "./lib/tailwind.preset.js",
+    "./tailwind.preset.js": "./lib/tailwind.preset.js"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "dev": "npm run serve",
+    "build": "NODE_ENV=production rollup --config ./rollup.config.js",
+    "serve": "rollup --config ./rollup.config.js --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "date-fns": "^2.21.3",
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "postcss": "^8.3.8",
+    "rollup": "^2.48.0",
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-vue": "^6.0.0",
+    "tailwindcss": "^2.1.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "bugs": {
+    "url": "https://github.com/indielayer/ui/issues"
+  },
+  "homepage": "https://github.com/indielayer/ui#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/indielayer/ui.git"
+  }
+}

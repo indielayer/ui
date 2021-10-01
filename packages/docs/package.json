@@ -1,0 +1,27 @@
+{
+  "name": "docs",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=/ui/",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@indielayer/ui": "0.0.0",
+    "vue": "^3.0.5",
+    "vue-router": "4",
+    "vuex": "4"
+  },
+  "devDependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@vitejs/plugin-vue": "^1.2.2",
+    "@vue/compiler-sfc": "^3.0.5",
+    "autoprefixer": "^10.2.5",
+    "highlight.js": "^11.2.0",
+    "postcss": "^8.2.15",
+    "postcss-nested": "^5.0.6",
+    "tailwindcss": "^2.1.2",
+    "vite": "^2.3.3"
+  }
+}
