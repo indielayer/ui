@@ -1,14 +1,14 @@
 {
   "name": "docs",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/ui/",
     "serve": "vite preview"
   },
   "dependencies": {
-    "@indielayer/ui": "0.0.0",
+    "@indielayer/ui": "^0.1.0",
     "vue": "^3.0.5",
     "vue-router": "4",
     "vuex": "4"
