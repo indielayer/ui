@@ -4,5 +4,14 @@
   "registry": "https://registry.npmjs.org",
   "packages": [
     "packages/*"
-  ]
+  ],
+  "command": {
+    "publish": {
+      "allowBranch": [
+        "dev",
+        "master"
+      ],
+      "message": "chore(release): publish %s"
+    }
+  }
 }
