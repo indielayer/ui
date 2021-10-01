@@ -13,6 +13,7 @@
     "dev": "cd packages/ui && yarn dev",
     "docs": "cd packages/docs && yarn dev",
     "build": "cd packages/ui && yarn build",
+    "prepublish": "yarn build",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "repository": {
