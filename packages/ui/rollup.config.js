@@ -16,7 +16,7 @@ export default [{
     dir: 'lib/cjs',
     exports: 'auto',
   }],
-  external: ['vue', 'date-fns'],
+  external: ['vue'],
   plugins: [
     cleaner({ targets: ['lib/esm', 'lib/cjs'] }),
     vue(),
@@ -34,10 +34,9 @@ export default [{
     exports: 'auto',
     globals: {
       vue: 'Vue',
-      'date-fns': 'date-fns',
     },
   }],
-  external: ['vue', 'date-fns'],
+  external: ['vue'],
   plugins: [
     cleaner({ targets: ['lib/umd'] }),
     vue(),
