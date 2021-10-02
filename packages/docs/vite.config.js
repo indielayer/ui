@@ -16,4 +16,9 @@ export default defineConfig({
       strict: false,
     },
   },
+  build: {
+    rollupOptions: {
+      treeshake: false,
+    },
+  },
 })
