@@ -3,7 +3,7 @@ const indielayer = require('@indielayer/ui/tailwind.preset')
 module.exports = {
   mode: 'jit',
   purge: [
-    'node_modules/@indielayer/ui/src/**/*.vue',
+    '../ui/src/**/*.vue',
     './src/**/*.vue',
   ],
   darkMode: 'class',

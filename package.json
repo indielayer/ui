@@ -4,17 +4,16 @@
   "version": "0.0.0",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "bootstrap": "yarn && lerna bootstrap --force-local",
-    "bootstrap-build": "yarn bootstrap-root && lerna bootstrap -- --frozen-lockfile --non-interactive",
-    "bootstrap-prod": "yarn bootstrap-root && lerna bootstrap -- --frozen-lockfile --non-interactive --production && cd apps/ui && yarn --frozen-lockfile --non-interactive --production",
-    "bootstrap-root": "yarn install --frozen-lockfile --non-interactive --production",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cd packages/ui && yarn dev",
     "docs": "cd packages/docs && yarn dev",
     "build": "cd packages/ui && yarn build",
     "build:docs": "yarn build && cd packages/docs && yarn build",
-    "prepublish": "yarn build",
     "release": "lerna publish",
     "release:alpha": "lerna publish prerelease --preid alpha --dist-tag alpha",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."

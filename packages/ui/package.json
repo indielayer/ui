@@ -18,15 +18,15 @@
   ],
   "files": [
     "lib",
-    "types"
+    "src"
   ],
-  "main": "lib/cjs/src",
-  "module": "lib/esm/src",
+  "main": "lib/cjs",
+  "module": "lib/esm",
   "browser": "lib/umd",
   "exports": {
     ".": {
-      "import": "./lib/esm/src/index.js",
-      "require": "./lib/cjs/src/index.js"
+      "import": "./lib/esm/index.js",
+      "require": "./lib/cjs/index.js"
     },
     "./tailwind.preset": "./lib/tailwind.preset.js",
     "./tailwind.preset.js": "./lib/tailwind.preset.js"

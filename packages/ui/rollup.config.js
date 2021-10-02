@@ -11,10 +11,12 @@ export default [{
     format: 'esm',
     dir: 'lib/esm',
     exports: 'auto',
+    preserveModulesRoot: 'src',
   }, {
     format: 'cjs',
     dir: 'lib/cjs',
     exports: 'auto',
+    preserveModulesRoot: 'src',
   }],
   external: ['vue'],
   plugins: [
