@@ -2,7 +2,7 @@
   <div style="min-width: 240px;" class="pb-16">
     <ul>
       <li class="font-semibold">
-        <x-link to="/" class="!py-4">
+        <x-link to="/getting-started" class="!py-4">
           <x-icon icon="book" class="mr-2"/>
           Getting Started
         </x-link>

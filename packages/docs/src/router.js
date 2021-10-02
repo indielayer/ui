@@ -5,8 +5,11 @@ const routes = [{
   component: () => import(/* webpackChunkName: "layout-default" */ '@/layouts/default.vue'),
   children: [{
     path: '',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "page-home" */ '@/pages/index.vue'),
+    redirect: { name: 'getting-started' },
+  }, {
+    path: 'getting-started',
+    name: 'getting-started',
+    component: () => import(/* webpackChunkName: "page-getting-started" */ '@/pages/index.vue'),
   }, {
     path: 'icons',
     name: 'icons',

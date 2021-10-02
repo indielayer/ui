@@ -4,29 +4,5 @@
   },
   "cleanUrls": true,
   "trailingSlash": false,
-  "headers": [
-    {
-      "source": "/assets/(.*)",
-      "headers": [{
-        "key": "cache-control",
-        "value": "max-age=31557600, immutable"
-      }]
-    }, {
-      "source": "/(.*)",
-      "headers" : [
-        {
-          "key" : "X-Content-Type-Options",
-          "value" : "nosniff"
-        },
-        {
-          "key" : "X-Frame-Options",
-          "value" : "DENY"
-        },
-        {
-          "key" : "X-XSS-Protection",
-          "value" : "1; mode=block"
-        }
-      ]
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
