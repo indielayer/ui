@@ -13,6 +13,7 @@
     "dev": "cd packages/ui && yarn dev",
     "docs": "cd packages/docs && yarn dev",
     "build": "cd packages/ui && yarn build",
+    "build:docs": "yarn build && cd packages/docs && yarn build",
     "prepublish": "yarn build",
     "release": "lerna publish",
     "release:alpha": "lerna publish prerelease --preid alpha --dist-tag alpha",
