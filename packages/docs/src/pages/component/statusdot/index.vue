@@ -1,5 +1,5 @@
 <template>
-  <document-page components="Statusdot" :title="title" :description="description">
+  <document-page components="StatusDot" :title="title" :description="description">
     <!-- usage  -->
     <h2 id="usage"><a href="#usage">#</a>Usage</h2>
     <code-preview :code="snippets.usage" expanded>
@@ -19,8 +19,8 @@ export default {
   },
   data() {
     return {
-      title: 'Statusdot',
-      description: 'Statusdot',
+      title: 'StatusDot',
+      description: 'StatusDot',
       snippets: {
         usage: UsageSnippetCode,
       },

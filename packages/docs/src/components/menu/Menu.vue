@@ -43,7 +43,7 @@
         <li><x-link to="/component/progress">Progress</x-link></li>
         <li><x-link to="/component/skeleton">Skeleton</x-link></li>
         <li><x-link to="/component/spinner">Spinner</x-link></li>
-        <li><x-link to="/component/statusdot">Statusdot</x-link></li>
+        <li><x-link to="/component/statusdot">StatusDot</x-link></li>
         <li><x-link to="/component/table">Table</x-link></li>
         <li><x-link to="/component/tabs">Tabs</x-link></li>
         <li><x-link to="/component/tag">Tag</x-link></li>
