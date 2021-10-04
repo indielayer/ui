@@ -88,9 +88,3 @@ sw.*
 
 # Vim swap files
 *.swp
-
-.vercel
-.vercel_cache
-node_modules
-node_modules_dev
-node_modules_prod

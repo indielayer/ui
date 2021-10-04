@@ -1,0 +1,38 @@
+name: Update docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PAT }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+
+      - name: Install dependencies
+        run: yarn bootstrap
+
+      - name: Build documentation
+        run: yarn build:docs
+
+      - name: Update pages
+        working-directory: ./packages/docs/dist
+        run: |
+          git config --global init.defaultBranch master
+          git init
+          git config user.name 'João Teixeira'
+          git config user.email 'joao@indielayer.com'
+          git add .
+          git commit -m "chore: deploy documentation: ${{github.sha}}"
+          git push -f https://${{ secrets.PAT }}@github.com/indielayer/ui master:gh-pages
