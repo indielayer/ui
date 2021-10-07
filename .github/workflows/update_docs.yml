@@ -24,7 +24,9 @@ jobs:
         run: yarn bootstrap
 
       - name: Build documentation
-        run: yarn build:docs
+        run: |
+          yarn build:docs
+          cp ./packages/docs/dist/index.html ./packages/docs/dist/404.html
 
       - name: Update pages
         working-directory: ./packages/docs/dist
