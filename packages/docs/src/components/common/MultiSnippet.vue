@@ -1,7 +1,7 @@
 <template>
   <div class="hljs pl-4 pt-4 dark">
-    <x-tabs>
-      <x-tab v-for="(snippet, index) in snippets" :key="index" :selected="selected === index" @click="selected = index">
+    <x-tabs v-model="selected">
+      <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index">
         {{ snippet.title }}
       </x-tab>
     </x-tabs>

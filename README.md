@@ -8,14 +8,12 @@
 
 > [Tailwind CSS](https://tailwindcss.com) UI components for Vue.js 3. Build and prototype fast web applications.
 
-> Based on the library https://github.com/lecoueyl/mijin, it's a port for Vue 3 with some extra components.
-
 <!-- - [📖 Documentation](https://indielayer.com/ui) -->
 > This library is still in development. It's pre-alpha for testing purposes and for Indielayer internal tools.
 
 ## Getting Started
 
-> [tailwindcss](https://tailwindcss.com) version >= 2.0 must be already present in your application
+> [tailwindcss](https://tailwindcss.com) version >= 3.0 must be already present in your application
 
 ### 1. Add `@indielayer/ui` dependency to your project
 
@@ -36,11 +34,10 @@ module.exports = {
   // load indielayer ui presets
   presets: [indielayer],
   // allow PurgeCSS to analyze components
-  purge: {
-    content: [
-      'node_modules/@indielayer/ui/src/**/*.vue',
-    ],
-  },
+  content: [
+    'node_modules/@indielayer/ui/src/**/*.vue',
+    './src/**/*.vue',
+  ],
 };
 ```
 

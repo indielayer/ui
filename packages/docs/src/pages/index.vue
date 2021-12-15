@@ -30,12 +30,11 @@ const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
   presets: [indielayer]
-  purge: {
-    content: [
-      'node_modules/@indielayer/ui/src/**/*.vue',
-      ...
-    ],
-  },
+  content: [
+    'node_modules/@indielayer/ui/src/**/*.vue',
+    // './src/**/*.vue',
+    // ...
+  ],
 }`"
       />
       <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your Vue project</h3>
