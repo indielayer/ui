@@ -1,7 +1,6 @@
 <template>
   <component
-    :is="$props.tag"
-    v-bind="$attrs"
+    :is="tag"
     class="container mx-auto px-4"
   >
     <slot></slot>

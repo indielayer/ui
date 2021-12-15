@@ -1,7 +1,6 @@
 <template>
   <component
     :is="tag"
-    v-bind="$attrs"
     class="inline-block w-full bg-white dark:bg-gray-700 shadow-lg rounded-md border-t border border-gray-200 dark:border-gray-800"
   >
     <slot></slot>

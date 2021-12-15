@@ -2,7 +2,7 @@ const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     '../ui/src/**/*.vue',
     './src/**/*.vue',
   ],
@@ -33,8 +33,18 @@ module.exports = {
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+  plugins: [
+    ({ addBase, config }) => {
+      addBase({
+        html: {
+          color: config('theme.colors.gray.900'),
+          backgroundColor: config('theme.colors.gray.50'),
+        },
+        'html.dark': {
+          color: config('theme.colors.gray.100'),
+          backgroundColor: config('theme.colors.gray.900'),
+        },
+      })
+    },
+  ],
 }

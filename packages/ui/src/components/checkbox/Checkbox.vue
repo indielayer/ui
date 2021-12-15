@@ -1,44 +1,48 @@
 <template>
-  <label
-    class="block mb-1 relative cursor-pointer"
-    :class="hideDetails ? 'pb-2' : 'pb-6'"
-  >
+  <label class="inline-block mb-1 relative cursor-pointer pb-2">
     <div
+      ref="focusRef"
       class="flex items-center"
       :class="{ 'cursor-not-allowed': disabled }"
+      :tabindex="0"
+      @keypress.prevent.stop.enter.space="toggle"
     >
       <input
-        ref="input"
-        v-model="selected"
+        v-model="checked"
+        :aria-checked="checked ? 'true' : 'false'"
+        :aria-disabled="disabled ? 'true' : null"
         type="checkbox"
         class="invisible absolute"
-        :disabled="disabled"
+        :disabled="disabled || loading"
         :name="name"
         :required="required"
         :value="modelValue"
       />
       <div
-        class="border rounded flex justify-center items-center flex-none"
+        class="rounded flex justify-center items-center flex-shrink-0"
         :class="[
           {
-            // shadow
-            'shadow': !flat,
+            'shadow': !flat && !loading,
+            [`shadow-lg shadow-${color}-500/50`]: !flat && glow && modelValue,
 
             'h-4 w-4': size === 'sm' || size === 'xs',
             'h-5 w-5': !['xs', 'sm', 'xl'].includes(size),
             'h-6 w-6': size === 'xl',
-
-            'hover:border-primary-500': !disabled,
-            'bg-primary-500 border-primary-500': modelValue && !disabled,
-            'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700': !modelValue && !disabled,
-            // disabled
-            'bg-gray-500 border-gray-600 dark:border-gray-400': modelValue && disabled,
-            'bg-gray-200 border-gray-300 dark:border-gray-700': !modelValue && disabled,
+          },
+          disabled ? {
+            'bg-gray-500 border-gray-600 dark:border-gray-400': modelValue,
+            'bg-gray-200 border-gray-300 dark:border-gray-700': !modelValue,
+          } :
+          {
+            [`bg-${color}-500 border-${color}-500`]: modelValue && !loading,
+            'border bg-white dark:bg-gray-900 border-gray-300 hover:border-gray-900 dark:border-gray-700': !modelValue && !loading,
           }
         ]"
       >
+        <x-spinner v-if="loading" :size="size" class="absolute" />
         <svg
-          class="fill-current text-primary-100"
+          v-else
+          class="fill-current text-gray-100"
           :class="{
             'opacity-0': !modelValue,
             'h-2 w-2': size === 'sm' || size === 'xs',
@@ -50,71 +54,61 @@
           <path d="M0 11l2-2 5 5L18 3l2 2L7 18z" />
         </svg>
       </div>
-      <span
-        v-if="label"
-        class="font-medium text-gray-800 dark:text-gray-200 pl-2"
+      <div
+        class="inline-block font-medium text-gray-800 dark:text-gray-200 pl-2"
         :class="{
           'text-xs': size === 'xs',
           'text-sm': size === 'sm',
           'text-lg': size === 'lg',
           'text-xl': size === 'xl',
         }"
-        v-text="label"
-      ></span>
+      >
+        <span v-if="label" v-text="label"></span>
+        <slot v-else></slot>
+      </div>
     </div>
+    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
   </label>
 </template>
 
 <script>
+import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
+import XSpinner from '../spinner/Spinner.vue'
+
 export default {
   name: 'XCheckbox',
+  components: {
+    XSpinner,
+  },
+
+  validator: {
+    ...withValidator(),
+  },
 
   props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    name: {
-      type: String,
-      default: null,
-    },
-
-    required: {
-      type: Boolean,
-      default: false,
-    },
-
-    size: {
-      type: String,
-      default: null,
-    },
+    ...withProps(),
 
     label: {
       type: String,
       default: null,
     },
 
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
-    modelValue: {
-      type: [String, Number, Boolean, Function, Object, Array],
-      default: null,
-    },
-
-    hideDetails: {
+    glow: {
       type: Boolean,
       default: false,
     },
   },
 
-  emits: ['update:modelValue'],
+  emits: withEmits(false),
+
+  setup(props, { attrs, emit }) {
+    return {
+      ...useInputtable(props, { attrs, emit, useListeners: false }),
+    }
+  },
 
   computed: {
-    selected: {
+    checked: {
       get() {
         return this.modelValue
       },
@@ -126,8 +120,8 @@ export default {
   },
 
   methods: {
-    focus() {
-      this.$refs.input.focus()
+    toggle() {
+      this.$emit('update:modelValue', !this.modelValue)
     },
   },
 }

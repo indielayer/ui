@@ -35,7 +35,7 @@
         aria-labelledby="modal-headline"
       >
         <slot></slot>
-        <div v-if="showClose" class="absolute rounded-full bg-white -top-4 -right-4 w-10 h-10 shadow-md flex items-center justify-center cursor-pointer" @click="close()">
+        <div v-if="showClose" class="absolute rounded-md bg-white -top-4 -right-2 w-8 h-8 shadow-md flex items-center justify-center cursor-pointer" @click="close()">
           <svg
             width="24"
             height="24"

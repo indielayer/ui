@@ -1,52 +1,25 @@
 <template>
   <component
-    :is="$props.tag"
-    v-bind="$attrs"
-    class="inline-block relative h-3 w-3"
+    :is="tag"
+    class="inline-block relative"
   >
+    <slot></slot>
     <div
-      v-if="$props.animate"
-      class="animate-ping absolute h-full w-full rounded-full opacity-75"
-      :class="[
-        {
-          // status
-          'bg-primary-400': $props.status === 'primary',
-          'bg-error-400': $props.status === 'error',
-          'bg-success-400': $props.status === 'success',
-          'bg-warning-400': $props.status === 'warning',
-        },
-      ]"
-    ></div>
-
+      v-if="animate"
+      class="animate-ping opacity-75 absolute -top-0.5 -right-0.5 rounded-full h-3 w-3 z-10"
+      :class="[`bg-${color}-500`]"
+    >
+    </div>
     <div
-      class="absolute rounded-full h-full w-full"
-      :class="[
-        {
-          // status
-          'bg-primary-500': $props.status === 'primary',
-          'bg-error-500': $props.status === 'error',
-          'bg-success-500': $props.status === 'success',
-          'bg-warning-500': $props.status === 'warning',
-        },
-      ]"
+      class="absolute -top-0.5 -right-0.5 rounded-full h-3 w-3 z-10"
+      :class="[`bg-${color}-500`]"
     ></div>
   </component>
 </template>
 
 <script>
-const validator = {
-  status: [
-    'primary',
-    'error',
-    'success',
-    'warning',
-  ],
-}
-
 export default {
   name: 'XStatusDot',
-
-  validator,
 
   props: {
     animate: {
@@ -54,10 +27,9 @@ export default {
       default: false,
     },
 
-    status: {
+    color: {
       type: String,
       default: 'primary',
-      validator: (value) => validator.status.includes(value),
     },
 
     tag: {

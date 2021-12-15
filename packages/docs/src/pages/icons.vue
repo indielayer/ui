@@ -7,7 +7,7 @@
 
       <h3 class="text-2xl mb-4">1. Create the icons library <strong>plugins/icons.js</strong></h3>
       <code-snippet
-        :code="`export default { }`"
+        :code="iconExample"
       />
       <h3 class="text-2xl mt-8 mb-4">2. Add icons from open source libraries</h3>
       <p class="mb-2 text-xl">Start adding the icons you need without the svg wrapper, copy only the content part of the SVG:</p>
@@ -35,9 +35,23 @@
 export default {
   data() {
     return {
+      iconExample: `// plugins/icons.js
+export default {
+  install: (app) => {
+    // define $icons globally
+    app.config.globalProperties.$icons = {
+      // icons
+    }
+  }
+}`,
       iconExample1: `// plugins/icons.js
 export default {
-  check: '<polyline points="20 6 9 17 4 12"></polyline>',
+  install: (app) => {
+    // define $icons globally
+    app.config.globalProperties.$icons = {
+      check: '<polyline points="20 6 9 17 4 12"></polyline>',
+    }
+  }
 }
 
 // main.js
@@ -46,7 +60,7 @@ import icons from './plugins/icons'
 
 const app = createApp(App)
 
-app.config.globalProperties.$icons = icons // define $icons globally
+app.use(icons)
 `,
       iconExample2: `<template>
   <x-icon icon="check" />

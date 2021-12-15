@@ -1,15 +1,14 @@
 <template>
   <component
-    :is="$props.tag"
-    v-bind="$attrs"
+    :is="tag"
     class="px-2 py-1 block rounded transition-colors duration-100 ease-in-out whitespace-nowrap"
     :class="[
       {
         'flex items-center': $slots.prefix || $slots.suffix,
-        'hover:bg-gray-100 dark:hover:bg-gray-800': $props.variant === 'base' && !$props.disabled,
-        'hover:text-error-500 hover:bg-error-50': $props.variant === 'error' && !$props.disabled,
-        'opacity-70': $props.disabled,
-        'cursor-pointer': !$props.disabled,
+        'hover:bg-gray-100 dark:hover:bg-gray-800': variant === 'base' && !disabled,
+        'hover:text-error-500 hover:bg-error-50': variant === 'error' && !disabled,
+        'opacity-70': disabled,
+        'cursor-pointer': !disabled,
       },
 
     ]"

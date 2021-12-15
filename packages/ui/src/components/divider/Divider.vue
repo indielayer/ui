@@ -1,10 +1,9 @@
 <template>
   <div
-    v-bind="$attrs"
     :class="[
       {
-        'h-full flex-col': $props.vertical,
-        'w-full': !$props.vertical
+        'h-full flex-col': vertical,
+        'w-full': !vertical
       },
     ]"
     class="flex justify-center items-center"
@@ -13,26 +12,26 @@
       class="bg-gray-200 dark:bg-gray-600 flex-grow"
       :style="[
         {
-          width: $props.vertical ? '1px' : 'auto',
-          height: !$props.vertical ? '1px' : 'auto'
+          width: vertical ? '1px' : 'auto',
+          height: !vertical ? '1px' : 'auto'
         }
       ]"
     ></div>
     <div
-      v-if="$props.label"
+      v-if="label"
       class="font-medium text-sm text-gray-600 dark:text-gray-300"
       :class="[{
-        'my-2': $props.vertical,
-        'mx-4': !$props.vertical
+        'my-2': vertical,
+        'mx-4': !vertical
       }]"
-      v-text="$props.label"
+      v-text="label"
     ></div>
     <div
       class="bg-gray-200 dark:bg-gray-600 flex-grow"
       :style="[
         {
-          width: $props.vertical ? '1px' : 'auto',
-          height: !$props.vertical ? '1px' : 'auto'
+          width: vertical ? '1px' : 'auto',
+          height: !vertical ? '1px' : 'auto'
         }
       ]"
     ></div>

@@ -1,8 +1,5 @@
 <template>
-  <label
-    class="block mb-1 relative"
-    :class="hideDetails ? 'pb-2' : 'pb-6'"
-  >
+  <label class="inline-block mb-1 relative">
     <p
       v-if="label"
       class="font-medium text-gray-800 dark:text-gray-200 mb-1"
@@ -18,17 +15,17 @@
     <div class="relative">
       <span
         v-if="$slots.icon"
-        class="flex items-center w-5 h-5 text-gray-500 absolute my-auto ml-2 inset-y-0"
+        class="flex items-center w-5 h-5 text-gray-500 absolute my-auto inset-y-0"
         :class="[{
-          'mr-2 left-0': $slots.icon && !iconRight,
-          'ml-2 right-0': $slots.icon && iconRight,
+          'ml-2 left-0': $slots.icon && !iconRight,
+          'mr-2 right-0': $slots.icon && iconRight,
         }]"
       >
         <slot name="icon"></slot>
       </span>
 
       <input
-        ref="input"
+        ref="focusRef"
         class="appearance-none block w-full text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600 rounded-form leading-tight
           focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out border-gray-300 dark:border-gray-700"
         :class="[
@@ -64,8 +61,8 @@
         :placeholder="placeholder"
         :readonly="readonly"
         :type="currentType"
-        :value="value"
-        v-bind="$attrs"
+        :value="modelValue"
+        v-on="inputListeners"
         @change="onChange"
       />
 
@@ -98,28 +95,19 @@
 </template>
 
 <script>
+import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
+
 export default {
   name: 'XInput',
 
+  validator: withValidator(),
+
   props: {
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+    ...withProps(),
 
     showPasswordToggle: {
       type: Boolean,
       default: true,
-    },
-
-    validateOnInput: {
-      type: Boolean,
-      default: true,
-    },
-
-    hideDetails: {
-      type: Boolean,
-      default: false,
     },
 
     label: {
@@ -157,22 +145,7 @@ export default {
       default: null,
     },
 
-    name: {
-      type: String,
-      default: null,
-    },
-
     placeholder: {
-      type: String,
-      default: null,
-    },
-
-    readonly: {
-      type: Boolean,
-      default: null,
-    },
-
-    size: {
       type: String,
       default: null,
     },
@@ -182,61 +155,24 @@ export default {
       default: 'text',
     },
 
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
     inputClass: {
       type: String,
       default: '',
     },
+  },
 
-    value: {
-      type: [String, Number],
-      default: null,
-    },
+  emits: withEmits(),
 
-    error: {
-      type: String,
-      default: '',
-    },
-
-    rules: {
-      type: Array,
-      default: () => [],
-    },
+  setup(props, { attrs, emit }) {
+    return {
+      ...useInputtable(props, { attrs, emit }),
+    }
   },
 
   data() {
     return {
-      isFirstValidation: true,
       currentType: this.type,
-      errorInternal: this.error,
     }
-  },
-
-  computed: {
-    listeners() {
-      return {
-        // Add listeners from parent
-        ...this.$attrs,
-        // Ensure that the component works with v-model
-        blur: (event) => this.$emit('blur', event),
-        focus: (event) => this.$emit('focus', event),
-        input: (event) => {
-          if (this.validateOnInput && !this.isFirstValidation) this.validate(event.target.value)
-          this.$emit('input', event.target.value)
-        },
-        change: (event) => this.$emit('change', event),
-      }
-    },
-  },
-
-  watch: {
-    error(val) {
-      this.errorInternal = val
-    },
   },
 
   methods: {
@@ -253,54 +189,6 @@ export default {
     },
     togglePasswordVisibility() {
       this.currentType = this.currentType === 'password' ? 'text' : 'password'
-      // this.$refs.input.setAttribute('type', this.currentType)
-    },
-    reset() {
-      this.errorInternal = ''
-      this.isFirstValidation = true
-      this.$emit('input', '')
-    },
-    focus() {
-      this.$refs.input.focus()
-    },
-    validate(val) {
-      val = val || this.value
-
-      this.isFirstValidation = false
-
-      for (let i = 0; i < this.rules.length; i++) {
-        const item = this.rules[i]
-
-        let isValid = true
-
-        // Direct Function
-        if (typeof item === 'function') {
-          const rule = item
-
-          isValid = rule(val)
-        } else if (Array.isArray(item) && item.length === 2) {
-          // Rule array [function, options]
-          const { 0: rule, 1: options } = item
-
-          isValid = rule(val, options)
-        } else {
-          // Rule object { fn, options }
-          const rule = item.fn
-          const { options } = item
-
-          isValid = rule(val, options)
-        }
-
-        if (isValid !== true) {
-          this.errorInternal = isValid
-
-          return false
-        }
-      }
-
-      this.errorInternal = ''
-
-      return true
     },
   },
 }

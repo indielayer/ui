@@ -1,24 +1,23 @@
 <template>
   <component
-    :is="$props.to ? 'router-link' : $props.tag"
-    v-bind="$attrs"
-    :to="$props.to"
+    :is="to ? 'router-link' : tag"
+    :to="to"
     class="transition-colors duration-150 ease-in-out cursor-pointer"
     :class="[
       {
         // color
-        'hover:text-gray-600 dark:hover:text-gray-300': $props.color === 'gray',
-        'text-primary-500 hover:text-primary-700': $props.color === 'primary',
-        'text-error-500 hover:text-error-700': $props.color === 'error',
-        'text-warning-500 hover:text-warning-700': $props.color === 'warning',
-        'text-success-500 hover:text-success-700': $props.color === 'success',
+        'hover:text-gray-600 dark:hover:text-gray-300': color === 'gray',
+        'text-primary-500 hover:text-primary-600': color === 'primary',
+        'text-error-500 hover:text-error-600': color === 'error',
+        'text-warning-500 hover:text-warning-600': color === 'warning',
+        'text-success-500 hover:text-success-600': color === 'success',
         // underline
-        'underline': $props.underline
+        'underline': underline
       },
     ]"
   >
     <span
-      v-if="$props.external"
+      v-if="external"
       class="inline-flex items-center"
     >
       <slot></slot>

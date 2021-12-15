@@ -6,6 +6,7 @@ import { store } from './store'
 
 // plugins
 import icons from './plugins/icons'
+import toast from './plugins/toast'
 
 // global components
 import CopyButton from './components/common/CopyButton.vue'
@@ -19,11 +20,12 @@ import './assets/css/tailwind.css'
 
 const app = createApp(App)
 
-app.config.globalProperties.$icons = icons
-
 app.use(router)
 app.use(store)
+app.use(icons)
+app.use(toast)
 app.use(UI, { prefix: 'X' })
+
 app.component('CopyButton', CopyButton)
 app.component('CodeSnippet', CodeSnippet)
 app.component('MultiSnippet', MultiSnippet)

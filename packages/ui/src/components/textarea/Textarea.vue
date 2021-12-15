@@ -1,8 +1,5 @@
 <template>
-  <label
-    class="block mb-1 relative"
-    :class="hideDetails ? 'pb-2' : 'pb-6'"
-  >
+  <label class="inline-block mb-1 relative">
     <p
       v-if="label"
       class="font-medium text-gray-800 dark:text-gray-200 mb-1"
@@ -16,15 +13,12 @@
     ></p>
 
     <textarea
-      ref="input"
+      ref="focusRef"
       class="appearance-none block w-full text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-600 rounded-form leading-tight
         focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out border-gray-300 dark:border-gray-700 resize-none overflow-hidden"
       :class="[
         disabled ? 'bg-gray-200 dark:bg-gray-800 cursor-not-allowed' : 'bg-white dark:bg-gray-900',
-        flat ? 'p-0 bg-transparent' : {
-          // shadow
-          'border shadow': true,
-
+        {
           // size
           'py-1': size === 'auto',
           'px-2 py-1 text-xs': size === 'xs',
@@ -33,6 +27,7 @@
           'px-4 py-3 text-lg': size === 'lg',
           'px-6 py-6 text-xl': size === 'xl',
         },
+        flat ? '!p-0 !bg-transparent' : 'border shadow',
         {
           // error
           'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
@@ -40,14 +35,18 @@
         inputClass,
       ]"
       :disabled="disabled"
+      :max="max"
       :maxlength="maxlength"
+      :min="min"
+      :dir="dir"
+      :minlength="minlength"
       :name="name"
       :placeholder="placeholder"
       :readonly="readonly"
-      :value="value"
-
-      v-on="listeners"
+      :value="modelValue"
+      v-on="inputListeners"
       @keydown="onKeyDown"
+      @input="onInput"
     ></textarea>
 
     <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
@@ -55,28 +54,29 @@
 </template>
 
 <script>
+import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
+
 export default {
   name: 'XTextarea',
 
+  validator: withValidator(),
+
   props: {
-    disabled: {
-      default: false,
-      type: Boolean,
-    },
-
-    validateOnInput: {
-      type: Boolean,
-      default: true,
-    },
-
-    hideDetails: {
-      type: Boolean,
-      default: false,
-    },
+    ...withProps(),
 
     label: {
       type: String,
       default: '',
+    },
+
+    dir: {
+      type: String,
+      default: 'ltr',
+    },
+
+    max: {
+      type: Number,
+      default: null,
     },
 
     maxlength: {
@@ -84,22 +84,17 @@ export default {
       default: null,
     },
 
-    name: {
-      type: String,
+    min: {
+      type: Number,
+      default: null,
+    },
+
+    minlength: {
+      type: Number,
       default: null,
     },
 
     placeholder: {
-      type: String,
-      default: null,
-    },
-
-    readonly: {
-      type: Boolean,
-      default: null,
-    },
-
-    size: {
       type: String,
       default: null,
     },
@@ -114,63 +109,22 @@ export default {
       default: false,
     },
 
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
     inputClass: {
       type: String,
       default: '',
     },
-
-    value: {
-      type: [String, Number],
-      default: null,
-    },
-
-    error: {
-      type: String,
-      default: '',
-    },
-
-    rules: {
-      type: Array,
-      default: () => [],
-    },
   },
 
-  data() {
+  emits: withEmits(),
+
+  setup(props, { attrs, emit }) {
     return {
-      isFirstValidation: true,
-      currentType: this.type,
-      errorInternal: this.error,
+      ...useInputtable(props, { attrs, emit }),
     }
   },
 
-  computed: {
-    listeners() {
-      return {
-        // Add listeners from parent
-        ...this.$attrs,
-        // Ensure that the component works with v-model
-        blur: (event) => this.$emit('blur', event),
-        focus: (event) => this.$emit('focus', event),
-        input: (event) => {
-          if (this.validateOnInput && !this.isFirstValidation) this.validate(event.target.value)
-          this.resize()
-          this.$emit('input', event.target.value)
-        },
-        change: (event) => this.$emit('change', event),
-      }
-    },
-  },
-
   watch: {
-    error(val) {
-      this.errorInternal = val
-    },
-    value() {
+    modelValue() {
       setTimeout(this.resize)
     },
     size() {
@@ -188,6 +142,9 @@ export default {
   },
 
   methods: {
+    onInput() {
+      this.resize()
+    },
     onKeyDown(e) {
       if (this.preventEnter && e.keyCode === 13) {
         e.preventDefault()
@@ -198,58 +155,11 @@ export default {
     },
     resize() {
       if (this.adjustToText) {
-        const { input } = this.$refs
+        const { focusRef } = this.$refs
 
-        input.style.height = '1px'
-        input.style.height = (2 + input.scrollHeight) + 'px'
+        focusRef.style.height = '1px'
+        focusRef.style.height = (2 + focusRef.scrollHeight) + 'px'
       }
-    },
-    reset() {
-      this.errorInternal = ''
-      this.isFirstValidation = true
-      this.$emit('input', '')
-    },
-    focus() {
-      this.$refs.input.focus()
-    },
-    validate(val) {
-      val = val || this.value
-
-      this.isFirstValidation = false
-
-      for (let i = 0; i < this.rules.length; i++) {
-        const item = this.rules[i]
-
-        let isValid = true
-
-        // Direct Function
-        if (typeof item === 'function') {
-          const rule = item
-
-          isValid = rule(val)
-        } else if (Array.isArray(item) && item.length === 2) {
-          // Rule array [function, options]
-          const { 0: rule, 1: options } = item
-
-          isValid = rule(val, options)
-        } else {
-          // Rule object { fn, options }
-          const rule = item.fn
-          const { options } = item
-
-          isValid = rule(val, options)
-        }
-
-        if (isValid !== true) {
-          this.errorInternal = isValid
-
-          return false
-        }
-      }
-
-      this.errorInternal = ''
-
-      return true
     },
   },
 }

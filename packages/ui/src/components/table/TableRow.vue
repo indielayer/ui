@@ -13,7 +13,6 @@
         'align-top': verticalAlign === 'top',
       },
     ]"
-    v-bind="$attrs"
   >
     <slot></slot>
   </tr>

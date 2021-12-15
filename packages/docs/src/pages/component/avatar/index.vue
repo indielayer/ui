@@ -6,33 +6,31 @@
       <usage-snippet />
     </code-preview>
 
-    <!-- squared  -->
-    <h2 id="squared"><a href="#squared">#</a>Squared</h2>
-    <code-preview :code="snippets.squared">
-      <squared-snippet />
+    <h2 id="variants"><a href="#variants">#</a>Variants</h2>
+    <code-preview :code="snippets.variants">
+      <variants-snippet />
     </code-preview>
-
   </document-page>
 </template>
 
 <script>
 import UsageSnippetCode from './-snippets/usage.vue?raw'
 import UsageSnippet from './-snippets/usage.vue'
-import SquaredSnippetCode from './-snippets/squared.vue?raw'
-import SquaredSnippet from './-snippets/squared.vue'
+import VariantsSnippetCode from './-snippets/variants.vue?raw'
+import VariantsSnippet from './-snippets/variants.vue'
 
 export default {
   components: {
     UsageSnippet,
-    SquaredSnippet,
+    VariantsSnippet,
   },
   data() {
     return {
       title: 'Avatar',
-      description: 'Not related to the movie',
+      description: 'Avatar',
       snippets: {
         usage: UsageSnippetCode,
-        squared: SquaredSnippetCode,
+        variants: VariantsSnippetCode,
       },
     }
   },

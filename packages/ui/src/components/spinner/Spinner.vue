@@ -2,10 +2,10 @@
   <svg
     :class="[
       {
-        'h-3 w-3': $props.size === 'xs',
-        'h-4 w-4': $props.size === 'sm',
-        'h-5 w-5': !['xs', 'sm', 'xl'].includes($props.size),
-        'h-6 w-6': $props.size === 'xl',
+        'h-3 w-3': size === 'xs',
+        'h-4 w-4': size === 'sm',
+        'h-5 w-5': !['xs', 'sm', 'xl'].includes(size),
+        'h-6 w-6': size === 'xl',
       },
 
     ]"

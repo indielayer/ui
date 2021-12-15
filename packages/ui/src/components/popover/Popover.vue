@@ -21,7 +21,7 @@
     ></div>
 
     <div
-      class="absolute w-auto bottom-0 left-0 right-0 sm:p-0 transform transition-transform z-50 xpopover-content whitespace-nowrap max-w-xs"
+      class="absolute w-fit bottom-0 left-0 right-0 sm:p-0 transform transition-transform z-50 xpopover-content whitespace-nowrap max-w-xs"
       :class="[
         {
           // align-left

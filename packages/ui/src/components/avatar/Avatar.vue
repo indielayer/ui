@@ -1,45 +1,34 @@
 <template>
   <component
-    :is="$props.tag"
-    v-bind="$attrs"
+    :is="tag"
     class="inline-flex items-center justify-center overflow-hidden"
     :class="[
       // color
-      !$props.src ? {
-        'bg-blue-500 text-blue-50': $props.color === 'blue',
-        'bg-gray-500 text-gray-50': $props.color === 'gray',
-        'bg-green-500 text-green-50': $props.color === 'green',
-        'bg-indigo-500 text-indigo-50': $props.color === 'indigo',
-        'bg-pink-500 text-pink-50': $props.color === 'pink',
-        'bg-primary-500 text-primary-50': $props.color === 'primary',
-        'bg-purple-500 text-purple-50': $props.color === 'purple',
-        'bg-red-500 text-red-50': $props.color === 'red',
-        'bg-yellow-500 text-yellow-50': $props.color === 'yellow',
-      } : {},
+      { [`bg-${color}-500 text-${color}-50`]: !source && !outlined },
       {
-        // size
-        'h-6 w-6 text-xs': $props.size === 'xs',
-        'h-7 w-7 text-sm': $props.size === 'sm',
-        'h-10 w-10': !['xs', 'sm', 'lg', 'xl'].includes($props.size),
-        'h-12 w-12 text-lg': $props.size === 'lg',
-        'h-20 w-20 text-2xl': $props.size === 'xl',
-        'h-36 w-36 text-2xl': $props.size === '2xl',
+        // border
+        'border border-gray-400 dark:border-gray-500': !source && outlined,
 
-        // variant
-        'rounded-full': $props.variant === 'rounded',
-        'rounded-md': $props.variant === 'squared',
+        // size
+        'h-6 w-6 text-xs': size === 'xs',
+        'h-7 w-7 text-sm': size === 'sm',
+        'h-10 w-10': !['xs', 'sm', 'lg', 'xl'].includes(size),
+        'h-12 w-12 text-lg': size === 'lg',
+        'h-20 w-20 text-2xl': size === 'xl',
+        'h-36 w-36 text-2xl': size === '2xl',
       },
+      squared ? 'rounded-md' : 'rounded-full'
     ]"
   >
     <span
-      v-if="!$props.src && $props.name"
+      v-if="!source && name"
       class="leading-none"
-    >{{ $options.initials($props.name) }}</span>
+    >{{ initials }}</span>
 
     <img
-      v-if="$props.src"
-      :alt="$props.alt"
-      :src="$props.src"
+      v-if="source"
+      :alt="alt"
+      :src="src"
       class="h-full w-full"
     />
   </component>
@@ -47,17 +36,6 @@
 
 <script>
 const validator = {
-  color: [
-    'blue',
-    'gray',
-    'green',
-    'indigo',
-    'pink',
-    'primary',
-    'purple',
-    'red',
-    'yellow',
-  ],
   variant: [
     'rounded',
     'squared',
@@ -69,53 +47,74 @@ export default {
 
   validator,
 
-  initials(name) {
-    if (name) {
-      const initials = name.match(/\b\w/g) || []
-
-      return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
-    }
-
-    return ''
-  },
-
   props: {
     alt: {
-      default: null,
       type: String,
+      default: null,
     },
 
     color: {
-      default: 'primary',
       type: String,
-      validator: (value) => validator.color.includes(value),
+      default: 'primary',
     },
 
     name: {
-      default: null,
       type: String,
+      default: null,
     },
 
     size: {
-      default: null,
       type: String,
+      default: null,
+    },
+
+    outlined: {
+      type: Boolean,
+      default: false,
     },
 
     src: {
-      default: null,
       type: String,
+      default: null,
     },
 
     tag: {
-      default: 'span',
       type: String,
+      default: 'span',
     },
 
-    variant: {
-      default: 'rounded',
-      type: String,
-      validator: (value) => validator.variant.includes(value),
+    squared: {
+      type: Boolean,
+      default: false,
     },
+  },
+
+  data() {
+    return {
+      source: null,
+    }
+  },
+
+  computed: {
+    initials() {
+      if (this.name) {
+        const initials = this.name.match(/\b\w/g) || []
+
+        return ((initials.shift() || '') + (initials.pop() || '')).toUpperCase()
+      }
+
+      return ''
+    },
+  },
+
+  mounted() {
+    if (this.src) {
+      const img = new Image()
+
+      img.onload = () => { this.source = this.src }
+      img.onerror = () => { }
+      img.src = this.src
+    }
   },
 }
 </script>

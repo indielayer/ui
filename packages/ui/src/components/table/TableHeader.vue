@@ -14,7 +14,6 @@
         'text-justify': textAlign === 'justify',
       },
     ]"
-    v-bind="$attrs"
   >
     <div
       v-if="sortable"

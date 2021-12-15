@@ -1,8 +1,5 @@
 <template>
-  <label
-    class="block mb-1 relative"
-    :class="hideDetails ? 'pb-2' : 'pb-6'"
-  >
+  <label class="inline-block mb-1 relative pb-2">
     <p
       v-if="label"
       class="font-medium text-gray-800 dark:text-gray-200 mb-1"
@@ -17,7 +14,8 @@
 
     <div class="relative">
       <select
-        ref="input"
+        ref="focusRef"
+        v-model="selected"
         class="block appearance-none w-full border border-gray-300 dark:border-gray-700 pr-8 rounded-form leading-tight
           focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out"
         :class="[
@@ -26,7 +24,7 @@
             : 'bg-white dark:bg-gray-900',
           {
             // shadow
-            'border shadow': !flat,
+            'shadow': !flat,
 
             // size
             'py-1': size === 'auto',
@@ -37,18 +35,17 @@
             'px-6 py-6 text-xl': size === 'xl',
           },
           {
-            'text-gray-700 dark:text-gray-200': value === '' || value === null,
+            'text-gray-400 dark:text-gray-500': modelValue === '' || modelValue === null,
 
             // error
             'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
           },
         ]"
-        :disabled="disabled"
+        :disabled="disabled || loading"
         :name="name"
         :readonly="readonly"
-        :value="value"
-
-        v-on="listeners"
+        :value="modelValue"
+        v-on="inputListeners"
       >
         <option
           v-if="placeholder"
@@ -57,13 +54,30 @@
         >
           {{ placeholder }}
         </option>
+        <option
+          v-for="(option, index) in options"
+          :key="index"
+          :value="option.value"
+          :disabled="option.disabled"
+        >
+          {{ option.label }}
+        </option>
         <slot></slot>
       </select>
 
       <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
+        <x-spinner v-if="loading" :size="size" />
         <svg
-          class="h-4 w-4 stroke-2"
-          :class="[disabled ? 'text-gray-600 dark:text-gray-400': 'text-gray-700 dark:text-gray-300']"
+          v-else
+          class="stroke-2"
+          :class="[
+            disabled ? 'text-gray-600 dark:text-gray-400': 'text-gray-700 dark:text-gray-300',
+            {
+              'h-3 w-3': size === 'sm' || size === 'xs',
+              'h-4 w-4': !['xs', 'sm', 'xl'].includes(size),
+              'h-5 w-5': size === 'xl',
+            }
+          ]"
           viewBox="0 0 24 24"
           stroke="currentColor"
           stroke-linejoin="round"
@@ -81,37 +95,24 @@
 </template>
 
 <script>
+import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
+import XSpinner from '../spinner/Spinner.vue'
+
 export default {
   name: 'XSelect',
+  components: {
+    XSpinner,
+  },
+
+  validator: {
+    ...withValidator(),
+  },
 
   props: {
-    disabled: {
-      default: false,
-      type: Boolean,
-    },
-
-    name: {
-      type: String,
-      default: null,
-    },
-
-    validateOnInput: {
-      type: Boolean,
-      default: true,
-    },
-
-    hideDetails: {
-      type: Boolean,
-      default: false,
-    },
+    ...withProps(),
 
     placeholder: {
       type: String,
-      default: null,
-    },
-
-    readonly: {
-      type: Boolean,
       default: null,
     },
 
@@ -120,110 +121,34 @@ export default {
       default: false,
     },
 
-    size: {
-      type: String,
-      default: null,
-    },
-
     label: {
       type: String,
       default: null,
     },
 
-    value: {
-      type: [String, Number],
-      default: null,
-    },
-
-    error: {
-      type: String,
-      default: '',
-    },
-
-    rules: {
+    options: {
       type: Array,
-      default: () => [],
+      default: null,
     },
   },
 
-  data() {
+  emits: withEmits(false),
+
+  setup(props, { attrs, emit }) {
     return {
-      isFirstValidation: true,
-      errorInternal: this.error,
+      ...useInputtable(props, { attrs, emit, useListeners: false }),
     }
   },
 
   computed: {
-    listeners() {
-      return {
-        // Add listeners from parent
-        ...this.$attrs,
-        // Ensure that the component works with v-model
-        blur: (event) => this.$emit('blur', event),
-        focus: (event) => this.$emit('focus', event),
-        input: (event) => {
-          if (this.validateOnInput && !this.isFirstValidation) this.validate(event.target.value)
-          this.$emit('input', event.target.value)
-          this.$emit('select', event.target.value)
-        },
-      }
-    },
-  },
+    selected: {
+      get() {
+        return this.modelValue
+      },
 
-  watch: {
-    error(val) {
-      this.errorInternal = val
-    },
-  },
-
-  methods: {
-    reset() {
-      this.errorInternal = ''
-      this.isFirstValidation = true
-      this.$emit('input', '')
-      this.$emit('select', '')
-    },
-    focus() {
-      this.$refs.input.focus()
-    },
-    validate(val) {
-      val = val || this.value
-
-      this.isFirstValidation = false
-
-      for (let i = 0; i < this.rules.length; i++) {
-        const item = this.rules[i]
-
-        let isValid = true
-
-        // Direct Function
-        if (typeof item === 'function') {
-          const rule = item
-
-          isValid = rule(val)
-        } else if (Array.isArray(item) && item.length === 2) {
-          // Rule array [function, options]
-          const { 0: rule, 1: options } = item
-
-          isValid = rule(val, options)
-        } else {
-          // Rule object { fn, options }
-          const rule = item.fn
-          const { options } = item
-
-          isValid = rule(val, options)
-        }
-
-        if (isValid !== true) {
-          this.errorInternal = isValid
-
-          return false
-        }
-      }
-
-      this.errorInternal = ''
-
-      return true
+      set(val) {
+        this.$emit('update:modelValue', val)
+      },
     },
   },
 }

@@ -4,11 +4,11 @@
       :value="1"
       :links="links"
       :size="size"
-      :selected="value === 1"
+      :selected="modelValue === 1"
       class="mr-1"
-      @input="(value) => $emit('input', value)"
+      @input="(value) => $emit('update:modelValue', value)"
     />
-    <span v-if="totalPages > 3 && value > 3">...</span>
+    <span v-if="totalPages > 3 && modelValue > 3">...</span>
     <x-pagination-item
       v-for="i in pages"
       :key="i"
@@ -16,18 +16,18 @@
       :value="i"
       :links="links"
       :size="size"
-      :selected="value === i"
-      @input="(value) => $emit('input', value)"
+      :selected="modelValue === i"
+      @input="(value) => $emit('update:modelValue', value)"
     />
-    <span v-if="totalPages > 3 && value < totalPages - 2">...</span>
+    <span v-if="totalPages > 3 && modelValue < totalPages - 2">...</span>
     <x-pagination-item
       v-if="totalPages > 1"
       :value="totalPages"
       :links="links"
       :size="size"
       class="ml-1"
-      :selected="value === totalPages"
-      @input="(value) => $emit('input', value)"
+      :selected="modelValue === totalPages"
+      @input="(value) => $emit('update:modelValue', value)"
     />
   </ul>
 </template>
@@ -44,7 +44,7 @@ export default {
       type: Number,
       default: 1,
     },
-    value: {
+    modelValue: {
       type: Number,
       default: 1,
     },
@@ -61,10 +61,10 @@ export default {
     pages() {
       if (this.totalPages === 3) return [2]
       if (this.totalPages > 2) {
-        if (this.value === 1 || this.value === 2) return [2, 3]
-        if (this.value === this.totalPages || this.value === this.totalPages - 1) return [this.totalPages - 2, this.totalPages - 1]
+        if (this.modelValue === 1 || this.modelValue === 2) return [2, 3]
+        if (this.modelValue === this.totalPages || this.modelValue === this.totalPages - 1) return [this.totalPages - 2, this.totalPages - 1]
 
-        return [this.value - 1, this.value, this.value + 1]
+        return [this.modelValue - 1, this.modelValue, this.modelValue + 1]
       }
 
       return []

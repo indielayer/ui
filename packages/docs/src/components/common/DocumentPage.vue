@@ -142,15 +142,37 @@ export default {
 
       components.forEach((component) => {
         const componentOptions = instance.appContext.components[`X${component}`]
-        const componentProps = componentOptions.props
+        let allValidators = {}
+        let allProps = {}
 
-        if (componentProps) {
-          const mappedProps = Object.keys(componentProps).map((key) => ({
-            default: componentProps[key].default,
+        if (componentOptions.mixins) componentOptions.mixins.forEach((m) => {
+          allValidators = {
+            ...allValidators,
+            ...m.validator,
+          }
+          allProps = {
+            ...allProps,
+            ...m.props,
+          }
+        })
+
+        allValidators = {
+          ...allValidators,
+          ...componentOptions.validator,
+        }
+
+        allProps = {
+          ...allProps,
+          ...componentOptions.props,
+        }
+
+        if (Object.keys(allProps).length > 0) {
+          const mappedProps = Object.keys(allProps).map((key) => ({
+            default: allProps[key].default,
             name: key,
-            required: componentProps[key].required,
-            type: Array.isArray(componentProps[key].type) ? componentProps[key].type.map((type) => type.name) : [componentProps[key].type.name],
-            validator: componentProps[key].validator && componentOptions?.validator && componentOptions?.validator[key] ? componentOptions?.validator[key] : null,
+            required: allProps[key].required,
+            type: Array.isArray(allProps[key].type) ? allProps[key].type.map((type) => type.name) : [allProps[key].type.name],
+            validator: allValidators[key],
           }))
 
           properties[component] = { props: mappedProps, ...properties[component] }

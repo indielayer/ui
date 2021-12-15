@@ -1,53 +1,58 @@
 <template>
   <label
-    class="inline-block cursor-pointer focus:outline-none"
+    ref="focusRef"
+    class="inline-block mb-1 relative cursor-pointer focus:outline-none"
     :class="{
-      'rounded border border-gray-300 dark:border-gray-700 p-2 hover:border-primary-500 dark:hover:border-primary-500': bordered,
-      'transition-colors duration-150 ease-in-out': bordered,
-      'border-primary-500 dark:border-primary-500': checked && !disabled,
+      ['rounded border p-2 hover:border-gray-500 dark:hover:border-gray-500 transition-colors duration-150 ease-in-out']: bordered,
+      [`border-gray-300 dark:border-gray-700`]: bordered && !selected,
+      [`border-${color}-500 dark:border-${color}-500`]: bordered && selected && !disabled,
     }"
-    :aria-checked="checked ? 'true' : 'false'"
+    :aria-checked="selected ? 'true' : 'false'"
     :aria-disabled="disabled ? 'true' : null"
     :tabindex="0"
+    @keypress.prevent.stop.enter.space="$emit('update:modelValue', value)"
   >
     <div
       class="flex items-center"
       :class="{ 'cursor-not-allowed': disabled }"
     >
       <input
-        ref="input"
         v-model="selected"
         type="radio"
         class="invisible absolute"
-        :disabled="disabled"
+        :disabled="disabled || loading"
         :name="name"
         :required="required"
-        :value="value"
+        :value="modelValue"
       />
       <div
-        class="border rounded-full flex justify-center items-center flex-none"
+        class="rounded-full flex justify-center items-center flex-shrink-0"
         :class="[
           {
             // shadow
-            'shadow': !flat,
+            'shadow': !flat && !loading,
+            [`shadow-lg shadow-${color}-500/50`]: !flat && glow && selected,
 
             'h-4 w-4': size === 'sm' || size === 'xs',
             'h-5 w-5': !['xs', 'sm', 'xl'].includes(size),
             'h-6 w-6': size === 'xl',
-
-            'hover:border-primary-500': !disabled,
-            'bg-primary-500 border-primary-500': checked && !disabled,
-            'bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700': !checked && !disabled,
-            // disabled
-            'bg-gray-500 border-gray-600 dark:border-gray-400': checked && disabled,
-            'bg-gray-200 border-gray-300 dark:border-gray-700': !checked && disabled,
+          },
+          disabled ? {
+            'bg-gray-500 border-gray-600 dark:border-gray-400': selected,
+            'bg-gray-200 border-gray-300 dark:border-gray-700': !selected,
+          } :
+          {
+            [`bg-${color}-500 border-${color}-500`]: selected && !loading,
+            'border bg-white dark:bg-gray-900 border-gray-300 dark:border-gray-700': !selected && !loading,
           }
         ]"
       >
+        <x-spinner v-if="loading" :size="size" class="absolute" />
         <svg
-          class="fill-current text-primary-100"
+          v-else
+          class="fill-current text-gray-100"
           :class="{
-            'opacity-0': !checked,
+            'opacity-0': !selected,
             'h-2 w-2': size === 'sm' || size === 'xs',
             'h-3 w-3': !['xs', 'sm', 'xl'].includes(size),
             'h-4 w-4': size === 'xl',
@@ -82,50 +87,27 @@
     >
       <slot></slot>
     </div>
+    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
   </label>
 </template>
 
 <script>
+import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
+import XSpinner from '../spinner/Spinner.vue'
+
 export default {
   name: 'XRadio',
+  components: {
+    XSpinner,
+  },
 
-  model: {
-    prop: 'options',
-    event: 'change',
+  validator: {
+    ...withValidator(),
   },
 
   props: {
+    ...withProps(),
     bordered: {
-      type: Boolean,
-      default: false,
-    },
-
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-
-    options: {
-      type: [String, Number, Boolean, Function, Object, Array],
-      default: null,
-    },
-
-    name: {
-      type: String,
-      default: null,
-    },
-
-    size: {
-      type: String,
-      default: null,
-    },
-
-    label: {
-      type: String,
-      default: null,
-    },
-
-    required: {
       type: Boolean,
       default: false,
     },
@@ -134,27 +116,35 @@ export default {
       type: [String, Number, Boolean, Function, Object, Array],
       default: null,
     },
+
+    label: {
+      type: String,
+      default: null,
+    },
+
+    glow: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: withEmits(false),
+
+  setup(props, { attrs, emit }) {
+    return {
+      ...useInputtable(props, { attrs, emit, useListeners: false }),
+    }
   },
 
   computed: {
-    checked() {
-      return this.options === this.value
-    },
-
     selected: {
       get() {
-        return this.options
+        return this.value === this.modelValue
       },
 
-      set(val) {
-        this.$emit('change', val)
+      set() {
+        this.$emit('update:modelValue', this.value)
       },
-    },
-  },
-
-  methods: {
-    focus() {
-      this.$refs.input.focus()
     },
   },
 }

@@ -17,11 +17,10 @@
     "@highlightjs/vue-plugin": "^2.1.0",
     "@vitejs/plugin-vue": "^1.2.2",
     "@vue/compiler-sfc": "^3.0.5",
-    "autoprefixer": "^10.2.5",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.4",
+    "tailwindcss": "^3.0.0",
     "highlight.js": "^11.2.0",
-    "postcss": "^8.2.15",
-    "postcss-nested": "^5.0.6",
-    "tailwindcss": "^2.1.2",
     "vite": "^2.3.3"
   }
 }

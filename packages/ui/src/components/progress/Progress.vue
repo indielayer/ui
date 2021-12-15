@@ -6,12 +6,7 @@
     >
       <div
         class="h-2 rounded-lg transition-all duration-200"
-        :class="{
-          'bg-primary-500': color === 'primary',
-          'bg-success-500': color === 'success',
-          'bg-error-500': color === 'error',
-          'bg-warning-500': color === 'warning',
-        }"
+        :class="[`bg-${color}-500`]"
         :style="{
           width: `${percentage}%`,
         }"
@@ -28,7 +23,7 @@
         stroke="currentColor"
         stroke-linejoin="round"
         stroke-linecap="round"
-        stroke-width="8"
+        stroke-width="4"
         fill="none"
         cx="50"
         cy="50"
@@ -36,17 +31,12 @@
       />
       <circle
         class="transition-all duration-200"
-        :class="{
-          'text-primary-500': color === 'primary',
-          'text-success-500': color === 'success',
-          'text-error-500': color === 'error',
-          'text-warning-500': color === 'warning',
-        }"
+        :class="[`text-${color}-500`]"
         :style="{ strokeDasharray: `${circleProgress} 252` }"
         stroke="currentColor"
         stroke-linejoin="round"
         stroke-linecap="round"
-        stroke-width="8"
+        stroke-width="4"
         fill="none"
         cx="50"
         cy="50"
@@ -62,13 +52,7 @@
         v-for="index in scoreLength"
         :key="index"
         class="rounded-sm h-2 w-3 inline-block"
-        :class="{
-          'bg-gray-200 dark:bg-gray-700': !isScoreActive(index),
-          'bg-primary-500': isScoreActive(index) && color === 'primary',
-          'bg-success-500': isScoreActive(index) && color === 'success',
-          'bg-error-500': isScoreActive(index) && color === 'error',
-          'bg-warning-500': isScoreActive(index) && color === 'warning',
-        }"
+        :class="isScoreActive(index) ? [`bg-${color}-500`]: ['bg-gray-200 dark:bg-gray-700']"
       ></div>
     </div>
   </component>
@@ -76,12 +60,6 @@
 
 <script>
 const validator = {
-  color: [
-    'primary',
-    'error',
-    'success',
-    'warning',
-  ],
   variant: [
     'bar',
     'circle',
@@ -96,9 +74,8 @@ export default {
 
   props: {
     color: {
-      default: 'primary',
       type: String,
-      validator: (value) => validator.color.includes(value),
+      default: 'primary',
     },
 
     percentage: {
@@ -113,8 +90,8 @@ export default {
     },
 
     tag: {
-      default: 'div',
       type: String,
+      default: 'div',
     },
 
     variant: {

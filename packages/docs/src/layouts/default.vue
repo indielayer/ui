@@ -8,6 +8,7 @@
     <router-view class="flex-1 overflow-y-scroll" />
   </div>
   <Cookies />
+  <x-toast ref="toast"/>
 </template>
 
 <script>
@@ -23,6 +24,9 @@ export default {
     Toolbar,
     Cookies,
     Menu,
+  },
+  mounted() {
+    window.toast = this.$refs.toast
   },
 }
 </script>

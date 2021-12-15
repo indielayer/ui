@@ -1,11 +1,10 @@
 <template>
   <component
-    :is="$props.tag"
-    v-bind="$attrs"
+    :is="tag"
     class="rounded bg-white dark:bg-gray-800"
     :class="[
       {
-        'shadow': !$props.flat,
+        'shadow': !flat,
       },
     ]"
   >
