@@ -10,13 +10,23 @@
       <x-spacer/>
 
       <div class="flex items-center font-semibold text-sm">
-        <div class="tracking-wide text-xs">v0.1.0</div>
+        <div class="tracking-wide text-xs">v{{ pkg }}</div>
         <x-divider vertical style="height: 10px;" class="px-2"/>
         <x-link href="https://github.com/indielayer/ui" target="_blank" class="" external>Github</x-link>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    pkg() {
+      return import.meta.env.PACKAGE_VERSION
+    },
+  },
+}
+</script>
 
 <style lang="postcss">
 .logo-white {
