@@ -1,4 +1,4 @@
-import { ref, computed, watch } from 'vue'
+import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import {
   withValidator as withInteractiveValidator,
   withProps as withInteractiveProps,
@@ -52,10 +52,21 @@ export const withEmits = (useListeners = true) => {
 }
 
 export const useInputtable = (props, { attrs, emit, useListeners = true } = {}) => {
+  const interactive = useInteractive()
+
   const isFirstValidation = ref(true)
   const errorInternal = ref(props.error)
 
+  const name = props.name ? props.name : (Math.random() + 1).toString(36).substring(7)
+  const nameInternal = ref(name)
+
   watch(() => props.error, (val) => { errorInternal.value = val })
+  watch(() => props.name, (val) => { if (val) nameInternal.value = val })
+
+  const form = inject('form', {
+    registerInput: () => {},
+    unregisterInput: () => {},
+  })
 
   const reset = () => {
     errorInternal.value = ''
@@ -63,7 +74,7 @@ export const useInputtable = (props, { attrs, emit, useListeners = true } = {}) 
     emit('update:modelValue', '')
   }
 
-  const setErrorInternal = (val) => {
+  const setError = (val) => {
     errorInternal.value = val
   }
 
@@ -120,8 +131,16 @@ export const useInputtable = (props, { attrs, emit, useListeners = true } = {}) 
     }
   }) : ref({})
 
+  onMounted(() => {
+    form.registerInput(nameInternal.value, { focus: interactive.focus, validate, setError })
+  })
+
+  onUnmounted(() => {
+    form.unregisterInput(nameInternal.value)
+  })
+
   return {
-    ...useInteractive(),
+    ...interactive,
 
     // data
     isFirstValidation,
@@ -133,6 +152,6 @@ export const useInputtable = (props, { attrs, emit, useListeners = true } = {}) 
     // methods
     reset,
     validate,
-    setErrorInternal,
+    setError,
   }
 }

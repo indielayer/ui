@@ -25,14 +25,12 @@ export const withValidator = () => validator
 export const useInteractive = () => {
   const focusRef = ref(null)
 
-  const methods = {
-    focus: () => {
-      if (focusRef.value) focusRef.value.focus()
-    },
+  const focus = () => {
+    if (focusRef.value) focusRef.value.focus()
   }
 
   return {
     focusRef,
-    ...methods,
+    focus,
   }
 }

@@ -1,7 +1,15 @@
-<script>
-import { defineComponent, h } from 'vue'
+<template>
+  <form @submit="submit" @keypress.enter="submit">
+    <fieldset :disabled="disabled">
+      <slot></slot>
+    </fieldset>
+  </form>
+</template>
 
-export default defineComponent({
+<script>
+import { provide, onMounted, watch, nextTick } from 'vue'
+
+export default {
   name: 'XForm',
   inheritAttrs: false,
   props: {
@@ -22,42 +30,46 @@ export default defineComponent({
       default: () => [],
     },
   },
-  data() {
-    return {
-      inputs: [],
-    }
-  },
-  watch: {
-    errors(errors) {
-      this.$nextTick(() => {
-        errors.forEach((error) => {
-          const input = this.inputs.find((i) => i.name === error.field)
 
-          if (input) input.setErrorInternal(error.msg)
+  setup(props, { emit }) {
+    const inputs = []
+
+    provide('form', {
+      registerInput: (name, { focus, validate, setError }) => {
+        const exists = inputs.find((i) => i.name === name)
+
+        if (exists) {
+          exists.focus = focus
+          exists.validate = validate
+          exists.setError = setError
+        }
+        else inputs.push({ name, focus, validate, setError })
+      },
+      unregisterInput: (name) => {
+        const index = inputs.findIndex((i) => i.name === name)
+
+        inputs.splice(index, 1)
+      },
+    })
+
+    onMounted(() => {
+      if (props.autoFocus && inputs && inputs.length > 0) inputs[0].focus()
+    })
+
+    watch(() => props.errors, (errors) => {
+      nextTick(() => {
+        errors.forEach((error) => {
+          const input = inputs.find((i) => i.name === error.field)
+
+          if (input) input.setError(error.msg)
         })
       })
-    },
-  },
-  mounted() {
-    this.getInputs(this.vnodesInDefaultSlot)
+    })
 
-    if (this.autoFocus) {
-      if (this.inputs && this.inputs.length > 0) this.inputs[0].focus()
-    }
-  },
-  methods: {
-    submit(e) {
-      e.preventDefault()
-      e.stopPropagation()
-
-      const isFormValid = this.autoValidate ? this.validate() : true
-
-      this.$emit('submit', isFormValid)
-    },
-    validate() {
+    const validate = () => {
       let isFormValid = true
 
-      this.inputs.forEach((input) => {
+      inputs.forEach((input) => {
         const isInputValid = input.validate()
 
         if (!isInputValid && isFormValid) {
@@ -69,39 +81,21 @@ export default defineComponent({
       })
 
       return isFormValid
-    },
-    getInputs(vnodesInDefaultSlot) {
-      if (!Array.isArray(vnodesInDefaultSlot)) return
+    }
 
-      vnodesInDefaultSlot.forEach((vNode) => {
-        const vInstance = vNode.component?.ctx
+    const submit = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
 
-        if (vInstance && typeof vInstance.validate === 'function') this.inputs.push(vInstance)
-        else if (vNode.children) this.getInputs(vNode.children)
-      })
-    },
+      const isFormValid = props.autoValidate ? validate() : true
+
+      emit('submit', isFormValid)
+    }
+
+    return {
+      validate,
+      submit,
+    }
   },
-  render() {
-    const vnodesInDefaultSlot = this.$slots.default ? this.$slots.default() : []
-
-    this.vnodesInDefaultSlot = vnodesInDefaultSlot
-
-    return h(
-      'form',
-      {
-        onKeyUp: (event) => {
-          if (event.target !== event.currentTarget) return
-          if (event.key === 'Enter') this.submit(event)
-        },
-        onSubmit: this.submit,
-      },
-      [
-        h('fieldset', {
-          disabled: this.disabled,
-        },
-        vnodesInDefaultSlot),
-      ],
-    )
-  },
-})
+}
 </script>
