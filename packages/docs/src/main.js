@@ -7,6 +7,7 @@ import { store } from './store'
 // plugins
 import icons from './plugins/icons'
 import toast from './plugins/toast'
+import ga from './plugins/ga'
 
 // global components
 import CopyButton from './components/common/CopyButton.vue'
@@ -24,6 +25,7 @@ app.use(router)
 app.use(store)
 app.use(icons)
 app.use(toast)
+app.use(ga)
 app.use(UI, { prefix: 'X' })
 
 app.component('CopyButton', CopyButton)
