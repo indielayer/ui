@@ -23,7 +23,7 @@ export default {
       /*
       ** We tell Google Analytic to add a page view
       */
-      ga('set', 'page', to.fullPath)
+      ga('set', 'page', '/ui' + to.fullPath)
       ga('send', 'pageview')
     })
   }
