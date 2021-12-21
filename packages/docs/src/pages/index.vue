@@ -2,7 +2,7 @@
   <div>
     <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto py-14">
       <h2 class="text-h2 mb-8">Getting Started</h2>
-      <h1 class="text-xl">Tailwind CSS UI components for Vue.js 3. Build and prototype fast web applications.</h1>
+      <h1 class="text-xl">Tailwind CSS UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.</h1>
       <x-divider class="mt-4 mb-8"/>
 
       <x-note variant="warning" class="my-8">This library is still in development. It's pre-alpha for testing purposes and for Indielayer internal tools.</x-note>
@@ -29,7 +29,7 @@
 const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
-  presets: [indielayer]
+  presets: [indielayer],
   content: [
     'node_modules/@indielayer/ui/src/**/*.vue',
     // './src/**/*.vue',
