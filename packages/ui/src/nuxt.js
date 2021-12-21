@@ -1,14 +1,13 @@
 import { join } from 'pathe'
 import { defineNuxtModule } from '@nuxt/kit'
 
-export default defineNuxtModule({
-  hooks: {
-    'components:dirs'(dirs) {
-      // Add ./components dir to the list
+export default defineNuxtModule((nuxt) => ({
+  async setup(options) {
+    nuxt.hook('components:dirs', (dirs) => {
       dirs.push({
         path: join(__dirname, 'components'),
-        prefix: 'X',
+        prefix: options?.prefix ? options?.prefix : 'X',
       })
-    },
+    })
   },
-})
+}))
