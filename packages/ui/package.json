@@ -28,6 +28,7 @@
       "import": "./lib/esm/index.js",
       "require": "./lib/cjs/index.js"
     },
+    "./nuxt": "./src/nuxt.js",
     "./tailwind.preset": "./lib/tailwind.preset.js",
     "./tailwind.preset.js": "./lib/tailwind.preset.js"
   },
