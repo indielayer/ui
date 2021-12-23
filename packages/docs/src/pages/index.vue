@@ -37,7 +37,8 @@ module.exports = {
   ],
 }`"
       />
-      <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your Vue project</h3>
+      <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your project</h3>
+      <h4 class="text-xl mt-8 mb-4">Load on a Vue 3 project</h4>
       <code-snippet
         :code="`import { createApp } from 'vue'
 import UI from '@indielayer/ui'
@@ -46,5 +47,26 @@ const app = createApp(App)
 
 app.use(UI, { prefix: 'X' })`"
       />
-    </section></div>
+      <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
+      <code-snippet
+        :code="`import { defineNuxtConfig } from 'nuxt3'
+
+export default defineNuxtConfig({
+  css: ['~/assets/css/tailwind.css'],
+  buildModules: ['@indielayer/ui/nuxt'],
+  build: {
+    postcss: {
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+        },
+      },
+    },
+  },
+})
+`"
+      />
+    </section>
+  </div>
 </template>

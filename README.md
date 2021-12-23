@@ -6,16 +6,15 @@
 
 ## Indielayer UI
 
-> [Tailwind CSS](https://tailwindcss.com) UI components for Vue.js 3. Build and prototype fast web applications.
+> [Tailwind CSS](https://tailwindcss.com) UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.
 
-<!-- - [📖 Documentation](https://indielayer.com/ui) -->
-> This library is still in development. It's pre-alpha for testing purposes and for Indielayer internal tools.
+- [📖 Documentation](https://indielayer.com/ui)
 
 ## Getting Started
 
 > [tailwindcss](https://tailwindcss.com) version >= 3.0 must be already present in your application
 
-### 1. Add `@indielayer/ui` dependency to your project
+#### 1. Add `@indielayer/ui` dependency to your project
 
 ```bash
 # using npm
@@ -24,7 +23,7 @@ npm install @indielayer/ui --save-dev
 yarn add @indielayer/ui --dev
 ```
 
-### 2. Add Indielayer UI Tailwind CSS preset `tailwind-preset.js` to your Tailwind CSS configuration file `tailwind.config.js` with the purge css configurations
+#### 2. Add Indielayer UI Tailwind CSS preset `tailwind-preset.js` to your Tailwind CSS configuration file `tailwind.config.js` with the purge css configurations
 
 ```javascript
 // tailwind.config.js
@@ -41,7 +40,8 @@ module.exports = {
 };
 ```
 
-### 3. Load the plugin in your vue application
+### 3. Load the plugin
+#### Load the plugin in your vue 3 application
 
 ```javascript
 import { createApp } from 'vue'
@@ -62,4 +62,25 @@ app.component('XButton', Button)
 app.component('XInput', Input)
 ```
 
-<!-- [📖 &nbsp;Read more](https://indielayer.com/ui) -->
+#### Load the module in your nuxt 3 application
+
+```javascript
+import { defineNuxtConfig } from 'nuxt3'
+
+export default defineNuxtConfig({
+  css: ["~/assets/css/tailwind.css"],
+  buildModules: ['@indielayer/ui/nuxt'],
+  build: {
+    postcss: {
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+        },
+      },
+    },
+  },
+})
+```
+
+[📖 &nbsp;Read more](https://indielayer.com/ui)
