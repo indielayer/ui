@@ -82,19 +82,22 @@ export default {
     return {
       collapsed: !this.expanded,
       maxHeight: !this.expanded ? 0 : 'auto',
+      observer: null,
     }
   },
 
   beforeMount() {
-    window.addEventListener('resize', this.resizeContent)
+    window.addEventListener('resize', this.onResize)
   },
 
   beforeUnmount() {
-    window.removeEventListener('resize', this.resizeContent)
+    this.observer.disconnect()
+    window.removeEventListener('resize', this.onResize)
   },
 
   mounted() {
-    this.resizeContent()
+    this.observer = new ResizeObserver(this.onResize)
+    this.observer.observe(this.$refs.content)
   },
 
   methods: {
@@ -103,10 +106,10 @@ export default {
 
       this.collapsed = !this.collapsed
       this.$emit('toggle', this.collapsed)
-      this.resizeContent()
+      this.onResize()
     },
 
-    resizeContent() {
+    onResize() {
       if (this.collapsed) {
         this.maxHeight = 0
       } else {
