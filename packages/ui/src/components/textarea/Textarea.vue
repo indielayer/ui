@@ -123,6 +123,12 @@ export default {
     }
   },
 
+  data() {
+    return {
+      observer: null,
+    }
+  },
+
   watch: {
     modelValue() {
       setTimeout(this.resize)
@@ -133,11 +139,14 @@ export default {
   },
 
   mounted() {
-    this.resize()
+    this.observer = new ResizeObserver(this.resize)
+    this.observer.observe(this.$refs.focusRef)
+
     window.addEventListener('resize', this.resize)
   },
 
   beforeUnmount() {
+    this.observer.disconnect()
     window.removeEventListener('resize', this.resize)
   },
 
