@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto py-14">
+    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto">
       <h1 class="text-h2 mb-8">Icons</h1>
       <h2 class="text-xl mt-8 mb-4">Building your own SVG icon library from multiple open source libraries</h2>
       <x-divider class="mt-4 mb-8"/>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto py-14">
+    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto">
       <div class="w-full flex document-page">
         <div class="min-w-0 flex-auto">
           <div class="text-4xl font-semibold">{{ title }}</div>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto py-14">
+    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto">
       <h2 class="text-h2 mb-8">Getting Started</h2>
       <h1 class="text-xl">Tailwind CSS UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.</h1>
       <x-divider class="mt-4 mb-8"/>
