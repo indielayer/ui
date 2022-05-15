@@ -1,3 +1,14 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    label: String,
+    vertical: Boolean,
+  },
+})
+</script>
+
 <template>
   <div
     :class="[
@@ -9,7 +20,7 @@
     class="flex justify-center items-center"
   >
     <div
-      class="bg-gray-200 dark:bg-gray-600 flex-grow"
+      class="bg-gray-200 dark:bg-slate-700 flex-grow"
       :style="[
         {
           width: vertical ? '1px' : 'auto',
@@ -27,7 +38,7 @@
       v-text="label"
     ></div>
     <div
-      class="bg-gray-200 dark:bg-gray-600 flex-grow"
+      class="bg-gray-200 dark:bg-slate-700 flex-grow"
       :style="[
         {
           width: vertical ? '1px' : 'auto',
@@ -37,20 +48,3 @@
     ></div>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'XDivider',
-
-  props: {
-    label: {
-      type: String,
-      default: '',
-    },
-    vertical: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
-</script>

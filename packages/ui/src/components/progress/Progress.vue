@@ -1,120 +1,84 @@
-<template>
-  <component :is="tag" class="w-full">
-    <div
-      v-if="variant === 'bar'"
-      class="rounded-lg bg-gray-200 dark:bg-gray-700 overflow-hidden"
-    >
-      <div
-        class="h-2 rounded-lg transition-all duration-200"
-        :class="[`bg-${color}-500`]"
-        :style="{
-          width: `${percentage}%`,
-        }"
-      ></div>
-    </div>
+<script lang="ts">
+import { computed, defineComponent, type PropType } from 'vue'
+import { useCSS } from '@/composables/css'
+import { useColors } from '@/composables/colors'
 
-    <svg
-      v-if="variant === 'circle'"
-      class="transform -rotate-90"
-      viewBox="0 0 100 100"
-    >
-      <circle
-        class="text-gray-200 dark:text-gray-700"
-        stroke="currentColor"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke-width="4"
-        fill="none"
-        cx="50"
-        cy="50"
-        r="40"
-      />
-      <circle
-        class="transition-all duration-200"
-        :class="[`text-${color}-500`]"
-        :style="{ strokeDasharray: `${circleProgress} 252` }"
-        stroke="currentColor"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke-width="4"
-        fill="none"
-        cx="50"
-        cy="50"
-        r="40"
-      />
-    </svg>
+// const validators = {
+//   variant: ['bar','score'],
+// }
 
-    <div
-      v-if="variant === 'score'"
-      class="space-x-1 inline-block"
-    >
-      <div
-        v-for="index in scoreLength"
-        :key="index"
-        class="rounded-sm h-2 w-3 inline-block"
-        :class="isScoreActive(index) ? [`bg-${color}-500`]: ['bg-gray-200 dark:bg-gray-700']"
-      ></div>
-    </div>
-  </component>
-</template>
-
-<script>
-const validator = {
-  variant: [
-    'bar',
-    'circle',
-    'score',
-  ],
-}
-
-export default {
-  name: 'XProgress',
-
-  validator,
+export default defineComponent({
+  // validators,
 
   props: {
-    color: {
-      type: String,
-      default: 'primary',
-    },
-
+    ...useColors.props('primary'),
     percentage: {
       type: Number,
       default: 0,
-      validator: (val) => val >= 0 && val <= 100,
+      validator: (value: number) => value >= 0 && value <= 100,
     },
-
-    scoreLength: {
-      type: Number,
-      default: 3,
+    // variant: {
+    //   type: String as PropType<'bar' | 'score'>,
+    //   default: 'bar',
+    //   validator: (value: string) => validators.variant.includes(value),
+    // },
+    gradient: Boolean,
+    animate: {
+      type: Boolean,
+      default: true,
     },
-
-    tag: {
-      type: String,
-      default: 'div',
-    },
-
-    variant: {
-      type: String,
-      default: 'bar',
-      validator: (value) => validator.variant.includes(value),
-    },
+    thick: Boolean,
   },
 
-  computed: {
-    circleProgress() {
-      const progressLimit = 251
+  setup(props) {
+    const css = useCSS('progress')
+    const colors = useColors()
+    const style = computed(() => {
+      const color = colors.getPalette(props.color)
+      const vars = []
 
-      return (progressLimit / 100) * this.percentage
-    },
+      vars.push(css.variables({
+        bg: color[500],
+      }))
+
+      if (props.gradient) vars.push({
+        '--tw-gradient-stops': `${color[100]}, ${color[800]}`,
+      })
+
+      return vars
+    })
+
+    return {
+      style,
+    }
   },
-
-  methods: {
-    isScoreActive(item) {
-      if (this.percentage > (item - 1) * (100 / this.scoreLength)) return true
-
-      return false
-    },
-  },
-}
+})
 </script>
+
+<template>
+  <div
+    class="relative rounded bg-gray-100 dark:bg-gray-700 overflow-hidden pointer-events-none"
+    :class="[thick ? 'h-1.5' : 'h-1']"
+    :style="style"
+  >
+    <div
+      class="h-full"
+      :class="[
+        gradient ? 'bg-gradient-to-r' : 'bg-[color:var(--x-progress-bg)]',
+        {
+          'duration-150 transition-[width]': animate
+        }
+      ]"
+      :style="[!gradient ? {width: `${percentage}%`} : '']"
+    >
+    </div>
+    <div
+      v-if="gradient"
+      class="absolute h-full bg-gray-100 dark:bg-gray-700 right-0 top-0"
+      :class="{ 'duration-150 transition-[width]': animate }"
+      :style="{
+        width: `${100 - percentage}%`
+      }"
+    ></div>
+  </div>
+</template>

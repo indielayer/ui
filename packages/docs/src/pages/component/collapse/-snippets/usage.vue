@@ -1,5 +1,5 @@
 <template>
-  <x-collapse>
+  <x-collapse icon="heart">
     <div class="p-2 bg-gray-100 dark:bg-gray-600">I'm a collapsible item (click me)</div>
 
     <template #content>

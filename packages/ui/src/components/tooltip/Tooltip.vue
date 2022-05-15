@@ -1,22 +1,24 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+import XPopover from '@/components/popover/Popover.vue'
+import XPopoverContainer from '@/components/popover/PopoverContainer.vue'
+
+export default defineComponent({
+  components: {
+    XPopover,
+    XPopoverContainer,
+  },
+})
+</script>
+
 <template>
-  <x-popover hover class="dark" v-bind="$attrs">
+  <x-popover hover class="dark">
     <slot></slot>
     <template #content>
-      <x-popover-container class="p-2 text-gray-300 text-sm">
+      <x-popover-container class="p-2 text-white text-sm">
         <slot name="tooltip"></slot>
       </x-popover-container>
     </template>
   </x-popover>
 </template>
-
-<script>
-import XPopover from '../popover/Popover.vue'
-import XPopoverContainer from '../popover/PopoverContainer.vue'
-
-export default {
-  components: {
-    XPopover,
-    XPopoverContainer,
-  },
-}
-</script>

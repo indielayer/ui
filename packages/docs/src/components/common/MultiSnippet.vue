@@ -1,9 +1,7 @@
 <template>
   <div class="hljs pl-4 pt-4 dark">
     <x-tabs v-model="selected">
-      <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index">
-        {{ snippet.title }}
-      </x-tab>
+      <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index" :label="snippet.label"/>
     </x-tabs>
     <div v-for="(snippet, index) in snippets" :key="index">
       <code-snippet v-if="selected === index" class="!pl-0" :code="snippet.code" :lang="snippet.lang" />

@@ -2,7 +2,7 @@
   <document-page components="Form" :title="title" :description="description">
     <!-- usage  -->
     <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage" expanded>
+    <code-preview :code="snippets.usage">
       <usage-snippet />
     </code-preview>
 

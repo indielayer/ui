@@ -1,30 +1,23 @@
-<template>
-  <component
-    :is="tag"
-    class="rounded bg-white dark:bg-gray-800"
-    :class="[
-      {
-        'shadow': !flat,
-      },
-    ]"
-  >
-    <slot></slot>
-  </component>
-</template>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-<script>
-export default {
-  name: 'XCard',
+export default defineComponent({
   props: {
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
     tag: {
       type: String,
       default: 'div',
     },
+    flat: Boolean,
   },
-}
+})
 </script>
+
+<template>
+  <component
+    :is="tag"
+    class="rounded bg-white dark:bg-gray-800"
+    :class="[{ 'shadow': !flat }]"
+  >
+    <slot></slot>
+  </component>
+</template>

@@ -1,11 +1,59 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+const validators = {
+  textAlign: [
+    null,
+    'left',
+    'center',
+    'right',
+    'justify',
+  ],
+  verticalAlign: [
+    null,
+    'baseline',
+    'bottom',
+    'middle',
+    'text-bottom',
+    'text-top',
+    'top',
+  ],
+}
+
+export default defineComponent({
+  validators,
+
+  props: {
+    textAlign: {
+      type: String,
+      validator: (value: string) => validators.textAlign.includes(value),
+    },
+    truncate: Boolean,
+    dense: Boolean,
+    fixed: Boolean,
+    verticalAlign: {
+      type: String,
+      default: 'middle',
+      validator: (value: string) => validators.verticalAlign.includes(value),
+    },
+  },
+
+  setup(props) {
+    if (props.truncate && !props.fixed) {
+      console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
+    }
+  },
+})
+</script>
+
 <template>
   <td
-    class="last:pr-0"
+    class="last:pr-0 px-3"
     :class="[
       {
         // density
-        'py-1 pr-2': dense,
-        'py-2 pr-4': !dense,
+        'py-2': dense,
+        'py-4': !dense,
         // text-align
         'text-left': textAlign === 'left',
         'text-center': textAlign === 'center',
@@ -26,65 +74,3 @@
     <slot></slot>
   </td>
 </template>
-
-<script>
-const validator = {
-  textAlign: [
-    null,
-    'left',
-    'center',
-    'right',
-    'justify',
-  ],
-  verticalAlign: [
-    null,
-    'baseline',
-    'bottom',
-    'middle',
-    'text-bottom',
-    'text-top',
-    'top',
-  ],
-}
-
-export default {
-  name: 'XTableCell',
-
-  validator,
-
-  props: {
-    textAlign: {
-      default: null,
-      type: String,
-      validator: (value) => validator.textAlign.includes(value),
-    },
-
-    truncate: {
-      default: false,
-      type: Boolean,
-    },
-
-    dense: {
-      default: false,
-      type: Boolean,
-    },
-
-    fixed: {
-      default: false,
-      type: Boolean,
-    },
-
-    verticalAlign: {
-      default: null,
-      type: String,
-      validator: (value) => validator.verticalAlign.includes(value),
-    },
-  },
-
-  created() {
-    if (this.truncate && !this.fixed) {
-      console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
-    }
-  },
-}
-</script>

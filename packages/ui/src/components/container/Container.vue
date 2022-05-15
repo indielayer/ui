@@ -1,3 +1,16 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  props: {
+    tag: {
+      type: String,
+      default: 'div',
+    },
+  },
+})
+</script>
+
 <template>
   <component
     :is="tag"
@@ -6,16 +19,3 @@
     <slot></slot>
   </component>
 </template>
-
-<script>
-export default {
-  name: 'XContainer',
-
-  props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
-  },
-}
-</script>

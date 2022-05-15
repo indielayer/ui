@@ -14,12 +14,13 @@
         :rules="[rules.isRequired]"
         name="password"
         label="Password"
+        helper="Must be between 8 and 10 characters"
         class="w-full"
       />
     </div>
     <x-textarea v-model="description" name="description" label="Description" class="w-full"/>
     <x-checkbox v-model="agree" :rules="[rules.isRequired]" name="agree" label="Agree with all the terms"/>
-    <x-button class="w-full" size="lg" type="submit">Submit</x-button>
+    <x-button block color="primary" type="submit">Submit</x-button>
   </x-form>
 </template>
 

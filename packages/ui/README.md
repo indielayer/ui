@@ -31,10 +31,10 @@ const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
   // load indielayer ui presets
-  presets: [indielayer],
+  presets: [indielayer()],
   // allow PurgeCSS to analyze components
   content: [
-    'node_modules/@indielayer/ui/src/**/*.vue',
+    'node_modules/@indielayer/ui/**/*',
     './src/**/*.vue',
   ],
 };

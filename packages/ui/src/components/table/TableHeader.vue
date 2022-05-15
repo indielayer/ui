@@ -1,28 +1,59 @@
+<script lang="ts">
+import { defineComponent, type PropType } from 'vue'
+
+export type Sort = 1 | -1 | undefined
+export type Align = 'left' | 'center' | 'right' | 'justify' | undefined
+
+const validators = {
+  sort: [1,-1],
+  textAlign: ['left','center','right','justify'],
+}
+
+export default defineComponent({
+  validators,
+
+  props: {
+    sort: {
+      type: Number as PropType<Sort>,
+      validator: (value: number) => validators.sort.includes(value),
+    },
+    sortable: Boolean,
+    textAlign: {
+      type: String as PropType<Align>,
+      default: 'left',
+      validator: (value: string) => validators.textAlign.includes(value),
+    },
+    stickyHeader: Boolean,
+  },
+})
+</script>
+
 <template>
   <th
-    class="py-2 bg-gray-50 dark:bg-gray-800 font-medium tracking-wide uppercase text-xs pr-1 last:pr-0"
+    class="py-2 font-semibold tracking-widest uppercase text-xs px-3"
     :class="[
       {
-        //sort
+        // sort
         'cursor-pointer hover:text-gray-800 dark:hover:text-gray-300 transition-colors duration-150 ease-in-out': sortable,
-        //stickyHeader
+        // stickyHeader
         'sticky top-0': stickyHeader,
         // textAlign
         'text-left': textAlign === 'left',
-        'text-center': textAlign === 'center',
         'text-right': textAlign === 'right',
+        'text-center': textAlign === 'center',
         'text-justify': textAlign === 'justify',
       },
     ]"
   >
     <div
       v-if="sortable"
-      class="flex items-center"
+      class="relative inline-block"
     >
       <slot></slot>
 
       <svg
-        v-if="[1, -1].includes(sort)"
+        v-if="sort && [1, -1].includes(sort)"
+        class="absolute stroke-2 w-3 h-3 ml-0.5 -right-3 top-0.5"
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -31,7 +62,6 @@
         stroke-linecap="round"
         fill="none"
         role="presentation"
-        class="inline-block stroke-2 w-3 h-3 ml-0.5"
       >
         <template v-if="sort === -1">
           <line
@@ -60,50 +90,3 @@
     </template>
   </th>
 </template>
-
-<script>
-const validator = {
-  sort: [
-    null,
-    1,
-    -1,
-  ],
-  textAlign: [
-    null,
-    'left',
-    'center',
-    'right',
-    'justify',
-  ],
-}
-
-export default {
-  name: 'XTableHeader',
-
-  validator,
-
-  props: {
-    sort: {
-      type: [Number, Boolean],
-      default: null,
-      validator: (value) => validator.sort.includes(value),
-    },
-
-    sortable: {
-      type: Boolean,
-      default: false,
-    },
-
-    textAlign: {
-      type: String,
-      default: 'left',
-      validator: (value) => validator.textAlign.includes(value),
-    },
-
-    stickyHeader: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
-</script>

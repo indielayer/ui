@@ -1,11 +1,16 @@
+import { injectIconsKey } from '@indielayer/ui'
+
 export default {
   install: (app) => {
-  /**
-   * FEATHER ICONS
-   * https://feathericons.com/
-   */
-    // web
-    app.config.globalProperties.$icons = {
+    /**
+    * FEATHER ICONS
+    * https://feathericons.com/
+    */
+    app.provide(injectIconsKey, {
+      'chevron-down': '<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />',
+      'align-justify': '<line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line>',
+      'align-left': '<line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line>',
+      'align-right': '<line x1="21" y1="10" x2="7" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="7" y2="18"></line>',
       smile: '<circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line>',
       check: '<polyline points="20 6 9 17 4 12"></polyline>',
       copy: '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>',
@@ -51,11 +56,11 @@ export default {
       'arrow-left': '<line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline>',
 
       /**
-   * TABLER ICONS
-   * https://tabler-icons.io/
-   */
+       * TABLER ICONS
+       * https://tabler-icons.io/
+       */
       star: '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" />',
       'star-half': '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253z" />',
-    }
+    })
   },
 }
