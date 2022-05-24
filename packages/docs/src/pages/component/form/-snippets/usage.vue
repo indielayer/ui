@@ -25,7 +25,21 @@
 </template>
 
 <script>
+import { useNotification } from '@indielayer/ui'
+
 export default {
+  setup() {
+    const notification = useNotification()
+
+    function onSubmit(isValid) {
+      if (isValid) notification.success('Valid! Sumitted.')
+      else notification.error('Invalid! Form has errors')
+    }
+
+    return {
+      onSubmit,
+    }
+  },
   data() {
     return {
       email: '',
@@ -37,12 +51,6 @@ export default {
         isRequired: (v) => !!v  || 'Field is required',
       },
     }
-  },
-  methods: {
-    onSubmit(isValid) {
-      if (isValid) this.$toast.success('Valid! Submitted')
-      else this.$toast.error({ message: 'Invalid! Form has errors' })
-    },
   },
 }
 </script>

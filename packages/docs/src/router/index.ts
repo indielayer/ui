@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 // layouts
 import DefaultLayout from '@/layouts/default.vue'
@@ -14,7 +14,11 @@ import ColorsPage from '@/pages/colors.vue'
 const pages = import.meta.globEager('@/pages/component/*/index.vue')
 
 const componentPages = Object.keys(pages).map((path) => {
-  const name = path.match(/\.\/pages\/component\/(.*)\/index\.vue$/)[1].toLowerCase()
+  const match = path.match(/\.\/pages\/component\/(.*)\/index\.vue$/)
+
+  if (!match) return null
+
+  const name = match[1].toLowerCase()
 
   return {
     path: name,
@@ -22,7 +26,7 @@ const componentPages = Object.keys(pages).map((path) => {
   }
 })
 
-const routes = [{
+const routes: RouteRecordRaw[] = [{
   path: '/',
   component: DefaultLayout,
   children: [{
@@ -47,6 +51,7 @@ const routes = [{
   }, {
     path: 'component',
     component: SimpleLayout,
+    // @ts-ignore
     children: componentPages,
   }],
 }, {

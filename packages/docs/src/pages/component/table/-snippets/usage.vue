@@ -3,7 +3,7 @@
     v-model:sort="sort"
     :headers="headers"
     :items="itemsSorted"
-    @click-row="$toast.log('open')"
+    @click-row="notification.log('open')"
   >
     <template #item-published="{ item }">
       {{ formatDate(item.published) }}
@@ -19,7 +19,7 @@
     striped
     :headers="headers"
     :items="itemsSorted"
-    @click-row="$toast.log('open')"
+    @click-row="notification.log('open')"
   >
     <template #item-published="{ item }">
       {{ formatDate(item.published) }}
@@ -31,7 +31,16 @@
 </template>
 
 <script>
+import { useNotification } from '@indielayer/ui'
+
 export default {
+  setup() {
+    const notification = useNotification()
+
+    return {
+      notification,
+    }
+  },
   data() {
     return {
       headers: [
