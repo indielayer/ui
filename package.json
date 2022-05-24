@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cd packages/ui && yarn dev",
     "docs": "cd packages/docs && yarn dev",
-    "build": "cd packages/ui && yarn build",
+    "build": "cd packages/ui && yarn build-prod",
     "build:docs": "yarn build && cd packages/docs && yarn build",
     "release": "lerna publish",
     "release:alpha": "lerna publish prerelease --preid alpha --dist-tag alpha",
@@ -29,13 +29,12 @@
   },
   "homepage": "https://github.com/indielayer/ui#readme",
   "dependencies": {
-    "@indielayer/eslint-config-vue": "^2.1.2",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0",
+    "@indielayer/eslint-config-vue": "^3.0.0",
     "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/eslint-config-typescript": "^10.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.26.0",
-    "eslint-plugin-vue": "^7.9.0",
+    "eslint": "^8.6.0",
+    "eslint-plugin-cypress": "^2.12.1",
     "lerna": "^4.0.0",
     "typescript": "^4.2.4"
   }

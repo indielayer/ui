@@ -1,20 +1,20 @@
 <template>
   <div>
-    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto">
-      <h2 class="text-h2 mb-8">Getting Started</h2>
-      <h1 class="text-xl">Tailwind CSS UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.</h1>
+    <section class="p-4 lg:p-8 max-w-4xl xl:max-w-7xl mx-auto">
+      <h2 class="text-4xl font-semibold">Getting Started</h2>
+      <h1 class="text-lg my-2 text-gray-500 dark:text-gray-400">Tailwind CSS UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.</h1>
       <x-divider class="mt-4 mb-8"/>
 
-      <x-note variant="warning" class="my-8">This library is still in development. It's pre-alpha for testing purposes and for Indielayer internal tools.</x-note>
+      <x-alert type="warning" color="orange" outlined class="my-8">This library is still in development. It's pre-alpha for testing purposes and for Indielayer internal tools.</x-alert>
 
       <h3 class="text-2xl mb-4">1. Install via package manager</h3>
       <multi-snippet
         :snippets="[{
-          title: 'npm',
+          label: 'npm',
           lang: 'bash',
           code: 'npm install @indielayer/ui'
         }, {
-          title: 'yarn',
+          label: 'yarn',
           lang: 'bash',
           code: 'yarn add @indielayer/ui'
         }]"

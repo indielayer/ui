@@ -1,8 +1,7 @@
 <template>
   <x-button
-    color="none"
-    class="pl-0"
-    flat
+    ghost
+    class="-ml-2"
     :icon="colorMode === 'light' ? 'sun' : 'moon'"
     @click="toggle"
   />

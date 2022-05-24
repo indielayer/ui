@@ -1,29 +1,71 @@
+<script lang="ts">
+import { computed, defineComponent } from 'vue'
+import { useCSS } from '@/composables/css'
+import { useColors } from '@/composables/colors'
+import { useCommon } from '@/composables/common'
+
+export default defineComponent({
+  props: {
+    ...useCommon.props(),
+    ...useColors.props('gray'),
+    tag: {
+      type: String,
+      default: 'span',
+    },
+    rounded: Boolean,
+    removable: Boolean,
+    outlined: Boolean,
+  },
+
+  emits: ['remove'],
+
+  setup(props) {
+    const css = useCSS()
+    const colors = useColors()
+    const styles = computed(() => {
+      const color = colors.getPalette(props.color)
+
+      return css.variables({
+        bg: color[100],
+        text: color[800],
+        border: color[800],
+        dark: {
+          text: props.outlined ? color[200] : color[800],
+        },
+      })
+    })
+
+    const sizeClasses = computed(() => {
+      if (props.size === 'xs') return 'px-2 py-1 text-xs'
+      else if (props.size === 'sm') return 'px-2 py-1 text-sm'
+      else if (props.size === 'lg') return 'px-4 py-3 text-lg'
+      else if (props.size === 'xl') return 'px-6 py-6 text-xl'
+
+      return 'px-3 py-2'
+    })
+
+    return {
+      styles,
+      sizeClasses,
+    }
+  },
+})
+</script>
+
 <template>
   <component
     :is="tag"
-    class="inline-block leading-none"
+    class="inline-flex items-center leading-none whitespace-nowrap
+      text-[color:var(--x-text)]
+      dark:text-[color:var(--x-dark-text)]
+      border-[color:var(--x-border)
+      "
+    :style="styles"
     :class="
       [
-        [`bg-${color}-200 text-${color}-900 border-${color}-900`],
-        {
-          // variant
-          '!bg-transparent border': outlined,
-
-          // size
-          'py-1': size === 'auto',
-          'px-2 py-1 text-xs': size === 'xs',
-          'px-2 py-1 text-sm': size === 'sm',
-          'px-3 py-2': !['auto', 'xs', 'sm', 'lg', 'xl'].includes(size),
-          'px-4 py-3 text-lg': size === 'lg',
-          'px-6 py-6 text-xl': size === 'xl',
-
-          // radius
-          'rounded-full': radius === 'full',
-          'rounded-lg': radius === 'lg',
-          'rounded-md': radius === 'md',
-          'rounded-sm': radius === 'sm',
-          'rounded': radius === 'rounded',
-        },
+        sizeClasses,
+        outlined ? 'border' : 'bg-[color:var(--x-bg)]',
+        rounded ? 'rounded-full' : 'rounded'
       ]"
   >
     <span
@@ -41,10 +83,9 @@
         fill="none"
         role="presentation"
         class="stroke-2 w-4 h-4 ml-1 cursor-pointer hover:text-gray-700 transition-colors duration-150 ease-in-out flex-shrink-0"
-        @click="$emit('remove')"
+        @click="(e) => $emit('remove', e)"
       >
-        <line x1="18" y1="6" x2="6" y2="18" />
-        <line x1="6" y1="6" x2="18" y2="18" />
+        <path d="M6 18L18 6M6 6l12 12" />
       </svg>
     </span>
 
@@ -53,41 +94,3 @@
     </template>
   </component>
 </template>
-
-<script>
-export default {
-  name: 'XTag',
-
-  props: {
-    color: {
-      type: String,
-      default: 'gray',
-    },
-
-    radius: {
-      type: String,
-      default: 'full',
-    },
-
-    removable: {
-      type: Boolean,
-      default: false,
-    },
-
-    size: {
-      type: String,
-      default: null,
-    },
-
-    tag: {
-      type: String,
-      default: 'span',
-    },
-
-    outlined: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
-</script>

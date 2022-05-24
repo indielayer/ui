@@ -3,33 +3,33 @@
     <x-radio
       v-model="selected"
       value="a"
-      color="emerald"
-      bordered
-      label="Bordered"
-    />
-    <x-radio
-      v-model="selected"
-      value="a"
       color="rose"
       bordered
-      label="Bordered with content"
+      label="Option A"
     >
-      I'm the content
+      label and content
     </x-radio>
     <x-radio
       v-model="selected"
-      value="a"
+      value="b"
       color="amber"
       glow
-      label="Option C"
-    />
+      label="Option B"
+    >Glow</x-radio>
     <x-radio
       v-model="selected"
-      value="a"
+      value="c"
       color="sky"
       glow
+      label="Option C"
+    >Glow</x-radio>
+    <x-radio
+      v-model="selected"
+      value="d"
+      color="indigo"
+      glow
       label="Option D"
-    />
+    >Glow</x-radio>
   </div>
 </template>
 

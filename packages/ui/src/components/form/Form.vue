@@ -1,17 +1,17 @@
-<template>
-  <form @submit="submit" @keypress.enter="submit">
-    <fieldset :disabled="disabled">
-      <slot></slot>
-    </fieldset>
-  </form>
-</template>
+<script lang="ts">
+import { defineComponent, provide, onMounted, watch, nextTick } from 'vue'
+import { injectFormKey } from '@/composables/keys'
 
-<script>
-import { provide, onMounted, watch, nextTick } from 'vue'
+export type Form = {
+  name: string,
+  focus: ()=> void,
+  validate: ()=> boolean,
+  setError: (val: string)=> void,
+}
 
-export default {
-  name: 'XForm',
+export default defineComponent({
   inheritAttrs: false,
+
   props: {
     autoValidate: {
       type: Boolean,
@@ -21,21 +21,20 @@ export default {
       type: Boolean,
       default: true,
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+    disabled: Boolean,
     errors: {
       type: Array,
       default: () => [],
     },
   },
 
-  setup(props, { emit }) {
-    const inputs = []
+  emits: ['submit'],
 
-    provide('form', {
-      registerInput: (name, { focus, validate, setError }) => {
+  setup(props, { emit }) {
+    const inputs: Form[] = []
+
+    provide(injectFormKey, {
+      registerInput: (name: string, focus: ()=> void, validate: ()=> boolean, setError: (val: string)=> void) => {
         const exists = inputs.find((i) => i.name === name)
 
         if (exists) {
@@ -45,11 +44,12 @@ export default {
         }
         else inputs.push({ name, focus, validate, setError })
       },
-      unregisterInput: (name) => {
+      unregisterInput: (name: string) => {
         const index = inputs.findIndex((i) => i.name === name)
 
         inputs.splice(index, 1)
       },
+      isInsideForm: true,
     })
 
     onMounted(() => {
@@ -58,7 +58,7 @@ export default {
 
     watch(() => props.errors, (errors) => {
       nextTick(() => {
-        errors.forEach((error) => {
+        errors.forEach((error: any) => {
           const input = inputs.find((i) => i.name === error.field)
 
           if (input) input.setError(error.msg)
@@ -83,7 +83,7 @@ export default {
       return isFormValid
     }
 
-    const submit = (e) => {
+    const submit = (e: Event) => {
       e.preventDefault()
       e.stopPropagation()
 
@@ -97,5 +97,13 @@ export default {
       submit,
     }
   },
-}
+})
 </script>
+
+<template>
+  <form @submit="submit">
+    <fieldset :disabled="disabled">
+      <slot></slot>
+    </fieldset>
+  </form>
+</template>

@@ -1,8 +1,8 @@
 <template>
-  <document-page :components="['Popover', 'PopoverContainer', 'PopoverItem']" :title="title" :description="description" >
+  <document-page :components="['Popover', 'PopoverContainer']" :title="title" :description="description" >
     <!-- usage  -->
     <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage" expanded>
+    <code-preview :code="snippets.usage">
       <usage-snippet />
     </code-preview>
 

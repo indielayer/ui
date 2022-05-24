@@ -1,28 +1,21 @@
-<template>
-  <component
-    :is="tag"
-    class="inline-block w-full bg-white dark:bg-gray-700 shadow-lg rounded-md border-t border border-gray-200 dark:border-gray-800"
-  >
-    <slot></slot>
-  </component>
-</template>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-<script>
-export default {
-  name: 'XPopoverContainer',
-
+export default defineComponent({
   props: {
     tag: {
       default: 'div',
       type: String,
     },
   },
-
-  created() {
-    if (this.$parent.$options.name !== 'XPopover') {
-      this.$destroy()
-      throw new Error('PopoverContainer must be wrap with Popover')
-    }
-  },
-}
+})
 </script>
+
+<template>
+  <component
+    :is="tag"
+    class="block w-full bg-white dark:bg-gray-700 shadow-lg rounded-md border  border-gray-200 dark:border-gray-800"
+  >
+    <slot></slot>
+  </component>
+</template>

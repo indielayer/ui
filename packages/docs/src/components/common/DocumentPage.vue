@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="p-8 max-w-4xl xl:max-w-7xl mx-auto">
+    <section class="p-4 lg:p-8 max-w-4xl xl:max-w-7xl mx-auto">
       <div class="w-full flex document-page">
         <div class="min-w-0 flex-auto">
           <div class="text-4xl font-semibold">{{ title }}</div>
@@ -148,7 +148,7 @@ export default {
         if (componentOptions.mixins) componentOptions.mixins.forEach((m) => {
           allValidators = {
             ...allValidators,
-            ...m.validator,
+            ...m.validators,
           }
           allProps = {
             ...allProps,
@@ -158,7 +158,7 @@ export default {
 
         allValidators = {
           ...allValidators,
-          ...componentOptions.validator,
+          ...componentOptions.validators,
         }
 
         allProps = {
@@ -167,23 +167,37 @@ export default {
         }
 
         if (Object.keys(allProps).length > 0) {
-          const mappedProps = Object.keys(allProps).map((key) => ({
-            default: allProps[key].default,
-            name: key,
-            required: allProps[key].required,
-            type: Array.isArray(allProps[key].type) ? allProps[key].type.map((type) => type.name) : [allProps[key].type.name],
-            validator: allValidators[key],
-          }))
+          const mappedProps = Object.keys(allProps).map((key) => {
+            const propFrom = allProps[key].type ?? allProps[key]
+            let propDefault = allProps[key].default
+            let propType = []
+
+            if (Array.isArray(propFrom)) {
+              propType = propFrom.map((type) => type.name)
+            } else {
+              propType = [propFrom.name]
+              if (propFrom.name === 'Boolean' && !propDefault) propDefault = false
+            }
+
+            return {
+              name: key,
+              default: propDefault,
+              required: allProps[key].required,
+              validator: allValidators[key],
+              type: propType,
+            }
+          })
 
           properties[component] = { props: mappedProps, ...properties[component] }
         }
 
-        ['events', 'methods', 'slots', 'emits'].forEach((property) => {
+        ['methods', 'slots'].forEach((property) => {
           if (componentOptions[property]) properties[component][property] = Object.keys(componentOptions[property]).map((k) => ({ name: k }))
         })
 
         // vue 3 events
         if (componentOptions['emits']) properties[component]['emits'] = componentOptions['emits'].map((k) => ({ name: k }))
+        if (componentOptions['expose']) properties[component]['methods'] = componentOptions['expose'].map((k) => ({ name: k }))
       })
 
       return properties

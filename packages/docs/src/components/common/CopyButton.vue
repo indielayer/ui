@@ -1,10 +1,9 @@
 <template>
   <x-button
     :icon="icon"
-    size="lg"
-    color="none"
     :class="animation"
-    flat
+    color="primary"
+    size="sm"
     @click="copyText"
   />
 </template>

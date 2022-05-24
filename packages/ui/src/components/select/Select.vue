@@ -1,59 +1,359 @@
+<script lang="ts">
+import { computed, defineComponent, ref, watch, type PropType } from 'vue'
+import { useCommon } from '@/composables/common'
+import { useInputtable } from '@/composables/inputtable'
+import { useInteractive } from '@/composables/interactive'
+
+import { useEventListener } from '@vueuse/core'
+
+import XTag from '@/components/tag/Tag.vue'
+import XMenuItem from '@/components/menu/MenuItem.vue'
+import XSpinner from '@/components/spinner/Spinner.vue'
+import XPopover from '@/components/popover/Popover.vue'
+import XPopoverContainer from '@/components/popover/PopoverContainer.vue'
+
+export type SelectOption = {
+  value: number | string,
+  disabled: boolean,
+  label: string
+}
+
+export default defineComponent({
+  components: {
+    XTag,
+    XMenuItem,
+    XSpinner,
+    XPopover,
+    XPopoverContainer,
+  },
+
+  validators: {
+    ...useCommon.validators(),
+  },
+
+  props: {
+    ...useCommon.props(),
+    ...useInteractive.props(),
+    ...useInputtable.props(),
+    placeholder: String,
+    options: Array as PropType<Array<SelectOption>>,
+    multiple: Boolean,
+    label: String,
+    helper: String,
+    flat: Boolean,
+  },
+
+  emits: useInputtable.emits(),
+
+  setup(props, { emit }) {
+    const elRef = ref<HTMLElement>()
+    const labelRef = ref()
+    const itemsRef = ref()
+    const popoverRef = ref()
+    const selectedIndex = ref<number | undefined>()
+
+    const interactive = useInteractive(elRef)
+
+    const checkIcon = '<path d="M5 13l4 4L19 7" />'
+
+    const selected = computed({
+      get(): any {
+        if (props.multiple) {
+          if (!props.modelValue) return []
+          if (Array.isArray(props.modelValue)) return props.modelValue
+          else return [props.modelValue]
+        }
+
+        return props.modelValue
+      },
+      set(value: string | number | []) {
+        emit('update:modelValue', value)
+      },
+    })
+
+    const internalOptions = computed(() => {
+      if (!props.options || props.options.length === 0) return []
+
+      return props.options.map((option) => {
+        let isActive = false
+
+        if (props.multiple && Array.isArray(selected.value)) {
+          // @ts-ignore
+          isActive = selected.value.includes(option.value)
+        } else {
+          isActive = option.value === selected.value
+        }
+
+        return {
+          value: option.value,
+          label: option.label,
+          active: isActive,
+          disabled: option.disabled,
+          iconRight: isActive ? checkIcon : undefined,
+          onClick: () => handleOptionClick(option.value),
+        }
+      })
+    })
+
+    const labelClasses = computed(() => {
+      if (props.size === 'xs') return 'text-xs'
+      else if (props.size === 'sm') return 'text-sm'
+      else if (props.size === 'lg') return 'text-lg'
+      else if (props.size === 'xl') return 'text-xl'
+
+      return ''
+    })
+
+    const sizeClasses = computed(() => {
+      if (props.size === 'xs') return 'px-2 py-1 text-xs'
+      else if (props.size === 'sm') return 'px-2 py-2 text-sm'
+      else if (props.size === 'lg') return 'px-4 py-3 text-lg'
+      else if (props.size === 'xl') return 'px-5 py-4 text-xl'
+
+      return 'px-3 py-2'
+    })
+
+    const availableOptions = computed(() => props.options?.filter((option) => !option.disabled))
+
+    watch(() => popoverRef.value?.isOpen, () => {
+      if (popoverRef.value?.isOpen && (props.multiple || typeof selectedIndex.value === 'undefined'))
+        findSelectableIndex(-1)
+    })
+
+    watch(selectedIndex, (index) => {
+      if (typeof index !== 'undefined') itemsRef.value[index].$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    })
+
+    function findSelectableIndex(start: number | undefined, direction = 'down') {
+      if (!availableOptions.value || availableOptions.value.length === 0) {
+        selectedIndex.value = undefined
+
+        return
+      }
+
+      if (typeof start === 'undefined') {
+        start = direction === 'down' ? -1 : 1
+      }
+
+      if (direction === 'down') {
+        let next = start + 1
+
+        if (next > internalOptions.value.length - 1) next = 0
+        while (internalOptions.value[next].disabled) {
+          if (++next > internalOptions.value.length - 1) next = 0
+        }
+        selectedIndex.value = next
+      } else {
+        let next = start - 1
+
+        if (next < 0) next = internalOptions.value.length - 1
+        while (internalOptions.value[next].disabled) {
+          if (--next < 0) next = internalOptions.value.length - 1
+        }
+        selectedIndex.value = next
+      }
+    }
+
+    useEventListener(labelRef, 'keydown', handleKeydown)
+
+    function handleKeydown(e: KeyboardEvent) {
+      if (internalOptions.value.length === 0) return
+
+      if (e.code === 'ArrowDown') {
+        e.preventDefault()
+        if (!popoverRef.value.isOpen) {
+          popoverRef.value.open()
+
+          return
+        }
+        findSelectableIndex(selectedIndex.value, 'down')
+      } else if (e.code === 'ArrowUp') {
+        e.preventDefault()
+        if (!popoverRef.value.isOpen) return
+        findSelectableIndex(selectedIndex.value, 'up')
+      } else if (e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault()
+        e.stopPropagation()
+        if (!popoverRef.value.isOpen) {
+          popoverRef.value.open()
+
+          return
+        }
+        if (typeof selectedIndex.value !== 'undefined') {
+          handleOptionClick(internalOptions.value[selectedIndex.value].value)
+          if (!props.multiple) popoverRef.value.close()
+        }
+      } else if (e.code === 'Escape') {
+        e.preventDefault()
+        e.stopPropagation()
+        popoverRef.value.close()
+      } else if (e.code === 'Tab') {
+        popoverRef.value.close()
+      }
+    }
+
+    function handleOptionClick(value: string | number) {
+      const option = props.options?.find((i) => i.value === value)
+
+      if (!option || option.disabled) return
+
+      if (props.multiple) {
+        if (Array.isArray(selected.value)) {
+          // @ts-ignore
+          const index = selected.value.indexOf(value)
+
+          if (index !== -1) selected.value.splice(index, 1)
+          else {
+            // @ts-ignore
+            selected.value.push(value)
+            emit('update:modelValue', selected.value)
+          }
+        } else {
+          // @ts-ignore
+          selected.value = [value]
+        }
+      } else {
+        selected.value = value
+      }
+    }
+
+    function isEmpty(value: string | number | []) {
+      if (typeof value === 'undefined' || value === null) return true
+      if (value === '') return true
+      if (Array.isArray(value) && value.length === 0) return true
+      if (!Array.isArray(value) && typeof value === 'object' && Object.keys(value).length === 0) return true
+
+      return false
+    }
+
+    function handleRemove(e: Event, value: string) {
+      e.stopPropagation()
+
+      // find value in selected and remove it
+      // @ts-ignore
+      const index = selected.value.indexOf(value)
+
+      if (index !== -1) {
+        // @ts-ignore
+        selected.value.splice(index, 1)
+        emit('update:modelValue', selected.value)
+      }
+    }
+
+    function getLabel(value: string | number | []) {
+      const option = props.options?.find((i) => i.value === value)
+
+      if (option) return option.label
+
+      return ''
+    }
+
+    return {
+      ...interactive,
+      ...useInputtable(props, { focus: interactive.focus, emit, withListeners: false }),
+      elRef,
+      labelRef,
+      itemsRef,
+      popoverRef,
+      selected,
+      selectedIndex,
+      internalOptions,
+      labelClasses,
+      sizeClasses,
+      isEmpty,
+      getLabel,
+      handleRemove,
+    }
+  },
+})
+</script>
+
 <template>
-  <label class="inline-block mb-1 relative pb-2">
+  <label
+    ref="labelRef"
+    tabindex="0"
+    class="group relative inline-block align-bottom text-left focus:outline-none"
+    :class="[{ 'mb-3': isInsideForm }]"
+  >
     <p
       v-if="label"
       class="font-medium text-gray-800 dark:text-gray-200 mb-1"
-      :class="{
-        'text-xs': size === 'xs',
-        'text-sm': size === 'sm',
-        'text-lg': size === 'lg',
-        'text-xl': size === 'xl',
-      }"
+      :class="labelClasses"
       v-text="label"
     ></p>
-
     <div class="relative">
+      <x-popover ref="popoverRef" block :disabled="disabled || loading" :dismiss-on-click="!multiple">
+        <div
+          class="w-full border border-gray-300 hover:border-gray-400 dark:border-gray-700 pr-8 group-focus:border-primary-500 dark:group-focus:border-primary-500 transition-colors duration-150 ease-in-out rounded-md shadow-sm"
+          :class="[
+            sizeClasses,
+            disabled
+              ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200',
+            {
+              // error
+              'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
+            },
+          ]"
+        >
+          <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+            <x-tag
+              v-for="value in selected"
+              :key="value"
+              size="sm"
+              class="mr-1"
+              removable
+              @remove="(e) => { handleRemove(e, value) }"
+            >{{ getLabel(value) }}</x-tag>
+          </template>
+          <template v-else-if="!multiple && !isEmpty(selected)">
+            {{ getLabel(selected) }}
+          </template>
+
+          <template v-else>
+            <div
+              v-if="placeholder"
+              class="text-gray-400 dark:text-gray-500"
+            >
+              {{ placeholder }}
+            </div>
+            <div v-else>&nbsp;</div>
+          </template>
+        </div>
+
+        <template #content>
+          <x-popover-container class="py-1 max-h-72 overflow-scroll">
+            <template v-if="internalOptions.length > 0">
+              <x-menu-item
+                v-for="(item, index) in internalOptions"
+                :key="index"
+                ref="itemsRef"
+                :item="item"
+                :size="size"
+                :disabled="item.disabled"
+                :selected="index === selectedIndex"
+                color="primary"
+                filled
+              />
+            </template>
+            <div v-else class="px-2 text-center text-gray-400">
+              No options
+            </div>
+          </x-popover-container>
+        </template>
+      </x-popover>
+
       <select
-        ref="focusRef"
+        ref="elRef"
         v-model="selected"
-        class="block appearance-none w-full border border-gray-300 dark:border-gray-700 pr-8 rounded-form leading-tight
-          focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out"
-        :class="[
-          disabled
-            ? 'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 cursor-not-allowed'
-            : 'bg-white dark:bg-gray-900',
-          {
-            // shadow
-            'shadow': !flat,
-
-            // size
-            'py-1': size === 'auto',
-            'px-2 py-1 text-xs': size === 'xs',
-            'px-2 py-1 text-sm': size === 'sm',
-            'px-3 py-2': !['auto', 'xs', 'sm', 'lg', 'xl'].includes(size),
-            'px-4 py-3 text-lg': size === 'lg',
-            'px-6 py-6 text-xl': size === 'xl',
-          },
-          {
-            'text-gray-400 dark:text-gray-500': modelValue === '' || modelValue === null,
-
-            // error
-            'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
-          },
-        ]"
-        :disabled="disabled || loading"
+        class="hidden"
         :name="name"
+        :disabled="disabled || loading"
+        :multiple="multiple"
         :readonly="readonly"
         :value="modelValue"
         v-on="inputListeners"
       >
-        <option
-          v-if="placeholder"
-          disabled
-          value=""
-        >
-          {{ placeholder }}
-        </option>
         <option
           v-for="(option, index) in options"
           :key="index"
@@ -62,7 +362,6 @@
         >
           {{ option.label }}
         </option>
-        <slot></slot>
       </select>
 
       <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
@@ -71,11 +370,12 @@
           v-else
           class="stroke-2"
           :class="[
-            disabled ? 'text-gray-600 dark:text-gray-400': 'text-gray-700 dark:text-gray-300',
+            disabled ? 'text-gray-600 dark:text-gray-500': 'text-gray-500 dark:text-gray-400',
             {
               'h-3 w-3': size === 'sm' || size === 'xs',
-              'h-4 w-4': !['xs', 'sm', 'xl'].includes(size),
-              'h-5 w-5': size === 'xl',
+              'h-5 w-5': !size || !['xs', 'sm', 'lg', 'xl'].includes(size),
+              'h-6 w-6': size === 'lg',
+              'h-7 w-7': size === 'xl',
             }
           ]"
           viewBox="0 0 24 24"
@@ -84,72 +384,12 @@
           stroke-linecap="round"
           fill="none"
         >
-          <path d="M18 8L12 2L6 8" />
-          <path d="M18 16L12 22L6 16" />
+          <path d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
         </svg>
       </div>
     </div>
 
     <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-else-if="helper" class="text-sm text-gray-500 mt-1" v-text="helper"></p>
   </label>
 </template>
-
-<script>
-import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
-import XSpinner from '../spinner/Spinner.vue'
-
-export default {
-  name: 'XSelect',
-  components: {
-    XSpinner,
-  },
-
-  validator: {
-    ...withValidator(),
-  },
-
-  props: {
-    ...withProps(),
-
-    placeholder: {
-      type: String,
-      default: null,
-    },
-
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
-    label: {
-      type: String,
-      default: null,
-    },
-
-    options: {
-      type: Array,
-      default: null,
-    },
-  },
-
-  emits: withEmits(false),
-
-  setup(props, { attrs, emit }) {
-    return {
-      ...useInputtable(props, { attrs, emit, useListeners: false }),
-    }
-  },
-
-  computed: {
-    selected: {
-      get() {
-        return this.modelValue
-      },
-
-      set(val) {
-        this.$emit('update:modelValue', val)
-      },
-    },
-  },
-}
-</script>

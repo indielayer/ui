@@ -1,58 +1,127 @@
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+import { useCSS } from '@/composables/css'
+import { useCommon } from '@/composables/common'
+import { useColors } from '@/composables/colors'
+import { useInputtable } from '@/composables/inputtable'
+import { useInteractive } from '@/composables/interactive'
+
+import XSpinner from '@/components/spinner/Spinner.vue'
+
+export default defineComponent({
+  components: {
+    XSpinner,
+  },
+
+  validators: {
+    ...useCommon.validators(),
+  },
+
+  props: {
+    ...useCommon.props(),
+    ...useColors.props('primary'),
+    ...useInteractive.props(),
+    ...useInputtable.props(),
+    id: String,
+    label: String,
+    glow: Boolean,
+  },
+
+  emits: useInputtable.emits(false),
+
+  setup(props, { emit }) {
+    const elRef = ref<HTMLElement>()
+    const checked = computed({
+      get(): boolean {
+        return !!props.modelValue
+      },
+      set(val: boolean) {
+        emit('update:modelValue', val)
+      },
+    })
+
+    const css = useCSS()
+    const colors = useColors()
+
+    const styles = computed(() => {
+      const color = colors.getPalette(props.color)
+
+      return css.variables({
+        bg: color[500],
+        dark: {
+          bg: color[600],
+        },
+      })
+    })
+
+    const interactive = useInteractive(elRef)
+
+    return {
+      ...interactive,
+      ...useInputtable(props, { focus: interactive.focus, emit, withListeners: false }),
+      elRef,
+      checked,
+      styles,
+    }
+  },
+})
+</script>
+
 <template>
   <label
-    class="inline-block mb-1 relative pb-2"
+    class="inline-block mb-1 pb-2"
     :class="[!disabled ? 'cursor-pointer' : 'cursor-not-allowed']"
   >
     <div class="flex items-center">
       <div
-        class="rounded-full transition-colors duration-300"
-        :class="[
-          {
-            // shadow
-            'border shadow': !flat,
-            [`shadow-lg shadow-${color}-500/50`]: !flat && glow && modelValue,
-
-            'w-8': size === 'sm' || size === 'xs',
-            'w-10': !['xs', 'sm', 'lg', 'xl'].includes(size),
-            'w-12': size === 'lg',
-            'w-14': size === 'xl',
-            'bg-gray-300 dark:bg-gray-600': disabled && !checked,
-            'bg-gray-400 dark:bg-gray-400': disabled && checked,
-            'bg-gray-200 dark:bg-gray-600': !disabled && !checked,
-            [`bg-${color}-200  border-${color}-200`]: !disabled && checked,
-          }
-        ]"
+        class="flex items-center rounded-full transition-colors duration-300 border-[3px] shrink-0 border-transparent"
+        :style="styles"
+        :class="{
+          [`shadow-lg shadow-${color}-500/50`]: glow && modelValue,
+          'bg-gray-300 dark:bg-gray-500': !disabled && !checked && !loading,
+          'bg-gray-100 dark:bg-gray-700': disabled || loading,
+          'bg-[color:var(--x-bg)]': !disabled && checked,
+        }"
       >
-        <input
-          :id="id"
-          v-model="checked"
-          :aria-checked="checked ? 'true' : 'false'"
-          :aria-disabled="disabled ? 'true' : null"
-          type="checkbox"
-          class="hidden"
-          :disabled="disabled || loading"
-          :name="name"
-          :required="required"
-          :value="modelValue"
-        />
-
-        <x-spinner v-if="loading" :size="size" :class="{'translate-x-full': checked}" />
         <div
-          v-else
-          class="rounded-full shadow transform transition duration-300 flex-shrink-0"
+          class="relative shrink-0"
           :class="[
             {
-              'h-4 w-4': size === 'sm' || size === 'xs',
-              'h-5 w-5': !['xs', 'sm', 'lg', 'xl'].includes(size),
-              'h-6 w-6': size === 'lg',
-              'h-7 w-7': size === 'xl',
-              'translate-x-full': checked,
-              'bg-gray-200 dark:bg-gray-200': disabled,
-              'bg-white': !disabled && !checked,
-              [`bg-${color}-500`]: !disabled && checked,
-            },
+              'w-6': size === 'sm' || size === 'xs',
+              'w-8': !size || !['xs', 'sm', 'lg', 'xl'].includes(size),
+              'w-10': size === 'lg',
+              'w-12': size === 'xl',
+            }
           ]"
-        ></div>
+        >
+          <input
+            :id="id"
+            ref="elRef"
+            v-model="checked"
+            :aria-checked="checked ? 'true' : 'false'"
+            :aria-disabled="disabled ? 'true' : undefined"
+            type="checkbox"
+            class="hidden"
+            :disabled="disabled || loading"
+            :name="name"
+            :required="required"
+            :value="modelValue"
+          />
+          <div
+            class="rounded-full shadow transform transition duration-300 flex-shrink-0"
+            :class="[
+              {
+                'h-3 w-3': size === 'sm' || size === 'xs',
+                'h-4 w-4': !size || !['xs', 'sm', 'lg', 'xl'].includes(size),
+                'h-5 w-5': size === 'lg',
+                'h-6 w-6': size === 'xl',
+                'translate-x-full': checked,
+                'bg-gray-shadow-md': !disabled
+              },
+              [disabled ? 'bg-gray-50 dark:bg-gray-800' : 'bg-white dark:bg-gray-800']
+            ]"
+          ></div>
+        </div>
       </div>
       <span
         v-if="label"
@@ -66,63 +135,8 @@
         v-text="label"
       >
       </span>
+      <x-spinner v-if="loading" :size="size" class="ml-1" />
     </div>
     <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
   </label>
 </template>
-
-<script>
-import { withProps, withValidator, withEmits, useInputtable } from '../../composables/inputtable'
-import XSpinner from '../spinner/Spinner.vue'
-
-export default {
-  name: 'XToggle',
-
-  components: {
-    XSpinner,
-  },
-
-  validator: {
-    ...withValidator(),
-  },
-
-  props: {
-    ...withProps(),
-
-    id: {
-      type: String,
-      default: null,
-    },
-
-    label: {
-      type: String,
-      default: null,
-    },
-
-    glow: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  emits: withEmits(false),
-
-  setup(props, { attrs, emit }) {
-    return {
-      ...useInputtable(props, { attrs, emit, useListeners: false }),
-    }
-  },
-
-  computed: {
-    checked: {
-      get() {
-        return this.modelValue
-      },
-
-      set(val) {
-        this.$emit('update:modelValue', val)
-      },
-    },
-  },
-}
-</script>
