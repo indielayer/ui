@@ -53,13 +53,13 @@ app.use(UI, { prefix: 'X' })
 
 // or
 import {
-  Input,
-  Button,
+  XButton,
+  XInput,
   // ...
 } from '@indielayer/ui'
 
-app.component('XButton', Button)
-app.component('XInput', Input)
+app.component('XButton', XButton)
+app.component('XInput', XInput)
 ```
 
 #### Load the module in your Nuxt 3 application
