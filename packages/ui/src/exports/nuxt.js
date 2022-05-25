@@ -1,5 +1,4 @@
-import { defineNuxtModule } from '@nuxt/kit'
-import UI from '@indielayer/ui'
+import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
 
 export default defineNuxtModule({
   meta: {
@@ -13,21 +12,19 @@ export default defineNuxtModule({
     prefix: 'X',
   },
   async setup(moduleOptions, nuxt) {
-    // plugin install
-    nuxt.vueApp.use(UI, { prefix: 'X' })
+    nuxt.options.css.push('@indielayer/ui/styles')
 
-    // nuxt install
+    // Create resolver to resolve relative paths
+    const { resolve } = createResolver(import.meta.url)
+
+    // plugin install
+    addPlugin(resolve('./nuxt.plugin.js'))
+
+    //// nuxt install
     // nuxt.hook('components:dirs', (dirs) => {
     //   dirs.push({
     //     path: join(__dirname, 'components'),
     //     prefix: options?.prefix ? options?.prefix : 'X',
     //   })
-
-    //   // temp import XTab - would be XTabsTab
-    //   dirs.push({
-    //     path: join(__dirname, 'components/tabs'),
-    //     prefix: options?.prefix ? options?.prefix : 'X',
-    //   })
-    // })
   },
 })

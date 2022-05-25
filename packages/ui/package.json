@@ -31,7 +31,10 @@
       "require": "./lib/index.cjs.js"
     },
     "./nuxt": "./lib/nuxt.js",
+    "./style": "./lib/style.css",
     "./styles": "./lib/style.css",
+    "./nuxt.plugin": "./lib/nuxt.plugin.js",
+    "./nuxt.plugin.js": "./lib/nuxt.plugin.js",
     "./tailwind.preset": "./lib/tailwind.preset.js",
     "./tailwind.preset.js": "./lib/tailwind.preset.js"
   },

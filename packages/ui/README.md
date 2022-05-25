@@ -41,7 +41,7 @@ module.exports = {
 ```
 
 ### 3. Load the plugin
-#### Load the plugin in your vue 3 application
+#### Load the plugin in your Vue 3 application
 
 ```javascript
 import { createApp } from 'vue'
@@ -62,18 +62,21 @@ app.component('XButton', Button)
 app.component('XInput', Input)
 ```
 
-#### Load the module in your nuxt 3 application
+#### Load the module in your Nuxt 3 application
 
 ```javascript
-import { defineNuxtConfig } from 'nuxt3'
+import { defineNuxtConfig } from 'nuxt'
 
 export default defineNuxtConfig({
   css: ["~/assets/css/tailwind.css"],
-  buildModules: ['@indielayer/ui/nuxt'],
+  modules: [
+    '@indielayer/ui/nuxt'
+  ],
   build: {
     postcss: {
       postcssOptions: {
         plugins: {
+          'tailwindcss/nesting': {},
           tailwindcss: {},
           autoprefixer: {},
         },
