@@ -28,13 +28,13 @@
 
   <x-button class="mt-10" @click="breakpoint = !breakpoint">Toggle breakpoint</x-button>
   <x-drawer v-model="breakpoint" position="left" breakpoint="md">
-    eu só sou uma drawer quando o ecrã for piqueno
+    drawer with breakpoint
   </x-drawer>
 
   <x-button class="mt-10" @click="contained = !contained">Toggle contained</x-button>
   <div id="container" ref="el" class="relative h-96 overflow-hidden bg-slate-50 dark:bg-slate-800 border rounded-md my-2">
     <x-drawer v-model="contained" position="left" to="#container">
-      eu só sou uma drawer quando o ecrã for piqueno
+      drawer with breakpoint
     </x-drawer>
   </div>
 
