@@ -7,7 +7,7 @@ export default {
     * https://feathericons.com/
     */
     app.provide(injectIconsKey, {
-      'chevron-down': '<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />',
+      'chevron-down': '<path d="M19 9l-7 7-7-7" />',
       'align-justify': '<line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line>',
       'align-left': '<line x1="17" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="17" y1="18" x2="3" y2="18"></line>',
       'align-right': '<line x1="21" y1="10" x2="7" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="7" y2="18"></line>',
@@ -23,7 +23,6 @@ export default {
       'chevron-left': '<polyline points="15 18 9 12 15 6"></polyline>',
       'chevron-right': '<polyline points="9 18 15 12 9 6"></polyline><',
       'chevron-up': '<polyline points="18 15 12 9 6 15"></polyline>',
-      'chevron-down': '<polyline points="6 9 12 15 18 9"></polyline>',
       plus: '<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>',
       'check-circle': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
       'x-circle': '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',

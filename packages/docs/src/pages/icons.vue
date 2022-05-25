@@ -36,21 +36,25 @@ export default {
   data() {
     return {
       iconExample: `// plugins/icons.js
+import { injectIconsKey } from '@indielayer/ui'
+
 export default {
   install: (app) => {
-    // define $icons globally
-    app.config.globalProperties.$icons = {
+    // inject icons globally
+    app.provide(injectIconsKey, {
       // icons
-    }
+    })
   }
 }`,
       iconExample1: `// plugins/icons.js
+import { injectIconsKey } from '@indielayer/ui'
+
 export default {
   install: (app) => {
-    // define $icons globally
-    app.config.globalProperties.$icons = {
+    // inject icons globally
+    app.provide(injectIconsKey, {
       check: '<polyline points="20 6 9 17 4 12"></polyline>',
-    }
+    })
   }
 }
 
