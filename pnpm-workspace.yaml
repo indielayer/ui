@@ -1,0 +1,7 @@
+packages:
+  - 'packages/ui'
+  - 'packages/docs'
+  - 'packages/create-ui'
+  - 'packages/create-ui/template/base'
+  - 'packages/create-ui/template/config/**'
+  - 'packages/create-ui/template/tsconfig/**'

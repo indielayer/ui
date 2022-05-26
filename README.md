@@ -10,6 +10,11 @@
 
 - [📖 Documentation](https://indielayer.com/ui)
 
+### Quickstart
+```bash
+npm init @indielayer/ui
+```
+
 ## Getting Started
 
 > [tailwindcss](https://tailwindcss.com) version >= 3.0 must be already present in your application
@@ -19,6 +24,7 @@
 ```bash
 # using npm
 npm install @indielayer/ui --save-dev
+
 # using yarn
 yarn add @indielayer/ui --dev
 ```

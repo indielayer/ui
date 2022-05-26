@@ -13,7 +13,7 @@ export default {
 </script>
 
 <template>
-<div class="p-10">
-  hello
-</div>
+  <div class="p-10">
+    hello
+  </div>
 </template>

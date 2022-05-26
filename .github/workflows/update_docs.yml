@@ -8,24 +8,32 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [16]
 
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.PAT }}
 
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - uses: pnpm/action-setup@v2.0.1
         with:
-          node-version: '14.x'
+          version: 7.0.0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: yarn bootstrap
+        run: pnpm install
 
       - name: Build documentation
         run: |
-          yarn build:docs
+          pnpm build:docs
           cp ./packages/docs/dist/index.html ./packages/docs/dist/404.html
 
       - name: Update pages

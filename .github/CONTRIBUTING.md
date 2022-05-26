@@ -18,12 +18,12 @@ Hi! I'm really excited that you are interested in contributing. Before submittin
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 8+** and [yarn](https://yarnpkg.com/en/docs/install).
+You will need [Node.js](http://nodejs.org) **version 14+** and [pnpm](https://pnpm.io/).
 
 After cloning the repo, run:
 
 ``` bash
-$ yarn bootstrap # install the dependencies of the project
+$ pnpm i # install the dependencies of the project
 ```
 
 ### Committing Changes
@@ -34,11 +34,11 @@ Commit messages should follow the [commit message convention](./COMMIT_CONVENTIO
 
 ``` bash
 # watch and auto re-build ui
-$ yarn dev
+$ pnpm dev
 
 # watch and auto re-run docs
-$ yarn docs
+$ pnpm run docs
 
 # build all dist files
-$ npm run build
+$ pnpm build
 ```
