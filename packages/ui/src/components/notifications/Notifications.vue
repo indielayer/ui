@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, provide, type PropType, watch } from 'vue'
+import { defineComponent, ref, provide, watch, type PropType } from 'vue'
 import { injectNotificationKey } from '@/composables/keys'
 import { useColors } from '@/composables/colors'
 import { useCSS } from '@/composables/css'
@@ -24,7 +24,7 @@ export type NotificationEvent = {
   action?: NotificationAction,
   iconColor?: string,
   title?: string,
-  style?: string | object,
+  style?: string,
   message?: string,
   timeout?: number,
   removable?: boolean,
@@ -174,7 +174,7 @@ export default defineComponent({
       const color = colors.getPalette(merged.iconColor)
       const colorAction = colors.getPalette(merged.action?.color || 'primary')
 
-      merged.style = css.variables({
+      const cssVariables = css.variables({
         icon: color[400],
         action: colorAction[400],
         hover: {
@@ -188,6 +188,8 @@ export default defineComponent({
           },
         },
       })
+
+      merged.style = Object.keys(cssVariables).map((key) => `${key}: ${cssVariables[key]}`).join(';')
 
       notifications.value.push(merged)
 
@@ -304,7 +306,7 @@ export default defineComponent({
               v-if="notification.removable"
               :icon="removeIcon"
               class="text-gray-400 hover:text-gray-500 ml-3 shrink-0 cursor-pointer"
-              @click="remove(notification)"
+              @click="() => {remove(notification)}"
             />
           </div>
         </li>

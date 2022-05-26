@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, watch, computed } from 'vue'
+import { defineComponent, ref, watch, computed, type StyleValue } from 'vue'
 import { useCSS } from '@/composables/css'
 import { useCommon } from '@/composables/common'
 import { useColors } from '@/composables/colors'
@@ -110,7 +110,7 @@ export default defineComponent({
         }
       }
 
-      return vars
+      return vars as StyleValue
     })
 
     function toggle() {
