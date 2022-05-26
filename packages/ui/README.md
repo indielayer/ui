@@ -10,6 +10,11 @@
 
 - [📖 Documentation](https://indielayer.com/ui)
 
+### Quickstart
+```bash
+npm init @indielayer/ui
+```
+
 ## Getting Started
 
 > [tailwindcss](https://tailwindcss.com) version >= 3.0 must be already present in your application
@@ -19,6 +24,7 @@
 ```bash
 # using npm
 npm install @indielayer/ui --save-dev
+
 # using yarn
 yarn add @indielayer/ui --dev
 ```
@@ -30,14 +36,20 @@ yarn add @indielayer/ui --dev
 const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
+  darkMode: 'class',
   // load indielayer ui presets
   presets: [indielayer()],
   // allow PurgeCSS to analyze components
   content: [
+    './index.html',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
     'node_modules/@indielayer/ui/**/*',
-    './src/**/*.vue',
   ],
-};
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
 ```
 
 ### 3. Load the plugin
@@ -46,6 +58,7 @@ module.exports = {
 ```javascript
 import { createApp } from 'vue'
 import UI from '@indielayer/ui'
+import '@indielayer/ui/styles'
 
 const app = createApp(App)
 
