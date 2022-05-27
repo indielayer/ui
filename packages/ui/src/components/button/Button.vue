@@ -12,6 +12,8 @@ import XIcon from '@/components/icon/Icon.vue'
 export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined
 
 export default defineComponent({
+  name: 'XButton',
+
   components: {
     XIcon,
     XSpinner,

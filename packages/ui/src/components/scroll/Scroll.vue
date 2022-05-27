@@ -3,6 +3,8 @@ import { defineComponent, ref, toRefs } from 'vue'
 import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
 
 export default defineComponent({
+  name: 'XScroll',
+
   props: {
     shadow: Boolean,
     horizontal: Boolean,

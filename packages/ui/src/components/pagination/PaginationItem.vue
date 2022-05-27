@@ -5,6 +5,8 @@ import { useCommon } from '@/composables/common'
 import XButton from '@/components/button/Button.vue'
 
 export default defineComponent({
+  name: 'XPaginationItem',
+
   components: {
     XButton,
   },

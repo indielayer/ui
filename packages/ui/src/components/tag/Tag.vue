@@ -5,6 +5,8 @@ import { useColors } from '@/composables/colors'
 import { useCommon } from '@/composables/common'
 
 export default defineComponent({
+  name: 'XTag',
+
   props: {
     ...useCommon.props(),
     ...useColors.props('gray'),

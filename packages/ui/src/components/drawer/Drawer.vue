@@ -5,6 +5,8 @@ import { breakpointsTailwind, SwipeDirection, useBreakpoints, useEventListener, 
 import XScroll from '@/components/scroll/Scroll.vue'
 
 export default defineComponent({
+  name: 'XDrawer',
+
   components: {
     XScroll,
   },

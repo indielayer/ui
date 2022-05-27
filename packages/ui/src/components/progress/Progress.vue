@@ -8,6 +8,8 @@ import { useColors } from '@/composables/colors'
 // }
 
 export default defineComponent({
+  name: 'XProgress',
+
   // validators,
 
   props: {

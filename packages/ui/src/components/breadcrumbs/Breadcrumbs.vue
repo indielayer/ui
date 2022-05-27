@@ -12,6 +12,8 @@ export type BreadcrumbItem = {
 }
 
 export default defineComponent({
+  name: 'XBreadcrumbs',
+
   props: {
     items: Array as PropType<Array<BreadcrumbItem>>,
     icon: String,

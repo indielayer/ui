@@ -11,6 +11,8 @@ import { useEventListener } from '@vueuse/core'
 import XProgress from '@/components/progress/Progress.vue'
 
 export default defineComponent({
+  name: 'XSlider',
+
   components: {
     XProgress,
   },

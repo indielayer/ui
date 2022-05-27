@@ -21,6 +21,8 @@ const validators = {
 }
 
 export default defineComponent({
+  name: 'XTableCell',
+
   validators,
 
   props: {

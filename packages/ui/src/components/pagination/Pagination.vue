@@ -7,6 +7,8 @@ import XButton from '@/components/button/Button.vue'
 import XPaginationItem from './PaginationItem.vue'
 
 export default defineComponent({
+  name: 'XPagination',
+
   components: {
     XIcon,
     XButton,

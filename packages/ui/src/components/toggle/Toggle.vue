@@ -9,6 +9,8 @@ import { useInteractive } from '@/composables/interactive'
 import XSpinner from '@/components/spinner/Spinner.vue'
 
 export default defineComponent({
+  name: 'XToggle',
+
   components: {
     XSpinner,
   },

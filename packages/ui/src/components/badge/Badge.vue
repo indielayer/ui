@@ -5,6 +5,8 @@ import { useCommon } from '@/composables/common'
 import { useColors } from '@/composables/colors'
 
 export default defineComponent({
+  name: 'XBadge',
+
   props: {
     ...useCommon.props(),
     ...useColors.props('primary'),

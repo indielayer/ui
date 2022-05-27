@@ -7,6 +7,8 @@ import { useCSS } from '@/composables/css'
 import XIcon from '@/components/icon/Icon.vue'
 
 export default defineComponent({
+  name: 'XAvatar',
+
   components: {
     XIcon,
   },

@@ -9,6 +9,8 @@ import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 import XScroll from '@/components/scroll/Scroll.vue'
 
 export default defineComponent({
+  name: 'XTabs',
+
   components: {
     XScroll,
   },

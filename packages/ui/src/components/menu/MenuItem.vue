@@ -8,6 +8,8 @@ import XSpinner from '@/components/spinner/Spinner.vue'
 import XLink from '@/components/link/Link.vue'
 
 export default defineComponent({
+  name: 'XMenuItem',
+
   components: {
     XSpinner,
     XLink,

@@ -5,6 +5,8 @@ import { useCommon } from '@/composables/common'
 import XIcon from '@/components/icon/Icon.vue'
 
 export default defineComponent({
+  name: 'XSpinner',
+
   components: {
     XIcon,
   },

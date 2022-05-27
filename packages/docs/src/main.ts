@@ -1,8 +1,8 @@
 import '@indielayer/ui/styles'
 import { createApp } from 'vue'
+import UI from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
-import UI from '@indielayer/ui'
 
 // plugins
 import icons from './plugins/icons'
@@ -19,9 +19,18 @@ import './assets/css/tailwind.css'
 
 const app = createApp(App)
 
+// const UI = createUI({
+//   prefix: 'X',
+//   components: [XButton],
+//   colors: {
+//     primary: colors.amber,
+//   },
+// })
+
+app.use(UI)
+
 app.use(router)
 app.use(icons)
-app.use(UI, { prefix: 'X' })
 
 app.component('CopyButton', CopyButton)
 app.component('CodeSnippet', CodeSnippet)

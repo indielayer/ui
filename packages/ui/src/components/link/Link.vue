@@ -4,6 +4,8 @@ import { useColors } from '@/composables/colors'
 import { useCSS } from '@/composables/css'
 
 export default defineComponent({
+  name: 'XLink',
+
   props: {
     ...useColors.props(),
     tag: {

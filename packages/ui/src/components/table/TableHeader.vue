@@ -10,6 +10,8 @@ const validators = {
 }
 
 export default defineComponent({
+  name: 'XTableHeader',
+
   validators,
 
   props: {

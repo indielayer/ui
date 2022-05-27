@@ -6,6 +6,8 @@ const validators = {
 }
 
 export default defineComponent({
+  name: 'XTableRow',
+
   validators,
 
   props: {

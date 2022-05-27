@@ -8,6 +8,8 @@ const validators = {
 }
 
 export default defineComponent({
+  name: 'XPopover',
+
   validators,
 
   props: {

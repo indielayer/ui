@@ -5,6 +5,8 @@ import XPopover from '@/components/popover/Popover.vue'
 import XPopoverContainer from '@/components/popover/PopoverContainer.vue'
 
 export default defineComponent({
+  name: 'XTooltip',
+
   components: {
     XPopover,
     XPopoverContainer,

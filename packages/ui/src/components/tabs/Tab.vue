@@ -4,6 +4,8 @@ import { injectTabKey } from '@/composables/keys'
 import { useCommon } from '@/composables/common'
 
 export default defineComponent({
+  name: 'XTab',
+
   props: {
     ...useCommon.props(),
     value: {

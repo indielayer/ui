@@ -1,4 +1,6 @@
-import { isValidColor, calculateColors, tailwindColors, colorShade, setOpacity } from './colors-utils'
+import { inject } from 'vue'
+import { injectColorsKey } from './keys'
+import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-utils'
 
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 
@@ -17,11 +19,11 @@ export interface ColorPalette {
 
 export type ColorLibrary = Record<string, ColorPalette>
 
-let customColors: ColorLibrary = {}
 const colorCache: ColorLibrary = {}
 
 export const useColors = () => {
-  if (Object.keys(customColors).length === 0) customColors = calculateColors()
+  const customColors = inject(injectColorsKey)
+  // if (Object.keys(customColors).length === 0) customColors = calculateColors()
 
   const getTailwindColor = (color: string) => tailwindColors[color]
 

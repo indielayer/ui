@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: 'XCard',
+
   props: {
     tag: {
       type: String,

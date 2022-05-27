@@ -17,6 +17,8 @@ export type Header = {
 }
 
 export default defineComponent({
+  name: 'XTable',
+
   components: {
     TableHead,
     TableHeader,

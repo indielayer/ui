@@ -2,6 +2,8 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
+  name: 'XContainer',
+
   props: {
     tag: {
       type: String,

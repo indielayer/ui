@@ -5,6 +5,8 @@ import { useInputtable } from '@/composables/inputtable'
 import { useInteractive } from '@/composables/interactive'
 
 export default defineComponent({
+  name: 'XInput',
+
   validators: {
     ...useCommon.validators(),
   },

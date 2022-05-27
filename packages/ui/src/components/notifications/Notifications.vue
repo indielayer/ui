@@ -33,6 +33,8 @@ export type NotificationEvent = {
 }
 
 export default defineComponent({
+  name: 'XNotifications',
+
   components: {
     XIcon,
   },

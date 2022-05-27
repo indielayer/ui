@@ -6,6 +6,8 @@ import { useInputtable } from '@/composables/inputtable'
 import { useInteractive } from '@/composables/interactive'
 
 export default defineComponent({
+  name: 'XTextarea',
+
   validators: {
     ...useCommon.validators(),
   },

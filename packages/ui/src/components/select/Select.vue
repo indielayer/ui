@@ -19,6 +19,8 @@ export type SelectOption = {
 }
 
 export default defineComponent({
+  name: 'XSelect',
+
   components: {
     XTag,
     XMenuItem,

@@ -6,6 +6,8 @@ import { onClickOutside, useEventListener } from '@vueuse/core'
 import XScroll from '@/components/scroll/Scroll.vue'
 
 export default defineComponent({
+  name: 'XModal',
+
   components: {
     XScroll,
   },

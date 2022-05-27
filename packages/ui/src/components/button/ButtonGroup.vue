@@ -6,6 +6,8 @@ import { useInteractive } from '@/composables/interactive'
 import { injectButtonGroupKey } from '@/composables/keys'
 
 export default defineComponent({
+  name: 'XButtonGroup',
+
   validators: {
     ...useCommon.validators(),
   },

@@ -9,6 +9,8 @@ import { useInputtable } from '@/composables/inputtable'
 import XSpinner from '@/components/spinner/Spinner.vue'
 
 export default defineComponent({
+  name: 'XCheckbox',
+
   components: {
     XSpinner,
   },

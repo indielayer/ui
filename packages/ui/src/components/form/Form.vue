@@ -10,6 +10,8 @@ export type Form = {
 }
 
 export default defineComponent({
+  name: 'XForm',
+
   inheritAttrs: false,
 
   props: {

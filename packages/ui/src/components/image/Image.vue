@@ -4,6 +4,8 @@ import { defineComponent, watch, ref } from 'vue'
 const fallback = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
 export default defineComponent({
+  name: 'XImage',
+
   props: {
     src: String,
   },
