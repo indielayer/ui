@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useCSS } from '@/composables/css'
 import { useCommon } from '@/composables/common'
 import { useColors } from '@/composables/colors'
 import { useInputtable } from '@/composables/inputtable'
@@ -14,7 +15,6 @@ export default defineComponent({
 
   props: {
     ...useCommon.props(),
-    ...useColors.props('primary'),
     ...useInteractive.props(),
     ...useInputtable.props(),
     helper: String,
@@ -59,6 +59,11 @@ export default defineComponent({
       setTimeout(resize)
     })
 
+    const css = useCSS('textarea')
+    const colors = useColors()
+    const color = colors.getPalette('primary')
+    const style = css.get('border', color[500])
+
     function onInput() {
       resize()
     }
@@ -83,6 +88,7 @@ export default defineComponent({
       ...interactive,
       ...useInputtable(props, { focus: interactive.focus, emit }),
       elRef,
+      style,
       onInput,
       onEnter,
     }
@@ -109,7 +115,10 @@ export default defineComponent({
 
     <textarea
       ref="elRef"
-      class="appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out border-gray-300 dark:border-gray-700 resize-none overflow-hidden border shadow-sm rounded-md"
+      class="appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors duration-150 ease-in-out border-gray-300 dark:border-gray-700 resize-none overflow-hidden border shadow-sm rounded-md
+      focus:border-[color:var(--x-textarea-border)]
+      "
+      :style="style"
       :class="[
         disabled ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200',
         {
@@ -122,7 +131,7 @@ export default defineComponent({
         },
         {
           // error
-          'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
+          'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
         },
         inputClass,
       ]"
@@ -141,7 +150,7 @@ export default defineComponent({
       @input="onInput"
     ></textarea>
 
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
     <p v-else-if="helper" class="text-sm text-gray-500 mt-1" v-text="helper"></p>
   </label>
 </template>

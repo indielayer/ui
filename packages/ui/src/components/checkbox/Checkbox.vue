@@ -192,7 +192,7 @@ export default defineComponent({
         <slot v-else></slot>
       </div>
     </div>
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
   </label>
 </template>
 

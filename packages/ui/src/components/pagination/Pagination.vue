@@ -1,6 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch, type PropType } from 'vue'
+import { useCSS } from '@/composables/css'
 import { useCommon } from '@/composables/common'
+import { useColors } from '@/composables/colors'
 
 import XIcon from '@/components/icon/Icon.vue'
 import XButton from '@/components/button/Button.vue'
@@ -60,6 +62,11 @@ export default defineComponent({
       return 'h-3 w-3'
     })
 
+    const css = useCSS('pagination')
+    const colors = useColors()
+    const color = colors.getPalette('primary')
+    const style = css.get('bg', color[500])
+
     const quickInput = ref<string>(props.modelValue + '')
 
     function onQuickInput() {
@@ -105,6 +112,7 @@ export default defineComponent({
       nextIcon,
       quickInput,
       quickButtonSize,
+      style,
       onQuickInput,
       prevPage,
       nextPage,
@@ -161,12 +169,12 @@ export default defineComponent({
       @input="(value: Event) => $emit('update:modelValue', value)"
     />
   </ul>
-  <ul v-else-if="variant === 'dots'" class="flex space-x-6">
+  <ul v-else-if="variant === 'dots'" class="flex space-x-6" :style="style">
     <li
       v-for="i in totalPages"
       :key="i"
       class="rounded-full cursor-pointer"
-      :class="[dotsClass, i === modelValue ? 'bg-primary-500': 'bg-gray-100 hover:bg-gray-200']"
+      :class="[dotsClass, i === modelValue ? 'bg-[color:var(--x-pagination-bg)]': 'bg-gray-100 hover:bg-gray-200']"
       @click="$emit('update:modelValue', i)"
     ></li>
   </ul>

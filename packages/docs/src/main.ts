@@ -1,6 +1,6 @@
 import '@indielayer/ui/styles'
 import { createApp } from 'vue'
-import UI from '@indielayer/ui'
+import UI, { colors } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
 
@@ -27,7 +27,11 @@ const app = createApp(App)
 //   },
 // })
 
-app.use(UI)
+app.use(UI, {
+  colors: {
+    primary: colors.indigo,
+  },
+})
 
 app.use(router)
 app.use(icons)

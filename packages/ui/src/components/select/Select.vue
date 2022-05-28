@@ -1,6 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch, type PropType } from 'vue'
+import { useCSS } from '@/composables/css'
 import { useCommon } from '@/composables/common'
+import { useColors } from '@/composables/colors'
 import { useInputtable } from '@/composables/inputtable'
 import { useInteractive } from '@/composables/interactive'
 
@@ -114,6 +116,11 @@ export default defineComponent({
 
       return 'px-3 py-2'
     })
+
+    const css = useCSS('select')
+    const colors = useColors()
+    const color = colors.getPalette('primary')
+    const style = css.get('border', color[500])
 
     const availableOptions = computed(() => props.options?.filter((option) => !option.disabled))
 
@@ -262,6 +269,7 @@ export default defineComponent({
       internalOptions,
       labelClasses,
       sizeClasses,
+      style,
       isEmpty,
       getLabel,
       handleRemove,
@@ -286,7 +294,10 @@ export default defineComponent({
     <div class="relative">
       <x-popover ref="popoverRef" block :disabled="disabled || loading" :dismiss-on-click="!multiple">
         <div
-          class="w-full border border-gray-300 hover:border-gray-400 dark:border-gray-700 pr-8 group-focus:border-primary-500 dark:group-focus:border-primary-500 transition-colors duration-150 ease-in-out rounded-md shadow-sm"
+          class="w-full border border-gray-300 hover:border-gray-400 dark:border-gray-700 pr-8 transition-colors duration-150 ease-in-out rounded-md shadow-sm
+          group-focus:border-[color:var(--x-select-border)]
+          "
+          :style="style"
           :class="[
             sizeClasses,
             disabled
@@ -294,7 +305,7 @@ export default defineComponent({
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200',
             {
               // error
-              'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
+              'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
             },
           ]"
         >
@@ -391,7 +402,7 @@ export default defineComponent({
       </div>
     </div>
 
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
     <p v-else-if="helper" class="text-sm text-gray-500 mt-1" v-text="helper"></p>
   </label>
 </template>

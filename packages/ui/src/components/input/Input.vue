@@ -1,5 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
+import { useCSS } from '@/composables/css'
+import { useColors } from '@/composables/colors'
 import { useCommon } from '@/composables/common'
 import { useInputtable } from '@/composables/inputtable'
 import { useInteractive } from '@/composables/interactive'
@@ -63,6 +65,11 @@ export default defineComponent({
       return 'px-3 py-2'
     })
 
+    const css = useCSS('input')
+    const colors = useColors()
+    const color = colors.getPalette('primary')
+    const style = css.get('border', color[500])
+
     function onChange(e: Event) {
       if (!e.target) return
 
@@ -92,6 +99,7 @@ export default defineComponent({
       currentType,
       labelClasses,
       sizeClasses,
+      style,
       elRef,
       onChange,
       togglePasswordVisibility,
@@ -122,7 +130,10 @@ export default defineComponent({
 
       <input
         ref="elRef"
-        class="appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary-500 dark:focus:border-primary-500 transition-colors duration-150 ease-in-out border-gray-300 hover:border-gray-400 dark:border-gray-700 border shadow-sm rounded-md"
+        class="appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors duration-150 ease-in-out border-gray-300 hover:border-gray-400 dark:border-gray-700 border shadow-sm rounded-md
+        focus:border-[color:var(--x-input-border)]
+        "
+        :style="style"
         :class="[
           sizeClasses,
           disabled ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200',
@@ -131,7 +142,7 @@ export default defineComponent({
             '!pl-9': icon,
             '!pr-9': iconRight,
             // error
-            'border-error-500 focus:border-error-500 dark:focus:border-error-500': errorInternal,
+            'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
           },
           inputClass,
         ]"
@@ -181,7 +192,7 @@ export default defineComponent({
       </svg>
     </div>
 
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
     <p v-else-if="helper" class="text-sm text-gray-500 mt-1" v-text="helper"></p>
   </label>
 </template>

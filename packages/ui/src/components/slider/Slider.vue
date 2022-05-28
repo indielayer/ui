@@ -58,11 +58,13 @@ export default defineComponent({
 
     const css = useCSS('slider')
     const colors = useColors()
+    const primary = colors.getPalette('primary')
     const style = computed(() => {
       const color = colors.getPalette(props.color)
 
       return css.variables({
         bg: color[500],
+        border: primary[500],
         // width: value.value + '%',
       })
     })
@@ -223,7 +225,9 @@ export default defineComponent({
         </div>
         <div
           ref="dragRef"
-          class="absolute w-[20px] h-[20px] -mt-[13px] -ml-[10px] rounded-full bg-white border shadow-sm group-focus:border-primary-500"
+          class="absolute w-[20px] h-[20px] -mt-[13px] -ml-[10px] rounded-full bg-white border shadow-sm
+          group-focus:border-[color:var(--x-slider-border)]
+          "
           :class="[isDragging ? 'cursor-grabbing' : 'cursor-grab']"
           :style="`left: ${value}%;`"
         ></div>
@@ -231,6 +235,6 @@ export default defineComponent({
       <slot name="suffix" :value="value"></slot>
     </div>
 
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
   </label>
 </template>
