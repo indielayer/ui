@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInputtable } from '@/composables/inputtable'
-import { useInteractive } from '@/composables/interactive'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
 
 export default defineComponent({
   name: 'XTextarea',

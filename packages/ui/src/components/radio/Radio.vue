@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent, computed, ref } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInteractive } from '@/composables/interactive'
-import { useInputtable } from '@/composables/inputtable'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { useInputtable } from '../../composables/inputtable'
 
-import XSpinner from '@/components/spinner/Spinner.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
 
 export default defineComponent({
   name: 'XRadio',

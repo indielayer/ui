@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref, provide, watch, type PropType } from 'vue'
-import { injectNotificationKey } from '@/composables/keys'
-import { useColors } from '@/composables/colors'
-import { useCSS } from '@/composables/css'
+import { injectNotificationKey } from '../../composables/keys'
+import { useColors } from '../../composables/colors'
+import { useCSS } from '../../composables/css'
 
-import XIcon from '@/components/icon/Icon.vue'
+import XIcon from '../../components/icon/Icon.vue'
 
 const validators = {
   align: ['left','right'],

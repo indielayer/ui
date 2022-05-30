@@ -1,8 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useColors } from '@/composables/colors'
-import { useCommon } from '@/composables/common'
+import { useCSS } from '../../composables/css'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
 
 export default defineComponent({
   name: 'XTag',

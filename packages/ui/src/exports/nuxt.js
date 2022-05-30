@@ -1,4 +1,5 @@
 import { defineNuxtModule, addPlugin, createResolver } from '@nuxt/kit'
+import { fileURLToPath } from 'node:url'
 
 export default defineNuxtModule({
   meta: {
@@ -11,20 +12,21 @@ export default defineNuxtModule({
   defaults: {
     prefix: 'X',
   },
-  async setup(moduleOptions, nuxt) {
-    nuxt.options.css.push('@indielayer/ui/styles')
-
+  async setup(options, nuxt) {
     // Create resolver to resolve relative paths
     const { resolve } = createResolver(import.meta.url)
+
+    nuxt.options.runtimeConfig.public.indielayerOptions = options
 
     // plugin install
     addPlugin(resolve('./nuxt.plugin.js'))
 
-    //// nuxt install
-    // nuxt.hook('components:dirs', (dirs) => {
-    //   dirs.push({
-    //     path: join(__dirname, 'components'),
-    //     prefix: options?.prefix ? options?.prefix : 'X',
-    //   })
+    // nuxt install
+    nuxt.hook('components:dirs', (dirs) => {
+      dirs.push({
+        path: fileURLToPath(new URL('../src/components', import.meta.url)),
+        prefix: options?.prefix ? options?.prefix : 'X',
+      })
+    })
   },
 })

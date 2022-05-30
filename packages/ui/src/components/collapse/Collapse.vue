@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 
-import XIcon from '@/components/icon/Icon.vue'
+import XIcon from '../../components/icon/Icon.vue'
 
 export default defineComponent({
   name: 'XCollapse',

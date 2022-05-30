@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
-import { useColors } from '@/composables/colors'
-import { useCSS } from '@/composables/css'
+import { useColors } from '../../composables/colors'
+import { useCSS } from '../../composables/css'
 
 export default defineComponent({
   name: 'XLink',

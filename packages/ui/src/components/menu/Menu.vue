@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
 
 import XMenuItem from './MenuItem.vue'
-import XCollapse from '@/components/collapse/Collapse.vue'
-import XDivider from '@/components/divider/Divider.vue'
+import XCollapse from '../../components/collapse/Collapse.vue'
+import XDivider from '../../components/divider/Divider.vue'
 
 export default defineComponent({
   name: 'XMenu',

@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useColors } from '@/composables/colors'
-import { useCommon } from '@/composables/common'
+import { useCSS } from '../../composables/css'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
 
-import XSpinner from '@/components/spinner/Spinner.vue'
-import XLink from '@/components/link/Link.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
+import XLink from '../../components/link/Link.vue'
 
 export default defineComponent({
   name: 'XMenuItem',
@@ -53,14 +53,14 @@ export default defineComponent({
     }))
 
     const htmlTag = cItem.value.to || cItem.value.href ? 'x-link' : 'div'
-    const classObserver = new MutationObserver(check)
+    const classObserver = process.client ? new MutationObserver(check) : null
 
     onMounted(() => {
       if (!elRef.value) return
 
       check()
 
-      if (htmlTag === 'x-link') classObserver.observe(elRef.value.$el, {
+      if (process.client && htmlTag === 'x-link') classObserver.observe(elRef.value.$el, {
         attributes: true,
         attributeFilter: ['class'],
       })

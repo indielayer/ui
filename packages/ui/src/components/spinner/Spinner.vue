@@ -1,8 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useCommon } from '@/composables/common'
+import { useCommon } from '../../composables/common'
 
-import XIcon from '@/components/icon/Icon.vue'
+import XIcon from '../../components/icon/Icon.vue'
 
 export default defineComponent({
   name: 'XSpinner',

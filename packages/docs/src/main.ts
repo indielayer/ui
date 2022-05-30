@@ -19,17 +19,13 @@ import './assets/css/tailwind.css'
 
 const app = createApp(App)
 
-// const UI = createUI({
-//   prefix: 'X',
-//   components: [XButton],
-//   colors: {
-//     primary: colors.amber,
-//   },
-// })
-
 app.use(UI, {
   colors: {
-    primary: colors.indigo,
+    primary: colors.emerald,
+    secondary: colors.slate,
+    success: colors.green,
+    warning: colors.yellow,
+    error: colors.red,
   },
 })
 

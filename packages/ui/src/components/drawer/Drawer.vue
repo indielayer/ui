@@ -2,7 +2,7 @@
 import { computed, defineComponent, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
 import { breakpointsTailwind, SwipeDirection, useBreakpoints, useEventListener, useSwipe, type Breakpoints } from '@vueuse/core'
 
-import XScroll from '@/components/scroll/Scroll.vue'
+import XScroll from '../../components/scroll/Scroll.vue'
 
 export default defineComponent({
   name: 'XDrawer',

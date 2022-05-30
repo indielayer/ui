@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useColors } from '@/composables/colors'
+import { useCSS } from '../../composables/css'
+import { useColors } from '../../composables/colors'
 
 // const validators = {
 //   variant: ['bar','score'],

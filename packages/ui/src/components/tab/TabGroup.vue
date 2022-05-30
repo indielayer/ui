@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent, reactive, computed, provide, type PropType, ref, watch, onMounted } from 'vue'
-import { injectTabKey } from '@/composables/keys'
-import { useCSS } from '@/composables/css'
-import { useColors } from '@/composables/colors'
+import { injectTabKey } from '../../composables/keys'
+import { useCSS } from '../../composables/css'
+import { useColors } from '../../composables/colors'
 
 import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 
-import XScroll from '@/components/scroll/Scroll.vue'
+import XScroll from '../../components/scroll/Scroll.vue'
 
 export default defineComponent({
   name: 'XTabs',

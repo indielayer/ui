@@ -1,11 +1,11 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch, type PropType } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
 
-import XIcon from '@/components/icon/Icon.vue'
-import XButton from '@/components/button/Button.vue'
+import XIcon from '../../components/icon/Icon.vue'
+import XButton from '../../components/button/Button.vue'
 import XPaginationItem from './PaginationItem.vue'
 
 export default defineComponent({

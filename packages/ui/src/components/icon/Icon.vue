@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, inject } from 'vue'
-import { useCommon } from '@/composables/common'
-import { injectIconsKey } from '@/composables/keys'
+import { useCommon } from '../../composables/common'
+import { injectIconsKey } from '../../composables/keys'
 
 export default defineComponent({
   name: 'XIcon',

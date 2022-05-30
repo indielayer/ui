@@ -1,6 +1,5 @@
 import type { App } from 'vue'
 import type { ColorLibrary } from './composables/colors'
-import { tailwindColors as colors } from './composables/colors-utils'
 import { injectColorsKey } from './composables/keys'
 
 export interface IndielayerUIOptions {
@@ -9,17 +8,8 @@ export interface IndielayerUIOptions {
   colors?: ColorLibrary
 }
 
-const defaultColors = {
-  primary: colors.sky,
-  secondary: colors.slate,
-  success: colors.green,
-  warning: colors.yellow,
-  error: colors.red,
-}
-
 const defaultOptions: IndielayerUIOptions = {
   prefix: 'X',
-  colors: defaultColors,
 }
 
 const create = (createOptions: IndielayerUIOptions = {}) => {

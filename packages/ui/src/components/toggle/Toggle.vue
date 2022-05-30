@@ -1,12 +1,12 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInputtable } from '@/composables/inputtable'
-import { useInteractive } from '@/composables/interactive'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
 
-import XSpinner from '@/components/spinner/Spinner.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
 
 export default defineComponent({
   name: 'XToggle',

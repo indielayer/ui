@@ -3,8 +3,10 @@ const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
   content: [
-    '../ui/lib/**/*',
-    './src/**/*.vue',
+    './index.html',
+    './app.vue',
+    './src/**/*.{vue,js,ts,jsx,tsx}',
+    'node_modules/@indielayer/ui/**/*',
   ],
   darkMode: 'class',
   presets: [

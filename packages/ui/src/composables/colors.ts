@@ -21,8 +21,16 @@ export type ColorLibrary = Record<string, ColorPalette>
 
 const colorCache: ColorLibrary = {}
 
+const defaultColors = {
+  primary: tailwindColors.sky,
+  secondary: tailwindColors.slate,
+  success: tailwindColors.green,
+  warning: tailwindColors.yellow,
+  error: tailwindColors.red,
+}
+
 export const useColors = () => {
-  const customColors = inject(injectColorsKey)
+  const customColors = inject(injectColorsKey) || defaultColors
   // if (Object.keys(customColors).length === 0) customColors = calculateColors()
 
   const getTailwindColor = (color: string) => tailwindColors[color]

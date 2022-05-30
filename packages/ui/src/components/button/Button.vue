@@ -1,13 +1,13 @@
 <script lang="ts">
 import { defineComponent, computed, ref, inject } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInteractive } from '@/composables/interactive'
-import { injectButtonGroupKey } from '@/composables/keys'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { injectButtonGroupKey } from '../../composables/keys'
 
-import XSpinner from '@/components/spinner/Spinner.vue'
-import XIcon from '@/components/icon/Icon.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
+import XIcon from '../../components/icon/Icon.vue'
 
 export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined
 

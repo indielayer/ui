@@ -1,9 +1,9 @@
 <script lang="ts">
 import { defineComponent, provide } from 'vue'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInteractive } from '@/composables/interactive'
-import { injectButtonGroupKey } from '@/composables/keys'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { injectButtonGroupKey } from '../../composables/keys'
 
 export default defineComponent({
   name: 'XButtonGroup',

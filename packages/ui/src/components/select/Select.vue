@@ -1,18 +1,18 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch, type PropType } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInputtable } from '@/composables/inputtable'
-import { useInteractive } from '@/composables/interactive'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
 
 import { useEventListener } from '@vueuse/core'
 
-import XTag from '@/components/tag/Tag.vue'
-import XMenuItem from '@/components/menu/MenuItem.vue'
-import XSpinner from '@/components/spinner/Spinner.vue'
-import XPopover from '@/components/popover/Popover.vue'
-import XPopoverContainer from '@/components/popover/PopoverContainer.vue'
+import XTag from '../../components/tag/Tag.vue'
+import XMenuItem from '../../components/menu/MenuItem.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
+import XPopover from '../../components/popover/Popover.vue'
+import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 
 export type SelectOption = {
   value: number | string,

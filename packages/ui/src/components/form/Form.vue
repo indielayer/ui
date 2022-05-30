@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, provide, onMounted, watch, nextTick } from 'vue'
-import { injectFormKey } from '@/composables/keys'
+import { injectFormKey } from '../../composables/keys'
 
 export type Form = {
   name: string,

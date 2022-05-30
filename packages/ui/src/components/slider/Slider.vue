@@ -1,14 +1,14 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useInteractive } from '@/composables/interactive'
-import { useInputtable } from '@/composables/inputtable'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { useInputtable } from '../../composables/inputtable'
 
 import { useEventListener } from '@vueuse/core'
 
-import XProgress from '@/components/progress/Progress.vue'
+import XProgress from '../../components/progress/Progress.vue'
 
 export default defineComponent({
   name: 'XSlider',

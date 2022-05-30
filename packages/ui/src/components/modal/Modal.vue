@@ -3,7 +3,7 @@ import { computed, defineComponent, ref, watch, type PropType } from 'vue'
 
 import { onClickOutside, useEventListener } from '@vueuse/core'
 
-import XScroll from '@/components/scroll/Scroll.vue'
+import XScroll from '../../components/scroll/Scroll.vue'
 
 export default defineComponent({
   name: 'XModal',

@@ -1,8 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
-import { useCommon } from '@/composables/common'
+import { useCommon } from '../../composables/common'
 
-import XButton from '@/components/button/Button.vue'
+import XButton from '../../components/button/Button.vue'
 
 export default defineComponent({
   name: 'XPaginationItem',

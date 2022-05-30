@@ -1,8 +1,8 @@
 <script lang="ts">
 import { computed, defineComponent, type PropType } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
+import { useCSS } from '../../composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
 
 export default defineComponent({
   name: 'XBadge',

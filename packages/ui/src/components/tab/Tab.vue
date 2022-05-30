@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, inject, reactive, computed, toRefs, ref, onMounted } from 'vue'
-import { injectTabKey } from '@/composables/keys'
-import { useCommon } from '@/composables/common'
+import { injectTabKey } from '../../composables/keys'
+import { useCommon } from '../../composables/common'
 
 export default defineComponent({
   name: 'XTab',

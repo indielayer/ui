@@ -1,10 +1,10 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watch } from 'vue'
-import { useCommon } from '@/composables/common'
-import { useColors } from '@/composables/colors'
-import { useCSS } from '@/composables/css'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useCSS } from '../../composables/css'
 
-import XIcon from '@/components/icon/Icon.vue'
+import XIcon from '../../components/icon/Icon.vue'
 
 export default defineComponent({
   name: 'XAvatar',

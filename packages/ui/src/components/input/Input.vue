@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
-import { useCSS } from '@/composables/css'
-import { useColors } from '@/composables/colors'
-import { useCommon } from '@/composables/common'
-import { useInputtable } from '@/composables/inputtable'
-import { useInteractive } from '@/composables/interactive'
+import { useCSS } from '../../composables/css'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
 
 export default defineComponent({
   name: 'XInput',
