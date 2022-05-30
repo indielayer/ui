@@ -53,14 +53,15 @@ export default defineComponent({
     }))
 
     const htmlTag = cItem.value.to || cItem.value.href ? 'x-link' : 'div'
-    const classObserver = process.client ? new MutationObserver(check) : null
+    const isSupported = window && 'MutationObserver' in window
+    const classObserver = isSupported ? new MutationObserver(check) : null
 
     onMounted(() => {
       if (!elRef.value) return
 
       check()
 
-      if (process.client && htmlTag === 'x-link') classObserver.observe(elRef.value.$el, {
+      if (isSupported && htmlTag === 'x-link') classObserver?.observe(elRef.value.$el, {
         attributes: true,
         attributeFilter: ['class'],
       })
