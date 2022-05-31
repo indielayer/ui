@@ -4,13 +4,10 @@ import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="flex items-center justify-center h-screen bg-[#001e26] dark text-[#accac8] flex-col">
+    <div class="max-w-2xl">
+      <HelloWorld msg="Welcome!" />
+      <TheWelcome />
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>

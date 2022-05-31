@@ -12,5 +12,8 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 .nuxt
-ui/lib
 lib
+packages/ui/lib
+packages/create-ui/outfile.cjs
+packages/docs/dist
+packages/create-ui/templates

@@ -12,7 +12,7 @@
     "build:docs": "pnpm build && cd packages/docs && pnpm build",
     "release": "lerna publish",
     "release:alpha": "lerna publish prerelease --preid alpha --dist-tag alpha",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --ext .js,.ts,.vue ."
   },
   "repository": {
     "type": "git",
@@ -25,12 +25,8 @@
   },
   "homepage": "https://github.com/indielayer/ui#readme",
   "dependencies": {
-    "@indielayer/eslint-config-vue": "^3.0.0",
-    "@vue/eslint-config-typescript": "^10.0.0",
-    "eslint": "^8.6.0",
-    "eslint-plugin-cypress": "^2.12.1",
-    "eslint-plugin-vue": "^8.2.0",
-    "typescript": "^4.7.2"
+    "@indielayer/eslint-config-vue": "^3.1.0",
+    "eslint": "^8.6.0"
   },
   "devDependencies": {
     "@changesets/cli": "^2.22.0"

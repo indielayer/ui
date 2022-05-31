@@ -7,9 +7,13 @@ import router from './router'
 import '@indielayer/ui/styles'
 import './assets/base.css'
 
+// plugins
+import Icons from './plugins/icons'
+
 const app = createApp(App)
 
 app.use(UI, { prefix: 'X' })
 app.use(router)
+app.use(Icons)
 
 app.mount('#app')

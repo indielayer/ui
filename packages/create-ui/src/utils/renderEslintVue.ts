@@ -15,6 +15,7 @@ function addEslintDependency(name) {
 
 addEslintDependency('eslint')
 addEslintDependency('eslint-plugin-vue')
+addEslintDependency('@indielayer/eslint-config-vue')
 
 interface ESLintConfig extends Linter.Config {
   extends: string[]

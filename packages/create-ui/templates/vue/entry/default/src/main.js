@@ -6,8 +6,12 @@ import App from './App.vue'
 import '@indielayer/ui/styles'
 import './assets/base.css'
 
+// plugins
+import Icons from './plugins/icons'
+
 const app = createApp(App)
 
 app.use(UI, { prefix: 'X' })
+app.use(Icons)
 
 app.mount('#app')
