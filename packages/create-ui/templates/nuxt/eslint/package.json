@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@indielayer/eslint-config-vue": "^3.0.0",
+    "eslint": "^8.16.0",
+    "typescript": "^4.7.2"
+  }
+}

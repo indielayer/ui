@@ -3,7 +3,7 @@ import * as path from 'path'
 
 import type { ESLint, Linter } from 'eslint'
 
-import { devDependencies as allEslintDeps } from '../../templates/eslint/package.json'
+import { devDependencies as allEslintDeps } from '../../templates/nuxt/eslint/package.json'
 import deepMerge from './deepMerge'
 import sortDependencies from './sortDependencies'
 
@@ -12,9 +12,6 @@ const dependencies = {}
 function addEslintDependency(name) {
   dependencies[name] = allEslintDeps[name]
 }
-
-addEslintDependency('eslint')
-addEslintDependency('eslint-plugin-vue')
 
 interface ESLintConfig extends Linter.Config {
   extends: string[]
@@ -28,17 +25,17 @@ const config: ESLintConfig = {
 }
 
 function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
-  switch (`${styleGuide}-${language}`) {
-  case 'default-javascript':
-    config.extends.push('eslint:recommended')
-    break
-  case 'default-typescript':
-    addEslintDependency('@vue/eslint-config-typescript')
-    config.extends.push('eslint:recommended')
-    config.extends.push('@vue/eslint-config-typescript/recommended')
-    break
-    // TODO: airbnb and standard
-  }
+  // switch (`${styleGuide}-${language}`) {
+  // case 'default-javascript':
+  //   config.extends.push('eslint:recommended')
+  //   break
+  // case 'default-typescript':
+  //   addEslintDependency('@vue/eslint-config-typescript')
+  //   config.extends.push('eslint:recommended')
+  //   config.extends.push('@vue/eslint-config-typescript/recommended')
+  //   break
+  //   // TODO: airbnb and standard
+  // }
 
   if (needsPrettier) {
     addEslintDependency('prettier')
@@ -63,10 +60,10 @@ function configureEslint({ language, styleGuide, needsPrettier, needsCypress, ne
   // generate the configuration file
   let configuration = '/* eslint-env node */\n'
 
-  if (styleGuide !== 'default' || language !== 'javascript' || needsPrettier) {
-    addEslintDependency('@rushstack/eslint-patch')
-    configuration += 'require("@rushstack/eslint-patch/modern-module-resolution");\n\n'
-  }
+  // if (styleGuide !== 'default' || language !== 'javascript' || needsPrettier) {
+  //   addEslintDependency('@rushstack/eslint-patch')
+  //   configuration += 'require("@rushstack/eslint-patch/modern-module-resolution");\n\n'
+  // }
   configuration += `module.exports = ${JSON.stringify(config, undefined, 2)}\n`
 
   return {
