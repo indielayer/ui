@@ -46,7 +46,7 @@ export default defineComponent({
     const elRef = ref()
     const isActive = ref(false)
 
-    const filled = computed(() => props.filled || props.item.filled)
+    const filled = computed(() => props.filled || props.item?.filled)
     const cItem = computed(() => ({
       ...props,
       ...props.item,
