@@ -4,13 +4,14 @@ import minimist from 'minimist'
 import prompts from 'prompts'
 import { red } from 'kolorist'
 
-import banner from './utils/banner'
+// import banner from './utils/banner'
 
 import createVueProject from './vue'
 import createNuxtProject from './nuxt'
 
 async function init() {
-  console.log(`\n${banner}\n`)
+  // console.log(`\n${banner}\n`)
+  console.log('\nIndielayer UI Library\n')
 
   const cwd = process.cwd()
   // possible options:
