@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import UI from '@indielayer/ui'
+import UI, { colors } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
 
@@ -7,13 +7,21 @@ import router from './router'
 import '@indielayer/ui/styles'
 import './assets/base.css'
 
-// plugins
-import Icons from './plugins/icons'
+import icons from './icons'
 
 const app = createApp(App)
 
-app.use(UI, { prefix: 'X' })
+app.use(UI, {
+  icons,
+  prefix: 'X',
+  colors: {
+    primary: colors.emerald,
+    secondary: colors.slate,
+    success: colors.green,
+    warning: colors.yellow,
+    error: colors.red,
+  },
+})
 app.use(router)
-app.use(Icons)
 
 app.mount('#app')

@@ -5,18 +5,18 @@ import WelcomeItem from './WelcomeItem.vue'
 <template>
   <WelcomeItem>
     <template #icon>
-      <x-icon icon="documentation" filled view-box="0 0 20 17" />
+      <x-icon icon="documentation" />
     </template>
     <template #heading>Documentation</template>
     <x-link shadow color="emerald" target="_blank" href="https://indielayer.com/ui">Indielayer UI's documentation</x-link>
-    and 
+    and
     <x-link shadow color="emerald" target="_blank" href="https://vuejs.org/">Vue’s documentation</x-link>
     provides you with all information you need to get started.
   </WelcomeItem>
 
   <WelcomeItem>
     <template #icon>
-      <x-icon icon="tooling" filled view-box="0 0 24 24" />
+      <x-icon icon="tooling" />
     </template>
     <template #heading>Tooling</template>
 
@@ -28,7 +28,7 @@ import WelcomeItem from './WelcomeItem.vue'
 
   <WelcomeItem>
     <template #icon>
-      <x-icon icon="ecosystem" filled view-box="0 0 18 20" />
+      <x-icon icon="ecosystem" />
     </template>
     <template #heading>Ecosystem</template>
 
