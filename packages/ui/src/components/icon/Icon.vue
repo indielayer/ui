@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, inject, ref, watchEffect } from 'vue'
 import { useCommon } from '../../composables/common'
 import { injectIconsKey } from '../../composables/keys'
 
@@ -34,8 +34,66 @@ export default defineComponent({
       return 'h-5 w-5'
     })
 
+    const isWrapSVG = ref(false)
+    const computedIcon = ref('')
+    const computedFilled = ref(props.filled)
+    const computedViewBox = ref(props.viewBox)
+    const attrs = ref({})
+
+    watchEffect(() => {
+      const injectedIcon = icons[props.icon]
+
+      isWrapSVG.value = false
+      computedIcon.value = injectedIcon
+
+      if (injectedIcon) {
+        if (typeof injectedIcon === 'string') {
+          if (injectedIcon.startsWith('<svg')) {
+            isWrapSVG.value = true
+
+            const { content, attributes } = getSVG(injectedIcon)
+
+            attrs.value = attributes
+            computedIcon.value = content
+          } else {
+            isWrapSVG.value = false
+            computedIcon.value = injectedIcon
+          }
+        } else if (typeof injectedIcon === 'object') {
+          computedIcon.value = injectedIcon.icon
+          computedFilled.value = injectedIcon.filled || props.filled
+          computedViewBox.value = injectedIcon.viewBox || injectedIcon.viewbox || props.viewBox
+        }
+      } else {
+        computedIcon.value = props.icon
+      }
+    })
+
+    function getSVG(svgString: string) {
+      const temp = document.createElement('template')
+
+      temp.innerHTML = svgString.trim()
+
+      const [svg] = temp.content.children
+      const names = svg.getAttributeNames()
+      const attributes: Record<string, string | null> = {}
+
+      names.forEach((n) => {
+        if (!['height', 'width', 'class'].includes(n)) attributes[n] = svg.getAttribute(n)
+      })
+
+      return {
+        attributes,
+        content: svg.innerHTML,
+      }
+    }
+
     return {
-      icons,
+      attrs,
+      isWrapSVG,
+      computedIcon,
+      computedFilled,
+      computedViewBox,
       sizeClasses,
     }
   },
@@ -43,14 +101,16 @@ export default defineComponent({
 </script>
 
 <template>
+  <svg v-if="isWrapSVG" :class="sizeClasses" v-bind="attrs" v-html="computedIcon"/>
   <svg
-    :class="[sizeClasses, { 'stroke-2': !filled}]"
-    :fill="filled ? 'currentColor' : 'none'"
-    :stroke="filled ? undefined : 'currentColor'"
-    :viewBox="viewBox"
-    :stroke-linecap="filled ? undefined : 'round'"
-    :stroke-linejoin="filled ? undefined : 'round'"
+    v-else
     xmlns="http://www.w3.org/2000/svg"
-    v-html="icons[icon] ? icons[icon] : icon"
+    :class="[sizeClasses, { 'stroke-2': !computedFilled}]"
+    :stroke-linejoin="computedFilled ? undefined : 'round'"
+    :stroke-linecap="computedFilled ? undefined : 'round'"
+    :stroke="computedFilled ? undefined : 'currentColor'"
+    :fill="computedFilled ? 'currentColor' : 'none'"
+    :viewBox="computedViewBox"
+    v-html="computedIcon"
   />
 </template>

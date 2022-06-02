@@ -1,11 +1,12 @@
 import type { App } from 'vue'
 import type { ColorLibrary } from './composables/colors'
-import { injectColorsKey } from './composables/keys'
+import { injectColorsKey, injectIconsKey } from './composables/keys'
 
 export interface IndielayerUIOptions {
   prefix?: string,
   components?: any,
-  colors?: ColorLibrary
+  colors?: ColorLibrary,
+  icons?: any
 }
 
 const defaultOptions: IndielayerUIOptions = {
@@ -26,6 +27,7 @@ const create = (createOptions: IndielayerUIOptions = {}) => {
       })
 
     app.provide(injectColorsKey, options.colors)
+    app.provide(injectIconsKey, options.icons)
   }
 
   return {

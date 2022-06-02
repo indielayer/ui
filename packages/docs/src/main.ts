@@ -3,9 +3,7 @@ import { createApp } from 'vue'
 import UI, { colors } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
-
-// plugins
-import icons from './plugins/icons'
+import icons from './icons'
 
 // global components
 import CopyButton from './components/common/CopyButton.vue'
@@ -20,6 +18,7 @@ import './assets/css/tailwind.css'
 const app = createApp(App)
 
 app.use(UI, {
+  icons,
   colors: {
     primary: colors.emerald,
     secondary: colors.slate,
@@ -30,7 +29,6 @@ app.use(UI, {
 })
 
 app.use(router)
-app.use(icons)
 
 app.component('CopyButton', CopyButton)
 app.component('CodeSnippet', CodeSnippet)
