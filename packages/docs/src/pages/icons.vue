@@ -8,18 +8,43 @@
       <p class="text-xl mt-8 my-4">SVG Icon Libraries - MIT License</p>
       <div class="font-bold text-lg">
         <ul>
-          <li><x-link external href="https://feathericons.com/" target="_blank">Feather Icons</x-link></li>
-          <li><x-link external href="https://heroicons.com/" target="_blank">Hero Icons</x-link></li>
-          <li><x-link external href="https://tabler-icons.io/" target="_blank">Tabler Icons</x-link></li>
+          <li><x-link
+            external
+            color="sky"
+            underline
+            href="https://heroicons.com/"
+            target="_blank"
+          >Hero Icons</x-link></li>
+          <li><x-link
+            external
+            color="sky"
+            underline
+            href="https://tabler-icons.io/"
+            target="_blank"
+          >Tabler Icons</x-link></li>
+          <li><x-link
+            external
+            color="sky"
+            underline
+            href="https://feathericons.com/"
+            target="_blank"
+          >Feather Icons</x-link></li>
         </ul>
       </div>
 
-      <h3 class="text-2xl mt-8 mb-4">1. Create the icons library <strong>plugins/icons.js</strong></h3>
+      <h3 class="text-2xl mt-8 mb-4">1. Create the icons file -> <strong>icons.js</strong></h3>
       <code-snippet
         :code="iconExample"
       />
-      <h3 class="text-2xl mt-8 mb-4">2. Add icons from open source libraries</h3>
-      <p class="mb-2 text-xl">Start adding the icons you need without the svg wrapper, copy only the content part of the SVG:</p>
+
+      <h3 class="text-2xl mt-8 mb-4">2. Add icons on UI install options -> <strong>main.js</strong></h3>
+      <code-snippet
+        :code="installExample"
+      />
+
+      <h3 class="text-2xl mt-8 mb-4">3. Add icons from open source libraries</h3>
+      <p class="mb-2 text-xl">Start adding the icons you need.</p>
+      <p class="mb-2">SVG wrapper optional, copy only the content part of the SVG:</p>
       <p class="mb-4 border dark:border-gray-600 rounded-md p-4">&#x3C;svg xmlns=&#x22;http://www.w3.org/2000/svg&#x22; width=&#x22;24&#x22; height=&#x22;24&#x22; viewBox=&#x22;0 0 24 24&#x22; fill=&#x22;none&#x22; stroke=&#x22;currentColor&#x22; stroke-width=&#x22;2&#x22; stroke-linecap=&#x22;round&#x22; stroke-linejoin=&#x22;round&#x22; class=&#x22;feather feather-check&#x22;&#x3E;<strong>&#x3C;polyline points=&#x22;20 6 9 17 4 12&#x22;&#x3E;&#x3C;/polyline&#x3E;</strong>&#x3C;/svg&#x3E;</p>
       <code-snippet :code="iconExample1"/>
 
@@ -35,37 +60,32 @@
 export default {
   data() {
     return {
-      iconExample: `// plugins/icons.js
-import { injectIconsKey } from '@indielayer/ui'
-
+      iconExample: `// icons.js
 export default {
-  install: (app) => {
-    // inject icons globally
-    app.provide(injectIconsKey, {
-      // icons
-    })
-  }
+  check: '<polyline points="20 6 9 17 4 12"></polyline>'
 }`,
-      iconExample1: `// plugins/icons.js
-import { injectIconsKey } from '@indielayer/ui'
-
-export default {
-  install: (app) => {
-    // inject icons globally
-    app.provide(injectIconsKey, {
-      check: '<polyline points="20 6 9 17 4 12"></polyline>',
-    })
-  }
-}
-
-// main.js
+      installExample: `// main.js
 import { createApp } from 'vue'
-import icons from './plugins/icons'
+import UI from '@indielayer/ui'
+import icons from './icons'
 
 const app = createApp(App)
 
-app.use(icons)
-`,
+app.use(UI, {
+  icons,
+})`,
+      iconExample1: `// icons.js
+export default {
+  check: '<polyline points="20 6 9 17 4 12"></polyline>',
+  // or
+  check2: {
+    icon: '<polyline points="20 6 9 17 4 12"></polyline>',
+    viewBox: '0 0 24 24', // default
+    filled: false, // default
+  },
+  // or
+  check3: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+}`,
       iconExample2: `<template>
   <x-icon icon="check" />
 </template>
