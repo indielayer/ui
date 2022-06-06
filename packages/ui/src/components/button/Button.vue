@@ -381,7 +381,7 @@ export default defineComponent({
       :icon="iconRight"
       class="shrink-0"
       :class="[
-        [$slots.default ? 'mr-2' : 'm-0.5'],
+        [$slots.default ? 'ml-2' : 'm-0.5'],
         {
           invisible: loading,
         },
