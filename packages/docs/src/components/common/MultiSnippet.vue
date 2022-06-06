@@ -1,8 +1,8 @@
 <template>
   <div class="hljs pl-4 pt-4 dark">
-    <x-tabs v-model="selected">
+    <x-tab-group v-model="selected">
       <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index" :label="snippet.label"/>
-    </x-tabs>
+    </x-tab-group>
     <div v-for="(snippet, index) in snippets" :key="index">
       <code-snippet v-if="selected === index" class="!pl-0" :code="snippet.code" :lang="snippet.lang" />
     </div>

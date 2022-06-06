@@ -1,5 +1,5 @@
 <template>
-  <document-page :components="['Tabs', 'Tab']" :title="title" :description="description" >
+  <document-page :components="['TabGroup', 'Tab']" :title="title" :description="description" >
     <!-- usage  -->
     <h2 id="usage"><a href="#usage">#</a>Usage</h2>
     <code-preview :code="snippets.usage">

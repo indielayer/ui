@@ -105,7 +105,7 @@ export default defineComponent({
             hover: { bg: !props.loading ? gray[100] : '' },
             active: { bg: !props.loading ? gray[200] : '' },
             dark: {
-              bg: gray[900],
+              bg: gray[800],
               text: 'white',
               border: gray[600],
               hover: { bg: !props.loading ? gray[800] : '' },

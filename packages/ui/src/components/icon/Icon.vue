@@ -101,10 +101,17 @@ export default defineComponent({
 </script>
 
 <template>
-  <svg v-if="isWrapSVG" :class="sizeClasses" v-bind="attrs" v-html="computedIcon"/>
+  <svg
+    v-if="isWrapSVG"
+    class="inline"
+    :class="sizeClasses"
+    v-bind="attrs"
+    v-html="computedIcon"
+  />
   <svg
     v-else
     xmlns="http://www.w3.org/2000/svg"
+    class="inline"
     :class="[sizeClasses, { 'stroke-2': !computedFilled}]"
     :stroke-linejoin="computedFilled ? undefined : 'round'"
     :stroke-linecap="computedFilled ? undefined : 'round'"

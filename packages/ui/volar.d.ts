@@ -40,7 +40,7 @@ declare module 'vue' {
     XTableHeader: typeof import('@indielayer/ui')['XTableHeader']
     XTableRow: typeof import('@indielayer/ui')['XTableRow']
     XTab: typeof import('@indielayer/ui')['XTab']
-    XTabs: typeof import('@indielayer/ui')['XTabs']
+    XTabGroup: typeof import('@indielayer/ui')['XTabGroup']
     XTag: typeof import('@indielayer/ui')['XTag']
     XTextarea: typeof import('@indielayer/ui')['XTextarea']
     XToggle: typeof import('@indielayer/ui')['XToggle']

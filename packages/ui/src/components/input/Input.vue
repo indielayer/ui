@@ -74,9 +74,10 @@ export default defineComponent({
       if (!e.target) return
 
       const target = (e.target as HTMLInputElement)
-      const value = Number(target.value)
 
       if (props.type === 'number') {
+        const value = Number(target.value)
+
         if (typeof props.min !== 'undefined') {
           if (value < props.min) target.value = props.min.toString()
         }

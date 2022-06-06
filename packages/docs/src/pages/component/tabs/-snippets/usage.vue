@@ -1,5 +1,5 @@
 <template>
-  <x-tabs v-model="tab" class="pb-10" variant="line">
+  <x-tab-group v-model="tab" class="pb-10" variant="line">
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -15,8 +15,8 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
-  <x-tabs v-model="tab" class="pb-10" variant="line" grow>
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="line" grow>
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -32,8 +32,8 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
-  <x-tabs v-model="tab" class="pb-10" variant="line" ghost>
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="line" ghost>
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -49,8 +49,8 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
-  <x-tabs v-model="tab" class="pb-10" variant="block">
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="block">
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -66,8 +66,8 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
-  <x-tabs v-model="tab" class="pb-10" variant="block" grow>
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="block" grow>
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -83,8 +83,8 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
-  <x-tabs v-model="tab" class="pb-10" variant="block" ghost>
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="block" ghost>
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -100,7 +100,7 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tabs>
+  </x-tab-group>
 </template>
 
 <script>
