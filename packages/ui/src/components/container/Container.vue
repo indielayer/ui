@@ -16,7 +16,7 @@ export default defineComponent({
 <template>
   <component
     :is="tag"
-    class="container mx-auto px-4"
+    class="max-w-screen-2xl mx-auto px-4"
   >
     <slot></slot>
   </component>
