@@ -108,8 +108,8 @@ export default defineComponent({
               bg: gray[800],
               text: 'white',
               border: gray[600],
-              hover: { bg: !props.loading ? gray[800] : '' },
-              active: { bg: !props.loading ? gray[700] : '' },
+              hover: { bg: !props.loading ? gray[700] : '' },
+              active: { bg: !props.loading ? gray[600] : '' },
             },
           }))
         }
