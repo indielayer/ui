@@ -24,7 +24,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const icons: any = inject(injectIconsKey, {})
+    const icons: any = inject(injectIconsKey, () => {}, false)
     const sizeClasses = computed(() => {
       if (props.size === 'xs') return 'h-3 w-3'
       else if (props.size === 'sm') return 'h-4 w-4'

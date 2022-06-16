@@ -131,10 +131,11 @@ export default defineComponent({
 <template>
   <label
     ref="elRef"
-    class="inline-block mb-1 relative cursor-pointer focus:outline-none"
+    tabindex="0"
+    class="inline-block mb-1 relative cursor-pointer focus:outline-none group"
     :aria-selected="selected ? 'true' : 'false'"
     :aria-disabled="(disabled || loading) ? 'true' : undefined"
-    tabindex="0"
+    :style="styles"
     @keypress.prevent.stop.space="$emit('update:modelValue', value)"
   >
     <div
@@ -150,13 +151,12 @@ export default defineComponent({
         class="invisible absolute"
       />
       <div
-        class="rounded-full flex justify-center items-center flex-shrink-0 border-2
+        class="rounded-full flex justify-center items-center flex-shrink-0 border-2 outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline
           border-[color:var(--x-border)]
           bg-[color:var(--x-bg)]
           dark:border-[color:var(--x-dark-border)]
           dark:bg-[color:var(--x-dark-bg)]
         "
-        :style="styles"
         :class="[
           [glow && !disabled && !loading ? $style['radio--glow'] : ''],
           {

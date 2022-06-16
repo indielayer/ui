@@ -4,12 +4,14 @@ import { computed, defineComponent, ref, watch, type PropType } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
 
 import XScroll from '../../components/scroll/Scroll.vue'
+import XIcon from '../icon/Icon.vue'
 
 export default defineComponent({
   name: 'XModal',
 
   components: {
     XScroll,
+    XIcon,
   },
 
   props: {
@@ -144,7 +146,7 @@ export default defineComponent({
         >
           <div
             v-if="showClose"
-            class="absolute p-1 top-4 right-4 rounded-full bg-opacity-10 hover:bg-opacity-30 cursor-pointer"
+            class="flex absolute p-1 top-4 z-10 right-4 rounded-full bg-opacity-10 hover:bg-opacity-30 cursor-pointer"
             :class="[
               $slots.image ? 'bg-gray-900 text-white' : 'bg-gray-500 text-gray-800 dark:text-gray-300'
             ]"

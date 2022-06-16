@@ -2,9 +2,14 @@
 import { defineComponent, inject, reactive, computed, toRefs, ref, onMounted } from 'vue'
 import { injectTabKey } from '../../composables/keys'
 import { useCommon } from '../../composables/common'
+import XIcon from '../icon/Icon.vue'
 
 export default defineComponent({
   name: 'XTab',
+
+  components: {
+    XIcon,
+  },
 
   props: {
     ...useCommon.props(),
@@ -88,7 +93,7 @@ export default defineComponent({
         :icon="icon"
       >
         <div class="flex items-center justify-center">
-          <x-icon v-if="icon" :icon="icon" :size="size" class="mr-1.5 shrink-0" />
+          <XIcon v-if="icon" :icon="icon" :size="size" class="mr-1.5 shrink-0" />
           <span>{{ cLabel }}</span>
         </div>
       </slot>
