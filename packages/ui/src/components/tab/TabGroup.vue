@@ -1,6 +1,7 @@
 <script lang="ts">
-import { defineComponent, reactive, computed, provide, type PropType, ref, watch, onMounted } from 'vue'
+import { defineComponent, reactive, computed, provide, type PropType, ref, watch, onMounted, watchEffect } from 'vue'
 import { injectTabKey } from '../../composables/keys'
+import { useCommon } from '../../composables/common'
 import { useCSS } from '../../composables/css'
 import { useColors } from '../../composables/colors'
 
@@ -16,6 +17,7 @@ export default defineComponent({
   },
 
   props: {
+    ...useCommon.props(),
     ...useColors.props('primary'),
     modelValue: [String, Number],
     variant: {
@@ -24,6 +26,7 @@ export default defineComponent({
     },
     ghost: Boolean,
     grow: Boolean,
+    exact: Boolean,
   },
 
   emits: ['update:modelValue'],
@@ -35,14 +38,23 @@ export default defineComponent({
     const tabsRef = ref<HTMLElement>()
     const tabsContentRef = ref<HTMLElement>()
 
+    const active = ref()
+
+    watchEffect(() => {
+      active.value = props.modelValue
+    })
+
     const state = reactive({
-      active: computed(() => props.modelValue),
+      active: computed(() => active.value),
       variant: computed(() => props.variant),
       ghost: computed(() => props.ghost),
       grow: computed(() => props.grow),
+      exact: computed(() => props.exact),
+      size: computed(() => props.size),
     })
 
     function activateTab(tab: string | number) {
+      active.value = tab
       emit('update:modelValue', tab)
     }
 
@@ -70,14 +82,14 @@ export default defineComponent({
       if (scrollRef.value.scrollEl) scrollRef.value.scrollEl.scrollTo({ left: center, behavior: 'smooth' })
     }, 100)
 
-    useResizeObserver(wrapperRef, () => { updateTracker(props.modelValue) })
+    useResizeObserver(wrapperRef, () => { updateTracker(active.value) })
 
-    watch(() => props.modelValue, (value) => {
+    watch(() => active.value, (value) => {
       updateTracker(value)
     })
 
     onMounted(() => {
-      updateTracker(props.modelValue)
+      updateTracker(active.value)
     })
 
     const css = useCSS('tabs')
@@ -131,7 +143,7 @@ export default defineComponent({
           :class="{
             'border-b border-gray-200 dark:border-gray-700': variant === 'line',
             'space-x-8': variant === 'line' && !grow,
-            'z-[1]': variant === 'block'
+            'z-[1]': variant === 'block',
           }"
         >
           <slot></slot>
