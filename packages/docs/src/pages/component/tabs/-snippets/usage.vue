@@ -16,7 +16,12 @@
       content e
     </x-tab>
   </x-tab-group>
-  <x-tab-group v-model="tab" class="pb-10" variant="line" grow>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="line"
+    grow
+  >
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -84,7 +89,12 @@
       content e
     </x-tab>
   </x-tab-group>
-  <x-tab-group v-model="tab" class="pb-10" variant="block" ghost>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="block"
+    ghost
+  >
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>

@@ -24,6 +24,10 @@ export default defineComponent({
       type: String as PropType<'line' | 'block'>,
       default: 'line',
     },
+    align: {
+      type: String as PropType<'left' | 'center' | 'right'>,
+      default: 'left',
+    },
     ghost: Boolean,
     grow: Boolean,
     exact: Boolean,
@@ -144,6 +148,8 @@ export default defineComponent({
             'border-b border-gray-200 dark:border-gray-700': variant === 'line',
             'space-x-8': variant === 'line' && !grow,
             'z-[1]': variant === 'block',
+            'justify-center': align === 'center',
+            'justify-end': align === 'right'
           }"
         >
           <slot></slot>
