@@ -38,7 +38,7 @@ export default defineComponent({
 
     watch(() => props.modelValue, (value) => {
       checked.value = !!value
-    })
+    }, { immediate: true })
 
     watch(() => checked.value, (value) => {
       emit('update:modelValue', value)
