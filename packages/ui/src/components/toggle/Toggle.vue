@@ -71,7 +71,7 @@ export default defineComponent({
 
 <template>
   <label
-    class="inline-block mb-1 pb-2"
+    class="inline-block"
     :class="[!disabled ? 'cursor-pointer' : 'cursor-not-allowed']"
   >
     <div class="flex items-center">
