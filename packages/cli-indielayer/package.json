@@ -1,0 +1,26 @@
+{
+  "name": "indielayer",
+  "version": "1.0.0-alpha.5",
+  "description": "An easy way to start a Indielayer UI project",
+  "keywords": [],
+  "homepage": "https://indielayer.com/ui",
+  "bugs": {
+    "url": "https://github.com/indielayer/ui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/indielayer/ui.git"
+  },
+  "license": "MIT",
+  "author": "João Teixeira <joao@indielayer.com>",
+  "bin": "./index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@indielayer/create-ui": "1.0.0-alpha.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
