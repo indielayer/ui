@@ -70,21 +70,21 @@ export default defineComponent({
     })
 
     function getSVG(svgString: string) {
-      const temp = document.createElement('template')
+      svgString = svgString.trim()
+      const content = svgString.substring(svgString.indexOf('>') + 1, svgString.lastIndexOf('</svg>'))
+      const attrsRaw = svgString.substring(svgString.indexOf('<svg') + 4, svgString.indexOf('>')).trim().match(/[\w-]+="[^"]*"/g)
 
-      temp.innerHTML = svgString.trim()
-
-      const [svg] = temp.content.children
-      const names = svg.getAttributeNames()
       const attributes: Record<string, string | null> = {}
 
-      names.forEach((n) => {
-        if (!['height', 'width', 'class'].includes(n)) attributes[n] = svg.getAttribute(n)
+      attrsRaw?.forEach((a) => {
+        const [attribute, value] = a.split('=')
+
+        if (!['height', 'width', 'class'].includes(attribute)) attributes[attribute] = value.replace(/(^"|"$)/g, '')
       })
 
       return {
         attributes,
-        content: svg.innerHTML,
+        content,
       }
     }
 
