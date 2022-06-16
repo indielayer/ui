@@ -27,8 +27,14 @@ export default defineComponent({
     collapseIcon: String,
     expanded: Boolean,
     disabled: Boolean,
-    rounded: Boolean,
-    filled: Boolean,
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
+    filled: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   emits: ['expand'],

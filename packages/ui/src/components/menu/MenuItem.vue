@@ -34,8 +34,14 @@ export default defineComponent({
     icon: String,
     iconRight: String,
     loading: Boolean,
-    rounded: Boolean,
-    filled: Boolean,
+    rounded: {
+      type: Boolean,
+      default: true,
+    },
+    filled: {
+      type: Boolean,
+      default: true,
+    },
     selected: Boolean,
     disabled: Boolean,
   },
@@ -72,6 +78,13 @@ export default defineComponent({
     })
 
     function onItemClick(e: Event) {
+      if (cItem.value.disabled) {
+        e.stopPropagation()
+        e.preventDefault()
+
+        return
+      }
+
       cItem.value.onClick && cItem.value.onClick(e)
       emit('click', e)
     }
@@ -100,7 +113,12 @@ export default defineComponent({
       const color = colors.getPalette(cItem.value.color || 'gray')
       const gray = colors.getPalette('gray')
 
-      if (cItem.value.disabled) return css.get('text', gray[300])
+      if (cItem.value.disabled) return css.variables({
+        text: gray[300],
+        dark: {
+          text: gray[600],
+        },
+      })
 
       if (filled.value) {
         if (isActive.value) {
@@ -193,7 +211,7 @@ export default defineComponent({
     :href="cItem.href"
     :target="cItem.target"
     :color="cItem.color"
-    class="relative flex items-center whitespace-nowrap px-3 mt-1"
+    class="relative !flex items-center whitespace-nowrap px-3 mt-1"
     :style="cssVariables"
     :class="[
       $style['menu-item'],

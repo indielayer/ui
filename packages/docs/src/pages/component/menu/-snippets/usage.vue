@@ -1,10 +1,10 @@
 <template>
   <div class="p-2 rounded-none">
-    <x-menu :items="items2" rounded filled />
+    <x-menu :items="items2" />
   </div>
 
   <div class="p-2 mt-4 rounded-lg">
-    <x-menu :items="items" rounded filled />
+    <x-menu :items="items" :rounded="false" :filled="false" />
   </div>
 </template>
 
@@ -13,6 +13,7 @@ const items2 = [{
   label: 'Open',
   active: false,
   value: 'a',
+  disabled: true,
 }, {
   label: 'Close',
   active: false,
