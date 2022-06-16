@@ -6,7 +6,7 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@indielayer/ui": "^1.0.0-alpha.5",
+    "@indielayer/ui": "^1.0.0-alpha.6",
     "autoprefixer": "^10.4.0",
     "nuxt": "3.0.0-rc.3",
     "postcss": "^8.4.14",

@@ -1,7 +1,7 @@
 {
   "name": "nuxt-demo",
   "private": true,
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^3.1.0",
-    "@indielayer/ui": "^1.0.0-alpha.5",
+    "@indielayer/ui": "^1.0.0-alpha.6",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.16.0",
     "nuxt": "3.0.0-rc.3",
