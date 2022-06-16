@@ -23,6 +23,7 @@ export default defineComponent({
       type: String,
       default: 'ltr',
     },
+    rows: Number,
     max: Number,
     maxlength: Number,
     min: Number,
@@ -34,6 +35,7 @@ export default defineComponent({
     },
     preventEnter: Boolean,
     inputClass: String,
+    block: Boolean,
   },
 
   emits: useInputtable.emits(),
@@ -99,7 +101,7 @@ export default defineComponent({
 <template>
   <label
     class="inline-block relative align-bottom text-left"
-    :class="{ 'mb-3': isInsideForm }"
+    :class="{ 'mb-3': isInsideForm, 'w-full': block }"
   >
     <p
       v-if="label"
@@ -140,6 +142,7 @@ export default defineComponent({
       :maxlength="maxlength"
       :min="min"
       :dir="dir"
+      :rows="rows"
       :minlength="minlength"
       :name="name"
       :placeholder="placeholder"

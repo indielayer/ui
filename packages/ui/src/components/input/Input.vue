@@ -39,6 +39,7 @@ export default defineComponent({
       default: 'text',
     },
     inputClass: String,
+    block: Boolean,
   },
 
   emits: useInputtable.emits(),
@@ -112,7 +113,7 @@ export default defineComponent({
 <template>
   <label
     class="inline-block relative align-bottom text-left"
-    :class="{ 'mb-3': isInsideForm }"
+    :class="{ 'mb-3': isInsideForm, 'w-full': block }"
   >
     <p
       v-if="label"
@@ -157,7 +158,7 @@ export default defineComponent({
         :placeholder="placeholder"
         :readonly="readonly"
         :type="currentType"
-        :value="modelValue"
+        :value="modelValue || ''"
         v-bind="$attrs"
         v-on="inputListeners"
         @change="onChange"
