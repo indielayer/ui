@@ -1,7 +1,17 @@
 <template>
-  <div class="grid grid-cols-3 gap-2">
+  <div class="grid grid-cols-3 gap-4">
     <x-badge color="pink" outlined size="lg" animated>
       <x-button color="pink" outlined light size="xl">Notifications</x-button>
+    </x-badge>
+
+    <x-badge
+      color="pink"
+      outlined
+      animated
+      offset-x="-12"
+      offset-y="-10"
+    >
+      Text Example
     </x-badge>
 
     <x-badge color="indigo" position="top" align="right">

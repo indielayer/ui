@@ -22,6 +22,8 @@ export default defineComponent({
       type: String as PropType<'left' | 'right'>,
       default: 'right',
     },
+    offsetX: [Number, String],
+    offsetY: [Number, String],
     animated: Boolean,
     outlined: Boolean,
     icon: String,
@@ -57,8 +59,18 @@ export default defineComponent({
       return classes
     })
 
+    const offsetStyle = computed(() => {
+      const style: any = {}
+
+      if (props.offsetX) style[props.align === 'left' ? 'marginLeft' : 'marginRight'] = props.offsetX + 'px'
+      if (props.offsetY) style[props.position === 'top' ? 'marginTop' : 'marginBottom'] = props.offsetY + 'px'
+
+      return style
+    })
+
     return {
       styles,
+      offsetStyle,
       positionClasses,
     }
   },
@@ -76,6 +88,7 @@ export default defineComponent({
       <div
         v-if="show"
         class="absolute rounded-full z-10 bg-[color:var(--x-badge-bg)]"
+        :style="offsetStyle"
         :class="[
           positionClasses,
           {

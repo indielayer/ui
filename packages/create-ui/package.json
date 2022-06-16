@@ -3,6 +3,7 @@
   "version": "1.0.0-alpha.5",
   "description": "An easy way to start a Indielayer UI project",
   "type": "module",
+  "main": "outfile.cjs",
   "bin": {
     "create-ui": "outfile.cjs"
   },
@@ -26,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/indielayer/ui/issues"
   },
-  "homepage": "https://github.com/indielayer/ui#readme",
+  "homepage": "https://indielayer.com/ui",
   "devDependencies": {
     "@types/eslint": "^8.4.1",
     "@types/node": "^17.0.36",
