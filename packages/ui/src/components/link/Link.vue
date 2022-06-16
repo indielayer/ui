@@ -51,7 +51,7 @@ export default defineComponent({
   <component
     :is="to ? 'router-link' : tag"
     :to="to"
-    class="transition duration-300 ease-in-out cursor-pointer
+    class="transition duration-300 ease-in-out cursor-pointer inline-flex
       text-[color:var(--x-text)]
       dark:text-[color:var(--x-dark-text)]
     "
