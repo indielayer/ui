@@ -14,6 +14,7 @@ export type Header = {
   align?: Align,
   value: string,
   text: string,
+  width: string | number
 }
 
 export default defineComponent({
@@ -136,6 +137,7 @@ export default defineComponent({
         :text-align="header.align"
         :sort="getSort(header.value, sort)"
         :sortable="header.sortable"
+        :width="header.width"
         @click="header.sortable ? sortHeader(header) : null"
       >
         {{ header.text }}
