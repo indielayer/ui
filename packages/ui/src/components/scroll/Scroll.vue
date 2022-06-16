@@ -25,7 +25,7 @@ export default defineComponent({
 
     if (props.horizontal && props.mousewheel)
       useEventListener(scrollEl, 'wheel', (e: WheelEvent) => {
-        if (!scrollEl.value) return
+        if (!scrollEl.value || scrollEl.value.scrollWidth <= scrollEl.value.clientWidth) return
 
         e.preventDefault()
         scrollEl.value.scrollLeft += e.deltaY + e.deltaX
