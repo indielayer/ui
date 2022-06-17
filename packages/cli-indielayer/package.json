@@ -1,6 +1,6 @@
 {
   "name": "indielayer",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "An easy way to start a Indielayer UI project",
   "keywords": [],
   "homepage": "https://indielayer.com/ui",
@@ -18,7 +18,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "@indielayer/create-ui": "1.0.0-alpha.6"
+    "@indielayer/create-ui": "1.0.0-alpha.7"
   },
   "publishConfig": {
     "access": "public"
