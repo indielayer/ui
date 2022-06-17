@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, inject, reactive, computed, toRefs, ref, onMounted, onBeforeUnmount } from 'vue'
+import { useMutationObserver } from '@vueuse/core'
 import { injectTabKey } from '../../composables/keys'
 import { useCommon } from '../../composables/common'
 import XIcon from '../icon/Icon.vue'
@@ -45,25 +46,19 @@ export default defineComponent({
       }),
     })
 
-    const isSupported = window && 'MutationObserver' in window
-    const mutationObserver = isSupported ? new MutationObserver(check) : null
-
     const cExact = computed(() => tabs.state.exact || props.exact)
     const cSize = computed(() => props.size || tabs.state.size)
 
     onMounted(() => {
       teleportTo.value = tabs.tabsContentRef.value
 
-      if (props.to) check()
-
-      if (isSupported && props.to) mutationObserver?.observe(elRef.value.$el, {
-        attributes: true,
-        attributeFilter: ['class'],
-      })
-    })
-
-    onBeforeUnmount(() => {
-      if (mutationObserver) mutationObserver.disconnect()
+      if (props.to) {
+        check()
+        useMutationObserver(elRef.value.$el, check, {
+          attributes: true,
+          attributeFilter: ['class'],
+        })
+      }
     })
 
     function check() {

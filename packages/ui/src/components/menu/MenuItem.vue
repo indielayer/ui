@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useMutationObserver } from '@vueuse/core'
 import { useCSS } from '../../composables/css'
 import { useColors } from '../../composables/colors'
 import { useCommon } from '../../composables/common'
@@ -59,22 +60,16 @@ export default defineComponent({
     }))
 
     const htmlTag = cItem.value.to || cItem.value.href ? 'x-link' : 'div'
-    const isSupported = window && 'MutationObserver' in window
-    const classObserver = isSupported ? new MutationObserver(check) : null
 
     onMounted(() => {
       if (!elRef.value) return
 
       check()
 
-      if (isSupported && htmlTag === 'x-link') classObserver?.observe(elRef.value.$el, {
+      if (htmlTag === 'x-link') useMutationObserver(elRef.value.$el, check, {
         attributes: true,
         attributeFilter: ['class'],
       })
-    })
-
-    onBeforeUnmount(() => {
-      if (classObserver) classObserver.disconnect()
     })
 
     function onItemClick(e: Event) {
