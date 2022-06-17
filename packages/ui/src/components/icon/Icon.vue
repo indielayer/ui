@@ -41,7 +41,7 @@ export default defineComponent({
     const attrs = ref({})
 
     watchEffect(() => {
-      const injectedIcon = icons[props.icon]
+      const injectedIcon = icons && icons[props.icon]
 
       isWrapSVG.value = false
       computedIcon.value = injectedIcon

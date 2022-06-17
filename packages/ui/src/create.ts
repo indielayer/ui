@@ -27,7 +27,7 @@ const create = (createOptions: IndielayerUIOptions = {}) => {
       })
 
     app.provide(injectColorsKey, options.colors)
-    app.provide(injectIconsKey, options.icons)
+    app.provide(injectIconsKey, options.icons || {})
   }
 
   return {
