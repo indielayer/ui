@@ -5,6 +5,7 @@ import { useColors } from '../../composables/colors'
 import { useCSS } from '../../composables/css'
 
 import XIcon from '../../components/icon/Icon.vue'
+import XSpacer from '../../components/spacer/Spacer.vue'
 
 const validators = {
   align: ['left','right'],
@@ -37,6 +38,7 @@ export default defineComponent({
 
   components: {
     XIcon,
+    XSpacer,
   },
 
   validators,
