@@ -31,9 +31,9 @@ function copyPalette(val: any) {
 
       <h2 class="text-2xl mb-2">Generate your own palettes</h2>
       <p class="mb-8 text-gray-500 dark:text-gray-400">Generate your own color palette like Tailwind. With the same properties as Tailwind color palettes.</p>
-      <p class="font-medium">Change the middle value (500) to generate a new palette:</p>
-      <div class="mt-4 md:hidden">
-        <x-input v-model="color500" label="Middle color"/>
+      <p class="font-medium"></p>
+      <div class="mt-4">
+        <x-input v-model="color500" label="Change here the middle value (500) to generate a new palette"/>
       </div>
       <div class="grid grid-cols-10 my-4 text-sm">
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[50]}`">50</div>
@@ -41,12 +41,7 @@ function copyPalette(val: any) {
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[200]}`">200</div>
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[300]}`">300</div>
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[400]}`">400</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[500]}`">
-          <div class="text-center">
-            <div>500</div>
-            <x-input v-model="color500" size="xs" class="w-20  hidden md:block"/>
-          </div>
-        </div>
+        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[500]}`">500</div>
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[600]}`">600</div>
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[700]}`">700</div>
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[800]}`">800</div>
@@ -84,7 +79,7 @@ const app = createApp(App)
 app.use(UI, {
   prefix: 'X',
   colors: {
-    primary: colors.emerald,
+    primary: ${JSON.stringify(palette, null, 2)},
     secondary: colors.slate,
     success: colors.green,
     warning: colors.yellow,
