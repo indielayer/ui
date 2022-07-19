@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@highlightjs/vue-plugin": "^2.1.0",
     "@indielayer/eslint-config-vue": "^3.1.0",
-    "@indielayer/ui": "^1.0.0-alpha.8",
+    "@indielayer/ui": "^1.0.0-alpha.9",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.27",
     "@vitejs/plugin-vue": "^2.3.1",
