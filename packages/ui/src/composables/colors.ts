@@ -38,6 +38,8 @@ export const useColors = () => {
   const getColorOpacity = (color: string, opacity: number) => setOpacity(color, opacity)
 
   const getPalette = (color: string): ColorPalette => {
+    if (!color) return getTailwindColor('gray')
+
     const twColor = getTailwindColor(color)
 
     if (twColor) return twColor
