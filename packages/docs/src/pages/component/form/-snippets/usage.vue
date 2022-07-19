@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import { useNotification } from '@indielayer/ui'
+import { useNotifications} from '@indielayer/ui'
 
 export default {
   setup() {
-    const notification = useNotification()
+    const notification = useNotifications()
 
     function onSubmit(isValid) {
       if (isValid) notification.success('Valid! Sumitted.')
