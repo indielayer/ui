@@ -1,5 +1,5 @@
 <template>
-  <div class="hljs pl-4 pt-4 dark">
+  <div class="hljs pl-4 pt-1 dark">
     <x-tab-group v-model="selected">
       <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index" :label="snippet.label"/>
     </x-tab-group>

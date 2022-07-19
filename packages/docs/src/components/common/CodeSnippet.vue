@@ -1,5 +1,5 @@
 <template>
-  <div class="hljs relative px-5 py-4">
+  <div class="hljs relative px-5 py-4 dark">
     <highlightjs v-if="lang === 'javascript'" language="js" :code="code" />
     <pre v-else v-html="highlighted"></pre>
     <copy-button class="!absolute top-2 right-2" :text="code"/>
