@@ -107,9 +107,9 @@ export default defineComponent({
             dark: {
               bg: gray[800],
               text: 'white',
-              border: gray[600],
-              hover: { bg: !props.loading ? gray[700] : '' },
-              active: { bg: !props.loading ? gray[600] : '' },
+              border: gray[700],
+              hover: { bg: !props.loading ? gray[700] : '', border: gray[600] },
+              active: { bg: !props.loading ? gray[600] : '', border: gray[500] },
             },
           }))
         }
@@ -125,8 +125,8 @@ export default defineComponent({
             text: color[200],
             border: 'transparent',
             dark: {
-              bg: color[900],
-              text: color[600],
+              bg: gray[800],
+              text: color[900],
               border: 'transparent',
             },
           }))
@@ -138,11 +138,11 @@ export default defineComponent({
             hover: { bg: !props.loading ? color[100] : '' },
             active: { bg: !props.loading ? color[200] : '' },
             dark: {
-              bg: color[200],
-              text: color[800],
+              bg: gray[800],
+              text: color[500],
               border: computedOutlined.value ? color[500] : 'transparent',
-              hover: { bg: !props.loading ? color[100] : '' },
-              active: { bg: !props.loading ? color[50] : '' },
+              hover: { bg: !props.loading ? gray[700] : '' },
+              active: { bg: !props.loading ? gray[600] : '' },
             },
           }))
         }
@@ -164,7 +164,7 @@ export default defineComponent({
             vars.push(css.variables({
               text: color[600],
               dark: {
-                text: color[200],
+                text: color[500],
               },
             }))
             if (!props.loading) {
@@ -172,8 +172,8 @@ export default defineComponent({
                 hover: { bg: color[50] },
                 active: { bg: color[100] },
                 dark: {
-                  hover: { bg: color[900] },
-                  active: { bg: color[800] },
+                  hover: { bg: gray[800] },
+                  active: { bg: gray[700] },
                 },
               }))
             }
@@ -224,8 +224,8 @@ export default defineComponent({
               text: color[600],
               border: color[600],
               dark: {
-                text: color[300],
-                border: color[300],
+                text: color[500],
+                border: color[500],
               },
             }))
             if (!props.loading) {
@@ -233,8 +233,8 @@ export default defineComponent({
                 hover: { bg: color[100] },
                 active: { bg: color[200] },
                 dark: {
-                  hover: { bg: color[800] },
-                  active: { bg: color[700] },
+                  hover: { bg: gray[800] },
+                  active: { bg: gray[700] },
                 },
               }))
             }
@@ -252,6 +252,7 @@ export default defineComponent({
             vars.push(css.variables({
               bg: color[100],
               dark: {
+                text: color[700],
                 bg: color[900],
               },
             }))
@@ -262,8 +263,8 @@ export default defineComponent({
               active: { bg: !props.loading ? color[800] : '' },
               dark: {
                 bg: color[600],
-                hover: { bg: !props.loading ? color[500] : '' },
-                active: { bg: !props.loading ? color[400] : '' },
+                hover: { bg: !props.loading ? color[700] : '' },
+                active: { bg: !props.loading ? color[800] : '' },
               },
             }))
           }
