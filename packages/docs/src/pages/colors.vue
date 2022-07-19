@@ -55,9 +55,11 @@ function copyPalette(val: any) {
 
       <x-button icon="copy" :color="color500" block @click="copyPalette(palette)">Copy Palette</x-button>
 
+      <p class="text-gray-500 dark:text-gray-400 mt-4">This is the generated palette when you use the color directly on the color prop like &#x3C;x-button <b>color="#10B981"</b>&#x3E;Hello&#x3C;/x-button&#x3E;</p>
+
       <x-divider class="mt-4 mb-8"/>
 
-      <h2 class="text-2xl mb-2">Theme color names</h2>
+      <h2 class="text-2xl mb-2">Theme colors</h2>
       <p class="mb-8 text-gray-500 dark:text-gray-400">Default theme color names and how to customize them.</p>
 
       <p>The default theme color names are

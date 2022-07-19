@@ -4,9 +4,9 @@ export default {
     return {
       docsmenu: [
         { to: '/getting-started', label: 'Getting Started', icon: 'book' },
+        { to: '/typography', label: 'Typography', icon: 'type' },
         { to: '/colors', label: 'Colors', icon: 'palette' },
         { to: '/icons', label: 'Icons', icon: 'star' },
-        // { to: '/typography', label: 'Typography', icon: 'smile' },
       ],
       formcomponents: [
         { to: '/component/button', label: 'Button' },

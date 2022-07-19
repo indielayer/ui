@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import PreToolbar from '@/components/toolbar/PreToolbar.vue'
 import Toolbar from '@/components/toolbar/Toolbar.vue'
 import Cookies from '@/components/Cookies.vue'
-import Menu from '@/components/menu/Menu.vue'
+import DocsMenu from '@/components/menu/DocsMenu.vue'
 
 const drawer = ref(false)
 </script>
@@ -21,7 +21,7 @@ const drawer = ref(false)
   </div>
   <div class="flex-1 flex overflow-hidden">
     <XDrawer v-model="drawer" breakpoint="lg" width="260" class="border-r">
-      <Menu />
+      <DocsMenu />
     </XDrawer>
     <XNotifications>
       <router-view class="flex-1 overflow-y-scroll" />
