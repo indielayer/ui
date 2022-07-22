@@ -1,5 +1,17 @@
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
+export default { name: 'XBreadcrumbs' }
+</script>
+
+<script setup lang="ts">
+import { computed, type PropType } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { arrowRightIcon } from '../../common/icons'
+import { useColors } from '../../composables/colors'
+
+import XIcon from '../../components/icon/Icon.vue'
+import XLink from '../../components/link/Link.vue'
+
+import theme from './Breadcrumbs.theme'
 
 export type BreadcrumbItem = {
   label: string,
@@ -11,33 +23,31 @@ export type BreadcrumbItem = {
   underline?: boolean
 }
 
-export default defineComponent({
-  name: 'XBreadcrumbs',
-
-  props: {
-    items: Array as PropType<Array<BreadcrumbItem>>,
-    icon: String,
-    color: String,
-    shadow: Boolean,
-    underline: Boolean,
+const props = defineProps({
+  ...useColors.props(),
+  items: Array as PropType<Array<BreadcrumbItem>>,
+  icon: {
+    type: String,
+    default: arrowRightIcon,
   },
-
-  setup(props) {
-    const arrowIcon = '<path d="M13 7l5 5m0 0l-5 5m5-5H6" />'
-    const lastItem = computed(() => props.items && props.items.length > 0 ? props.items[props.items.length - 1] : undefined)
-
-    return {
-      arrowIcon,
-      lastItem,
-    }
-  },
+  shadow: Boolean,
+  underline: Boolean,
 })
+
+const lastItem = computed(() => props.items && props.items.length > 0 ? props.items[props.items.length - 1] : undefined)
+
+const { styles, classes, className } = useTheme('breadcrumbs', theme, props)
 </script>
 
 <template>
-  <nav v-if="items && items.length > 0" aria-label="Breadcrumb">
-    <ul class="flex items-center flex-wrap">
-      <li v-for="(item, index) in items?.slice(0,-1)" :key="index" class="flex items-center">
+  <nav
+    v-if="items && items.length > 0"
+    aria-label="Breadcrumb"
+    :class="className"
+    :style="styles"
+  >
+    <ul :class="classes.wrapper">
+      <li v-for="(item, index) in items?.slice(0,-1)" :key="index" :class="classes.item">
         <x-link
           :to="item.to"
           :href="item.href"
@@ -49,9 +59,9 @@ export default defineComponent({
           <x-icon v-if="item.icon" :icon="item.icon" class="mr-1.5"/>
           {{ item.label }}
         </x-link>
-        <x-icon :icon="icon || arrowIcon" class="text-gray-400 mx-1.5 shrink-0" size="sm" />
+        <x-icon :icon="icon" class="text-gray-400 mx-1.5" size="sm" />
       </li>
-      <li v-if="lastItem" class="font-semibold">
+      <li v-if="lastItem" :class="classes.lastItem">
         <x-icon v-if="lastItem.icon" :icon="lastItem.icon" class="mr-1"/>
         {{ lastItem.label }}
       </li>

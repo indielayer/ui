@@ -2,7 +2,7 @@
   <x-button
     ghost
     class="-ml-2"
-    :icon="colorMode === 'light' ? 'sun' : 'moon'"
+    :icon-left="colorMode === 'light' ? 'sun' : 'moon'"
     @click="toggle"
   />
 </template>

@@ -1,87 +1,80 @@
 <script lang="ts">
-import { computed, defineComponent, type PropType } from 'vue'
-import { useCSS } from '../../composables/css'
+export default { name: 'XBadge' }
+</script>
+
+<script setup lang="ts">
+import { computed, useSlots, type PropType } from 'vue'
+import { useTheme } from '../../composables/theme'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
 
-export default defineComponent({
-  name: 'XBadge',
+import theme from './Badge.theme'
 
-  props: {
-    ...useCommon.props(),
-    ...useColors.props('primary'),
-    tag: {
-      type: String,
-      default: 'div',
-    },
-    position: {
-      type: String as PropType<'top' | 'bottom'>,
-      default: 'top',
-    },
-    align: {
-      type: String as PropType<'left' | 'right'>,
-      default: 'right',
-    },
-    offsetX: [Number, String],
-    offsetY: [Number, String],
-    animated: Boolean,
-    outlined: Boolean,
-    icon: String,
-    show: {
-      type: Boolean,
-      default: true,
-    },
+const props = defineProps({
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  tag: {
+    type: String,
+    default: 'div',
   },
-
-  setup(props, { slots }) {
-    const css = useCSS('badge')
-    const colors = useColors()
-    const styles = computed(() => {
-      const color = colors.getPalette(props.color)
-
-      return css.get('bg', color[500])
-    })
-
-    const positionClasses = computed(() => {
-      const classes = []
-
-      if (props.position === 'top') classes.push('top-0')
-      if (props.position === 'bottom') classes.push('bottom-0')
-      if (props.align === 'left') classes.push('left-0')
-      if (props.align === 'right') classes.push('right-0')
-      if (slots.content) classes.push('-m-[7.5%]')
-      else if (props.outlined) {
-        classes.push('-m-[5%]')
-      } else {
-        classes.push('-m-[3.5%]')
-      }
-
-      return classes
-    })
-
-    const offsetStyle = computed(() => {
-      const style: any = {}
-
-      if (props.offsetX) style[props.align === 'left' ? 'marginLeft' : 'marginRight'] = props.offsetX + 'px'
-      if (props.offsetY) style[props.position === 'top' ? 'marginTop' : 'marginBottom'] = props.offsetY + 'px'
-
-      return style
-    })
-
-    return {
-      styles,
-      offsetStyle,
-      positionClasses,
-    }
+  position: {
+    type: String as PropType<'top' | 'bottom'>,
+    default: 'top',
+  },
+  align: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'right',
+  },
+  offsetX: [Number, String],
+  offsetY: [Number, String],
+  animated: Boolean,
+  outlined: Boolean,
+  icon: String,
+  show: {
+    type: Boolean,
+    default: true,
   },
 })
+
+const slots = useSlots()
+
+const positionClasses = computed(() => {
+  const classes = []
+
+  if (props.position === 'top') classes.push('top-0')
+  if (props.position === 'bottom') classes.push('bottom-0')
+  if (props.align === 'left') classes.push('left-0')
+  if (props.align === 'right') classes.push('right-0')
+  if (slots.content) classes.push('-m-[7.5%]')
+  else if (props.outlined) {
+    classes.push('-m-[5%]')
+  } else {
+    classes.push('-m-[3.5%]')
+  }
+
+  return classes
+})
+
+const offsetStyle = computed(() => {
+  const style: any = {}
+
+  if (props.offsetX) style[props.align === 'left' ? 'marginLeft' : 'marginRight'] = props.offsetX + 'px'
+  if (props.offsetY) style[props.position === 'top' ? 'marginTop' : 'marginBottom'] = props.offsetY + 'px'
+
+  return style
+})
+
+const { styles, classes, className } = useTheme('badge', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="inline-block"
     :style="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
   >
     <div class="relative inline-block">
       <slot></slot>
@@ -103,7 +96,7 @@ export default defineComponent({
         <div
           class="text-xs text-white overflow-hidden"
           :class="[
-            $slots.content ? 'flex items-center justify-center min-w-[1.25rem] h-5 px-0.5' : {
+            $slots.content ? 'flex items-center justify-center min-w-[1.25rem] h-5 px-1.5' : {
               'p-1': size === 'xs',
               'p-[0.312rem]': size === 'sm',
               'p-1.5': !size || !['xs', 'sm', 'lg', 'xl'].includes(size),

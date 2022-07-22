@@ -1,22 +1,30 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XContainer' }
+</script>
 
-export default defineComponent({
-  name: 'XContainer',
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
 
-  props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
+import theme from './Container.theme'
+
+const props = defineProps({
+  tag: {
+    type: String,
+    default: 'div',
   },
 })
+
+const { styles, classes, className } = useTheme('container', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="max-w-screen-2xl mx-auto px-4"
+    :style="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
   >
     <slot></slot>
   </component>

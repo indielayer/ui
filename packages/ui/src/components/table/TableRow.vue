@@ -1,24 +1,33 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
-
 const validators = {
   verticalAlign: ['baseline','bottom','middle','text-bottom','text-top','top'],
 }
 
-export default defineComponent({
-  name: 'XTableRow',
+export default { name: 'XTableRow', validators }
+</script>
 
-  validators,
+<script setup lang="ts">
+import { computed, type PropType } from 'vue'
 
-  props: {
-    pointer: Boolean,
-    striped: Boolean,
-    verticalAlign: {
-      type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
-      default: 'top',
-      validator: (value: string) => validators.verticalAlign.includes(value),
-    },
+const props = defineProps({
+  pointer: Boolean,
+  striped: Boolean,
+  verticalAlign: {
+    type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
+    default: 'top',
+    validator: (value: string) => validators.verticalAlign.includes(value),
   },
+})
+
+const alignClass = computed(() => {
+  if (props.verticalAlign === 'baseline') return 'align-baseline'
+  else if (props.verticalAlign === 'bottom') return 'align-bottom'
+  else if (props.verticalAlign === 'middle') return 'align-middle'
+  else if (props.verticalAlign === 'text-bottom') return 'align-text-bottom'
+  else if (props.verticalAlign === 'text-top') return 'align-text-top'
+  else if (props.verticalAlign === 'top') return 'align-top'
+
+  return ''
 })
 </script>
 
@@ -28,14 +37,8 @@ export default defineComponent({
       striped ? 'odd:bg-gray-50 dark:odd:bg-gray-800' : 'border-b border-gray-200 dark:border-gray-700',
       {
         'hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer': pointer,
-        // vertical-align
-        'align-baseline': verticalAlign === 'baseline',
-        'align-bottom': verticalAlign === 'bottom',
-        'align-middle': verticalAlign === 'middle',
-        'align-text-bottom': verticalAlign === 'text-bottom',
-        'align-text-top': verticalAlign === 'text-top',
-        'align-top': verticalAlign === 'top',
       },
+      alignClass
     ]"
   >
     <slot></slot>

@@ -1,6 +1,6 @@
 <template>
   <x-alert class="mb-4">Default</x-alert>
-  <x-alert class="mb-4" color="pink" outlined>Outlined</x-alert>
+  <x-alert class="mb-4" color="primary" outlined>Outlined</x-alert>
   <x-alert
     class="mb-4"
     type="info"

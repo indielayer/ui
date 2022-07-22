@@ -1,120 +1,104 @@
 <script lang="ts">
-import { defineComponent, inject, reactive, computed, toRefs, ref, onMounted, onBeforeUnmount } from 'vue'
+export default { name: 'XTab' }
+</script>
+
+<script setup lang="ts">
+import { inject, reactive, computed, ref, onMounted } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabKey } from '../../composables/keys'
 import { useCommon } from '../../composables/common'
+import { useTheme } from '../../composables/theme'
+
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
 
-export default defineComponent({
-  name: 'XTab',
+import theme from './Tab.theme'
 
-  components: {
-    XIcon,
-    XLink,
+const props = defineProps({
+  ...useCommon.props(),
+  value: {
+    type: [String, Number],
   },
-
-  props: {
-    ...useCommon.props(),
-    value: {
-      type: [String, Number],
-    },
-    tag: {
-      type: String,
-      default: 'div',
-    },
-    to: String,
-    label: String,
-    icon: String,
-    disabled: Boolean,
-    exact: Boolean,
+  tag: {
+    type: String,
+    default: 'div',
   },
-
-  setup(props) {
-    const cValue = computed(() => props.to || props.value )
-    const cLabel = computed(() => props.label || props.value)
-    const teleportTo = ref(null)
-    const elRef = ref()
-
-    const tabs = inject(injectTabKey, {
-      tabsContentRef: ref(null),
-      activateTab: () => {},
-      state: reactive({
-        active: null,
-        variant: 'line',
-        grow: false,
-      }),
-    })
-
-    const cExact = computed(() => tabs.state.exact || props.exact)
-    const cSize = computed(() => props.size || tabs.state.size)
-
-    onMounted(() => {
-      teleportTo.value = tabs.tabsContentRef.value
-
-      if (props.to) {
-        check()
-        useMutationObserver(elRef.value.$el, check, {
-          attributes: true,
-          attributeFilter: ['class'],
-        })
-      }
-    })
-
-    function check() {
-      if (elRef.value && elRef.value.$el && (props.to)) {
-        const active = elRef.value?.$el.classList.contains(cExact.value ? 'router-link-exact-active' : 'router-link-active')
-
-        if (active) tabs.activateTab(cValue.value)
-      }
-    }
-
-    const state = reactive({
-      selected: computed(() => tabs.state.active === cValue.value),
-    })
-
-    function onClickTab() {
-      if (!props.to) tabs.activateTab(cValue.value)
-    }
-
-    const sizeClasses = computed(() => {
-      if (cSize.value === 'xs') return 'text-xs'
-      else if (cSize.value === 'sm') return 'text-sm'
-      else if (cSize.value === 'lg') return 'text-lg'
-      else if (cSize.value === 'xl') return 'text-xl'
-
-      return ''
-    })
-
-    return {
-      ...toRefs(state),
-      variant: tabs.state.variant,
-      grow: tabs.state.grow,
-      elRef,
-      cLabel,
-      cValue,
-      cSize,
-      tabs,
-      sizeClasses,
-      teleportTo,
-      onClickTab,
-    }
-  },
+  to: String,
+  label: String,
+  icon: String,
+  disabled: Boolean,
+  exact: Boolean,
 })
+
+const computedValue = computed(() => props.to || props.value )
+const computedLabel = computed(() => props.label || props.value)
+const teleportTo = ref(null)
+const elRef = ref<HTMLElement | typeof XLink | null>(null)
+
+const tabs = inject(injectTabKey, {
+  tabsContentRef: ref(null),
+  activateTab: () => {},
+  state: reactive({
+    active: null,
+    variant: 'line',
+    grow: false,
+  }),
+})
+
+const computedExact = computed(() => tabs.state.exact || props.exact)
+const computedSize = computed(() => props.size || tabs.state.size)
+
+onMounted(() => {
+  teleportTo.value = tabs.tabsContentRef.value
+
+  if (props.to && elRef.value) {
+    check()
+    useMutationObserver((elRef.value as typeof XLink).$el, check, {
+      attributes: true,
+      attributeFilter: ['class'],
+    })
+  }
+})
+
+function check() {
+  if (elRef.value && (elRef.value as typeof XLink).$el && (props.to)) {
+    const active = (elRef.value as typeof XLink).$el.classList.contains(computedExact.value ? 'router-link-exact-active' : 'router-link-active')
+
+    if (active) tabs.activateTab(computedValue.value)
+  }
+}
+
+const selected = computed(() => tabs.state.active === computedValue.value)
+
+function onClickTab() {
+  if (!props.to) tabs.activateTab(computedValue.value)
+}
+
+const { styles, classes, className } = useTheme('tab', theme, ref({
+  ...props,
+  size: computedSize.value,
+  exact: computedExact.value,
+}), tabs.state)
 </script>
 
 <template>
-  <li :data-value="cValue" class="shrink-0 font-medium" :class="{ 'flex-1': grow }">
+  <li
+    :data-value="computedValue"
+    :style="styles"
+    class="shrink-0 font-medium"
+    :class="[
+      className,
+      { 'flex-1': tabs.state.grow }
+    ]"
+  >
     <component
-      :is="to ? 'x-link' : tag"
+      :is="to ? XLink : tag"
       ref="elRef"
       :to="to"
-      class="py-2 transition-colors duration-150 ease-in-out whitespace-nowrap text-center"
       :class="[
-        sizeClasses,
+        classes.wrapper,
         {
-          'px-8': variant === 'block',
-          'text-[color:var(--x-tabs-text)] dark:text-[color:var(--x-dark-tabs-text)]': selected,
+          'text-[color:var(--x-tabs-text)] dark:text-[color:var(--x-tabs-dark-text)]': selected,
           'cursor-pointer': !disabled,
           'cursor-not-allowed': disabled,
           'cursor-not-allowed text-gray-500': disabled && !selected,
@@ -128,17 +112,22 @@ export default defineComponent({
         name="tab"
         :label="label"
         :value="value"
-        :size="cSize"
+        :size="computedSize"
         :icon="icon"
       >
         <div class="flex items-center justify-center">
-          <XIcon v-if="icon" :icon="icon" :size="cSize" class="mr-1.5 shrink-0" />
-          <span>{{ cLabel }}</span>
+          <x-icon
+            v-if="icon"
+            :icon="icon"
+            :size="computedSize"
+            :class="classes.icon"
+          />
+          <div :class="classes.label">{{ computedLabel }}</div>
         </div>
       </slot>
-      <Teleport v-if="selected && teleportTo" :to="teleportTo">
+      <teleport v-if="selected && teleportTo" :to="teleportTo">
         <slot></slot>
-      </Teleport>
+      </teleport>
     </component>
   </li>
 </template>

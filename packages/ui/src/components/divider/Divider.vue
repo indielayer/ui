@@ -1,28 +1,30 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XDivider' }
+</script>
 
-export default defineComponent({
-  name: 'XDivider',
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
 
-  props: {
-    label: String,
-    vertical: Boolean,
-  },
+import theme from './Divider.theme'
+
+const props = defineProps({
+  label: String,
+  vertical: Boolean,
 })
+
+const { styles, classes, className } = useTheme('divider', theme, props)
 </script>
 
 <template>
   <div
+    :style="styles"
     :class="[
-      {
-        'h-full flex-col': vertical,
-        'w-full': !vertical
-      },
+      className,
+      classes.wrapper
     ]"
-    class="flex justify-center items-center"
   >
     <div
-      class="bg-gray-200 dark:bg-slate-700 flex-grow"
+      :class="classes.line"
       :style="[
         {
           width: vertical ? '1px' : 'auto',
@@ -33,14 +35,16 @@ export default defineComponent({
     <div
       v-if="label"
       class="font-medium text-sm text-gray-600 dark:text-gray-300"
-      :class="[{
-        'my-2': vertical,
-        'mx-4': !vertical
-      }]"
+      :class="[
+        classes.label,
+        {
+          'my-2': vertical,
+          'mx-4': !vertical
+        }]"
       v-text="label"
     ></div>
     <div
-      class="bg-gray-200 dark:bg-slate-700 flex-grow"
+      :class="classes.line"
       :style="[
         {
           width: vertical ? '1px' : 'auto',

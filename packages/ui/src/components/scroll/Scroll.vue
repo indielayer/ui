@@ -1,55 +1,53 @@
 <script lang="ts">
-import { defineComponent, ref, toRefs } from 'vue'
+export default { name: 'XScroll' }
+</script>
+
+<script setup lang="ts">
+import { ref, toRefs } from 'vue'
 import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
+import { useTheme } from '../../composables/theme'
 
-export default defineComponent({
-  name: 'XScroll',
+import theme from './Scroll.theme'
 
-  props: {
-    shadow: Boolean,
-    horizontal: Boolean,
-    mousewheel: Boolean,
-    scrollbar: {
-      type: Boolean,
-      default: true,
-    },
-  },
-
-  setup(props) {
-    const scrollEl = ref<HTMLElement | null>(null)
-
-    const { x, y, isScrolling, arrivedState, directions } = useScroll(scrollEl)
-    const { left, right, top, bottom } = toRefs(arrivedState)
-
-    useResizeObserver(scrollEl, triggerScroll)
-
-    if (props.horizontal && props.mousewheel)
-      useEventListener(scrollEl, 'wheel', (e: WheelEvent) => {
-        if (!scrollEl.value || scrollEl.value.scrollWidth <= scrollEl.value.clientWidth) return
-
-        e.preventDefault()
-        scrollEl.value.scrollLeft += e.deltaY + e.deltaX
-      })
-
-    function triggerScroll() {
-      scrollEl.value?.dispatchEvent(new CustomEvent('scroll'))
-    }
-
-    return {
-      scrollEl,
-      left,
-      right,
-      top,
-      bottom,
-    }
+const props = defineProps({
+  shadow: Boolean,
+  horizontal: Boolean,
+  mousewheel: Boolean,
+  scrollbar: {
+    type: Boolean,
+    default: true,
   },
 })
+
+const scrollEl = ref<HTMLElement | null>(null)
+
+const { x, y, isScrolling, arrivedState, directions } = useScroll(scrollEl)
+const { left, right, top, bottom } = toRefs(arrivedState)
+
+useResizeObserver(scrollEl, triggerScroll)
+
+if (props.horizontal && props.mousewheel)
+  useEventListener(scrollEl, 'wheel', (e: WheelEvent) => {
+    if (!scrollEl.value || scrollEl.value.scrollWidth <= scrollEl.value.clientWidth) return
+
+    e.preventDefault()
+    scrollEl.value.scrollLeft += e.deltaY + e.deltaX
+  })
+
+function triggerScroll() {
+  scrollEl.value?.dispatchEvent(new CustomEvent('scroll'))
+}
+
+const { styles, classes, className } = useTheme('scroll', theme, props)
 </script>
 
 <template>
   <div
     class="flex relative overflow-hidden"
+    :style="styles"
     :class="[
+      className,
+      classes.wrapper,
       $style.scrollWrap,
       horizontal ? [
         $style.horizontal,
@@ -81,7 +79,7 @@ export default defineComponent({
   </div>
 </template>
 
-<style lang="postcss" scoped module>
+<style lang="postcss" module>
 .scrollWrap {
   &:before, &:after {
     content: "";

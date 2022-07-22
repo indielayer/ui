@@ -5,7 +5,8 @@ import { useColors, useNotifications, colors as TailwindColors } from '@indielay
 const notifications = useNotifications()
 const { getPalette } = useColors()
 
-const color500 = ref('#10B981')
+// const color500 = ref('#10B981')
+const color500 = ref('#F46262')
 
 const palette = computed(() => getPalette(color500.value))
 
@@ -48,7 +49,7 @@ function copyPalette(val: any) {
         <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[900]}`">900</div>
       </div>
 
-      <x-button icon="copy" :color="color500" block @click="copyPalette(palette)">Copy Palette</x-button>
+      <x-button icon-left="copy" :color="color500" block @click="copyPalette(palette)">Copy Palette</x-button>
 
       <p class="text-gray-500 dark:text-gray-400 mt-4">This is the generated palette when you use the color directly on the color prop like &#x3C;x-button <b>color="#10B981"</b>&#x3E;Hello&#x3C;/x-button&#x3E;</p>
 

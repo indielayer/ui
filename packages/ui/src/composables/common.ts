@@ -11,6 +11,7 @@ const validators = Object.freeze({
 useCommon.props = () => ({
   size: {
     type: String as PropType<Size>,
+    default: 'md',
     validator: (value: string) => validators.size.includes(value),
   },
 } as const)

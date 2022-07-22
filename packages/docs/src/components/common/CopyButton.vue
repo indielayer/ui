@@ -1,6 +1,6 @@
 <template>
   <x-button
-    :icon="icon"
+    :icon-left="icon"
     :class="animation"
     color="primary"
     size="sm"

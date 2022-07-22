@@ -1,22 +1,30 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XPopoverContainer' }
+</script>
 
-export default defineComponent({
-  name: 'XPopoverContainer',
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
 
-  props: {
-    tag: {
-      default: 'div',
-      type: String,
-    },
+import theme from './PopoverContainer.theme'
+
+const props = defineProps({
+  tag: {
+    default: 'div',
+    type: String,
   },
 })
+
+const { styles, classes, className } = useTheme('popover-container', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="block w-full bg-white dark:bg-gray-700 shadow-lg rounded-md border  border-gray-200 dark:border-gray-800"
+    :style="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
   >
     <slot></slot>
   </component>

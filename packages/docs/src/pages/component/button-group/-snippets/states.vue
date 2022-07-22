@@ -11,9 +11,9 @@
       <x-button>right</x-button>
     </x-button-group>
     <x-button-group color="indigo" outlined>
-      <x-button>left</x-button>
+      <x-button disabled>left</x-button>
       <x-button>middle</x-button>
-      <x-button disabled>right</x-button>
+      <x-button>right</x-button>
     </x-button-group>
   </div>
 </template>

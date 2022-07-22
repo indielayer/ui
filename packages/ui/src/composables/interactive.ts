@@ -1,12 +1,16 @@
 import type { Ref } from 'vue'
 
+export interface InteractiveProps {
+  disabled?: boolean
+  loading?: boolean
+}
+
 export const useInteractive = (
-  el: Ref<HTMLElement | undefined>,
+  el: Ref<HTMLElement | null>,
 ) => {
   return {
-    focus: () => {
-      el.value?.focus?.()
-    },
+    focus: () => el.value?.focus?.(),
+    blur: () => el.value?.blur?.(),
   }
 }
 

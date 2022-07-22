@@ -15,6 +15,7 @@ declare module 'vue' {
     XForm: typeof import('@indielayer/ui')['XForm']
     XIcon: typeof import('@indielayer/ui')['XIcon']
     XImage: typeof import('@indielayer/ui')['XImage']
+    XAbac: typeof import('@indielayer/ui')['XAbac']
     XInput: typeof import('@indielayer/ui')['XInput']
     XLink: typeof import('@indielayer/ui')['XLink']
     XMenu: typeof import('@indielayer/ui')['XMenu']

@@ -1,5 +1,6 @@
-import { inject } from 'vue'
-import { injectColorsKey } from './keys'
+import * as R from 'ramda'
+import { computed, inject, unref } from 'vue'
+import { injectThemeKey } from './keys'
 import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-utils'
 
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
@@ -19,6 +20,15 @@ export interface ColorPalette {
 
 export type ColorLibrary = Record<string, ColorPalette>
 
+export interface ColorsProps {
+  color?: string
+}
+
+export interface ColorComposition {
+  getPalette: (color: string)=> ColorPalette
+  getColorOpacity: (color: string, opacity: number)=> string
+}
+
 const colorCache: ColorLibrary = {}
 
 const defaultColors = {
@@ -29,9 +39,9 @@ const defaultColors = {
   error: tailwindColors.red,
 }
 
-export const useColors = () => {
-  const customColors = inject(injectColorsKey) || defaultColors
-  // if (Object.keys(customColors).length === 0) customColors = calculateColors()
+export const useColors = (): ColorComposition => {
+  const globalTheme = inject(injectThemeKey,  {})
+  const customColors = computed(() => R.mergeRight(defaultColors, unref(globalTheme).colors))
 
   const getTailwindColor = (color: string) => tailwindColors[color]
 
@@ -44,7 +54,7 @@ export const useColors = () => {
 
     if (twColor) return twColor
     if (colorCache[color]) return colorCache[color]
-    if (customColors[color]) return customColors[color]
+    if (customColors.value[color]) return customColors.value[color]
 
     if (!isValidColor(color)) {
       console.warn(`Invalid color: ${color}`)

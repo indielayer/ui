@@ -1,12 +1,13 @@
 import type { App } from 'vue'
 import type { ColorLibrary } from './composables/colors'
-import { injectColorsKey, injectIconsKey } from './composables/keys'
+import { injectColorsKey, injectIconsKey, injectThemeKey } from './composables/keys'
 
-export interface IndielayerUIOptions {
+export type IndielayerUIOptions = {
   prefix?: string,
   components?: any,
   colors?: ColorLibrary,
   icons?: any
+  theme?: any
 }
 
 const defaultOptions: IndielayerUIOptions = {
@@ -23,11 +24,15 @@ const create = (createOptions: IndielayerUIOptions = {}) => {
 
     if (options.components)
       options.components.forEach((component: any) => {
-        app.component(`${options.prefix}${component.name.slice(1)}`, component)
+        // TODO: remove me
+        const name = component.name.startsWith('X') ? component.name.slice(1) : component.name
+
+        app.component(`${options.prefix}${name}`, component)
       })
 
     app.provide(injectColorsKey, options.colors)
     app.provide(injectIconsKey, options.icons || {})
+    app.provide(injectThemeKey, options.theme || {})
   }
 
   return {
