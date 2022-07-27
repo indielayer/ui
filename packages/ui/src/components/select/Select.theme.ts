@@ -15,14 +15,20 @@ export default {
       return c
     },
 
-    popover: ({ props }: ThemeParams) => {
-      let c = 'w-full border border-gray-300 hover:border-gray-400 dark:border-gray-700 pr-8 transition-colors duration-150 ease-in-out rounded-md shadow-sm'
+    box: ({ props, data }: ThemeParams) => {
+      let c = 'w-full border border-gray-300 dark:border-gray-700 pr-8 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm'
+
+      if (!data.errorInternal && !props.disabled) c += ' hover:border-gray-400 dark:hover:border-gray-500'
 
       if (props.size === 'xs') c += ' px-2 py-1 text-xs'
       else if (props.size === 'sm') c += ' px-2 py-2 text-sm'
       else if (props.size === 'lg') c += ' px-4 py-3 text-lg'
       else if (props.size === 'xl') c += ' px-5 py-4 text-xl'
       else c += ' px-3 py-2'
+
+      c += props.disabled
+        ? ' bg-gray-100 dark:bg-gray-900 text-gray-500 cursor-not-allowed'
+        : ' bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 group-focus:outline-[color:var(--x-select-border)]'
 
       return c
     },

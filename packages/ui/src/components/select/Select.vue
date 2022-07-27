@@ -226,7 +226,7 @@ const {
   isInsideForm,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('select', theme, props)
+const { styles, classes, className } = useTheme('select', theme, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -251,15 +251,11 @@ defineExpose({ focus, blur, reset, validate, setError })
     <div class="relative">
       <x-popover ref="popoverRef" block :disabled="disabled || loading" :dismiss-on-click="!multiple">
         <div
-          class="group-focus:border-[color:var(--x-select-border)]"
           :class="[
-            classes.popover,
-            disabled
-              ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200',
+            classes.box,
             {
               // error
-              'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
+              'border-red-500 dark:border-red-400 group-focus:outline-red-500': errorInternal,
             },
           ]"
         >

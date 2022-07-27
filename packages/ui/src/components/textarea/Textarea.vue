@@ -62,7 +62,7 @@ watch([() => props.modelValue, () => props.size], () => {
 const css = useCSS('textarea')
 const colors = useColors()
 const color = colors.getPalette('primary')
-const style = css.get('border', color[500])
+const style = css.get('border', color[400])
 
 function onInput() {
   resize()
@@ -93,7 +93,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('textarea', theme, props)
+const { styles, classes, className } = useTheme('textarea', theme, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -116,13 +116,13 @@ defineExpose({ focus, blur, reset, validate, setError })
 
     <textarea
       ref="elRef"
-      class="focus:border-[color:var(--x-textarea-border)]"
+      class="focus:outline-[color:var(--x-textarea-border)]"
       :style="style"
       :class="[
         classes.input,
         {
           // error
-          'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
+          'border-red-500 dark:border-red-400 focus:outline-red-500': errorInternal,
         },
         inputClass,
       ]"

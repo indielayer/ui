@@ -25,11 +25,13 @@ export default {
       else if (props.size === 'lg') return classes + ' text-lg'
       else if (props.size === 'xl') return classes + ' text-xl'
 
-      return classes + ' text-sm'
+      return classes //+ ' text-sm'
     },
 
-    input: ({ props }: ThemeParams) => {
-      const classes = ['resize-none appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none transition-colors duration-150 ease-in-out border-gray-300 hover:border-gray-400 dark:border-gray-700 border shadow-sm rounded-md']
+    input: ({ props, data }: ThemeParams) => {
+      const classes = ['resize-none appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 outline-transparent outline outline-2 outline-offset-[-1px] transition duration-150 ease-in-out border-gray-300 dark:border-gray-700 border shadow-sm rounded-md']
+
+      if (!data.errorInternal && !props.disabled) classes.push('hover:border-gray-400 dark:hover:border-gray-500')
 
       if (props.size === 'xs') classes.push('px-2 py-1 text-xs')
       else if (props.size === 'sm') classes.push('px-2 py-2 text-sm')
@@ -38,7 +40,7 @@ export default {
       else classes.push('px-3 py-2')
 
       classes.push(props.disabled
-        ? 'bg-gray-100 dark:bg-gray-700 text-gray-500 cursor-not-allowed'
+        ? 'bg-gray-100 dark:bg-gray-900 text-gray-500 cursor-not-allowed'
         : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200')
 
       return classes

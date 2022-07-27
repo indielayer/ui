@@ -3,7 +3,7 @@ export default { name: 'XInput' }
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useTheme } from '../../composables/theme'
 import { useColors } from '../../composables/colors'
 import { useCommon } from '../../composables/common'
@@ -16,7 +16,7 @@ import XInputError from '../helpers/InputError'
 
 import theme from './Input.theme'
 
-const props  = defineProps({
+const props = defineProps({
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
@@ -85,7 +85,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('input', theme, props)
+const { styles, classes, className } = useTheme('input', theme, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -117,7 +117,7 @@ defineExpose({ focus, blur, reset, validate, setError })
 
       <input
         ref="elRef"
-        class="focus:border-[color:var(--x-input-border)]"
+        class="focus:outline-[color:var(--x-input-border)]"
         :class="[
           classes.input,
           type === 'password' ? 'pr-10' : '',
@@ -125,7 +125,7 @@ defineExpose({ focus, blur, reset, validate, setError })
             '!pl-10': iconLeft,
             '!pr-10': iconRight,
             // error
-            'border-red-500 focus:border-red-500 dark:focus:border-red-500': errorInternal,
+            'border-red-500 dark:border-red-400 focus:outline-red-500': errorInternal,
           },
           inputClass,
         ]"
