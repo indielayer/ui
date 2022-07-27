@@ -1,13 +1,3 @@
-<template>
-  <div class="p-2 rounded-none">
-    <x-menu :items="items2" />
-  </div>
-
-  <div class="p-2 mt-4 rounded-lg">
-    <x-menu :items="items" :rounded="false" :filled="false" />
-  </div>
-</template>
-
 <script setup>
 const items2 = [{
   label: 'Open',
@@ -120,3 +110,13 @@ const items = [{
   'exact-active-class': '',
 }]
 </script>
+
+<template>
+  <div class="p-2 rounded-none">
+    <x-menu :items="items2" />
+  </div>
+
+  <div class="p-2 mt-4 rounded-lg">
+    <x-menu :items="items" :rounded="false" :filled="false" />
+  </div>
+</template>

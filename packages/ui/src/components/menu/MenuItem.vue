@@ -112,7 +112,6 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
     :is="htmlTag"
     ref="elRef"
     :to="cItem.to"
-    :href="cItem.href"
     :target="cItem.target"
     :color="cItem.color"
     :style="styles"
