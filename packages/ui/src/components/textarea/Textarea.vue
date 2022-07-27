@@ -136,7 +136,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :name="name"
       :placeholder="placeholder"
       :readonly="readonly"
-      :value="modelValue?.toString()"
+      :value="modelValue ? String(modelValue) : ''"
       v-on="inputListeners"
       @keydown.enter="onEnter"
       @input="onInput"

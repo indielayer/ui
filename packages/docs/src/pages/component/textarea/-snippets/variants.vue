@@ -1,7 +1,6 @@
 <template>
   <div class="grid grid-cols-4 gap-4">
     <x-textarea
-      v-model="sizes"
       flat
       class="mx-2"
       label="Flat"
