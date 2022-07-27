@@ -6,11 +6,16 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { provide, onMounted, watch, nextTick } from 'vue'
+import { provide, onMounted, watch, nextTick, type PropType } from 'vue'
 import { injectFormKey } from '../../composables/keys'
 import { useTheme } from '../../composables/theme'
 
 import theme from './Form.theme'
+
+export type FormError = {
+  field: string
+  msg: string
+}
 
 export type Form = {
   name: string,
@@ -30,8 +35,8 @@ const props = defineProps({
   },
   disabled: Boolean,
   errors: {
-    type: Array,
-    default: () => [],
+    type: [Array, Object] as PropType<[FormError[], FormError]>,
+    default: () => ([]),
   },
 })
 
@@ -63,12 +68,18 @@ onMounted(() => {
 })
 
 watch(() => props.errors, (errors) => {
-  nextTick(() => {
-    errors.forEach((error: any) => {
+  if (errors) nextTick(() => {
+    if (Array.isArray(errors)) errors.forEach((error: any) => {
       const input = inputs.find((i) => i.name === error.field)
 
       if (input) input.setError(error.msg)
     })
+
+    else {
+      const input = inputs.find((i) => i.name === (errors as FormError).field)
+
+      if (input) input.setError((errors as FormError).msg)
+    }
   })
 })
 

@@ -112,7 +112,7 @@ useInputtable.emits = (withListeners = true): string[] => {
 }
 
 useInputtable.props = () => ({
-  modelValue: [String, Number, Boolean, Object, Array] as PropType<[string, number, boolean, object, []]>,
+  modelValue: [String, Number, Boolean, Object, Array] as PropType<string | number | boolean | object | any[] | undefined>,
   name: String,
   readonly: Boolean,
   required: Boolean,
