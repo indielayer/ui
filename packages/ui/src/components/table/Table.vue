@@ -16,12 +16,12 @@ import XSpinner from '../spinner/Spinner.vue'
 import theme from './Table.theme'
 
 export type Header = {
-  sortable?: boolean,
-  sort?: string[],
-  align?: Align,
-  value: string,
-  text: string,
-  width: string | number
+  sortable?: boolean
+  sort?: string[]
+  align?: Align
+  value?: string
+  text?: string
+  width?: string | number
 }
 
 const props = defineProps({
@@ -54,7 +54,9 @@ const props = defineProps({
 
 const emit = defineEmits(['update:sort', 'click-row'])
 
-function getSort(headerValue: string, sort: string[]): Sort {
+function getSort(headerValue: string | undefined, sort: string[]): Sort {
+  if (!headerValue) return undefined
+
   for (let i = 0; i < sort.length; i++) {
     const { 0: value, 1: order } = sort[i].split(',')
 
@@ -95,7 +97,7 @@ function sortHeader(header: Header) {
   emit('update:sort', sort)
 }
 
-function getValue(item: any, path: string | string[]) {
+function getValue(item: any, path: string | string[] | undefined) {
   if (!path) return ''
   const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g)
   const result = pathArray?.reduce((prevObj: any, key: string) => prevObj && prevObj[key], item)
