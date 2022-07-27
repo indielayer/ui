@@ -1,32 +1,30 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
-
-export type Sort = 1 | -1 | undefined
-export type Align = 'left' | 'center' | 'right' | 'justify' | undefined
-
 const validators = {
   sort: [1,-1],
   textAlign: ['left','center','right','justify'],
 }
 
-export default defineComponent({
-  name: 'XTableHeader',
+export default { name: 'XTableHeader', validators }
+</script>
 
-  validators,
+<script setup lang="ts">
+import type { PropType } from 'vue'
 
-  props: {
-    sort: {
-      type: Number as PropType<Sort>,
-      validator: (value: number) => validators.sort.includes(value),
-    },
-    sortable: Boolean,
-    textAlign: {
-      type: String as PropType<Align>,
-      default: 'left',
-      validator: (value: string) => validators.textAlign.includes(value),
-    },
-    stickyHeader: Boolean,
+export type Sort = 1 | -1 | undefined
+export type Align = 'left' | 'center' | 'right' | 'justify' | undefined
+
+const props = defineProps({
+  sort: {
+    type: Number as PropType<Sort>,
+    validator: (value: number) => validators.sort.includes(value),
   },
+  sortable: Boolean,
+  textAlign: {
+    type: String as PropType<Align>,
+    default: 'left',
+    validator: (value: string) => validators.textAlign.includes(value),
+  },
+  stickyHeader: Boolean,
 })
 </script>
 

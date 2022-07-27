@@ -1,22 +1,30 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XSkeleton' }
+</script>
 
-export default defineComponent({
-  name: 'XSkeleton',
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
 
-  props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
+import theme from './Skeleton.theme'
+
+const props = defineProps({
+  tag: {
+    type: String,
+    default: 'div',
   },
 })
+
+const { styles, classes, className } = useTheme('skeleton', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="animate-pulse bg-gray-300 dark:bg-gray-600 rounded-md"
+    :style="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
   >
     &#8203;
   </component>

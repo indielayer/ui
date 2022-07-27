@@ -1,24 +1,31 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XCard' }
+</script>
 
-export default defineComponent({
-  name: 'XCard',
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
 
-  props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
-    flat: Boolean,
+import theme from './Card.theme'
+
+const props = defineProps({
+  tag: {
+    type: String,
+    default: 'div',
   },
+  flat: Boolean,
 })
+
+const { styles, classes, className } = useTheme('card', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="rounded bg-white dark:bg-gray-800"
-    :class="[{ 'shadow': !flat }]"
+    :styles="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
   >
     <slot></slot>
   </component>

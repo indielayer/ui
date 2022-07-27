@@ -4,6 +4,7 @@
       v-model="name"
       label="Normal textarea"
       placeholder="Placeholder"
+      :adjust-to-text="false"
     />
     <x-textarea v-model="multiline" label="Multiline adjust" />
   </div>

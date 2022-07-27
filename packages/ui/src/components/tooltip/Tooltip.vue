@@ -1,17 +1,10 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+export default { name: 'XTooltip' }
+</script>
 
+<script setup lang="ts">
 import XPopover from '../../components/popover/Popover.vue'
 import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
-
-export default defineComponent({
-  name: 'XTooltip',
-
-  components: {
-    XPopover,
-    XPopoverContainer,
-  },
-})
 </script>
 
 <template>

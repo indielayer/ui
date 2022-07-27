@@ -1,48 +1,54 @@
 <script lang="ts">
-import { defineComponent, type PropType } from 'vue'
+export default { name: 'XMenu' }
+</script>
+
+<script setup lang="ts">
+import type { PropType } from 'vue'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/theme'
 
 import XMenuItem from './MenuItem.vue'
 import XCollapse from '../../components/collapse/Collapse.vue'
 import XDivider from '../../components/divider/Divider.vue'
 
-export default defineComponent({
-  name: 'XMenu',
+import theme from './Menu.theme'
 
-  components: {
-    XDivider,
-    XCollapse,
-    XMenuItem,
+const props = defineProps({
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  items: Array as PropType<Array<any>>,
+  collapsible: {
+    type: Boolean,
+    default: true,
   },
-
-  props: {
-    ...useCommon.props(),
-    ...useColors.props('primary'),
-    items: Array as PropType<Array<any>>,
-    collapsible: {
-      type: Boolean,
-      default: true,
-    },
-    collapseIcon: String,
-    expanded: Boolean,
-    disabled: Boolean,
-    rounded: {
-      type: Boolean,
-      default: true,
-    },
-    filled: {
-      type: Boolean,
-      default: true,
-    },
+  collapseIcon: String,
+  expanded: Boolean,
+  disabled: Boolean,
+  rounded: {
+    type: Boolean,
+    default: true,
   },
-
-  emits: ['expand'],
+  filled: {
+    type: Boolean,
+    default: true,
+  },
 })
+
+const emit = defineEmits(['expand'])
+
+const { styles, classes, className } = useTheme('menu', theme, props)
 </script>
 
 <template>
-  <div v-if="items">
+  <div
+    v-if="items"
+    :style="styles"
+    :class="[
+      className,
+      classes.wrapper
+    ]"
+  >
     <template v-for="(item, index) in items" :key="index">
       <template v-if="item.items">
         <x-collapse
@@ -107,18 +113,20 @@ export default defineComponent({
           />
         </template>
       </template>
-      <component
-        :is="item.divider ? 'x-divider' : 'x-menu-item'"
-        v-else
-        :color="item.color || color"
-        :size="item.size || size"
-        :item="item"
-        :disabled="disabled || item.disabled"
-        :filled="filled"
-        :rounded="rounded"
-        :class="{ 'my-2': item.divider }"
-        @active="$emit('expand')"
-      />
+      <template v-else>
+        <x-divider v-if="item.divider"/>
+        <x-menu-item
+          v-else
+          :color="item.color || color"
+          :size="item.size || size"
+          :item="item"
+          :disabled="disabled || item.disabled"
+          :filled="filled"
+          :rounded="rounded"
+          :class="{ 'my-2': item.divider }"
+          @active="$emit('expand')"
+        />
+      </template>
     </template>
   </div>
 </template>

@@ -1,76 +1,48 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
-
 const validators = {
-  textAlign: [
-    null,
-    'left',
-    'center',
-    'right',
-    'justify',
-  ],
-  verticalAlign: [
-    null,
-    'baseline',
-    'bottom',
-    'middle',
-    'text-bottom',
-    'text-top',
-    'top',
-  ],
+  textAlign: [null,'left','center','right','justify'],
+  verticalAlign: [null,'baseline','bottom','middle','text-bottom','text-top','top'],
 }
 
-export default defineComponent({
+export default {
   name: 'XTableCell',
-
   validators,
+}
+</script>
 
-  props: {
-    textAlign: {
-      type: String,
-      validator: (value: string) => validators.textAlign.includes(value),
-    },
-    truncate: Boolean,
-    dense: Boolean,
-    fixed: Boolean,
-    verticalAlign: {
-      type: String,
-      default: 'middle',
-      validator: (value: string) => validators.verticalAlign.includes(value),
-    },
+<script setup lang="ts">
+import { useTheme } from '../../composables/theme'
+
+import theme  from './TableCell.theme'
+
+const props = defineProps({
+  textAlign: {
+    type: String,
+    validator: (value: string) => validators.textAlign.includes(value),
   },
-
-  setup(props) {
-    if (props.truncate && !props.fixed) {
-      console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
-    }
+  truncate: Boolean,
+  dense: Boolean,
+  fixed: Boolean,
+  verticalAlign: {
+    type: String,
+    default: 'middle',
+    validator: (value: string) => validators.verticalAlign.includes(value),
   },
 })
+
+if (props.truncate && !props.fixed) {
+  console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
+}
+
+const { styles, classes, className } = useTheme('table-cell', theme, props)
 </script>
 
 <template>
   <td
-    class="last:pr-0 px-3"
+    :style="styles"
     :class="[
-      {
-        // density
-        'py-2': dense,
-        'py-4': !dense,
-        // text-align
-        'text-left': textAlign === 'left',
-        'text-center': textAlign === 'center',
-        'text-right': textAlign === 'right',
-        'text-justify': textAlign === 'justify',
-        // vertical-align
-        'align-baseline': verticalAlign === 'baseline',
-        'align-bottom': verticalAlign === 'bottom',
-        'align-middle': verticalAlign === 'middle',
-        'align-text-bottom': verticalAlign === 'text-bottom',
-        'align-text-top': verticalAlign === 'text-top',
-        'align-top': verticalAlign === 'top',
-        // truncate
-        'truncate': truncate && fixed,
-      },
+      className,
+      classes.wrapper,
     ]"
   >
     <slot></slot>

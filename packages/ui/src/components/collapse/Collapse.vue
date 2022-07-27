@@ -1,142 +1,126 @@
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+export default { name: 'XCollapse' }
+</script>
+
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/colors'
 
 import XIcon from '../../components/icon/Icon.vue'
 
-export default defineComponent({
-  name: 'XCollapse',
+import theme from './Collapse.theme'
 
-  components: {
-    XIcon,
+const props = defineProps({
+  ...useColors.props(),
+  tag: {
+    type: String,
+    default: 'div',
   },
-
-  props: {
-    tag: {
-      type: String,
-      default: 'div',
-    },
-    disabled: Boolean,
-    expanded: Boolean,
-    showIcon: {
-      type: Boolean,
-      default: true,
-    },
-    icon: String,
-    color: String,
+  disabled: Boolean,
+  expanded: Boolean,
+  showIcon: {
+    type: Boolean,
+    default: true,
   },
-
-  emits: ['expand'],
-
-  expose: ['toggle', 'open', 'close'],
-
-  setup(props, { emit }) {
-    const collapsed = ref(!props.expanded)
-    const animated = ref(true)
-
-    watch(() => props.expanded, () => {
-      collapsed.value = !props.expanded
-    })
-
-    function onBeforeEnter(el: HTMLElement) {
-      if (animated.value) el.style.height = '0px'
-    }
-
-    function onEnter(el: HTMLElement, done: ()=> void) {
-      if (!animated.value) done()
-      else {
-        el.addEventListener('transitionend', done)
-        setTimeout(() => {
-          el.style.height = `${el.scrollHeight}px`
-        }, 1)
-      }
-    }
-
-    function onAfterEnter(el: HTMLElement) {
-      if (!animated.value) {
-        animated.value = true
-      } else {
-        el.style.removeProperty('height')
-      }
-    }
-
-    function onBeforeLeave(el: HTMLElement) {
-      if (!animated.value) return
-      el.style.height = `${el.scrollHeight}px`
-    }
-
-    function onLeave(el: HTMLElement ,done: ()=> void) {
-      if (!animated.value) done()
-      else {
-        el.addEventListener('transitionend', done)
-        setTimeout(() => {
-          el.style.height = '0px'
-        }, 1)
-      }
-    }
-
-    function onAfterLeave(el: HTMLElement) {
-      if (!animated.value) {
-        animated.value = true
-      } else {
-        el.style.removeProperty('height')
-      }
-    }
-
-    function open(anim = true) {
-      animated.value = anim
-      collapsed.value = false
-    }
-
-    function close(anim = true) {
-      animated.value = anim
-      collapsed.value = true
-    }
-
-    function toggle() {
-      if (!props.disabled) collapsed.value = !collapsed.value
-    }
-
-    function onExpand(anim = true) {
-      open(anim)
-      emit('expand')
-    }
-
-    return {
-      collapsed,
-      onBeforeEnter,
-      onEnter,
-      onAfterEnter,
-      onBeforeLeave,
-      onLeave,
-      onAfterLeave,
-      onExpand,
-      toggle,
-      close,
-      open,
-    }
-  },
+  icon: String,
 })
+
+const emit = defineEmits(['expand'])
+
+const collapsed = ref(!props.expanded)
+const animated = ref(true)
+
+watch(() => props.expanded, () => {
+  collapsed.value = !props.expanded
+})
+
+function onBeforeEnter(el: HTMLElement) {
+  if (animated.value) el.style.height = '0px'
+}
+
+function onEnter(el: HTMLElement, done: ()=> void) {
+  if (!animated.value) done()
+  else {
+    el.addEventListener('transitionend', done)
+    setTimeout(() => {
+      el.style.height = `${el.scrollHeight}px`
+    }, 1)
+  }
+}
+
+function onAfterEnter(el: HTMLElement) {
+  if (!animated.value) {
+    animated.value = true
+  } else {
+    el.style.removeProperty('height')
+  }
+}
+
+function onBeforeLeave(el: HTMLElement) {
+  if (!animated.value) return
+  el.style.height = `${el.scrollHeight}px`
+}
+
+function onLeave(el: HTMLElement ,done: ()=> void) {
+  if (!animated.value) done()
+  else {
+    el.addEventListener('transitionend', done)
+    setTimeout(() => {
+      el.style.height = '0px'
+    }, 1)
+  }
+}
+
+function onAfterLeave(el: HTMLElement) {
+  if (!animated.value) {
+    animated.value = true
+  } else {
+    el.style.removeProperty('height')
+  }
+}
+
+function open(anim = true) {
+  animated.value = anim
+  collapsed.value = false
+}
+
+function close(anim = true) {
+  animated.value = anim
+  collapsed.value = true
+}
+
+function toggle() {
+  if (!props.disabled) collapsed.value = !collapsed.value
+}
+
+function onExpand(anim = true) {
+  open(anim)
+  emit('expand')
+}
+
+const { styles, classes, className } = useTheme('collapse', theme, props)
+
+defineExpose({ toggle, open, close })
 </script>
 
 <template>
   <component
     :is="tag"
+    :style="styles"
+    :class="className"
     :aria-disabled="disabled"
     :aria-expanded="collapsed ? 'false' : 'true'"
   >
     <div
-      class="flex items-center relative"
-      :class="{
-        'cursor-pointer' : !disabled,
-        'flex-row-reverse': icon,
-      }"
+      :class="classes.wrapper"
       @click="toggle"
     >
       <div class="flex-1 overflow-hidden">
         <slot :collapsed="collapsed"></slot>
       </div>
 
-      <div v-if="showIcon" class="absolute top-1/2 transform -translate-y-1/2 right-3">
+      <div v-if="showIcon" :class="classes.icon">
         <span
           class="flex transform transition-transform duration-150"
           :class="[
@@ -165,7 +149,7 @@ export default defineComponent({
       <slot name="summary"></slot>
     </template>
 
-    <Transition
+    <transition
       @before-enter="onBeforeEnter"
       @enter="onEnter"
       @after-enter="onAfterEnter"
@@ -173,9 +157,9 @@ export default defineComponent({
       @leave="onLeave"
       @after-leave="onAfterLeave"
     >
-      <div v-show="!collapsed" class="transition-[height] duration-150 overflow-y-hidden">
+      <div v-show="!collapsed" :class="classes.content">
         <slot name="content" :expand="onExpand" :collapsed="collapsed"></slot>
       </div>
-    </Transition>
+    </transition>
   </component>
 </template>

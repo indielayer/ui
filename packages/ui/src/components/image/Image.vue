@@ -1,36 +1,35 @@
 <script lang="ts">
-import { defineComponent, watch, ref } from 'vue'
+export default { name: 'XImage' }
+</script>
+
+<script setup lang="ts">
+import { watch, ref } from 'vue'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Image.theme'
 
 const fallback = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
-export default defineComponent({
-  name: 'XImage',
-
-  props: {
-    src: String,
-  },
-
-  setup(props) {
-    const source = ref<string | undefined>(fallback)
-
-    watch(() => props.src, (src) => {
-      if (!src) return
-      const img = new Image()
-
-      img.onload = () => { source.value = props.src }
-      img.onerror = () => { }
-      img.src = src
-    }, {
-      immediate: true,
-    })
-
-    return {
-      source,
-    }
-  },
+const props = defineProps({
+  src: String,
 })
+
+const source = ref<string | undefined>(fallback)
+
+watch(() => props.src, (src) => {
+  if (!src) return
+  const img = new Image()
+
+  img.onload = () => { source.value = props.src }
+  img.onerror = () => { }
+  img.src = src
+}, {
+  immediate: true,
+})
+
+const { styles, classes, className } = useTheme('image', theme, props)
 </script>
 
 <template>
-  <img :src="source" />
+  <img :class="[className, classes.wrapper]" :style="styles" :src="source" />
 </template>

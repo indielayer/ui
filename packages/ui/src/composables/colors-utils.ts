@@ -34,81 +34,81 @@ export const shades: Tone[] = ['50', '100', '200', '300', '400', '500', '600', '
 export const indielayerColors = ['primary', 'secondary', 'success', 'warning', 'error']
 
 // calculate custom colors
-export function calculateColors(): ColorLibrary {
-  const cc = computedColors
-  const customColors: ColorLibrary = {}
-  const e = document.createElement('div')
+// export function calculateColors(): ColorLibrary {
+//   const cc = computedColors
+//   const customColors: ColorLibrary = {}
+//   const e = document.createElement('div')
 
-  document.body.appendChild(e)
+//   document.body.appendChild(e)
 
-  indielayerColors.forEach((color) => {
-    const c: ColorPalette = { ...tailwindColors.gray }
+//   indielayerColors.forEach((color) => {
+//     const c: ColorPalette = { ...tailwindColors.gray }
 
-    shades.forEach((shade) => {
-      e.className = `bg-${color}-${shade}`
-      c[shade] = window.getComputedStyle(e ,null).getPropertyValue('background-color')
-    })
+//     shades.forEach((shade) => {
+//       e.className = `bg-${color}-${shade}`
+//       c[shade] = window.getComputedStyle(e ,null).getPropertyValue('background-color')
+//     })
 
-    customColors[color] = c
-  })
+//     customColors[color] = c
+//   })
 
-  e.remove()
+//   e.remove()
 
-  return customColors
-}
+//   return customColors
+// }
 
-const computedColors = Object.freeze([
-  'bg-primary-50',
-  'bg-primary-100',
-  'bg-primary-200',
-  'bg-primary-300',
-  'bg-primary-400',
-  'bg-primary-500',
-  'bg-primary-600',
-  'bg-primary-700',
-  'bg-primary-800',
-  'bg-primary-900',
-  'bg-secondary-50',
-  'bg-secondary-100',
-  'bg-secondary-200',
-  'bg-secondary-300',
-  'bg-secondary-400',
-  'bg-secondary-500',
-  'bg-secondary-600',
-  'bg-secondary-700',
-  'bg-secondary-800',
-  'bg-secondary-900',
-  'bg-error-50',
-  'bg-error-100',
-  'bg-error-200',
-  'bg-error-300',
-  'bg-error-400',
-  'bg-error-500',
-  'bg-error-600',
-  'bg-error-700',
-  'bg-error-800',
-  'bg-error-900',
-  'bg-warning-50',
-  'bg-warning-100',
-  'bg-warning-200',
-  'bg-warning-300',
-  'bg-warning-400',
-  'bg-warning-500',
-  'bg-warning-600',
-  'bg-warning-700',
-  'bg-warning-800',
-  'bg-warning-900',
-  'bg-success-50',
-  'bg-success-100',
-  'bg-success-200',
-  'bg-success-300',
-  'bg-success-400',
-  'bg-success-500',
-  'bg-success-600',
-  'bg-success-700',
-  'bg-success-800',
-  'bg-success-900',
-])
+// const computedColors = Object.freeze([
+//   'bg-primary-50',
+//   'bg-primary-100',
+//   'bg-primary-200',
+//   'bg-primary-300',
+//   'bg-primary-400',
+//   'bg-primary-500',
+//   'bg-primary-600',
+//   'bg-primary-700',
+//   'bg-primary-800',
+//   'bg-primary-900',
+//   'bg-secondary-50',
+//   'bg-secondary-100',
+//   'bg-secondary-200',
+//   'bg-secondary-300',
+//   'bg-secondary-400',
+//   'bg-secondary-500',
+//   'bg-secondary-600',
+//   'bg-secondary-700',
+//   'bg-secondary-800',
+//   'bg-secondary-900',
+//   'bg-error-50',
+//   'bg-error-100',
+//   'bg-error-200',
+//   'bg-error-300',
+//   'bg-error-400',
+//   'bg-error-500',
+//   'bg-error-600',
+//   'bg-error-700',
+//   'bg-error-800',
+//   'bg-error-900',
+//   'bg-warning-50',
+//   'bg-warning-100',
+//   'bg-warning-200',
+//   'bg-warning-300',
+//   'bg-warning-400',
+//   'bg-warning-500',
+//   'bg-warning-600',
+//   'bg-warning-700',
+//   'bg-warning-800',
+//   'bg-warning-900',
+//   'bg-success-50',
+//   'bg-success-100',
+//   'bg-success-200',
+//   'bg-success-300',
+//   'bg-success-400',
+//   'bg-success-500',
+//   'bg-success-600',
+//   'bg-success-700',
+//   'bg-success-800',
+//   'bg-success-900',
+// ])
 
 export const tailwindColors: ColorLibrary = Object.freeze({
   slate: {

@@ -1,47 +1,48 @@
 <script lang="ts">
-import { defineComponent, provide } from 'vue'
+export default { name: 'XButtonGroup' }
+</script>
+
+<script setup lang="ts">
+import { provide } from 'vue'
+import { useTheme } from '../../composables/theme'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
 import { useInteractive } from '../../composables/interactive'
 import { injectButtonGroupKey } from '../../composables/keys'
 
-export default defineComponent({
-  name: 'XButtonGroup',
+import theme from './ButtonGroup.theme'
 
-  validators: {
-    ...useCommon.validators(),
+const props = defineProps({
+  ...useCommon.props(),
+  ...useColors.props(),
+  ...useInteractive.props(),
+  tag: {
+    type: String,
+    default: 'div',
   },
-
-  props: {
-    ...useCommon.props(),
-    ...useColors.props(),
-    ...useInteractive.props(),
-    tag: {
-      type: String,
-      default: 'div',
-    },
-    outlined: Boolean,
-    rounded: Boolean,
-    ghost: Boolean,
-    light: Boolean,
-  },
-
-  setup(props) {
-    provide(injectButtonGroupKey, {
-      groupProps: props,
-      isButtonGroup: true,
-    })
-  },
+  outlined: Boolean,
+  rounded: Boolean,
+  ghost: Boolean,
+  light: Boolean,
 })
+
+provide(injectButtonGroupKey, {
+  groupProps: props,
+  isButtonGroup: true,
+})
+
+const { className, classes, styles } = useTheme('button-group', theme, props)
 </script>
 
 <template>
   <component
     :is="tag"
-    class="inline-flex align-middle relative"
+    :style="styles"
     :class="[
+      className,
       $style['button-group'],
-      rounded ? $style['button-group--rounded'] : ''
+      rounded ? $style['button-group--rounded'] : '',
+      classes.wrapper
     ]"
   >
     <slot></slot>
@@ -52,7 +53,7 @@ export default defineComponent({
 .button-group {
   &:not(&--rounded) {
     > :first-child {
-      @apply rounded-l-md border-l
+      @apply rounded-l-md
     }
 
     > :last-child {
@@ -62,7 +63,7 @@ export default defineComponent({
 
   &--rounded {
     > :first-of-type {
-      @apply rounded-l-full border-l
+      @apply rounded-l-full
     }
 
     > :last-child {

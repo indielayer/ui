@@ -1,127 +1,99 @@
 <script lang="ts">
-import { defineComponent, reactive, computed, provide, type PropType, ref, watch, onMounted, watchEffect } from 'vue'
+export default { name: 'XTabGroup' }
+</script>
+
+<script setup lang="ts">
+import { reactive, computed, provide, type PropType, ref, watch, onMounted, watchEffect } from 'vue'
+import { useResizeObserver, useThrottleFn } from '@vueuse/core'
 import { injectTabKey } from '../../composables/keys'
 import { useCommon } from '../../composables/common'
-import { useCSS } from '../../composables/css'
 import { useColors } from '../../composables/colors'
-
-import { useResizeObserver, useThrottleFn } from '@vueuse/core'
+import { useTheme } from '../../composables/theme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
 
-export default defineComponent({
-  name: 'XTabGroup',
+import theme from './TabGroup.theme'
 
-  components: {
-    XScroll,
+const props = defineProps({
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  modelValue: [String, Number],
+  variant: {
+    type: String as PropType<'line' | 'block'>,
+    default: 'line',
   },
-
-  props: {
-    ...useCommon.props(),
-    ...useColors.props('primary'),
-    modelValue: [String, Number],
-    variant: {
-      type: String as PropType<'line' | 'block'>,
-      default: 'line',
-    },
-    align: {
-      type: String as PropType<'left' | 'center' | 'right'>,
-      default: 'left',
-    },
-    ghost: Boolean,
-    grow: Boolean,
-    exact: Boolean,
+  align: {
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: 'left',
   },
-
-  emits: ['update:modelValue'],
-
-  setup(props, { emit }) {
-    const scrollRef = ref()
-    const wrapperRef = ref<HTMLElement>()
-    const trackerRef = ref<HTMLElement>()
-    const tabsRef = ref<HTMLElement>()
-    const tabsContentRef = ref<HTMLElement>()
-
-    const active = ref()
-
-    watchEffect(() => {
-      active.value = props.modelValue
-    })
-
-    const state = reactive({
-      active: computed(() => active.value),
-      variant: computed(() => props.variant),
-      ghost: computed(() => props.ghost),
-      grow: computed(() => props.grow),
-      exact: computed(() => props.exact),
-      size: computed(() => props.size),
-    })
-
-    function activateTab(tab: string | number) {
-      active.value = tab
-      emit('update:modelValue', tab)
-    }
-
-    provide(injectTabKey, {
-      tabsContentRef,
-      activateTab,
-      state,
-    })
-
-    const updateTracker = useThrottleFn((value: string | number | undefined) => {
-      if (typeof value === 'undefined') return
-
-      const tabEl = tabsRef.value?.querySelector(`[data-value="${value}"]`) as HTMLElement
-
-      if (!tabEl || !trackerRef.value) return
-
-      trackerRef.value.style.left = `${tabEl.offsetLeft}px`
-      trackerRef.value.style.width = `${tabEl.offsetWidth}px`
-
-      if (!tabsRef.value || !scrollRef.value) return
-
-      // scrollIntoView only updates one at a time
-      const center = tabEl.offsetLeft - (tabsRef.value.getBoundingClientRect().width - tabEl.getBoundingClientRect().width) / 2
-
-      if (scrollRef.value.scrollEl) scrollRef.value.scrollEl.scrollTo({ left: center, behavior: 'smooth' })
-    }, 100)
-
-    useResizeObserver(wrapperRef, () => { updateTracker(active.value) })
-
-    watch(() => active.value, (value) => {
-      updateTracker(value)
-    })
-
-    onMounted(() => {
-      updateTracker(active.value)
-    })
-
-    const css = useCSS('tabs')
-    const colors = useColors()
-    const gray = colors.getPalette('gray')
-    const style = computed(() => {
-      const color = colors.getPalette(props.color)
-
-      return css.variables({
-        text: color[600],
-        bg: props.ghost ? color[50] : '#fff',
-        dark: {
-          text: color[400],
-          bg: props.ghost ? color[900] : gray[700],
-        },
-      })
-    })
-
-    return {
-      scrollRef,
-      wrapperRef,
-      trackerRef,
-      tabsRef,
-      tabsContentRef,
-      style,
-    }
-  },
+  ghost: Boolean,
+  grow: Boolean,
+  exact: Boolean,
 })
+
+const emit = defineEmits(['update:modelValue'])
+
+const scrollRef = ref<typeof XScroll | null>(null)
+const wrapperRef = ref<HTMLElement | null>(null)
+const trackerRef = ref<HTMLElement | null>(null)
+const tabsRef = ref<HTMLElement | null>(null)
+const tabsContentRef = ref<HTMLElement | null>(null)
+
+const active = ref()
+
+watchEffect(() => {
+  active.value = props.modelValue
+})
+
+const state = reactive({
+  active: computed(() => active.value),
+  variant: computed(() => props.variant),
+  ghost: computed(() => props.ghost),
+  grow: computed(() => props.grow),
+  exact: computed(() => props.exact),
+  size: computed(() => props.size),
+})
+
+function activateTab(tab: string | number) {
+  active.value = tab
+  emit('update:modelValue', tab)
+}
+
+provide(injectTabKey, {
+  tabsContentRef,
+  activateTab,
+  state,
+})
+
+const updateTracker = useThrottleFn((value: string | number | undefined) => {
+  if (typeof value === 'undefined') return
+
+  const tabEl = tabsRef.value?.querySelector(`[data-value="${value}"]`) as HTMLElement
+
+  if (!tabEl || !trackerRef.value) return
+
+  trackerRef.value.style.left = `${tabEl.offsetLeft}px`
+  trackerRef.value.style.width = `${tabEl.offsetWidth}px`
+
+  if (!tabsRef.value || !scrollRef.value) return
+
+  // scrollIntoView only updates one at a time
+  const center = tabEl.offsetLeft - (tabsRef.value.getBoundingClientRect().width - tabEl.getBoundingClientRect().width) / 2
+
+  if (scrollRef.value.scrollEl) scrollRef.value.scrollEl.scrollTo({ left: center, behavior: 'smooth' })
+}, 100)
+
+useResizeObserver(wrapperRef, () => { updateTracker(active.value) })
+
+watch(() => active.value, (value) => {
+  updateTracker(value)
+})
+
+onMounted(() => {
+  updateTracker(active.value)
+})
+
+const { styles, classes, className } = useTheme('tabs', theme, props)
 </script>
 
 <template>
@@ -129,7 +101,11 @@ export default defineComponent({
     <div
       ref="wrapperRef"
       class="relative"
-      :style="style"
+      :style="styles"
+      :class="[
+        className,
+        classes.wrapper,
+      ]"
     >
       <x-scroll
         ref="scrollRef"
@@ -143,24 +119,14 @@ export default defineComponent({
       >
         <ul
           ref="tabsRef"
-          class="flex relative min-w-full w-fit"
-          :class="{
-            'border-b border-gray-200 dark:border-gray-700': variant === 'line',
-            'space-x-8': variant === 'line' && !grow,
-            'z-[1]': variant === 'block',
-            'justify-center': align === 'center',
-            'justify-end': align === 'right'
-          }"
+          class="relative"
+          :class="classes.list"
         >
           <slot></slot>
         </ul>
         <div
           ref="trackerRef"
-          class="absolute transition-all duration-150"
-          :class="{
-            'h-[2px] -mt-[2px] bg-[color:var(--x-tabs-text)] dark:bg-[color:var(--x-dark-tabs-text)]': variant === 'line',
-            'rounded-md h-full top-0 bg-[color:var(--x-tabs-bg)] dark:bg-[color:var(--x-dark-tabs-bg)]': variant === 'block'
-          }"
+          :class="classes.tracker"
         ></div>
       </x-scroll>
     </div>

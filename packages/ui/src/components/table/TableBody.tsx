@@ -1,13 +1,8 @@
-<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'XTableBody',
+  setup(props, { slots }) {
+    return () => <tbody>{slots.default?.()}</tbody>
+  },
 })
-</script>
-
-<template>
-  <tbody>
-    <slot></slot>
-  </tbody>
-</template>

@@ -13,7 +13,7 @@ const drawer = ref(false)
   <Toolbar class="border-y z-10" @open-drawer="drawer = true" />
   <div class="lg:hidden border-b p-2">
     <x-button
-      icon="menu"
+      icon-left="menu"
       size="sm"
       ghost
       @click="drawer = true"
