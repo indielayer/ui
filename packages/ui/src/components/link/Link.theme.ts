@@ -9,9 +9,9 @@ export default {
     const color = colors.getPalette(props.color || 'gray')
 
     return css.variables({
-      text: props.color ? color[500] : '',
+      text: props.color ? color[600] : '',
       hover: {
-        text: !props.shadow ? color[600] : '',
+        text: !props.shadow ? color[700] : '',
       },
       shadow: color[100],
       dark: {

@@ -52,6 +52,7 @@ const state = reactive({
   grow: computed(() => props.grow),
   exact: computed(() => props.exact),
   size: computed(() => props.size),
+  color: computed(() => props.color),
 })
 
 function activateTab(tab: string | number) {

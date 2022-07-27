@@ -39,9 +39,13 @@ const tabs = inject(injectTabKey, {
   tabsContentRef: ref(null),
   activateTab: () => {},
   state: reactive({
-    active: null,
+    active: false,
     variant: 'line',
+    ghost: false,
     grow: false,
+    exact: false,
+    size: 'md',
+    color: 'primary',
   }),
 })
 
@@ -70,6 +74,8 @@ function check() {
 
 const selected = computed(() => tabs.state.active === computedValue.value)
 
+const color = computed(() => tabs.state.color)
+
 function onClickTab() {
   if (!props.to) tabs.activateTab(computedValue.value)
 }
@@ -95,6 +101,7 @@ const { styles, classes, className } = useTheme('tab', theme, ref({
       :is="to ? XLink : tag"
       ref="elRef"
       :to="to"
+      :color="selected ? color : undefined"
       :class="[
         classes.wrapper,
         {
