@@ -56,8 +56,8 @@ export const unrefArray: any = (arr: []) => arr.map(smartUnref)
  *
  * @return {Object}
  */
-export const unrefObject = (obj) => {
-  const unreffed = {}
+export const unrefObject = (obj: any) => {
+  const unreffed: any = {}
 
   // Object? un-ref it!
   Object.keys(obj).forEach((key) => {
