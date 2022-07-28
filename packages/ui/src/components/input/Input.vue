@@ -43,7 +43,6 @@ const props = defineProps({
     type: String,
     default: 'text',
   },
-  inputClass: String,
   block: Boolean,
 })
 
@@ -117,17 +116,17 @@ defineExpose({ focus, blur, reset, validate, setError })
 
       <input
         ref="elRef"
-        class="focus:outline-[color:var(--x-input-border)]"
         :class="[
           classes.input,
           type === 'password' ? 'pr-10' : '',
+          // error
+          errorInternal
+            ? 'border-red-500 dark:border-red-400 focus:outline-red-500'
+            : 'focus:outline-[color:var(--x-input-border)]',
           {
             '!pl-10': iconLeft,
             '!pr-10': iconRight,
-            // error
-            'border-red-500 dark:border-red-400 focus:outline-red-500': errorInternal,
           },
-          inputClass,
         ]"
         :disabled="disabled"
         :min="min"

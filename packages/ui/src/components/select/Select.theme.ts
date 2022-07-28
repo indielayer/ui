@@ -28,7 +28,7 @@ export default {
 
       c += props.disabled
         ? ' bg-gray-100 dark:bg-gray-900 text-gray-500 cursor-not-allowed'
-        : ' bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 group-focus:outline-[color:var(--x-select-border)]'
+        : ' bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200'
 
       return c
     },

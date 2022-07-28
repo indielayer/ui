@@ -37,7 +37,6 @@ const props = defineProps({
     default: true,
   },
   preventEnter: Boolean,
-  inputClass: String,
   block: Boolean,
 })
 
@@ -116,15 +115,13 @@ defineExpose({ focus, blur, reset, validate, setError })
 
     <textarea
       ref="elRef"
-      class="focus:outline-[color:var(--x-textarea-border)]"
+      class=""
       :style="style"
       :class="[
         classes.input,
-        {
-          // error
-          'border-red-500 dark:border-red-400 focus:outline-red-500': errorInternal,
-        },
-        inputClass,
+        errorInternal
+          ? 'border-red-500 dark:border-red-400 focus:outline-red-500'
+          : 'focus:outline-[color:var(--x-textarea-border)]',
       ]"
       :disabled="disabled"
       :max="max"

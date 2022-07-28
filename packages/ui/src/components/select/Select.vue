@@ -256,6 +256,7 @@ defineExpose({ focus, blur, reset, validate, setError })
             {
               // error
               'border-red-500 dark:border-red-400 group-focus:outline-red-500': errorInternal,
+              'group-focus:outline-[color:var(--x-select-border)]': !disabled && !errorInternal
             },
           ]"
         >
