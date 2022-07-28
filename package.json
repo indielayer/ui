@@ -12,6 +12,7 @@
     "release": "lerna publish",
     "release:alpha": "lerna publish prerelease --preid alpha --dist-tag alpha",
     "lint": "eslint --ext .js,.ts,.vue .",
+    "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
     "test": "cd packages/ui && pnpm test"
   },
   "repository": {

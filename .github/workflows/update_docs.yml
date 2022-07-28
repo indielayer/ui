@@ -41,8 +41,8 @@ jobs:
         run: |
           git config --global init.defaultBranch master
           git init
-          git config user.name 'João Teixeira'
-          git config user.email 'joao@indielayer.com'
+          git config user.name 'IndieBot'
+          git config user.email 'bot@indielayer.com'
           git add .
           git commit -m "chore: deploy documentation: ${{github.sha}}"
           git push -f https://${{ secrets.PAT }}@github.com/indielayer/ui master:gh-pages

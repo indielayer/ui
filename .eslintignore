@@ -17,3 +17,4 @@ packages/ui/lib
 packages/create-ui/outfile.cjs
 packages/docs/dist
 packages/create-ui/templates
+packages/ui/vite.config.ts
