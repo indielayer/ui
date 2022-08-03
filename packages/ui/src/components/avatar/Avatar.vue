@@ -1,9 +1,12 @@
 <script lang="ts">
-export default { name: 'XAvatar' }
+export default {
+  name: 'XAvatar',
+  validators: useCommon.validators(),
+}
 </script>
 
 <script setup lang="ts">
-import { computed, ref, unref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
 import { useTheme } from '../../composables/theme'

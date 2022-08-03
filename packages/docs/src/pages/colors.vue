@@ -71,6 +71,7 @@ function copyPalette(val: any) {
 
       <p class="my-2">Customize the color prop, e.g. <b>color="primary"</b> on the UI initialization.</p>
       <code-snippet
+        lang="js"
         :code="`import { createApp } from 'vue'
 import UI, { colors } from '@indielayer/ui'
 import '@indielayer/ui/styles'
@@ -93,6 +94,7 @@ app.use(UI, {
 
       <div>
         <code-snippet
+          lang="js"
           :code="`// tailwind.config.js
 //...
 const colors = require('tailwindcss/colors')

@@ -1,40 +1,36 @@
-<template>
-  <document-page components="Collapse" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XCollapse } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
+import ExpandedDemoCode from './expanded.vue?raw'
+import ExpandedDemo from './expanded.vue'
 
-    <!-- usage  -->
-    <h2 id="expanded"><a href="#expanded">#</a>Expanded</h2>
-    <code-preview :code="snippets.expanded">
-      <expanded-snippet />
-    </code-preview>
-
-  </document-page>
-</template>
-
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-import ExpandedSnippetCode from './-snippets/expanded.vue?raw'
-import ExpandedSnippet from './-snippets/expanded.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-    ExpandedSnippet,
-  },
-  data() {
-    return {
-      title: 'Collapse',
-      description: 'Collapse',
-      snippets: {
-        usage: UsageSnippetCode,
-        expanded: ExpandedSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Collapse'
+const description = 'Collapse.'
+const components = [XCollapse]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}, {
+  name: 'Expanded',
+  description: '',
+  code: ExpandedDemoCode,
+  component: ExpandedDemo,
+}]
+const back = 'card'
+const next = 'container'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/collapse"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

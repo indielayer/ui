@@ -78,7 +78,7 @@ const contentClasses = computed(() => {
     'bottom-0': props.align === 'bottom' && ['left', 'right'].includes(props.position),
   })
 
-  if (props.position === 'top') c.push(`bottom-full pb-2 ${$style.popoverTop}`)
+  if (props.position === 'top') c.push(`bottom-full ${$style.popoverTop}`)
   if (props.position === 'right') c.push(`left-full pl-2 ${$style.popoverRight}`)
   if (props.position === 'bottom') c.push(`top-full bottom-0 ${$style.popoverBottom}`)
   if (props.position === 'left') c.push(`right-full left-auto pr-2 ${$style.popoverLeft}`)
@@ -154,13 +154,13 @@ defineExpose({ open, close, toggle, isOpen })
     --tw-translate-y: 0.5rem;
   }
   .popoverRight {
-    --tw-translate-x: -0.5rem;
+    --tw-translate-x: 0.5rem;
   }
   .popoverBottom {
-    --tw-translate-y: -0.25rem;
+    --tw-translate-y: -0.5rem;
   }
   .popoverLeft {
-    --tw-translate-x: 0.5rem;
+    --tw-translate-x: -0.5rem;
   }
 
   &.hover:hover .popoverContent,
@@ -172,7 +172,7 @@ defineExpose({ open, close, toggle, isOpen })
 
   &.hover:hover .popoverTop,
   &.is-open .popoverTop {
-    --tw-translate-y: 0.25rem;
+    --tw-translate-y: -0.25rem;
   }
 
   &.hover:hover .popoverRight,

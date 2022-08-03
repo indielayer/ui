@@ -1,45 +1,80 @@
+<script lang="ts">
+import { setCDN, getHighlighter } from 'shiki'
+import theme from './Indielayer-theme.json'
+
+setCDN("/node_modules/shiki/");
+// setCDN('/')
+// setCDN(`https://cdn.jsdelivr.net/npm/shiki-es@${version}/dist/assets/`)
+// setCDN(`-`)
+
+// const t = loadTheme('./Indielayer-theme.json')
+
+const highlighter = getHighlighter({
+  theme,
+  // theme,
+  // langs: [{
+  //   id: 'ts',
+  //   scopeName: 'source.ts',
+  //   path: './languages/typescript.tmLanguage.json'
+  // }, {
+  //   id: 'vue-html',
+  //   scopeName: 'text.html.vue-html',
+  //   path: './languages/vue-html.tmLanguage.json'
+  // }, {
+  //   id: 'bash',
+  //   scopeName: 'source.sh',
+  //   path: './languages/bash.tmLanguage.json'
+  // }, {
+  //   id: 'vue',
+  //   scopeName: 'source.vue',
+  //   path: './languages/vue.tmLanguage.json'
+  // }, {
+  //   id: 'js',
+  //   scopeName: 'source.js',
+  //   path: './languages/javascript.tmLanguage.json'
+  // }]
+})
+</script>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+
+
+const props = defineProps({
+  code: String,
+  lang: {
+    type: String,
+    default: 'vue',
+  },
+  showCopyButton: {
+    type: Boolean,
+    default: true,
+  },
+})
+
+const highlighted = ref('')
+
+onMounted(async () => {
+  highlighted.value = (await highlighter).codeToHtml(props.code, { lang: props.lang })
+})
+</script>
+
 <template>
-  <div class="hljs relative px-5 py-4 dark">
-    <highlightjs v-if="lang === 'javascript'" language="js" :code="code" />
-    <pre v-else v-html="highlighted"></pre>
-    <copy-button class="!absolute top-2 right-2" :text="code"/>
+  <div class="relative">
+    <div v-html="highlighted"></div>
+    <copy-button v-if="showCopyButton" class="!absolute top-2 right-2" :text="code"/>
   </div>
 </template>
 
-<script>
-import hljs from 'highlight.js/lib/core'
-import javascript from 'highlight.js/lib/languages/javascript'
-import typescript from 'highlight.js/lib/languages/typescript'
-import bash from 'highlight.js/lib/languages/bash'
-import css from 'highlight.js/lib/languages/css'
-import xml from 'highlight.js/lib/languages/xml'
-import hljsVuePlugin from '@highlightjs/vue-plugin'
-import '@/assets/css/hljs.css'
+<style lang="postcss">
+.shiki {
+  /* font-family: 'Fira Code VF', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
+  @apply rounded-md overflow-x-auto p-4 text-sm;
 
-hljs.registerLanguage('javascript', javascript)
-hljs.registerLanguage('typescript', typescript)
-hljs.registerLanguage('bash', bash)
-hljs.registerLanguage('css', css)
-hljs.registerLanguage('xml', xml)
+  code { font-family: 'Fira Code', monospace; }
 
-export default {
-  components: {
-    highlightjs: hljsVuePlugin.component,
-  },
-  props: {
-    code: {
-      type: String,
-      default: '',
-    },
-    lang: {
-      type: String,
-      default: 'javascript',
-    },
-  },
-  computed: {
-    highlighted() {
-      return hljs.highlight(this.code, { language: this.lang }).value
-    },
-  },
+  @supports (font-variation-settings: normal) {
+    code { font-family: 'Fira Code VF', monospace; }
+  }
 }
-</script>
+</style>

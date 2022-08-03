@@ -19,10 +19,7 @@ const props = defineProps({
   },
   disabled: Boolean,
   expanded: Boolean,
-  showIcon: {
-    type: Boolean,
-    default: true,
-  },
+  showIcon: Boolean,
   icon: String,
 })
 

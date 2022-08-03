@@ -1,6 +1,6 @@
 <template>
-  <div class="hljs pl-4 pt-1 dark">
-    <x-tab-group v-model="selected">
+  <div class="pt-1">
+    <x-tab-group v-model="selected" class="mb-2">
       <x-tab v-for="(snippet, index) in snippets" :key="index" :value="index" :label="snippet.label"/>
     </x-tab-group>
     <div v-for="(snippet, index) in snippets" :key="index">

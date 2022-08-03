@@ -20,7 +20,7 @@ const props = defineProps({
     type: String as PropType<'left' | 'right' | 'top' | 'bottom'>,
     default: 'left',
   },
-  to: {
+  teleportTo: {
     type: [String, Object] as PropType<string | HTMLElement>,
     default: 'body',
   },
@@ -169,7 +169,7 @@ function onLeave(el: HTMLElement, done: ()=> void) {
   }, 1)
 }
 
-const deferShow = ref<boolean>(!!(props.to && (props.to instanceof HTMLElement || document.querySelector(props.to))))
+const deferShow = ref<boolean>(!!(props.teleportTo && (props.teleportTo instanceof HTMLElement || document.querySelector(props.teleportTo))))
 
 onMounted(() => {
   deferShow.value = true
@@ -181,7 +181,7 @@ defineExpose({ open, close })
 </script>
 
 <template>
-  <teleport v-if="deferShow" :to="to" :disabled="!detached">
+  <teleport v-if="deferShow" :to="teleportTo" :disabled="!detached">
     <transition
       :css="false"
       @before-enter="onBeforeEnter"

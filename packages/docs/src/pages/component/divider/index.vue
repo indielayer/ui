@@ -1,50 +1,43 @@
-<template>
-  <document-page components="Divider" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XDivider } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
+import LabelDemoCode from './label.vue?raw'
+import LabelDemo from './label.vue'
+import VerticalDemoCode from './vertical.vue?raw'
+import VerticalDemo from './vertical.vue'
 
-    <!-- vertical  -->
-    <h2 id="vertical"><a href="#vertical">#</a>Vertical</h2>
-    <code-preview :code="snippets.vertical">
-      <vertical-snippet />
-    </code-preview>
-
-    <!-- usage  -->
-    <h2 id="label"><a href="#label">#</a>Label</h2>
-    <code-preview :code="snippets.label">
-      <label-snippet />
-    </code-preview>
-
-  </document-page>
-</template>
-
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-import LabelSnippetCode from './-snippets/label.vue?raw'
-import LabelSnippet from './-snippets/label.vue'
-import VerticalSnippetCode from './-snippets/vertical.vue?raw'
-import VerticalSnippet from './-snippets/vertical.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-    LabelSnippet,
-    VerticalSnippet,
-  },
-  data() {
-    return {
-      title: 'Divider',
-      description: 'Divider',
-      snippets: {
-        usage: UsageSnippetCode,
-        vertical: VerticalSnippetCode,
-        label: LabelSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Divider'
+const description = 'divider.'
+const components = [XDivider]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}, {
+  name: 'Label',
+  description: '',
+  code: LabelDemoCode,
+  component: LabelDemo,
+}, {
+  name: 'Vertical',
+  description: '',
+  code: VerticalDemoCode,
+  component: VerticalDemo,
+}]
+const back = 'container'
+const next = 'drawer'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/divider"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

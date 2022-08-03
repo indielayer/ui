@@ -4,6 +4,6 @@ export default {
   classes: {
     wrapper: 'inline-block relative',
 
-    content: 'w-fit max-w-xs',
+    content: 'w-max max-w-xs',
   },
 }

@@ -1,75 +1,64 @@
-<template>
-  <document-page components="Button" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XButton, XButtonGroup } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
+import VariantsDemoCode from './variants.vue?raw'
+import VariantsDemo from './variants.vue'
+import IconsDemoCode from './icons.vue?raw'
+import IconsDemo from './icons.vue'
+import ButtonGroupDemoCode from './button-group.vue?raw'
+import ButtonGroupDemo from './button-group.vue'
+import SizeDemoCode from './size.vue?raw'
+import SizeDemo from './size.vue'
+import StatesDemoCode from './states.vue?raw'
+import StatesDemo from './states.vue'
 
-    <h2 id="variants"><a href="#variants">#</a>Variants</h2>
-    <code-preview :code="snippets.variants">
-      <variants-snippet />
-    </code-preview>
-
-    <h2 id="states"><a href="#states">#</a>States</h2>
-    <code-preview :code="snippets.states">
-      <states-snippet />
-    </code-preview>
-
-    <h2 id="icons"><a href="#icons">#</a>Icons</h2>
-    <code-preview :code="snippets.icons">
-      <icons-snippet />
-    </code-preview>
-  </document-page>
-</template>
-
-<script>
-// const files = import.meta.globEager('./-snippets/*.vue')
-// const components = {}
-// const snippets = Object.keys(files).map((path) => {
-//   const name = path.match(/\.\/-snippets\/(.*)\.vue$/)[1].toLowerCase()
-//   const nameCapitalized = name.charAt(0).toUpperCase() + name.slice(1)
-
-//   const component = files[path].default
-//   const componentName = nameCapitalized + 'Snippet'
-
-//   components[componentName] = component
-
-//   return {
-//     name,
-//     nameCapitalized,
-//     component,
-//     componentName,
-//   }
-// })
-
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-import StatesSnippetCode from './-snippets/states.vue?raw'
-import StatesSnippet from './-snippets/states.vue'
-import IconsSnippetCode from './-snippets/icons.vue?raw'
-import IconsSnippet from './-snippets/icons.vue'
-import VariantsSnippetCode from './-snippets/variants.vue?raw'
-import VariantsSnippet from './-snippets/variants.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-    StatesSnippet,
-    IconsSnippet,
-    VariantsSnippet,
-  },
-  data() {
-    return {
-      title: 'Button',
-      description: 'Button',
-      snippets: {
-        usage: UsageSnippetCode,
-        states: StatesSnippetCode,
-        icons: IconsSnippetCode,
-        variants: VariantsSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Button'
+const description = 'Used to trigger an action, such as submitting a form, opening a menu, or performing a command.'
+const components = [XButton, XButtonGroup]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}, {
+  name: 'Variants',
+  description: '',
+  code: VariantsDemoCode,
+  component: VariantsDemo,
+}, {
+  name: 'Icons',
+  description: '',
+  code: IconsDemoCode,
+  component: IconsDemo,
+}, {
+  name: 'Size',
+  description: '',
+  code: SizeDemoCode,
+  component: SizeDemo,
+}, {
+  name: 'Button Group',
+  description: '',
+  code: ButtonGroupDemoCode,
+  component: ButtonGroupDemo,
+}, {
+  name: 'States',
+  description: '',
+  code: StatesDemoCode,
+  component: StatesDemo,
+}]
+const back = 'breadcrumbs'
+const next = 'card'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/button"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

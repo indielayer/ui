@@ -5,6 +5,9 @@ export default { name: 'XLink' }
 <script setup lang="ts">
 import { useColors } from '../../composables/colors'
 import { useTheme } from '../../composables/theme'
+import { externalIcon } from '../../common/icons'
+
+import XIcon from '../icon/Icon.vue'
 
 import theme from './Link.theme'
 
@@ -41,20 +44,7 @@ const { styles, classes, className } = useTheme('link', theme, props)
       class="inline-flex items-center"
     >
       <slot></slot>
-      <svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        fill="none"
-        role="presentation"
-        class="stroke-2 w-4 h-4 ml"
-      >
-        <line x1="7" y1="17" x2="17" y2="7" />
-        <polyline points="7 7 17 7 17 17" />
-      </svg>
+      <x-icon :icon="externalIcon" />
     </span>
     <template v-else>
       <slot></slot>

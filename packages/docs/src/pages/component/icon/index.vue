@@ -1,38 +1,36 @@
-<template>
-  <document-page components="Icon" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XIcon } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
+import VariantsDemoCode from './variants.vue?raw'
+import VariantsDemo from './variants.vue'
 
-    <h2 id="variants"><a href="#variants">#</a>Variants</h2>
-    <code-preview :code="snippets.variants">
-      <variants-snippet />
-    </code-preview>
-  </document-page>
-</template>
-
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-import VariantsSnippetCode from './-snippets/variants.vue?raw'
-import VariantsSnippet from './-snippets/variants.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-    VariantsSnippet,
-  },
-  data() {
-    return {
-      title: 'Icon',
-      description: 'Icon',
-      snippets: {
-        usage: UsageSnippetCode,
-        variants: VariantsSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Icon'
+const description = 'Icon.'
+const components = [XIcon]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}, {
+  name: 'Variants',
+  description: '',
+  code: VariantsDemoCode,
+  component: VariantsDemo,
+}]
+const back = 'drawer'
+const next = 'link'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/icon"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

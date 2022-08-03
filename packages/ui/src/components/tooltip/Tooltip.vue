@@ -8,12 +8,14 @@ import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 </script>
 
 <template>
-  <x-popover hover class="dark">
+  <x-popover hover>
     <slot></slot>
     <template #content>
-      <x-popover-container class="p-2 text-white text-sm">
-        <slot name="tooltip"></slot>
-      </x-popover-container>
+      <div class="dark">
+        <x-popover-container class="p-2 text-white text-sm">
+          <slot name="tooltip"></slot>
+        </x-popover-container>
+      </div>
     </template>
   </x-popover>
 </template>

@@ -1,30 +1,29 @@
-<template>
-  <document-page :components="['TabGroup', 'Tab']" :title="title" :description="description" >
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XTabGroup, XTab } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
 
-  </document-page>
-</template>
-
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-  },
-  data() {
-    return {
-      title: 'Tabs',
-      description: 'Tabs',
-      snippets: {
-        usage: UsageSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Tabs'
+const description = 'Tabs.'
+const components = [XTabGroup, XTab]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}]
+const back = 'table'
+const next = 'tag'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/tabs"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

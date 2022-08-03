@@ -5,11 +5,9 @@
       <h1 class="text-lg my-2 text-gray-500 dark:text-gray-400">Tailwind CSS UI components for Vue.js 3 / Nuxt.js 3. Build and prototype fast web applications.</h1>
       <x-divider class="mt-4 mb-8"/>
 
-      <x-alert type="warning" color="orange" outlined class="my-8">This library is in development. It's alpha for testing purposes and for Indielayer internal tools.</x-alert>
-
       <h3 class="text-2xl mb-4">Quickstart a new Vue 3 or Nuxt 3 project</h3>
       <p class="my-4">
-        This following command will install and execute <x-link external href="https://github.com/indielayer/ui/tree/main/packages/create-ui" shadow color="primary">@indielayer/create-ui</x-link>, the official Indielayer UI project scaffolding tool. You will be presented with prompts for a number of optional features such as TypeScript.
+        This following command will install and execute <x-link external href="https://github.com/indielayer/ui/tree/main/packages/create-ui" target="_blank" shadow color="primary">@indielayer/create-ui</x-link>, the official Indielayer UI project scaffolding tool. You will be presented with prompts for a number of optional features such as TypeScript.
       </p>
       <code-snippet :code="`npm init @indielayer/ui`" lang="bash"/>
       <pre class="bg-slate-600 text-slate-50 text-xs mt-4 px-4 py-2 rounded-md">? Project type: › - Use arrow-keys. Return to submit.
@@ -40,6 +38,7 @@
         Add Indielayer Tailwind CSS preset <b>tailwind.preset.js</b> to your Tailwind CSS configuration file tailwind.config.js and <b>purge css configurations.</b>
       </p>
       <code-snippet
+        lang="js"
         :code="`// tailwind.config.js
 const colors = require('tailwindcss/colors')
 const indielayer = require('@indielayer/ui/tailwind.preset')
@@ -72,6 +71,7 @@ module.exports = {
       <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your project</h3>
       <h4 class="text-xl mt-8 mb-4">Load on a Vue 3 project</h4>
       <code-snippet
+        lang="js"
         :code="`import { createApp } from 'vue'
 import UI from '@indielayer/ui'
 import '@indielayer/ui/styles'
@@ -84,6 +84,7 @@ app.use(UI, {
       />
       <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
       <code-snippet
+        lang="js"
         :code="`import { defineNuxtConfig } from 'nuxt'
 import { colors } from '@indielayer/ui'
 
@@ -116,6 +117,7 @@ export default defineNuxtConfig({
       />
       <h3 class="text-2xl mt-8 mb-4">4. (optional) Load only the components you want</h3>
       <code-snippet
+        lang="js"
         :code="`import { createApp } from 'vue'
 import { createUI, XButton, XAlert } from '@indielayer/ui'
 import '@indielayer/ui/styles'

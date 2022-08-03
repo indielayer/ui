@@ -1,32 +1,74 @@
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+import { ref } from 'vue'
+
+const props = defineProps({
+  title: String,
+  description: String,
+  code: String,
+  github: String,
+  lang: {
+    type: String,
+    default: 'vue',
+  },
+  expanded: Boolean,
+})
+
+const notifications = useNotifications()
+
+const codeRef = ref()
+const expandedSync = ref(props.expanded)
+
+function toggleCode() {
+  codeRef.value.toggle()
+  expandedSync.value = !expandedSync.value
+}
+
+function copy(text: string) {
+  const el = document.createElement('textarea')
+
+  el.value = text
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+  notifications.success('Copied to clipboard!')
+}
+</script>
+
 <template>
   <div>
+    <h2 :id="title?.toLowerCase()" class="flex border-b pb-1 items-center">
+      <a class="anchor" :href="`#${title?.toLowerCase()}`">#</a>
+      <div class="mr-2 cursor-pointer" @click="toggleCode">{{ title }}</div>
+      <x-spacer/>
+      <x-tooltip position="top">
+        <x-link :href="`${github}/-snippets/${title?.toLowerCase()}.vue`" target="blank">
+          <x-button icon="edit" ghost size="sm"/>
+        </x-link>
+        <template #tooltip>
+          Edit on <span class="text-gray-300">GitHub</span>
+        </template>
+      </x-tooltip>
+
+      <x-tooltip position="top">
+        <x-button icon="copy" ghost size="sm" @click="copy(code)"/>
+        <template #tooltip>Copy</template>
+      </x-tooltip>
+
+      <x-tooltip position="top">
+        <x-button icon="code" ghost size="sm" @click="toggleCode"/>
+        <template #tooltip>{{ expandedSync ? 'Hide' : 'Show' }} code</template>
+      </x-tooltip>
+    </h2>
+    <p>{{ description }}</p>
     <slot></slot>
-    <x-collapse :expanded="expanded">
-      <template #default="{ collapsed }">
-        <div class="text-center hover:bg-gray-100 border-gray-200 dark:hover:bg-secondary-800 dark:border-secondary-700 p-2 my-4 border-t border-b">{{ collapsed ? 'Show Code' : 'Hide' }}</div>
-      </template>
+    <x-collapse ref="codeRef" :expanded="expanded">
       <template #content>
-        <code-snippet :code="code" :lang="lang"/>
+        <div class="mt-4">
+          <code-snippet :code="code" :lang="lang" :show-copy-button="false"/>
+        </div>
       </template>
     </x-collapse>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    code: {
-      type: String,
-      default: '',
-    },
-    lang: {
-      type: String,
-      default: 'javascript',
-    },
-    expanded: {
-      type: Boolean,
-      default: false,
-    },
-  },
-}
-</script>

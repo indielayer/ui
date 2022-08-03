@@ -34,11 +34,13 @@
 
       <h3 class="text-2xl mt-8 mb-4">1. Create the icons file -> <strong>icons.js</strong></h3>
       <code-snippet
+        lang="js"
         :code="iconExample"
       />
 
       <h3 class="text-2xl mt-8 mb-4">2. Add icons on UI install options -> <strong>main.js</strong></h3>
       <code-snippet
+        lang="js"
         :code="installExample"
       />
 
@@ -46,12 +48,12 @@
       <p class="mb-2 text-xl">Start adding the icons you need.</p>
       <p class="mb-2">SVG wrapper optional, copy only the content part of the SVG:</p>
       <p class="mb-4 border dark:border-gray-600 rounded-md p-4">&#x3C;svg xmlns=&#x22;http://www.w3.org/2000/svg&#x22; width=&#x22;24&#x22; height=&#x22;24&#x22; viewBox=&#x22;0 0 24 24&#x22; fill=&#x22;none&#x22; stroke=&#x22;currentColor&#x22; stroke-width=&#x22;2&#x22; stroke-linecap=&#x22;round&#x22; stroke-linejoin=&#x22;round&#x22; class=&#x22;feather feather-check&#x22;&#x3E;<strong>&#x3C;polyline points=&#x22;20 6 9 17 4 12&#x22;&#x3E;&#x3C;/polyline&#x3E;</strong>&#x3C;/svg&#x3E;</p>
-      <code-snippet :code="iconExample1"/>
+      <code-snippet lang="js" :code="iconExample1"/>
 
       <div class="my-4">
         Icon "check" <x-icon icon="check"/>
       </div>
-      <code-snippet :code="iconExample2"/>
+      <code-snippet lang="js" :code="iconExample2"/>
     </section>
   </div>
 </template>

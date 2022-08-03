@@ -3,7 +3,7 @@ import type { ThemeParams } from '../../composables/theme'
 export default {
   classes: {
     wrapper: ({ props, data }: ThemeParams) => {
-      const classes: any[] = ['relative !flex items-center whitespace-nowrap px-3 mt-1']
+      const classes: any[] = ['relative !flex items-center whitespace-nowrap px-3']
 
       classes.push({
         'font-medium': data.isActive,
@@ -16,7 +16,7 @@ export default {
         'py-3': props.size === 'lg',
         'py-4 text-lg': props.size === 'xl',
 
-        'rounded my-[1px]': props.rounded,
+        'rounded': props.rounded,
       })
 
       return classes

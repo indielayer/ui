@@ -1,50 +1,50 @@
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+import { onUnmounted, ref } from 'vue'
+
+const props = defineProps({
+  text: String,
+})
+
+const notifications = useNotifications()
+
+const icon = ref('copy')
+const animation = ref('')
+
+let timeout: number | undefined
+
+onUnmounted(() => {
+  clearTimeout(timeout)
+})
+
+function copyText() {
+  clearTimeout(timeout)
+  animation.value = 'animate-ping'
+  copy(props.text || '')
+  notifications.success('Copied to clipboard!')
+  timeout = setTimeout(() => {
+    animation.value = ''
+  }, 1000)
+}
+
+function copy(text: string) {
+  const el = document.createElement('textarea')
+
+  el.value = text
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+}
+</script>
+
 <template>
   <x-button
     :icon-left="icon"
     :class="animation"
     color="primary"
     size="sm"
+    ghost
     @click="copyText"
   />
 </template>
-
-<script>
-export default {
-  props: {
-    text: {
-      type: String,
-      default: '',
-    },
-  },
-  data() {
-    return {
-      icon: 'copy',
-      animation: '',
-    }
-  },
-  beforeUnmount() {
-    clearTimeout(this.timeout)
-  },
-  methods: {
-    copyText() {
-      clearTimeout(this.timeout)
-      // this.icon = 'copy'
-      this.animation = 'animate-ping'
-      this.copy(this.text)
-      this.timeout = setTimeout(() => {
-        // this.icon = 'copy'
-        this.animation = ''
-      }, 1000)
-    },
-    copy(text) {
-      const el = document.createElement('textarea')
-
-      el.value = text
-      document.body.appendChild(el)
-      el.select()
-      document.execCommand('copy')
-      document.body.removeChild(el)
-    },
-  },
-}
-</script>

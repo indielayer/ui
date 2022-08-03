@@ -41,8 +41,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "pnpm build-only && chokidar \"./src/**\" -c \"pnpm build-only\"",
-    "dev2": "vite build --watch",
+    "dev": "vite build --watch",
+    "dev2": "pnpm build-only && chokidar \"./src/**\" -c \"pnpm build-only\"",
     "build": "pnpm generate && vite build",
     "build-prod": "pnpm build && pnpm gen-types",
     "build-only": "vite build",

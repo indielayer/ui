@@ -109,53 +109,55 @@ const { styles, classes, className } = useTheme('table', theme, props)
 </script>
 
 <template>
-  <table
-    :style="styles"
-    :class="[
-      className,
-      classes.wrapper,
-    ]"
-  >
-    <x-table-head>
-      <x-table-header
-        v-for="(header, index) in headers"
-        :key="index"
-        :sticky-header="stickyHeader"
-        :text-align="header.align"
-        :sort="getSort(header.value, sort)"
-        :sortable="header.sortable"
-        :width="header.width"
-        @click="header.sortable ? sortHeader(header) : null"
-      >
-        {{ header.text }}
-      </x-table-header>
-    </x-table-head>
-    <x-table-body>
-      <x-table-row
-        v-for="(item, index) in items"
-        :key="index"
-        :pointer="pointer"
-        :striped="striped"
-        @click="$emit('click-row', item)"
-      >
-        <x-table-cell
-          v-for="(header, index2) in headers"
-          :key="index2"
-          :text-align="header.align"
-          :dense="dense"
-          :fixed="fixed"
-        >
-          <slot :name="`item-${header.value}`" :item="item">
-            {{ getValue(item, header.value) }}
-          </slot>
-        </x-table-cell>
-      </x-table-row>
-    </x-table-body>
-    <div
-      v-if="loading"
-      :class="classes.loadingWrapper"
+  <div class="w-full overflow-x-auto">
+    <table
+      :style="styles"
+      :class="[
+        className,
+        classes.wrapper,
+      ]"
     >
-      <x-spinner size="lg"/>
-    </div>
-  </table>
+      <x-table-head>
+        <x-table-header
+          v-for="(header, index) in headers"
+          :key="index"
+          :sticky-header="stickyHeader"
+          :text-align="header.align"
+          :sort="getSort(header.value, sort)"
+          :sortable="header.sortable"
+          :width="header.width"
+          @click="header.sortable ? sortHeader(header) : null"
+        >
+          {{ header.text }}
+        </x-table-header>
+      </x-table-head>
+      <x-table-body>
+        <x-table-row
+          v-for="(item, index) in items"
+          :key="index"
+          :pointer="pointer"
+          :striped="striped"
+          @click="$emit('click-row', item)"
+        >
+          <x-table-cell
+            v-for="(header, index2) in headers"
+            :key="index2"
+            :text-align="header.align"
+            :dense="dense"
+            :fixed="fixed"
+          >
+            <slot :name="`item-${header.value}`" :item="item">
+              {{ getValue(item, header.value) }}
+            </slot>
+          </x-table-cell>
+        </x-table-row>
+      </x-table-body>
+      <div
+        v-if="loading"
+        :class="classes.loadingWrapper"
+      >
+        <x-spinner size="lg"/>
+      </div>
+    </table>
+  </div>
 </template>

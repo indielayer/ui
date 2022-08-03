@@ -1,29 +1,29 @@
-<template>
-  <document-page components="Notifications" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
-  </document-page>
-</template>
+<script setup lang="ts">
+import { XNotifications } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
 
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-  },
-  data() {
-    return {
-      title: 'Notifications',
-      description: 'Notifications',
-      snippets: {
-        usage: UsageSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Notifications'
+const description = 'Notifications.'
+const components = [XNotifications]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}]
+const back = 'modal'
+const next = 'pagination'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/notifications"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>

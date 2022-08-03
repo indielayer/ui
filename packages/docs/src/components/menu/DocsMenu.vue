@@ -2,28 +2,27 @@
 export default {
   setup() {
     return {
-      docsmenu: [
+      docsMenu: [
         { to: '/getting-started', label: 'Getting Started', icon: 'book' },
         { to: '/typography', label: 'Typography', icon: 'type' },
         { to: '/colors', label: 'Colors', icon: 'palette' },
         { to: '/icons', label: 'Icons', icon: 'star' },
       ],
-      formcomponents: [
-        { to: '/component/button', label: 'Button' },
-        { to: '/component/button-group', label: 'Button Group' },
+      inputComponents: [
         { to: '/component/checkbox', label: 'Checkbox' },
+        { to: '/component/form', label: 'Form' },
         { to: '/component/input', label: 'Input' },
         { to: '/component/radio', label: 'Radio' },
         { to: '/component/select', label: 'Select' },
         { to: '/component/textarea', label: 'Textarea' },
         { to: '/component/toggle', label: 'Toggle' },
-        { to: '/component/form', label: 'Form' },
       ],
-      uicomponents: [
+      uiComponents: [
         { to: '/component/alert', label: 'Alert' },
         { to: '/component/avatar', label: 'Avatar' },
         { to: '/component/badge', label: 'Badge' },
         { to: '/component/breadcrumbs', label: 'Breadcrumbs' },
+        { to: '/component/button', label: 'Button' },
         { to: '/component/card', label: 'Card' },
         { to: '/component/collapse', label: 'Collapse' },
         { to: '/component/container', label: 'Container' },
@@ -55,22 +54,22 @@ export default {
   <div style="min-width: 240px;" class="pb-4">
     <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Documentation</div>
     <x-menu
-      :items="docsmenu"
-      class="menu font-medium my-2"
+      :items="docsMenu"
+      class="menu font-medium m-2"
       color="primary"
       filled
     />
     <div class="title text-overline text-sm font-light ml-6 mt-8 mb-4">Form Components</div>
     <x-menu
-      :items="formcomponents"
-      class="menu font-medium"
+      :items="inputComponents"
+      class="menu font-medium m-2"
       color="primary"
       filled
     />
     <div class="title text-overline text-sm font-light ml-6 mt-8 mb-4">UI Components</div>
     <x-menu
-      :items="uicomponents"
-      class="menu font-medium"
+      :items="uiComponents"
+      class="menu font-medium m-2"
       color="primary"
       filled
     />

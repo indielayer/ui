@@ -45,6 +45,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
     v-if="items"
     :style="styles"
     :class="[
+      'space-y-1',
       className,
       classes.wrapper
     ]"
@@ -56,7 +57,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
           :icon="item.collapseIcon || collapseIcon"
           :expanded="item.expanded || expanded"
           :disabled="disabled || item.disabled"
-          class="x-menu-inner"
+          class="x-menu-inner space-y-1"
           @expand="$emit('expand')"
         >
           <template #default="{ }">
@@ -72,7 +73,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
           </template>
           <template #content="{ expand }">
             <x-menu
-              class="border-l ml-4 border-gray-100 dark:border-gray-700 mt-2 mb-1"
+              class="border-l ml-4 border-gray-100 dark:border-gray-700"
               :class="{ 'pl-1': filled }"
               :items="item.items"
               :color="item.color || color"
@@ -98,7 +99,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
             inactive
           />
           <x-menu
-            class="x-menu-inner ml-4 border-l border-gray-100 dark:border-gray-700"
+            class="x-menu-inner space-y-1 ml-4 border-l border-gray-100 dark:border-gray-700"
             :class="{ 'pl-1': filled }"
             :items="item.items"
             :color="item.color || color"

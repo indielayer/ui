@@ -1,30 +1,29 @@
-<template>
-  <document-page components="Card" :title="title" :description="description">
-    <!-- usage  -->
-    <h2 id="usage"><a href="#usage">#</a>Usage</h2>
-    <code-preview :code="snippets.usage">
-      <usage-snippet />
-    </code-preview>
+<script setup lang="ts">
+import { XCard } from '@indielayer/ui'
+import UsageDemoCode from './usage.vue?raw'
+import UsageDemo from './usage.vue'
 
-  </document-page>
-</template>
-
-<script>
-import UsageSnippetCode from './-snippets/usage.vue?raw'
-import UsageSnippet from './-snippets/usage.vue'
-
-export default {
-  components: {
-    UsageSnippet,
-  },
-  data() {
-    return {
-      title: 'Card',
-      description: 'Card',
-      snippets: {
-        usage: UsageSnippetCode,
-      },
-    }
-  },
-}
+const title = 'Card'
+const description = 'Card.'
+const components = [XCard]
+const demos = [{
+  name: 'Usage',
+  description: '',
+  code: UsageDemoCode,
+  component: UsageDemo,
+}]
+const back = 'button'
+const next = 'collapse'
 </script>
+
+<template>
+  <document-page
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/card"
+    :title="title"
+    :description="description"
+    :components="components"
+    :demos="demos"
+    :back="back"
+    :next="next"
+  />
+</template>
