@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "packages/docs",
+      "isBackground": true,
+      "problemMatcher": [],
+      "label": "npm: dev - packages/docs",
+      "detail": "vite"
+    },
+    {
+      "type": "shell",
+      "label": "stop server",
+      "command": "echo ${input:terminate}"
+    }
+  ],
+  "inputs": [{
+    "id": "terminate",
+    "type": "command",
+    "command": "workbench.action.tasks.terminate",
+    "args": "terminateAll"
+  }]
+}

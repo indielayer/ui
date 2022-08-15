@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "pwa-chrome",
+      "request": "launch",
+      "name": "Debug Docs",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "npm: dev - packages/docs",
+      "postDebugTask": "stop server",
+      "url": "http://localhost:3001",
+    }
+  ]
+}
