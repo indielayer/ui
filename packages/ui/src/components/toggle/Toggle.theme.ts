@@ -27,7 +27,7 @@ export default {
     },
 
     button: ({ props }: ThemeParams) => {
-      let c = 'rounded-full shadow transform transition duration-300 shrink-0'
+      let c = 'rounded-full shadow transform transition duration-150 shrink-0'
 
       if (props.size === 'sm' || props.size === 'xs') c += ' h-3 w-3'
       else if (props.size === 'lg') c += ' h-5 w-5'

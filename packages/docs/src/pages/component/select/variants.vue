@@ -1,5 +1,5 @@
 <template>
-  <div class="space-x-4">
+  <div class="flex items-center space-x-4">
     <x-select v-model="selected" :options="options" placeholder="xs" size="xs" />
     <x-select v-model="selected" :options="options" placeholder="sm" size="sm" />
     <x-select v-model="selected" :options="options" placeholder="md"/>

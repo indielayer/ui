@@ -249,7 +249,13 @@ defineExpose({ focus, blur, reset, validate, setError })
       v-text="label"
     ></p>
     <div class="relative">
-      <x-popover ref="popoverRef" block :disabled="disabled || loading" :dismiss-on-click="!multiple">
+      <x-popover
+        ref="popoverRef"
+        block
+        :disabled="disabled || loading"
+        :dismiss-on-click="!multiple"
+        align="left"
+      >
         <div
           :class="[
             classes.box,

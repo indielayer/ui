@@ -54,7 +54,7 @@ const { styles, classes, className } = useTheme('tag', theme, props)
   >
     <span
       v-if="removable"
-      class="flex items-center"
+      class="max-w-full truncate"
     >
       <slot></slot>
       <x-icon

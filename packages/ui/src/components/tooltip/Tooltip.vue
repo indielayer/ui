@@ -12,7 +12,7 @@ import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
     <slot></slot>
     <template #content>
       <div class="dark">
-        <x-popover-container class="p-2 text-white text-sm">
+        <x-popover-container class="p-2 text-white text-sm w-max max-w-xs">
           <slot name="tooltip"></slot>
         </x-popover-container>
       </div>

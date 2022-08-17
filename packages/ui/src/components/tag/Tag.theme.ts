@@ -3,7 +3,7 @@ import type { ThemeParams } from '../../composables/theme'
 export default {
   classes: {
     wrapper: ({ props, data }: ThemeParams) => {
-      let c = 'inline-flex items-center leading-none whitespace-nowrap'
+      let c = 'inline-flex items-center leading-none max-w-full'
 
       if (props.size === 'xs') c += ' px-2 py-1 text-xs'
       else if (props.size === 'sm') c += ' px-2 py-1 text-sm'

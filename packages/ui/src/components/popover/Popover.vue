@@ -12,7 +12,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, useCssModule, watch, type PropType } from 'vue'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useEventListener } from '@vueuse/core'
 import { useTheme } from '../../composables/theme'
 
 import theme from './Popover.theme'
@@ -32,6 +32,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  autoAlign: {
+    type: Boolean,
+    default: true,
+  },
   disabled: Boolean,
   hover: Boolean,
   block: Boolean,
@@ -40,12 +44,19 @@ const props = defineProps({
 const emit = defineEmits(['open', 'close', 'toggle'])
 
 const elRef = ref<HTMLElement | null>(null)
+const contentRef = ref<HTMLElement | null>(null)
 const isOpen = ref(false)
 
 let stopClickOutside: undefined | (()=> void) = undefined
 
 watch(isOpen, (newValue) => {
   if (props.hover) return
+
+  if (newValue) {
+    checkVisibility()
+  } else {
+    resetOutbounds()
+  }
 
   if (stopClickOutside) {
     stopClickOutside()
@@ -60,33 +71,74 @@ watch(isOpen, (newValue) => {
 })
 
 const $style = useCssModule()
+const isOutLeft = ref(false)
+const isOutRight = ref(false)
+const isOutTop = ref(false)
+const isOutBottom = ref(false)
 const contentClasses = computed(() => {
   const c = []
 
-  c.push({
-    // align-left
-    'left-0 right-auto': props.align === 'left' && ['bottom', 'top'].includes(props.position),
-    // align-center
-    'left-1/2 right-auto -translate-x-1/2': props.align === 'center' && ['bottom', 'top'].includes(props.position),
-    // align-right
-    'right-0 left-auto': props.align === 'right' && ['bottom', 'top'].includes(props.position),
-    // align-top
-    'top-0 bottom-auto': props.align === 'top' && ['left', 'right'].includes(props.position),
-    // align-middle
-    '-translate-y-1/2 top-1/2 bottom-auto': props.align === 'center' && ['left', 'right'].includes(props.position),
-    // align-bottom
-    'bottom-0': props.align === 'bottom' && ['left', 'right'].includes(props.position),
-  })
+  let align = props.align
+  let position = props.position
 
-  if (props.position === 'top') c.push(`bottom-full ${$style.popoverTop}`)
-  if (props.position === 'right') c.push(`left-full pl-2 ${$style.popoverRight}`)
-  if (props.position === 'bottom') c.push(`top-full bottom-0 ${$style.popoverBottom}`)
-  if (props.position === 'left') c.push(`right-full left-auto pr-2 ${$style.popoverLeft}`)
+  if (isOutTop.value) {
+    if (position === 'top') position = 'bottom'
+    else if ((position === 'left' || position === 'right')) align = 'top'
+  }
+
+  if (isOutBottom.value) {
+    if (position === 'bottom') position = 'top'
+    else if ((position === 'left' || position === 'right')) align = 'bottom'
+  }
+
+  if (isOutLeft.value) {
+    if (position === 'left') position = 'right'
+    else if ((position === 'top' || position === 'bottom')) align = 'left'
+  }
+
+  if (isOutRight.value) {
+    if (position === 'right') position = 'left'
+    else if ((position === 'top' || position === 'bottom')) align = 'right'
+  }
+
+  if (position === 'top') c.push(`bottom-full ${$style.popoverTop}`)
+  if (position === 'bottom') c.push(`top-full bottom-0 ${$style.popoverBottom}`)
+  if (position === 'right') c.push(`left-full ${$style.popoverRight}`)
+  if (position === 'left') c.push(`right-full left-auto ${$style.popoverLeft}`)
+
+  if (align === 'left' && ['bottom', 'top'].includes(position)) c.push('left-0 right-auto')
+  if (align === 'center' && ['bottom', 'top'].includes(position)) c.push('left-1/2 right-auto -translate-x-1/2')
+  if (align === 'right' && ['bottom', 'top'].includes(position)) c.push('right-0 left-auto')
+  if (align === 'top' && ['left', 'right'].includes(position)) c.push('top-0 bottom-auto')
+  if (align === 'center' && ['left', 'right'].includes(position)) c.push('-translate-y-1/2 top-1/2 bottom-auto')
+  if (align === 'bottom' && ['left', 'right'].includes(position)) c.push('bottom-0')
 
   if (props.block) c.push('min-w-full')
 
   return c
 })
+
+if (props.hover) {
+  useEventListener(elRef, 'mouseenter', checkVisibility)
+  useEventListener(elRef, 'mouseleave', resetOutbounds)
+}
+
+function resetOutbounds() {
+  isOutLeft.value = false
+  isOutRight.value = false
+  isOutTop.value = false
+  isOutBottom.value = false
+}
+
+function checkVisibility() {
+  if (!contentRef.value) return
+  const clientRect = contentRef.value.getBoundingClientRect()
+
+  isOutLeft.value = clientRect.left < 0
+  isOutRight.value = clientRect.right > (window.innerWidth || document.documentElement.clientWidth)
+  isOutTop.value = clientRect.top < 0
+  isOutBottom.value = clientRect.bottom > (window.innerHeight || document.documentElement.clientHeight)
+}
 
 function close() {
   if (props.disabled) return
@@ -130,7 +182,8 @@ defineExpose({ open, close, toggle, isOpen })
     </div>
 
     <div
-      class="absolute bottom-0 left-0 right-0 sm:p-0 transform transition-transform z-40"
+      ref="contentRef"
+      class="absolute transform transition-transform z-40 h-fit"
       :class="[
         $style.popoverContent,
         contentClasses,
@@ -154,13 +207,13 @@ defineExpose({ open, close, toggle, isOpen })
     --tw-translate-y: 0.5rem;
   }
   .popoverRight {
-    --tw-translate-x: 0.5rem;
+    --tw-translate-x: -0.5rem;
   }
   .popoverBottom {
     --tw-translate-y: -0.5rem;
   }
   .popoverLeft {
-    --tw-translate-x: -0.5rem;
+    --tw-translate-x: 0.5rem;
   }
 
   &.hover:hover .popoverContent,
@@ -177,7 +230,7 @@ defineExpose({ open, close, toggle, isOpen })
 
   &.hover:hover .popoverRight,
   &.is-open .popoverRight {
-    --tw-translate-x: 0px;
+    --tw-translate-x: 0.25rem;
   }
 
   &.hover:hover .popoverBottom,
@@ -187,7 +240,7 @@ defineExpose({ open, close, toggle, isOpen })
 
   &.hover:hover .popoverLeft,
   &.is-open .popoverLeft {
-    --tw-translate-x: 0px;
+    --tw-translate-x: -0.25rem;
   }
 }
 </style>
