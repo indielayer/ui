@@ -64,6 +64,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  injectKey: {
+    type: [Symbol, String],
+    default: injectNotificationKey,
+  },
 })
 
 const internalAlign = ref(props.align)
@@ -73,7 +77,7 @@ const listRef = ref<HTMLElement | null>(null)
 const css = useCSS('notification')
 const colors = useColors()
 
-provide(injectNotificationKey, {
+provide(props.injectKey, {
   log,
   info,
   warn,
