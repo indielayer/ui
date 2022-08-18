@@ -115,7 +115,7 @@ const { styles, classes, className } = useTheme('tabs', theme, props)
         mousewheel
         :class="{
           'rounded-md': variant === 'block',
-          'bg-gray-50 dark:bg-gray-800 p-1': variant === 'block' && !ghost
+          'bg-slate-100 dark:bg-gray-800 p-1': variant === 'block' && !ghost
         }"
       >
         <ul

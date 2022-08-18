@@ -98,18 +98,20 @@ defineExpose({ focus, blur, reset, validate, setError })
           <circle cx="10" cy="10" r="10"/>
         </svg>
       </div>
-      <span
-        v-if="label"
-        :class="classes.label"
-        v-text="label"
-      ></span>
-    </div>
+      <div>
+        <div
+          v-if="label"
+          :class="classes.label"
+          v-text="label"
+        ></div>
 
-    <div
-      v-if="$slots.default"
-      :class="classes.content"
-    >
-      <slot></slot>
+        <div
+          v-if="$slots.default"
+          :class="classes.content"
+        >
+          <slot></slot>
+        </div>
+      </div>
     </div>
 
     <x-input-error :error="errorInternal" :helper="helper"/>

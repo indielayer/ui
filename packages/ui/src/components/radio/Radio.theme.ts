@@ -27,7 +27,7 @@ export default {
       return c
     },
 
-    label: ({ props }: ThemeParams) => {
+    label: ({ props, data }: ThemeParams) => {
       let c = 'font-medium text-gray-800 dark:text-gray-200 pl-2'
 
       if (props.size === 'xs') c += ' text-xs'
@@ -39,12 +39,14 @@ export default {
     },
 
     content: ({ props }: ThemeParams) => {
-      if (props.size === 'xs') return 'text-xs pl-6'
-      else if (props.size === 'sm') return 'text-sm pl-6'
-      else if (props.size === 'lg') return 'text-lg pl-7'
-      else if (props.size === 'xl') return 'text-lg pl-8'
+      let c = 'pl-2'
 
-      return 'pl-7'
+      if (props.size === 'xs') c += ' text-xs'
+      else if (props.size === 'sm') c += ' text-sm'
+      else if (props.size === 'lg') c += ' text-lg'
+      else if (props.size === 'xl') c += ' text-xl'
+
+      return c
     },
   },
 

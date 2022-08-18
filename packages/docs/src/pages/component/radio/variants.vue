@@ -4,10 +4,9 @@
       v-model="selected"
       value="a"
       color="rose"
-      bordered
       label="Option A"
     >
-      label and content
+      option extra content
     </x-radio>
     <x-radio
       v-model="selected"
