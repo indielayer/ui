@@ -8,13 +8,16 @@ export default defineNuxtConfig({
     ['@indielayer/ui/nuxt', {
       icons,
       prefix: 'X',
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
-      },
+      theme: {
+        classPrefix: 'x-',
+        colors: {
+          primary: colors.emerald,
+          secondary: colors.slate,
+          success: colors.green,
+          warning: colors.yellow,
+          error: colors.red,
+        },
+      }
     }],
   ],
   css: ['~/assets/tailwind.css'],

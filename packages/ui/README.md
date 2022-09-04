@@ -4,8 +4,8 @@
 
 <p>
   <a href="https://github.com/indielayer/ui/actions/workflows/build.yml"><img src="https://github.com/indielayer/ui/actions/workflows/build.yml/badge.svg?branch=main&event=push" alt="ci"></a>
-  <a href="https://www.npmjs.com/package/@indielayer/ui/v/latest"><img src="https://badgen.net/npm/dm/@indielayer/ui" alt="Downloads"></a>
-  <a href="https://www.npmjs.com/package/@indielayer/ui/v/latest"><img src="https://badgen.net/npm/v/@indielayer/ui/latest" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/@indielayer/ui"><img src="https://badgen.net/npm/dm/@indielayer/ui" alt="Downloads"></a>
+  <a href="https://www.npmjs.com/package/@indielayer/ui"><img src="https://badgen.net/npm/v/@indielayer/ui/latest" alt="Version"></a>
   <a href="https://www.npmjs.com/package/@indielayer/ui"><img src="https://badgen.net/npm/license/@indielayer/ui" alt="License"></a>
 </p>
 
