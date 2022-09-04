@@ -3,7 +3,6 @@ import UI, { colors } from '@indielayer/ui'
 import App from './App.vue'
 
 // css
-import '@indielayer/ui/styles'
 import './assets/base.css'
 
 import icons from './icons'

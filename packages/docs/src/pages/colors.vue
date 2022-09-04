@@ -74,7 +74,6 @@ function copyPalette(val: any) {
         lang="js"
         :code="`import { createApp } from 'vue'
 import UI, { colors } from '@indielayer/ui'
-import '@indielayer/ui/styles'
 
 const app = createApp(App)
 

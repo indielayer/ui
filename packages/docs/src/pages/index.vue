@@ -7,7 +7,13 @@
 
       <h3 class="text-2xl mb-4">Quickstart a new Vue 3 or Nuxt 3 project</h3>
       <p class="my-4">
-        This following command will install and execute <x-link external href="https://github.com/indielayer/ui/tree/main/packages/create-ui" target="_blank" shadow color="primary">@indielayer/create-ui</x-link>, the official Indielayer UI project scaffolding tool. You will be presented with prompts for a number of optional features such as TypeScript.
+        This following command will install and execute <x-link
+          external
+          href="https://github.com/indielayer/ui/tree/main/packages/create-ui"
+          target="_blank"
+          shadow
+          color="primary"
+        >@indielayer/create-ui</x-link>, the official Indielayer UI project scaffolding tool. You will be presented with prompts for a number of optional features such as TypeScript.
       </p>
       <code-snippet :code="`npm init @indielayer/ui`" lang="bash"/>
       <pre class="bg-slate-600 text-slate-50 text-xs mt-4 px-4 py-2 rounded-md">? Project type: › - Use arrow-keys. Return to submit.
@@ -74,7 +80,6 @@ module.exports = {
         lang="js"
         :code="`import { createApp } from 'vue'
 import UI from '@indielayer/ui'
-import '@indielayer/ui/styles'
 
 const app = createApp(App)
 
@@ -120,7 +125,6 @@ export default defineNuxtConfig({
         lang="js"
         :code="`import { createApp } from 'vue'
 import { createUI, XButton, XAlert } from '@indielayer/ui'
-import '@indielayer/ui/styles'
 
 const app = createApp(App)
 
