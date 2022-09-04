@@ -3,7 +3,7 @@
 
 
 <p>
-  <a href="https://github.com/indielayer/ui/actions/workflows/update_docs.yml"><img src="https://github.com/indielayer/ui/actions/workflows/update_docs.yml/badge.svg?branch=main&event=push" alt="Update docs"></a>
+  <a href="https://github.com/indielayer/ui/actions/workflows/build.yml"><img src="https://github.com/indielayer/ui/actions/workflows/build.yml/badge.svg?branch=main&event=push" alt="ci"></a>
   <a href="https://www.npmjs.com/package/@indielayer/ui/v/alpha"><img src="https://badgen.net/npm/dm/@indielayer/ui" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/@indielayer/ui/v/alpha"><img src="https://badgen.net/npm/v/@indielayer/ui/alpha" alt="Version"></a>
   <a href="https://www.npmjs.com/package/@indielayer/ui"><img src="https://badgen.net/npm/license/@indielayer/ui" alt="License"></a>
@@ -39,3 +39,5 @@ The documentation is located inside [/packages/docs](./packages/docs)
 ## License
 
 [MIT](./LICENSE)
+
+Copyright (c) 2022, Indielayer
