@@ -150,7 +150,7 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
 </template>
 
 <style lang="postcss" module scoped>
-  .menu-item {
+  .menu-item, .menu-item.x-link {
     color: var(--x-menu-item-text);
     background-color: var(--x-menu-item-bg);
 
