@@ -41,17 +41,19 @@ const initials = computed(() => {
   return ''
 })
 
-watch(() => props.image, (src) => {
-  source.value = undefined
-  if (!src) return
-  const img = new Image()
+if (document && Image) {
+  watch(() => props.image, (src) => {
+    source.value = undefined
+    if (!src) return
+    const img = new Image()
 
-  img.onload = () => { source.value = props.image }
-  img.onerror = () => { }
-  img.src = src
-}, {
-  immediate: true,
-})
+    img.onload = () => { source.value = props.image }
+    img.onerror = () => { }
+    img.src = src
+  }, {
+    immediate: true,
+  })
+}
 
 const { styles, classes, className } = useTheme('avatar', theme, props, { source })
 </script>

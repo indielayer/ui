@@ -1,7 +1,7 @@
 <script setup>
 import { useNotifications } from '@indielayer/ui'
 
-const notification = useNotifications()
+const notification = useNotifications('notifica')
 
 const log = () => {notification.log('Default notification.')}
 const info = () => {notification.info('Starwars is a movie.')}

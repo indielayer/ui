@@ -23,7 +23,7 @@ const drawer = ref(false)
     <XDrawer v-model="drawer" breakpoint="lg" width="260" class="border-r">
       <DocsMenu />
     </XDrawer>
-    <XNotifications>
+    <XNotifications inject-key="notifica">
       <router-view class="flex-1 overflow-y-scroll" />
     </XNotifications>
   </div>

@@ -2,7 +2,7 @@
 import { useNotifications } from '@indielayer/ui'
 import { ref } from 'vue'
 
-const notifications = useNotifications()
+const notifications = useNotifications('notifica')
 
 const email = ref('')
 const password = ref('')

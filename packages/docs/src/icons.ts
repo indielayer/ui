@@ -17,7 +17,7 @@ export default {
   'trending-up': '<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline>',
   mail: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline>',
   'chevron-left': '<polyline points="15 18 9 12 15 6"></polyline>',
-  'chevron-right': '<polyline points="9 18 15 12 9 6"></polyline><',
+  'chevron-right': '<polyline points="9 18 15 12 9 6"></polyline>',
   'chevron-up': '<polyline points="18 15 12 9 6 15"></polyline>',
   plus: '<line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line>',
   'check-circle': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',

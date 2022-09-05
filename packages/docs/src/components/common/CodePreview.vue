@@ -14,7 +14,7 @@ const props = defineProps({
   expanded: Boolean,
 })
 
-const notifications = useNotifications()
+const notifications = useNotifications('notifica')
 
 const codeRef = ref()
 const expandedSync = ref(props.expanded)

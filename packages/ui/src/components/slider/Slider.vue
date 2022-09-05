@@ -119,10 +119,12 @@ function endDrag(e: PointerEvent) {
   e.stopPropagation()
 }
 
-useEventListener(progressRef, 'pointerdown', startProgressDrag, false)
-useEventListener(dragRef, 'pointerdown', startDrag, false)
-useEventListener(window, 'pointermove', moveDrag, true)
-useEventListener(window, 'pointerup', endDrag, true)
+if (window) {
+  useEventListener(progressRef, 'pointerdown', startProgressDrag, false)
+  useEventListener(dragRef, 'pointerdown', startDrag, false)
+  useEventListener(window, 'pointermove', moveDrag, true)
+  useEventListener(window, 'pointerup', endDrag, true)
+}
 
 useEventListener(elRef, 'keydown', handleKeydown)
 

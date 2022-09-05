@@ -46,14 +46,21 @@ const value = ref<boolean>(props.modelValue)
 const backdropRef = ref<HTMLElement | null>(null)
 const drawerRef = ref<HTMLElement | null>(null)
 
+const deferShow = ref<boolean>(!!(props.teleportTo && (props.teleportTo instanceof HTMLElement || document.querySelector(props.teleportTo))))
+
 const isTailwindBreakpoint = typeof props.breakpoint === 'string'
 const breakpoints = useBreakpoints(isTailwindBreakpoint ? breakpointsTailwind : { md: props.breakpoint || 768 } as Breakpoints)
 const point = breakpoints.smaller(isTailwindBreakpoint ? props.breakpoint : 'md')
 
 watchEffect(() => {
   if (props.breakpoint) {
-    close()
-    detached.value = point.value
+    if (point.value) {
+      detached.value = true
+      close()
+    } else {
+      detached.value = false
+      open()
+    }
   }
 })
 
@@ -63,7 +70,7 @@ watch(() => props.modelValue, (val) => {
   value.value = val
 })
 
-useEventListener(document, 'keydown', onKeyDown)
+if (document) useEventListener(document, 'keydown', onKeyDown)
 
 function onKeyDown(event: KeyboardEvent) {
   if (event.key === 'Escape' && value.value) close()
@@ -97,17 +104,6 @@ const { lengthX, lengthY } = useSwipe(drawerRef, {
     }
   },
 })
-
-function close(e?: PointerEvent) {
-  if (e && e.target !== backdropRef.value) return
-  value.value = false
-  emit('update:modelValue', false)
-}
-
-function open() {
-  value.value = true
-  emit('update:modelValue', true)
-}
 
 const autoStyles = computed(() => {
   const s: Record<string, string> = {}
@@ -169,7 +165,16 @@ function onLeave(el: HTMLElement, done: ()=> void) {
   }, 1)
 }
 
-const deferShow = ref<boolean>(!!(props.teleportTo && (props.teleportTo instanceof HTMLElement || document.querySelector(props.teleportTo))))
+function close(e?: PointerEvent) {
+  if (e && e.target !== backdropRef.value) return
+  value.value = false
+  emit('update:modelValue', false)
+}
+
+function open() {
+  value.value = true
+  emit('update:modelValue', true)
+}
 
 onMounted(() => {
   deferShow.value = true
@@ -190,7 +195,7 @@ defineExpose({ open, close })
       @leave="onLeave"
     >
       <div
-        v-if="!detached || (detached && value)"
+        v-if="value"
         ref="backdropRef"
         :class="[
           $attrs.class,

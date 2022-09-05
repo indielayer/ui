@@ -2,7 +2,7 @@
 import { setCDN, getHighlighter } from 'shiki'
 import theme from './Indielayer-theme.json'
 
-setCDN("/node_modules/shiki/");
+setCDN('/node_modules/shiki/')
 // setCDN('/')
 // setCDN(`https://cdn.jsdelivr.net/npm/shiki-es@${version}/dist/assets/`)
 // setCDN(`-`)
@@ -37,8 +37,7 @@ const highlighter = getHighlighter({
 </script>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-
+import { onMounted, ref } from 'vue'
 
 const props = defineProps({
   code: String,
