@@ -43,7 +43,7 @@ function copy(text: string) {
       <div class="mr-2 cursor-pointer" @click="toggleCode">{{ title }}</div>
       <x-spacer/>
       <x-tooltip position="top">
-        <x-link :href="`${github}/-snippets/${title?.toLowerCase()}.vue`" target="blank">
+        <x-link :href="`${github}/${title?.toLowerCase()}.vue`" target="blank">
           <x-button icon="edit" ghost size="sm"/>
         </x-link>
         <template #tooltip>
