@@ -8,7 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@indielayer/ui": "^1.0.1",
+    "@indielayer/ui": "^1.0.2",
     "autoprefixer": "^10.4.8",
     "nuxt": "3.0.0-rc.9",
     "ramda": "^0.28.0",
