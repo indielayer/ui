@@ -41,7 +41,7 @@ const initials = computed(() => {
   return ''
 })
 
-if (document && Image) {
+if (typeof window !== 'undefined' && Image) {
   watch(() => props.image, (src) => {
     source.value = undefined
     if (!src) return

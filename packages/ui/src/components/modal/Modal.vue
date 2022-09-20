@@ -60,7 +60,7 @@ watch(() => props.modelValue, (val) => {
   }
 })
 
-if (document) useEventListener(document, 'keydown', onKeyDown)
+if (typeof window !== 'undefined') useEventListener(document, 'keydown', onKeyDown)
 
 function onKeyDown(event: KeyboardEvent) {
   if (event.key === 'Escape' && value.value) close()
