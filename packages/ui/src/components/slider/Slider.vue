@@ -119,7 +119,7 @@ function endDrag(e: PointerEvent) {
   e.stopPropagation()
 }
 
-if (window) {
+if (typeof window !== 'undefined') {
   useEventListener(progressRef, 'pointerdown', startProgressDrag, false)
   useEventListener(dragRef, 'pointerdown', startDrag, false)
   useEventListener(window, 'pointermove', moveDrag, true)

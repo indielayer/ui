@@ -16,16 +16,18 @@ const props = defineProps({
 
 const source = ref<string | undefined>(fallback)
 
-watch(() => props.src, (src) => {
-  if (!src) return
-  const img = new Image()
+if (typeof window !== 'undefined' && Image) {
+  watch(() => props.src, (src) => {
+    if (!src) return
+    const img = new Image()
 
-  img.onload = () => { source.value = props.src }
-  img.onerror = () => { }
-  img.src = src
-}, {
-  immediate: true,
-})
+    img.onload = () => { source.value = props.src }
+    img.onerror = () => { }
+    img.src = src
+  }, {
+    immediate: true,
+  })
+}
 
 const { styles, classes, className } = useTheme('image', theme, props)
 </script>
