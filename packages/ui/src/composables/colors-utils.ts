@@ -3,7 +3,7 @@ import type { Tone, ColorLibrary, ColorPalette } from './colors'
 const isHex = (hex: string) => /^#(?:[A-Fa-f0-9]{3}){1,2}$/.test(hex)
 const isRGB = (rgb: string) => /^rgb[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*(?:,(?![)])|(?=[)]))){3}[)]$/.test(rgb)
 const isRGBA = (rgba: string) => /^^rgba[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*,){3}\s*0*(?:\.\d+|1(?:\.0*)?)\s*[)]$/.test(rgba)
-const parseRGB = (rgb: string) => rgb.match(/(?<=\().+?(?=\))/g)?.[0].split(',')
+const parseRGB = (rgb: string) => rgb.match(/\((.*?)\)/)?.[1].split(',')
 const hexToRGB = (hex: string) => hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => '#' + r + r + g + g + b + b)
   .substring(1).match(/.{2}/g)
   ?.map((x) => parseInt(x, 16))

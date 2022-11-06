@@ -4,7 +4,7 @@ export default {
   classes: {
     wrapper({ props, slots, data }: ThemeParams) {
       /*tw*/
-      const classes = ['relative transition duration-150 focus:outline-none inline-flex items-center justify-center font-medium whitespace-nowrap overflow-hidden align-middle active:!shadow-none border']
+      const classes = ['relative transition duration-150 focus:outline-none inline-flex items-center justify-center font-medium whitespace-nowrap overflow-hidden align-middle active:!shadow-none border appearance-none']
 
       // radius
       if (!data.isButtonGroup) classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
