@@ -9,7 +9,7 @@
   "command": {
     "publish": {
       "allowBranch": "main",
-      "message": "chore(release): publish %s"
+      "message": "chore(release): publish packages"
     }
   }
 }
