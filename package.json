@@ -1,9 +1,12 @@
 {
   "name": "root",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.2",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "main": "index.js",
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "dev": "cd packages/ui && pnpm dev",
     "docs": "cd packages/docs && pnpm dev",
@@ -12,7 +15,7 @@
     "lint": "eslint --ext .js,.ts,.vue .",
     "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
     "test": "cd packages/ui && pnpm test",
-    "changelog": "changelogen"
+    "changelog": "changelogen --bump"
   },
   "repository": {
     "type": "git",

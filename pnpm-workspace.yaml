@@ -1,8 +1,0 @@
-packages:
-  - 'packages/ui'
-  - 'packages/docs'
-  - 'packages/nuxt-demo'
-  - 'packages/create-ui'
-  - 'packages/create-ui/template/base'
-  - 'packages/create-ui/template/config/**'
-  - 'packages/create-ui/template/tsconfig/**'
