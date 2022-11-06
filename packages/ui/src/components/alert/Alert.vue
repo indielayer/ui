@@ -60,7 +60,7 @@ const { styles, classes, className } = useTheme('alert', theme, props)
 
     <template v-if="removable">
       <div class="flex-grow"></div>
-      <span class="flex items-center cursor-pointer shrink-0" @click="(e) => $emit('remove', e)">
+      <span class="flex items-center cursor-pointer shrink-0" @click="(e: Event) => $emit('remove', e)">
         <slot name="removeIcon">
           <x-icon :icon="closeIcon"/>
         </slot>

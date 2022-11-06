@@ -15,7 +15,8 @@
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "build": "zx ./scripts/build.mjs"
+    "build": "zx ./scripts/build.mjs",
+    "prepublish": "pnpm build"
   },
   "repository": {
     "type": "git",

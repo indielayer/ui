@@ -1,6 +1,6 @@
 {
   "version": "independent",
-  "npmClient": "npm",
+  "npmClient": "pnpm",
   "useWorkspaces": true,
   "registry": "https://registry.npmjs.org",
   "packages": [

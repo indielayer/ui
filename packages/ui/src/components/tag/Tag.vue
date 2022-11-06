@@ -61,7 +61,7 @@ const { styles, classes, className } = useTheme('tag', theme, props)
         :size="closeIconSize"
         :icon="closeIcon"
         class="ml-1 cursor-pointer hover:text-gray-700 transition-colors duration-150"
-        @click="(e) => $emit('remove', e)"
+        @click="(e: Event) => $emit('remove', e)"
       />
     </span>
 

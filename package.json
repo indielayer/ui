@@ -4,9 +4,6 @@
   "version": "0.0.0",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "main": "index.js",
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "dev": "cd packages/ui && pnpm dev",
     "docs": "cd packages/docs && pnpm dev",

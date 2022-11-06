@@ -273,7 +273,7 @@ defineExpose({ focus, blur, reset, validate, setError })
               size="sm"
               class="mr-1"
               removable
-              @remove="(e) => { handleRemove(e, value) }"
+              @remove="(e: Event) => { handleRemove(e, value) }"
             >{{ getLabel(value) }}</x-tag>
           </template>
           <template v-else-if="!multiple && !isEmpty(selected)">
