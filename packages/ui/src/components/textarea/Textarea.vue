@@ -3,8 +3,8 @@ export default { name: 'XTextarea' }
 </script>
 
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
+import { ref, watch } from 'vue'
+import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/css'
 import { useTheme } from '../../composables/theme'
 import { useCommon } from '../../composables/common'
@@ -45,14 +45,7 @@ const emit = defineEmits(useInputtable.emits())
 const elRef = ref<HTMLTextAreaElement | null>(null)
 
 useResizeObserver(elRef, resize)
-
-onMounted(() => {
-  window.addEventListener('resize', resize)
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', resize)
-})
+if (typeof window !== 'undefined') useEventListener(window, 'resize', resize)
 
 watch([() => props.modelValue, () => props.size], () => {
   setTimeout(resize)
