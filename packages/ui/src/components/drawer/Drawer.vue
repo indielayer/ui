@@ -110,8 +110,8 @@ const { lengthX, lengthY } = useSwipe(drawerRef, {
 const autoStyles = computed(() => {
   const s: Record<string, string> = {}
 
-  if (props.position === 'left' || props.position === 'right') s['width'] = props.width + 'px'
-  else if (props.position === 'top' || props.position === 'bottom') s['height'] = props.height + 'px'
+  if (props.position === 'left' || props.position === 'right') s['width'] = `${props.width}px`
+  else if (props.position === 'top' || props.position === 'bottom') s['height'] = `${props.height}px`
 
   return s
 })
@@ -132,6 +132,7 @@ const autoClasses = computed(() => {
 })
 
 function onBeforeEnter(el: HTMLElement) {
+  el.classList.add('inset-0')
   if (props.position === 'top') el.style.top = `-${props.height}px`
   else if (props.position === 'bottom') el.style.bottom = `-${props.height}px`
   else if (props.position === 'left') el.style.left = `-${props.width}px`
@@ -167,6 +168,10 @@ function onLeave(el: HTMLElement, done: ()=> void) {
   }, 1)
 }
 
+function onAfterLeave(el: HTMLElement, done: ()=> void) {
+  el.classList.remove('inset-0')
+}
+
 function close(e?: PointerEvent) {
   if (e && e.target !== backdropRef.value) return
   value.value = false
@@ -195,13 +200,15 @@ defineExpose({ open, close })
       @enter="onEnter"
       @before-leave="onBeforeLeave"
       @leave="onLeave"
+      @after-leave="onAfterLeave"
     >
       <div
-        v-if="value"
+        v-show="breakpoint ? (value && point || !point) : value"
         ref="backdropRef"
         :class="[
           $attrs.class,
-          detached ? classes.backdrop : ''
+          classes.backdrop,
+          detached || !breakpoint ? 'absolute z-40' : '',
         ]"
       >
         <div
