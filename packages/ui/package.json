@@ -1,6 +1,6 @@
 {
   "name": "@indielayer/ui",
-  "version": "1.0.5",
+  "version": "1.0.4",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "author": {
     "name": "João Teixeira",
@@ -54,7 +54,7 @@
     "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
     "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "prepare": "pnpm build-prod && git add src/version.ts"
+    "prepublish": "pnpm build-prod && git add src/version.ts"
   },
   "peerDependencies": {
     "tailwindcss": "^3.0.0",

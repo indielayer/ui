@@ -1,6 +1,6 @@
 {
   "name": "@indielayer/create-ui",
-  "version": "1.0.5",
+  "version": "1.0.4",
   "description": "An easy way to start a Indielayer UI project",
   "type": "module",
   "main": "outfile.cjs",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "zx ./scripts/build.mjs",
-    "prepare": "pnpm build"
+    "prepublish": "pnpm build"
   },
   "repository": {
     "type": "git",
