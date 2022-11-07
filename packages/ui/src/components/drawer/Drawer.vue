@@ -46,9 +46,7 @@ const value = ref<boolean>(props.modelValue)
 const backdropRef = ref<HTMLElement | null>(null)
 const drawerRef = ref<HTMLElement | null>(null)
 
-let deferShow = ref<boolean>(false)
-
-if (typeof window !== 'undefined') deferShow = ref<boolean>(!!(props.teleportTo && (props.teleportTo instanceof HTMLElement || document.querySelector(props.teleportTo))))
+const deferShow = ref<boolean>(false)
 
 const isTailwindBreakpoint = typeof props.breakpoint === 'string'
 const breakpoints = useBreakpoints(isTailwindBreakpoint ? breakpointsTailwind : { md: props.breakpoint || 768 } as Breakpoints)
