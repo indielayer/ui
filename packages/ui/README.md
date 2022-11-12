@@ -12,7 +12,7 @@
 Vue 3 & Nuxt 3 UI Components built with Tailwind 3. **Build and prototype fast web applications.** 🚀
 
 ## 📖 Documentation
-Read the <a href="https://indielayer.com/ui">Online Documentation</a>.
+Read the <a href="https://indielayer.com/ui/docs">Online Documentation</a>.
 
 ## Quickstart
 ```bash
