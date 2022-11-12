@@ -23,6 +23,10 @@ const props = defineProps({
     default: () => {},
   },
   active: Boolean,
+  attrs: {
+    type: Object,
+    default: () => {},
+  },
   onClick: Function,
   inactive: Boolean,
   value: [Number,String],
@@ -111,6 +115,7 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
   <component
     :is="htmlTag"
     ref="elRef"
+    v-bind="cItem.attrs"
     :to="cItem.to"
     :target="cItem.target"
     :color="cItem.color"

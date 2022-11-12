@@ -28,7 +28,7 @@ const { styles, classes, className } = useTheme('link', theme, props)
 
 <template>
   <component
-    :is="to ? 'router-link' : tag"
+    :is="to ? (tag !== 'a' ? tag : 'router-link') : tag"
     :to="to"
     :style="styles"
     :class="[
