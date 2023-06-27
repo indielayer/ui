@@ -10,6 +10,10 @@
 - [ ] Build-related changes
 - [ ] Other, please describe:
 
+**Do we need to publish a new version of a package?**
+- [ ] Add a changeset `pnpm changeset` and select what [semver](https://semver.org/) changes your PR is adding
+  - commit and push the generated *changeset* file
+
 **Does this PR introduce a breaking change?** (check one)
 
 - [ ] Yes

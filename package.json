@@ -1,17 +1,23 @@
 {
   "name": "root",
   "private": true,
-  "version": "0.0.0",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
-  "main": "index.js",
   "scripts": {
+    "preinstall": "npm exec only-allow pnpm",
+    "postinstall": "simple-git-hooks",
     "dev": "cd packages/ui && pnpm dev",
     "docs": "cd packages/docs && pnpm dev",
     "build": "cd packages/ui && pnpm build-prod",
     "build:docs": "pnpm build && cd packages/docs && pnpm build",
     "lint": "eslint --ext .js,.ts,.vue .",
     "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
-    "test": "cd packages/ui && pnpm test"
+    "test": "cd packages/ui && pnpm test",
+    "changeset": "changeset",
+    "version:prod": "changeset version",
+    "publish:prod": "changeset publish",
+    "version:snapshot": "changeset version --snapshot dev",
+    "publish:snapshot": "changeset publish --no-git-tag --snapshot --tag dev",
+    "changeset:status": "node .scripts/changesetStatus.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +30,22 @@
   },
   "homepage": "https://github.com/indielayer/ui#readme",
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.2",
     "@indielayer/eslint-config-vue": "^3.1.1",
-    "eslint": "^8.43.0"
+    "eslint": "^8.43.0",
+    "lint-staged": "^13.2.2",
+    "only-allow": "^1.1.1",
+    "simple-git-hooks": "^2.8.1",
+    "tsx": "^3.12.7"
+  },
+  "lint-staged": {
+    "*.{cjs,js,jsx,ts,tsx,vue}": [
+      "eslint --cache --fix"
+    ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npm exec lint-staged --concurrent false",
+    "commit-msg": "npm exec tsx .scripts/verifyCommit.ts $1"
   }
 }

@@ -9,31 +9,31 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
-    strategy:
-      matrix:
-        node-version: [18]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.P_GITHUB_TOKEN }}
 
-      - uses: pnpm/action-setup@v2.0.1
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
         with:
-          version: 7.0.0
+          version: 8
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
           cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Build documentation
         run: |
-          pnpm build:docs
+          pnpm run build:docs
           cp ./packages/docs/dist/index.html ./packages/docs/dist/404.html
 
       - name: Update pages
@@ -41,8 +41,8 @@ jobs:
         run: |
           git config --global init.defaultBranch master
           git init
-          git config user.name 'IndieBot'
-          git config user.email 'bot@indielayer.com'
+          git config user.name 'indielayer-ci'
+          git config user.email 'bot+ci@indielayer.com'
           git add .
           git commit -m "chore: deploy documentation: ${{github.sha}}"
-          git push -f https://${{ secrets.PAT }}@github.com/indielayer/ui master:gh-pages
+          git push -f https://${{ secrets.P_GITHUB_TOKEN }}@github.com/indielayer/ui master:gh-pages

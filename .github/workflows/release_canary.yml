@@ -1,0 +1,69 @@
+name: Release canary
+run-name: Release canary - ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Release canary - ${{ github.ref_name }}
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check if we have anything to release
+        id: checkStatus
+        continue-on-error: true
+        run: pnpm run changeset:status
+
+      - name: Changeset Version
+        run: pnpm run version:snapshot
+        if: steps.checkStatus.outcome == 'success'
+        env:
+          GITHUB_TOKEN: ${{ secrets.P_GITHUB_TOKEN }}
+
+      - name: Build
+        run: pnpm run build:ui
+        if: steps.checkStatus.outcome == 'success'
+
+      - name: Publish canary
+        id: publish
+        if: steps.checkStatus.outcome == 'success'
+        run: |
+          echo "SNAPSHOT<<EOF" >> $GITHUB_OUTPUT
+          pnpm run publish:snapshot >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Comment PR
+        if: github.event_name == 'pull_request' && steps.checkStatus.outcome == 'success'
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.P_GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `${{ join(steps.publish.outputs.*, '\n') }}`
+            })

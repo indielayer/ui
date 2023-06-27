@@ -1,7 +1,6 @@
 {
   "name": "nuxt-demo",
   "private": true,
-  "version": "1.0.0",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
