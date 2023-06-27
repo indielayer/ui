@@ -40,4 +40,4 @@ The documentation is located inside [/packages/docs](./packages/docs)
 
 [MIT](./LICENSE)
 
-Copyright (c) 2022, Indielayer
+Copyright (c) 2023, Indielayer

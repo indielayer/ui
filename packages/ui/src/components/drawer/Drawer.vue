@@ -7,7 +7,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
-import { breakpointsTailwind, SwipeDirection, useBreakpoints, useEventListener, useSwipe, type Breakpoints } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useEventListener, useSwipe, type Breakpoints, type UseSwipeDirection } from '@vueuse/core'
 import { useTheme } from '../../composables/theme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
@@ -86,20 +86,20 @@ const { lengthX, lengthY } = useSwipe(drawerRef, {
   //     left.value = '0'
   //   }
   // },
-  // onSwipeEnd(e: TouchEvent, direction: SwipeDirection) {
+  // onSwipeEnd(e: TouchEvent, direction: UseSwipeDirection) {
   //   if (lengthX.value < 0 && props.width && (Math.abs(lengthX.value) / props.width) >= 0.5) {
   //     left.value = '100%'
   //   } else {
   //     left.value = '0'
   //   }
   // },
-  onSwipeEnd(e: TouchEvent, direction: SwipeDirection) {
+  onSwipeEnd(e: TouchEvent, direction: UseSwipeDirection) {
     if (detached.value) {
       if (
-        (props.position === 'left' && direction === 'LEFT') ||
-            (props.position === 'right' && direction === 'RIGHT') ||
-            (props.position === 'top' && direction === 'UP') ||
-            (props.position === 'bottom' && direction === 'DOWN')
+        (props.position === 'left' && direction === 'left') ||
+            (props.position === 'right' && direction === 'right') ||
+            (props.position === 'top' && direction === 'up') ||
+            (props.position === 'bottom' && direction === 'down')
       ) close()
     }
   },
@@ -129,15 +129,15 @@ const autoClasses = computed(() => {
   return c
 })
 
-function onBeforeEnter(el: HTMLElement) {
+function onBeforeEnter(el: Element) {
   el.classList.add('inset-0')
-  if (props.position === 'top') el.style.top = `-${props.height}px`
-  else if (props.position === 'bottom') el.style.bottom = `-${props.height}px`
-  else if (props.position === 'left') el.style.left = `-${props.width}px`
-  else if (props.position === 'right') el.style.right = `-${props.width}px`
+  if (props.position === 'top') (el as HTMLElement).style.top = `-${props.height}px`
+  else if (props.position === 'bottom') (el as HTMLElement).style.bottom = `-${props.height}px`
+  else if (props.position === 'left') (el as HTMLElement).style.left = `-${props.width}px`
+  else if (props.position === 'right') (el as HTMLElement).style.right = `-${props.width}px`
 }
 
-function onEnter(el: HTMLElement, done: ()=> void) {
+function onEnter(el: Element, done: ()=> void) {
   if (!detached.value) {
     done()
 
@@ -146,27 +146,27 @@ function onEnter(el: HTMLElement, done: ()=> void) {
   el.addEventListener('transitionend', done)
   setTimeout(() => {
     if (props.backdrop) el.classList.add('bg-gray-500/30')
-    if (props.position === 'top') el.style.top = '0'
-    else if (props.position === 'bottom') el.style.bottom = '0'
-    else if (props.position === 'left') el.style.left = '0'
-    else if (props.position === 'right') el.style.right = '0'
+    if (props.position === 'top') (el as HTMLElement).style.top = '0'
+    else if (props.position === 'bottom') (el as HTMLElement).style.bottom = '0'
+    else if (props.position === 'left') (el as HTMLElement).style.left = '0'
+    else if (props.position === 'right') (el as HTMLElement).style.right = '0'
   }, 1)
 }
 
-function onBeforeLeave(el: HTMLElement) {}
+function onBeforeLeave(el: Element) {}
 
-function onLeave(el: HTMLElement, done: ()=> void) {
+function onLeave(el: Element, done: ()=> void) {
   el.addEventListener('transitionend', done)
   setTimeout(() => {
     if (props.backdrop) el.classList.remove('bg-gray-500/30')
-    if (props.position === 'top') el.style.top = `-${props.height}px`
-    else if (props.position === 'bottom') el.style.bottom = `-${props.height}px`
-    else if (props.position === 'left') el.style.left = `-${props.width}px`
-    else if (props.position === 'right') el.style.right = `-${props.width}px`
+    if (props.position === 'top') (el as HTMLElement).style.top = `-${props.height}px`
+    else if (props.position === 'bottom') (el as HTMLElement).style.bottom = `-${props.height}px`
+    else if (props.position === 'left') (el as HTMLElement).style.left = `-${props.width}px`
+    else if (props.position === 'right') (el as HTMLElement).style.right = `-${props.width}px`
   }, 1)
 }
 
-function onAfterLeave(el: HTMLElement, done: ()=> void) {
+function onAfterLeave(el: Element) {
   el.classList.remove('inset-0')
 }
 

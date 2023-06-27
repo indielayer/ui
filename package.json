@@ -11,9 +11,7 @@
     "build:docs": "pnpm build && cd packages/docs && pnpm build",
     "lint": "eslint --ext .js,.ts,.vue .",
     "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
-    "test": "cd packages/ui && pnpm test",
-    "changelog": "changelogen --bump",
-    "release": "lerna publish --no-private"
+    "test": "cd packages/ui && pnpm test"
   },
   "repository": {
     "type": "git",
@@ -27,8 +25,6 @@
   "homepage": "https://github.com/indielayer/ui#readme",
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^3.1.1",
-    "changelogen": "^0.3.5",
-    "eslint": "^8.6.0",
-    "lerna": "^6.0.1"
+    "eslint": "^8.43.0"
   }
 }

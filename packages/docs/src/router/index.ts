@@ -11,18 +11,18 @@ import PlayPage from '@/pages/play.vue'
 import TypographyPage from '@/pages/typography.vue'
 import ColorsPage from '@/pages/colors.vue'
 
-const pages = import.meta.globEager('@/pages/component/*/index.vue')
+const pages: Record<string, any> = import.meta.glob('@/pages/component/*/index.vue', { eager: true })
 
 const componentPages = Object.keys(pages).map((path) => {
-  const match = path.match(/\.\/pages\/component\/(.*)\/index\.vue$/)
+  const match = path.match(/\/pages\/component\/(.*)\/index\.vue$/)
 
-  if (!match) return null
+  if (match) {
+    const name = match[1].toLowerCase()
 
-  const name = match[1].toLowerCase()
-
-  return {
-    path: name,
-    component: pages[path].default,
+    return {
+      path: name,
+      component: pages[path].default,
+    }
   }
 })
 
