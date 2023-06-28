@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@indielayer/eslint-config-vue": "^3.1.0",
-    "@indielayer/ui": "^1.0.2",
+    "@indielayer/ui": "^1.0.9",
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
     "autoprefixer": "^10.4.0",

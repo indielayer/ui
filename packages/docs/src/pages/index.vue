@@ -34,7 +34,7 @@
         }, {
           label: 'pnpm',
           lang: 'bash',
-          code: 'pnpm install @indielayer/ui'
+          code: 'pnpm add @indielayer/ui'
         }]"
       />
 
@@ -88,36 +88,50 @@ app.use(UI, {
 })`"
       />
       <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
+      <multi-snippet
+        class="my-4"
+        :snippets="[{
+          label: 'npm',
+          lang: 'bash',
+          code: 'npm install @indielayer/ui ramda @vueuse/core -D'
+        }, {
+          label: 'yarn',
+          lang: 'bash',
+          code: 'yarn add @indielayer/ui ramda @vueuse/core -D'
+        }, {
+          label: 'pnpm',
+          lang: 'bash',
+          code: 'pnpm add @indielayer/ui ramda @vueuse/core -D'
+        }]"
+      />
       <code-snippet
         lang="js"
-        :code="`import { defineNuxtConfig } from 'nuxt'
-import { colors } from '@indielayer/ui'
+        :code="`import { colors } from '@indielayer/ui'
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
     ['@indielayer/ui/nuxt', {
-      prefix: 'X',
-      theme: {
-        colors: {
-          primary: colors.emerald,
-          secondary: colors.slate,
-          success: colors.green,
-          warning: colors.yellow,
-          error: colors.red,
-        },
-      }
+      colors: {
+        primary: colors.emerald,
+        secondary: colors.slate,
+        success: colors.green,
+        warning: colors.yellow,
+        error: colors.red,
+      },
     }],
   ],
-  build: {
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          'tailwindcss/nesting': {},
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
+  css: ['~/assets/tailwind.css'],
+  /**
+   * @tailwind base;
+   * @tailwind components;
+   * @tailwind utilities;
+   */
+  postcss: {
+    plugins: {
+      'tailwindcss/nesting': {},
+      tailwindcss: {},
+      autoprefixer: {},
     },
   },
 })`"
