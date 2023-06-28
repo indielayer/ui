@@ -13,6 +13,10 @@ function addEslintDependency(name) {
   dependencies[name] = allEslintDeps[name]
 }
 
+addEslintDependency('eslint')
+addEslintDependency('eslint-plugin-vue')
+addEslintDependency('@indielayer/eslint-config-vue')
+
 interface ESLintConfig extends Linter.Config {
   extends: string[];
 }
@@ -20,6 +24,7 @@ const config: ESLintConfig = {
   root: true,
   extends: ['@indielayer/eslint-config-vue'],
   env: {
+    node: true,
     'vue/setup-compiler-macros': true,
   },
 }
