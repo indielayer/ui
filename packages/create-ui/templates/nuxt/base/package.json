@@ -9,9 +9,11 @@
   },
   "devDependencies": {
     "@indielayer/ui": "^1.0.2",
+    "@nuxt/devtools": "latest",
+    "@types/node": "^18",
     "autoprefixer": "^10.4.8",
-    "nuxt": "3.0.0-rc.9",
+    "nuxt": "3.6.1",
     "ramda": "^0.28.0",
-    "tailwindcss": "^3.1.8"
+    "tailwindcss": "^3.3.2"
   }
 }

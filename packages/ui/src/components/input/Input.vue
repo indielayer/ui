@@ -60,11 +60,11 @@ function onChange(e: Event) {
     const value = Number(target.value)
 
     if (typeof props.min !== 'undefined') {
-      if (value < props.min) target.value = props.min.toString()
+      if (value < Number(props.min)) target.value = props.min.toString()
     }
 
     if (typeof props.max !== 'undefined') {
-      if (value > props.max) target.value = props.max.toString()
+      if (value > Number(props.max)) target.value = props.max.toString()
     }
   }
 }

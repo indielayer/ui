@@ -321,7 +321,6 @@ defineExpose({ focus, blur, reset, validate, setError })
         :disabled="disabled || loading"
         :multiple="multiple"
         :readonly="readonly"
-        :value="modelValue"
         v-on="inputListeners"
       >
         <option

@@ -1,0 +1,80 @@
+name: Release production
+run-name: Release production - ${{ github.ref_name }}
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Validate release target
+        if: ${{ github.ref_name != github.event.repository.default_branch }}
+        run: exit 1
+
+  build:
+    needs:
+      - check
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.P_GITHUB_TOKEN }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Check if we have anything to release
+        run: pnpm run changeset:status
+
+      - name: Linting
+        run: pnpm run lint:ui
+
+      - name: Unit tests
+        run: pnpm run test
+
+      - name: Changeset Version
+        run: pnpm run version:prod
+        env:
+          GITHUB_TOKEN: ${{ secrets.P_GITHUB_TOKEN }}
+
+      - name: Set git user
+        run: |
+          git config user.name 'indielayer-ci'
+          git config user.email 'bot+ci@indielayer.com'
+
+      - name: Build
+        run: |
+          pnpm install --frozen-lockfile=false
+          pnpm run build:ui
+
+      - name: Publish packages
+        run: pnpm run publish:prod
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Commit changes
+        run: |
+          git add .
+          git restore --staged .npmrc
+          git commit -m "chore: release packages"
+          git tag -l
+          git push
+          git push --tags

@@ -45,7 +45,6 @@ declare module '@vue/runtime-core' {
     XTextarea: typeof import('@indielayer/ui')['XTextarea']
     XToggle: typeof import('@indielayer/ui')['XToggle']
     XTooltip: typeof import('@indielayer/ui')['XTooltip']
-    [key: string]: any
   }
 }
 

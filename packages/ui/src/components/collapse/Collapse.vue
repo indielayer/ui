@@ -32,48 +32,48 @@ watch(() => props.expanded, () => {
   collapsed.value = !props.expanded
 })
 
-function onBeforeEnter(el: HTMLElement) {
-  if (animated.value) el.style.height = '0px'
+function onBeforeEnter(el: Element) {
+  if (animated.value) (el as HTMLElement).style.height = '0px'
 }
 
-function onEnter(el: HTMLElement, done: ()=> void) {
+function onEnter(el: Element, done: ()=> void) {
   if (!animated.value) done()
   else {
     el.addEventListener('transitionend', done)
     setTimeout(() => {
-      el.style.height = `${el.scrollHeight}px`
+      (el as HTMLElement).style.height = `${el.scrollHeight}px`
     }, 1)
   }
 }
 
-function onAfterEnter(el: HTMLElement) {
+function onAfterEnter(el: Element) {
   if (!animated.value) {
     animated.value = true
   } else {
-    el.style.removeProperty('height')
+    (el as HTMLElement).style.removeProperty('height')
   }
 }
 
-function onBeforeLeave(el: HTMLElement) {
+function onBeforeLeave(el: Element) {
   if (!animated.value) return
-  el.style.height = `${el.scrollHeight}px`
+  (el as HTMLElement).style.height = `${el.scrollHeight}px`
 }
 
-function onLeave(el: HTMLElement ,done: ()=> void) {
+function onLeave(el: Element ,done: ()=> void) {
   if (!animated.value) done()
   else {
     el.addEventListener('transitionend', done)
     setTimeout(() => {
-      el.style.height = '0px'
+      (el as HTMLElement).style.height = '0px'
     }, 1)
   }
 }
 
-function onAfterLeave(el: HTMLElement) {
+function onAfterLeave(el: Element) {
   if (!animated.value) {
     animated.value = true
   } else {
-    el.style.removeProperty('height')
+    (el as HTMLElement).style.removeProperty('height')
   }
 }
 

@@ -1,7 +1,7 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "include": ["src/index.ts", "src/utils/**/*"],
   "compilerOptions": {
-    "strict": false,
+    "strict": false
   }
 }
