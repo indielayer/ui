@@ -1,4 +1,4 @@
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     XAlert: typeof import('@indielayer/ui')['XAlert']
     XAvatar: typeof import('@indielayer/ui')['XAvatar']
@@ -15,7 +15,6 @@ declare module 'vue' {
     XForm: typeof import('@indielayer/ui')['XForm']
     XIcon: typeof import('@indielayer/ui')['XIcon']
     XImage: typeof import('@indielayer/ui')['XImage']
-    XAbac: typeof import('@indielayer/ui')['XAbac']
     XInput: typeof import('@indielayer/ui')['XInput']
     XLink: typeof import('@indielayer/ui')['XLink']
     XMenu: typeof import('@indielayer/ui')['XMenu']
