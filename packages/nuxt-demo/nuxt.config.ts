@@ -1,8 +1,8 @@
-import { defineNuxtConfig } from 'nuxt'
 import { colors } from '@indielayer/ui'
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  devtools: { enabled: true },
   modules: [
     ['@indielayer/ui/nuxt', {
       colors: {
@@ -15,15 +15,11 @@ export default defineNuxtConfig({
     }],
   ],
   css: ['~/assets/tailwind.css'],
-  build: {
-    postcss: {
-      postcssOptions: {
-        plugins: {
-          'tailwindcss/nesting': {},
-          tailwindcss: {},
-          autoprefixer: {},
-        },
-      },
+  postcss: {
+    plugins: {
+      'tailwindcss/nesting': {},
+      tailwindcss: {},
+      autoprefixer: {},
     },
   },
 })

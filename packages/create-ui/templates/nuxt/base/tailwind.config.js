@@ -7,10 +7,11 @@ module.exports = {
   presets: [indielayer()],
   // allow PurgeCSS to analyze components
   content: [
+    './index.html',
     './app.vue',
     './**/*.vue',
     './src/**/*.{vue,js,ts,jsx,tsx}',
-    'node_modules/@indielayer/ui/**/*',
+    'node_modules/@indielayer/ui/{lib,src}/**/*',
   ],
   theme: {
     extend: {

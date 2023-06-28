@@ -20,25 +20,15 @@
   "files": [
     "lib",
     "src",
-    "*.d.ts",
+    "volar.d.ts",
+    "nuxt.js",
+    "nuxt.plugin.js",
+    "tailwind.preset.js",
     "README.md"
   ],
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
-  "typings": "lib/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./lib/index.es.js",
-      "require": "./lib/index.cjs.js"
-    },
-    "./nuxt": "./lib/nuxt.js",
-    "./style": "./lib/style.css",
-    "./styles": "./lib/style.css",
-    "./nuxt.plugin": "./lib/nuxt.plugin.js",
-    "./nuxt.plugin.js": "./lib/nuxt.plugin.js",
-    "./tailwind.preset": "./lib/tailwind.preset.js",
-    "./tailwind.preset.js": "./lib/tailwind.preset.js"
-  },
+  "types": "lib/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "dev": "vite build --watch",

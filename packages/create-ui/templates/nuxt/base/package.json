@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "@indielayer/ui": "^1.0.2",
+    "@nuxt/devtools": "latest",
+    "@types/node": "^18",
     "autoprefixer": "^10.4.8",
     "nuxt": "3.6.1",
     "ramda": "^0.28.0",

@@ -6,7 +6,7 @@ export default defineNuxtModule({
     name: '@indielayer/ui',
     configKey: 'indielayer',
     compatibility: {
-      nuxt: '^3.0.0-rc.1',
+      nuxt: '^3.0.0',
     },
   },
   defaults: {
@@ -24,7 +24,7 @@ export default defineNuxtModule({
     // nuxt install
     nuxt.hook('components:dirs', (dirs) => {
       dirs.push({
-        path: fileURLToPath(new URL('../src/components', import.meta.url)),
+        path: fileURLToPath(new URL('./src/components', import.meta.url)),
         extensions: ['vue', 'tsx'],
         prefix: options?.prefix ? options?.prefix : 'X',
       })
