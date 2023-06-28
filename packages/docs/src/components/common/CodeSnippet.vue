@@ -3,42 +3,42 @@ import { setCDN, getHighlighter } from 'shiki'
 import theme from './Indielayer-theme.json'
 
 setCDN('/shiki/')
-  // // setCDN('/')
-  // setCDN('https://cdn.jsdelivr.net/npm/shiki-es@0.10.1/dist/assets/')
-  // setCDN(`-`)
-  // setCDN('https://unpkg.com/shiki@')
+// // setCDN('/')
+// setCDN('https://cdn.jsdelivr.net/npm/shiki-es@0.10.1/dist/assets/')
+// setCDN(`-`)
+// setCDN('https://unpkg.com/shiki@')
 
-  // const t = loadTheme('./Indielayer-theme.json')
+// const t = loadTheme('./Indielayer-theme.json')
 
-  const highlighter = getHighlighter({
+const highlighter = getHighlighter({
   // theme: 'nord',
-    theme: 'indielayer',
-    langs: [{
-      id: 'ts',
-      scopeName: 'source.ts',
-      path: './languages/typescript.tmLanguage.json',
-    }, {
-      id: 'vue-html',
-      scopeName: 'text.html.vue-html',
-      path: './languages/vue-html.tmLanguage.json',
-    }, {
-      id: 'html',
-      scopeName: 'text.html.basic',
-      path: './languages/html.tmLanguage.json',
-    }, {
-      id: 'bash',
-      scopeName: 'source.shell',
-      path: './languages/shellscript.tmLanguage.json',
-    }, {
-      id: 'vue',
-      scopeName: 'source.vue',
-      path: './languages/vue.tmLanguage.json',
-    }, {
-      id: 'js',
-      scopeName: 'source.js',
-      path: './languages/javascript.tmLanguage.json',
-    }],
-  })
+  theme: 'indielayer',
+  langs: [{
+    id: 'ts',
+    scopeName: 'source.ts',
+    path: './languages/typescript.tmLanguage.json',
+  }, {
+    id: 'vue-html',
+    scopeName: 'text.html.vue-html',
+    path: './languages/vue-html.tmLanguage.json',
+  }, {
+    id: 'html',
+    scopeName: 'text.html.basic',
+    path: './languages/html.tmLanguage.json',
+  }, {
+    id: 'bash',
+    scopeName: 'source.shell',
+    path: './languages/shellscript.tmLanguage.json',
+  }, {
+    id: 'vue',
+    scopeName: 'source.vue',
+    path: './languages/vue.tmLanguage.json',
+  }, {
+    id: 'js',
+    scopeName: 'source.js',
+    path: './languages/javascript.tmLanguage.json',
+  }],
+})
 
 </script>
 

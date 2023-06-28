@@ -3,11 +3,11 @@ import type { ColorLibrary } from './composables/colors'
 import { injectColorsKey, injectIconsKey, injectThemeKey } from './composables/keys'
 
 export type IndielayerUIOptions = {
-  prefix?: string,
-  components?: any,
-  colors?: ColorLibrary,
-  icons?: any
-  theme?: any
+  prefix?: string;
+  components?: any;
+  colors?: ColorLibrary;
+  icons?: any;
+  theme?: any;
 }
 
 const defaultOptions: IndielayerUIOptions = {

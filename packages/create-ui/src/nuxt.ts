@@ -18,10 +18,10 @@ export default async (options) => {
   let { targetDir } = options
 
   let result: {
-    projectName?: string
-    shouldOverwrite?: boolean
-    packageName?: string
-    needsEslint?: boolean
+    projectName?: string;
+    shouldOverwrite?: boolean;
+    packageName?: string;
+    needsEslint?: boolean;
   } = {}
 
   try {

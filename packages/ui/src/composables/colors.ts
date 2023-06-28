@@ -6,27 +6,27 @@ import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-u
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
 
 export interface ColorPalette {
-  50: string
-  100: string
-  200: string
-  300: string
-  400: string
-  500: string
-  600: string
-  700: string
-  800: string
-  900: string
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
 }
 
 export type ColorLibrary = Record<string, ColorPalette>
 
 export interface ColorsProps {
-  color?: string
+  color?: string;
 }
 
 export interface ColorComposition {
-  getPalette: (color: string)=> ColorPalette
-  getColorOpacity: (color: string, opacity: number)=> string
+  getPalette: (color: string) => ColorPalette;
+  getColorOpacity: (color: string, opacity: number) => string;
 }
 
 const colorCache: ColorLibrary = {}

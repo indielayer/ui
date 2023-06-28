@@ -18,17 +18,17 @@ export default async (options) => {
   let { targetDir } = options
 
   let result: {
-    projectName?: string
-    shouldOverwrite?: boolean
-    packageName?: string
-    needsTypeScript?: boolean
-    needsJsx?: boolean
-    needsRouter?: boolean
-    needsPinia?: boolean
-    needsVitest?: boolean
-    needsCypress?: boolean
-    needsEslint?: boolean
-    needsPrettier?: boolean
+    projectName?: string;
+    shouldOverwrite?: boolean;
+    packageName?: string;
+    needsTypeScript?: boolean;
+    needsJsx?: boolean;
+    needsRouter?: boolean;
+    needsPinia?: boolean;
+    needsVitest?: boolean;
+    needsCypress?: boolean;
+    needsEslint?: boolean;
+    needsPrettier?: boolean;
   } = {}
 
   try {

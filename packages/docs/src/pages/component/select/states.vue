@@ -8,12 +8,14 @@
 
 <script>
 export default {
-  data() { return {
-    selected: 'A',
-    options: [
-      { value: 'A', label: 'Option A' },
-      { value: 'B', label: 'Option B' },
-    ],
-  } },
+  data() {
+    return {
+      selected: 'A',
+      options: [
+        { value: 'A', label: 'Option A' },
+        { value: 'B', label: 'Option B' },
+      ],
+    } 
+  },
 }
 </script>

@@ -51,7 +51,7 @@ async function init() {
   const forceOverwrite = argv.force
 
   let projectResult: {
-    projectType?: 'vue' | 'nuxt'
+    projectType?: 'vue' | 'nuxt';
   } = {}
 
   try {

@@ -13,15 +13,15 @@ import { useTheme } from '../../composables/theme'
 import theme from './Form.theme'
 
 export type FormError = {
-  field: string
-  msg: string
+  field: string;
+  msg: string;
 }
 
 export type Form = {
-  name: string,
-  focus: ()=> void,
-  validate: ()=> boolean,
-  setError: (val: string)=> void,
+  name: string;
+  focus: () => void;
+  validate: () => boolean;
+  setError: (val: string) => void;
 }
 
 const props = defineProps({
@@ -45,15 +45,14 @@ const emit = defineEmits(['submit'])
 const inputs: Form[] = []
 
 provide(injectFormKey, {
-  registerInput: (name: string, focus: ()=> void, validate: ()=> boolean, setError: (val: string)=> void) => {
+  registerInput: (name: string, focus: () => void, validate: () => boolean, setError: (val: string) => void) => {
     const exists = inputs.find((i) => i.name === name)
 
     if (exists) {
       exists.focus = focus
       exists.validate = validate
       exists.setError = setError
-    }
-    else inputs.push({ name, focus, validate, setError })
+    } else inputs.push({ name, focus, validate, setError })
   },
   unregisterInput: (name: string) => {
     const index = inputs.findIndex((i) => i.name === name)

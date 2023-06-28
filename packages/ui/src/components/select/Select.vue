@@ -22,9 +22,9 @@ import XInputError from '../helpers/InputError'
 import theme from './Select.theme'
 
 export type SelectOption = {
-  value: number | string,
-  disabled: boolean,
-  label: string
+  value: number | string;
+  disabled: boolean;
+  label: string;
 }
 
 const  props = defineProps({

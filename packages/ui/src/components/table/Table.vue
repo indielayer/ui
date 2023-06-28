@@ -16,12 +16,12 @@ import XSpinner from '../spinner/Spinner.vue'
 import theme from './Table.theme'
 
 export type Header = {
-  sortable?: boolean
-  sort?: string[]
-  align?: Align
-  value?: string
-  text?: string
-  width?: string | number
+  sortable?: boolean;
+  sort?: string[];
+  align?: Align;
+  value?: string;
+  text?: string;
+  width?: string | number;
 }
 
 const props = defineProps({

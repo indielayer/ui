@@ -1,7 +1,7 @@
 <script lang="ts">
 const validators = {
-  sort: [1,-1],
-  textAlign: ['left','center','right','justify'],
+  sort: [1, -1],
+  textAlign: ['left', 'center', 'right', 'justify'],
 }
 
 export default { name: 'XTableHeader', validators }

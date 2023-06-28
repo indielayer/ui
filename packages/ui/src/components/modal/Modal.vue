@@ -29,7 +29,7 @@ const value = ref(props.modelValue)
 const visible = ref(false)
 const modalRef = ref<HTMLElement | null>(null)
 
-let stopClickOutside: undefined | (()=> void) = undefined
+let stopClickOutside: undefined | (() => void) = undefined
 
 watch(value, (val) => {
   if (stopClickOutside) {

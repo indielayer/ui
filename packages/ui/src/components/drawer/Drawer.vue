@@ -137,7 +137,7 @@ function onBeforeEnter(el: Element) {
   else if (props.position === 'right') (el as HTMLElement).style.right = `-${props.width}px`
 }
 
-function onEnter(el: Element, done: ()=> void) {
+function onEnter(el: Element, done: () => void) {
   if (!detached.value) {
     done()
 
@@ -155,7 +155,7 @@ function onEnter(el: Element, done: ()=> void) {
 
 function onBeforeLeave(el: Element) {}
 
-function onLeave(el: Element, done: ()=> void) {
+function onLeave(el: Element, done: () => void) {
   el.addEventListener('transitionend', done)
   setTimeout(() => {
     if (props.backdrop) el.classList.remove('bg-gray-500/30')

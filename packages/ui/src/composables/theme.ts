@@ -8,12 +8,12 @@ import { smartUnref } from '../common/utils'
 import type { Slots } from 'vue'
 
 export type ThemeParams = {
-  props: any
-  slots: Slots
-  colors: ColorComposition
-  css: CSSComposition
-  rtl?: boolean
-  data?: any
+  props: any;
+  slots: Slots;
+  colors: ColorComposition;
+  css: CSSComposition;
+  rtl?: boolean;
+  data?: any;
 }
 
 export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, data?: any) => {

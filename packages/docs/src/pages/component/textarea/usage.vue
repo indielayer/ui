@@ -12,9 +12,11 @@
 
 <script>
 export default {
-  data() { return {
-    name: '',
-    multiline: 'auto\nadjusted\nheight',
-  } },
+  data() {
+    return {
+      name: '',
+      multiline: 'auto\nadjusted\nheight',
+    } 
+  },
 }
 </script>

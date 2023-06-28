@@ -13,16 +13,18 @@ import ColorsPage from '@/pages/colors.vue'
 
 const pages: Record<string, any> = import.meta.glob('@/pages/component/*/index.vue', { eager: true })
 
-const componentPages = Object.keys(pages).map((path) => {
+const componentPages: RouteRecordRaw[] = []
+
+Object.keys(pages).forEach((path) => {
   const match = path.match(/\/pages\/component\/(.*)\/index\.vue$/)
 
   if (match) {
     const name = match[1].toLowerCase()
 
-    return {
+    componentPages.push({
       path: name,
       component: pages[path].default,
-    }
+    })
   }
 })
 
@@ -51,7 +53,6 @@ const routes: RouteRecordRaw[] = [{
   }, {
     path: 'component',
     component: SimpleLayout,
-    // @ts-ignore
     children: componentPages,
   }],
 }, {

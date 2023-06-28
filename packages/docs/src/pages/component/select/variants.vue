@@ -10,12 +10,14 @@
 
 <script>
 export default {
-  data() { return {
-    selected: '',
-    options: [
-      { value: 'A', label: 'Option A' },
-      { value: 'B', label: 'Option B' },
-    ],
-  } },
+  data() {
+    return {
+      selected: '',
+      options: [
+        { value: 'A', label: 'Option A' },
+        { value: 'B', label: 'Option B' },
+      ],
+    } 
+  },
 }
 </script>

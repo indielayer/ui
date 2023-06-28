@@ -9,7 +9,7 @@ const hexToRGB = (hex: string) => hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
   ?.map((x) => parseInt(x, 16))
 
 export const setOpacity = (color: string, opacity: number) => {
-  const [r, g, b] = (isHex(color) ? hexToRGB(color) : parseRGB(color)) ?? [0,0,0]
+  const [r, g, b] = (isHex(color) ? hexToRGB(color) : parseRGB(color)) ?? [0, 0, 0]
 
   return 'rgba' + '(' + r + ',' + g + ',' + b + ',' + opacity + ')'
 }
@@ -22,7 +22,7 @@ export const colorShade = (color: string, percentage: number) => {
   const shade = lighten ? 0 : percentage * 255 ** 2
   const calcPrimary = (p: string | number) => Math.round((base * Math.floor(Number(p)) ** 2 + shade) ** 0.5)
 
-  const [r, g, b, a] = (isHex(color) ? hexToRGB(color) : parseRGB(color)) ?? [0,0,0]
+  const [r, g, b, a] = (isHex(color) ? hexToRGB(color) : parseRGB(color)) ?? [0, 0, 0]
   const red = calcPrimary(r)
   const green = calcPrimary(g)
   const blue = calcPrimary(b)

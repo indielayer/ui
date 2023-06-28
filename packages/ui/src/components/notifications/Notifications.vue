@@ -1,7 +1,7 @@
 <script lang="ts">
 const validators = {
-  align: ['left','right'],
-  position: ['bottom','top'],
+  align: ['left', 'right'],
+  position: ['bottom', 'top'],
 }
 
 export default {
@@ -26,22 +26,22 @@ import theme from './Notifications.theme'
 export type NotificationAlign = 'left' | 'right'
 export type NotificationPosition = 'bottom' | 'top'
 export type NotificationAction = {
-  onClick: ()=> void,
-  label: string,
-  color?: string
+  onClick: () => void;
+  label: string;
+  color?: string;
 }
 export type NotificationEvent = {
-  id?: number,
-  icon?: string,
-  action?: NotificationAction,
-  iconColor?: string,
-  title?: string,
-  style?: string,
-  message?: string,
-  timeout?: number,
-  removable?: boolean,
-  align?: NotificationAlign,
-  position?: NotificationPosition
+  id?: number;
+  icon?: string;
+  action?: NotificationAction;
+  iconColor?: string;
+  title?: string;
+  style?: string;
+  message?: string;
+  timeout?: number;
+  removable?: boolean;
+  align?: NotificationAlign;
+  position?: NotificationPosition;
 }
 
 const props = defineProps({

@@ -1,7 +1,7 @@
 <script lang="ts">
 const validators = {
-  textAlign: [null,'left','center','right','justify'],
-  verticalAlign: [null,'baseline','bottom','middle','text-bottom','text-top','top'],
+  textAlign: [null, 'left', 'center', 'right', 'justify'],
+  verticalAlign: [null, 'baseline', 'bottom', 'middle', 'text-bottom', 'text-top', 'top'],
 }
 
 export default {

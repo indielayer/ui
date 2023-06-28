@@ -36,7 +36,7 @@ function onBeforeEnter(el: Element) {
   if (animated.value) (el as HTMLElement).style.height = '0px'
 }
 
-function onEnter(el: Element, done: ()=> void) {
+function onEnter(el: Element, done: () => void) {
   if (!animated.value) done()
   else {
     el.addEventListener('transitionend', done)
@@ -59,7 +59,7 @@ function onBeforeLeave(el: Element) {
   (el as HTMLElement).style.height = `${el.scrollHeight}px`
 }
 
-function onLeave(el: Element ,done: ()=> void) {
+function onLeave(el: Element, done: () => void) {
   if (!animated.value) done()
   else {
     el.addEventListener('transitionend', done)

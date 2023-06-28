@@ -29,7 +29,7 @@ const props = defineProps({
   },
   onClick: Function,
   inactive: Boolean,
-  value: [Number,String],
+  value: [Number, String],
   to: String,
   exact: Boolean,
   href: String,

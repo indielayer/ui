@@ -1,8 +1,8 @@
 import type { Ref } from 'vue'
 
 export interface InteractiveProps {
-  disabled?: boolean
-  loading?: boolean
+  disabled?: boolean;
+  loading?: boolean;
 }
 
 export const useInteractive = (

@@ -3,12 +3,12 @@ import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import { injectFormKey } from './keys'
 
 export interface XFormInputMethods {
-  focus: ()=> void,
-  validate: (val: any)=> boolean,
-  setError: (val: string)=> void
+  focus: () => void;
+  validate: (val: any) => boolean;
+  setError: (val: string) => void;
 }
 
-export const useInputtable = (props: any, { focus, emit, withListeners = true }: { focus: ()=> void, emit: any, withListeners?: boolean }) => {
+export const useInputtable = (props: any, { focus, emit, withListeners = true }: { focus: () => void; emit: any; withListeners?: boolean; }) => {
   const isFirstValidation = ref(true)
   const errorInternal = ref(props.error)
 

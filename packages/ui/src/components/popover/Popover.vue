@@ -1,7 +1,7 @@
 <script lang="ts">
 const validators = {
-  align: ['bottom','center','left','right','top'],
-  position: ['bottom','left','right','top'],
+  align: ['bottom', 'center', 'left', 'right', 'top'],
+  position: ['bottom', 'left', 'right', 'top'],
 }
 
 export default {
@@ -47,7 +47,7 @@ const elRef = ref<HTMLElement | null>(null)
 const contentRef = ref<HTMLElement | null>(null)
 const isOpen = ref(false)
 
-let stopClickOutside: undefined | (()=> void) = undefined
+let stopClickOutside: undefined | (() => void) = undefined
 
 watch(isOpen, (newValue) => {
   if (props.hover) return

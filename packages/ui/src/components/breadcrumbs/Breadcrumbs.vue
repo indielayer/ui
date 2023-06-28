@@ -14,13 +14,13 @@ import XLink from '../../components/link/Link.vue'
 import theme from './Breadcrumbs.theme'
 
 export type BreadcrumbItem = {
-  label: string,
-  to?: string | object,
-  href?: string,
-  color?: string,
-  icon?: string,
-  shadow?: boolean,
-  underline?: boolean
+  label: string;
+  to?: string | object;
+  href?: string;
+  color?: string;
+  icon?: string;
+  shadow?: boolean;
+  underline?: boolean;
 }
 
 const props = defineProps({

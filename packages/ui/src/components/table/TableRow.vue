@@ -1,6 +1,6 @@
 <script lang="ts">
 const validators = {
-  verticalAlign: ['baseline','bottom','middle','text-bottom','text-top','top'],
+  verticalAlign: ['baseline', 'bottom', 'middle', 'text-bottom', 'text-top', 'top'],
 }
 
 export default { name: 'XTableRow', validators }

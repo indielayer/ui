@@ -14,7 +14,7 @@ function addEslintDependency(name) {
 }
 
 interface ESLintConfig extends Linter.Config {
-  extends: string[]
+  extends: string[];
 }
 const config: ESLintConfig = {
   root: true,

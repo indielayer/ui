@@ -18,7 +18,7 @@ addEslintDependency('eslint-plugin-vue')
 addEslintDependency('@indielayer/eslint-config-vue')
 
 interface ESLintConfig extends Linter.Config {
-  extends: string[]
+  extends: string[];
 }
 const config: ESLintConfig = {
   root: true,
@@ -30,14 +30,14 @@ const config: ESLintConfig = {
 
 function configureEslint({ language, styleGuide, needsPrettier, needsCypress, needsCypressCT }) {
   switch (`${styleGuide}-${language}`) {
-  case 'default-javascript':
-    config.extends.push('eslint:recommended')
-    break
-  case 'default-typescript':
-    addEslintDependency('@vue/eslint-config-typescript')
-    config.extends.push('eslint:recommended')
-    config.extends.push('@vue/eslint-config-typescript/recommended')
-    break
+    case 'default-javascript':
+      config.extends.push('eslint:recommended')
+      break
+    case 'default-typescript':
+      addEslintDependency('@vue/eslint-config-typescript')
+      config.extends.push('eslint:recommended')
+      config.extends.push('@vue/eslint-config-typescript/recommended')
+      break
     // TODO: airbnb and standard
   }
 

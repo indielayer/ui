@@ -70,10 +70,8 @@ export default {
           },
         }))
       }
-    }
-
-    // light
-    else if (isLight) {
+    } else if (isLight) {
+      // light
       if (!props.outlined || props.disabled) vars.push(css.get('border', 'transparent'))
 
       if (props.disabled) {
@@ -103,10 +101,8 @@ export default {
           },
         }))
       }
-    }
-
-    // ghost
-    else if (props.ghost) {
+    } else if (props.ghost) {
+      // ghost
       if (!props.outlined) vars.push(css.get('border', 'transparent'))
 
       if (props.color) {
@@ -162,9 +158,7 @@ export default {
           }
         }
       }
-    }
-
-    else {
+    } else {
       // outlined
       if (props.outlined) {
         if (props.disabled) {

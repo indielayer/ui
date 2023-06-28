@@ -19,13 +19,13 @@ const menu2 = [{
   label: 'Menu item 1',
   value: '',
   exact: true,
-},{
+}, {
   to: 'menu',
   label: 'Menu item 2',
   value: '',
   icon: 'smile',
   exact: true,
-},{
+}, {
   label: 'Menu item 3',
   value: '',
   exact: true,

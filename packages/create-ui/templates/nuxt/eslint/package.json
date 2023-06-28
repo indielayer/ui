@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@indielayer/eslint-config-vue": "^3.1.0",
+    "@indielayer/eslint-config-vue": "^3.2.0",
     "eslint": "^8.43.0"
   }
 }
