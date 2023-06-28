@@ -128,10 +128,11 @@ defineExpose({ focus, blur, reset, validate, setError })
     }
 
     &--glow {
-      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-radio-glow),0 4px 6px -4px var(--x-radio-glow);
+      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-radio-glow), 0 4px 6px -4px var(--x-radio-glow);
     }
 
-    :global(.dark) &, &:global(.dark) {
+    :global(.dark) &,
+    &:global(.dark) {
       border-color: var(--x-radio-dark-border);
       background-color: var(--x-radio-dark-bg);
 

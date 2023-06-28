@@ -155,12 +155,13 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
 </template>
 
 <style lang="postcss" module scoped>
-  .menu-item, .menu-item.x-link {
+  .menu-item,
+  .menu-item.x-link {
     color: var(--x-menu-item-text);
     background-color: var(--x-menu-item-bg);
 
-    &:before {
-      content: '';
+    &::before {
+      content: "";
       position: absolute;
       left: -1px;
       height: 100%;
@@ -173,9 +174,11 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
       background-color: var(--x-menu-item-bg-hover, var(--x-menu-item-bg));
     }
 
-    :global(.dark) &, &:global(.dark) {
+    :global(.dark) &,
+    &:global(.dark) {
       color: var(--x-menu-item-dark-text);
       background: var(--x-menu-item-dark-bg);
+
       &:hover {
         color: var(--x-menu-item-dark-text-hover, var(--x-menu-item-dark-text));
         background-color: var(--x-menu-item-dark-bg-hover, var(--x-menu-item-dark-bg));
@@ -184,8 +187,10 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
   }
 
   :global(.x-menu-inner) {
+    /* stylelint-disable-next-line no-descending-specificity */
     .menu-item {
-      &:hover:before, &--active:before {
+      &:hover::before,
+      &--active::before {
         background-color: var(--x-menu-item-border-hover);
       }
     }

@@ -112,7 +112,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
 <style lang="postcss" module>
   .checkbox {
     &--glow {
-      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-checkbox-glow),0 4px 6px -4px var(--x-checkbox-glow);
+      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-checkbox-glow), 0 4px 6px -4px var(--x-checkbox-glow);
     }
   }
 </style>

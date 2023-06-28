@@ -150,7 +150,8 @@ defineExpose({ focus, blur })
     border-color: var(--x-button-border-active, var(--x-button-border));
   }
 
-  :global(.dark) &, &:global(.dark) {
+  :global(.dark) &,
+  &:global(.dark) {
     color: var(--x-button-dark-text, var(--x-button-text));
     background-color: var(--x-button-dark-bg, var(--x-button-bg));
     border-color: var(--x-button-dark-border, var(--x-button-border));

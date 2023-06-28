@@ -48,7 +48,7 @@ const { styles, classes, className } = useTheme('scroll', theme, props)
     :class="[
       className,
       classes.wrapper,
-      $style.scrollWrap,
+      $style.scrollwrap,
       horizontal ? [
         $style.horizontal,
         {
@@ -70,7 +70,7 @@ const { styles, classes, className } = useTheme('scroll', theme, props)
       :class="[
         [horizontal ? 'overflow-x-auto' : 'overflow-y-auto'],
         {
-          [$style.hideScroll]: !scrollbar,
+          [$style.hidescroll]: !scrollbar,
         }
       ]"
     >
@@ -80,60 +80,67 @@ const { styles, classes, className } = useTheme('scroll', theme, props)
 </template>
 
 <style lang="postcss" module>
-.scrollWrap {
-  &:before, &:after {
+.scrollwrap {
+  &::before,
+  &::after {
     content: "";
     pointer-events: none;
     position: absolute;
     z-index: 1;
-    transition: box-shadow .2s;
+    transition: box-shadow 0.2s;
   }
 
-  &.horizontal:before, &.horizontal:after {
+  &.horizontal::before,
+  &.horizontal::after {
     top: 0;
     bottom: 0;
     width: 20px;
   }
 
-  &.vertical:before, &.vertical:after {
+  &.vertical::before,
+  &.vertical::after {
     right: 0;
     left: 0;
     height: 20px;
   }
 
-  &.horizontal:before {
+  &.horizontal::before {
     left: 0;
   }
-  &.horizontal:after {
+
+  &.horizontal::after {
     right: 0;
   }
-  &.vertical:before {
+
+  &.vertical::before {
     top: 0;
   }
-  &.vertical:after {
+
+  &.vertical::after {
     bottom: 0;
   }
 
-  &.shadow-left:before {
+  &.shadow-left::before {
     box-shadow: inset 12px 0 10px -10px rgb(0 0 0 / 7%);
   }
 
-  &.shadow-right:after {
+  &.shadow-right::after {
     box-shadow: inset -12px 0 10px -10px rgb(0 0 0 / 7%);
   }
 
-  &.shadow-top:before {
+  &.shadow-top::before {
     box-shadow: inset 0 12px 10px -10px rgb(0 0 0 / 7%);
   }
 
-  &.shadow-bottom:after {
+  &.shadow-bottom::after {
     box-shadow: inset 0 -12px 10px -10px rgb(0 0 0 / 7%);
   }
 }
 
-.hideScroll {
+.hidescroll {
   -ms-overflow-style: auto;
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }

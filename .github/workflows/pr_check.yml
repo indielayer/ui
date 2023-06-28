@@ -32,7 +32,9 @@ jobs:
         run: pnpm install
 
       - name: Linting
-        run: pnpm run lint:ui
+        run: |
+          pnpm run lint:ui
+          pnpm run lint:style
 
       - name: Unit tests
         run: pnpm run test

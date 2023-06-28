@@ -53,21 +53,21 @@ const { className, classes, styles } = useTheme('button-group', theme, props)
 .button-group {
   &:not(&--rounded) {
     > :first-child {
-      @apply rounded-l-md
+      @apply rounded-l-md;
     }
 
     > :last-child {
-      @apply rounded-r-md
+      @apply rounded-r-md;
     }
   }
 
   &--rounded {
     > :first-of-type {
-      @apply rounded-l-full
+      @apply rounded-l-full;
     }
 
     > :last-child {
-      @apply rounded-r-full
+      @apply rounded-r-full;
     }
   }
 }

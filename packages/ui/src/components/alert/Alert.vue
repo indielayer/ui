@@ -79,7 +79,8 @@ const { styles, classes, className } = useTheme('alert', theme, props)
     box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-alert-glow), 0 4px 6px -4px var(--x-alert-glow);
   }
 
-  :global(.dark) &, &:global(.dark) {
+  :global(.dark) &,
+  &:global(.dark) {
     color: var(--x-alert-dark-text, var(--x-alert-text));
     background-color: var(--x-alert-dark-bg, var(--x-alert-bg));
     border-color: var(--x-alert-dark-border, var(--x-alert-border));

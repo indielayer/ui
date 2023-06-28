@@ -101,10 +101,10 @@ const contentClasses = computed(() => {
     else if ((position === 'top' || position === 'bottom')) align = 'right'
   }
 
-  if (position === 'top') c.push(`bottom-full ${$style.popoverTop}`)
-  if (position === 'bottom') c.push(`top-full bottom-0 ${$style.popoverBottom}`)
-  if (position === 'right') c.push(`left-full ${$style.popoverRight}`)
-  if (position === 'left') c.push(`right-full left-auto ${$style.popoverLeft}`)
+  if (position === 'top') c.push(`bottom-full ${$style['popover-top']}`)
+  if (position === 'bottom') c.push(`top-full bottom-0 ${$style['popover-bottom']}`)
+  if (position === 'right') c.push(`left-full ${$style['popover-right']}`)
+  if (position === 'left') c.push(`right-full left-auto ${$style['popover-left']}`)
 
   if (align === 'left' && ['bottom', 'top'].includes(position)) c.push('left-0 right-auto')
   if (align === 'center' && ['bottom', 'top'].includes(position)) c.push('left-1/2 right-auto -translate-x-1/2')
@@ -185,7 +185,7 @@ defineExpose({ open, close, toggle, isOpen })
       ref="contentRef"
       class="absolute transform transition-transform z-40 h-fit"
       :class="[
-        $style.popoverContent,
+        $style['popover-content'],
         contentClasses,
         classes.content
       ]"
@@ -198,48 +198,52 @@ defineExpose({ open, close, toggle, isOpen })
 
 <style lang="postcss" module>
 .popover {
-  .popoverContent {
+  .popover-content {
     visibility: hidden;
-    transition-duration: .1s;
-    transition-timing-function: cubic-bezier(.4,0,1,1);
+    transition-duration: 0.1s;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
-  .popoverTop {
+
+  .popover-top {
     --tw-translate-y: 0.5rem;
   }
-  .popoverRight {
+
+  .popover-right {
     --tw-translate-x: -0.5rem;
   }
-  .popoverBottom {
+
+  .popover-bottom {
     --tw-translate-y: -0.5rem;
   }
-  .popoverLeft {
+
+  .popover-left {
     --tw-translate-x: 0.5rem;
   }
 
-  &.hover:hover .popoverContent,
-  &.is-open .popoverContent {
+  &.is-open .popover-content,
+  &.hover:hover .popover-content {
     visibility: visible;
-    transition-duration: .15s;
-    transition-timing-function: cubic-bezier(0,0,.2,1);
+    transition-duration: 0.15s;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
-  &.hover:hover .popoverTop,
-  &.is-open .popoverTop {
+  &.is-open .popover-top,
+  &.hover:hover .popover-top {
     --tw-translate-y: -0.25rem;
   }
 
-  &.hover:hover .popoverRight,
-  &.is-open .popoverRight {
+  &.is-open .popover-right,
+  &.hover:hover .popover-right {
     --tw-translate-x: 0.25rem;
   }
 
-  &.hover:hover .popoverBottom,
-  &.is-open .popoverBottom {
+  &.is-open .popover-bottom,
+  &.hover:hover .popover-bottom {
     --tw-translate-y: 0.25rem;
   }
 
-  &.hover:hover .popoverLeft,
-  &.is-open .popoverLeft {
+  &.is-open .popover-left,
+  &.hover:hover .popover-left {
     --tw-translate-x: -0.25rem;
   }
 }

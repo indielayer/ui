@@ -62,12 +62,14 @@ const { styles, classes, className } = useTheme('link', theme, props)
 
     &--shadow {
       box-shadow: inset 0 -0.315em 0 0 var(--x-link-shadow);
+
       &:hover {
         box-shadow: inset 0 -1.325em 0 0 var(--x-link-shadow);
       }
     }
 
-    :global(.dark) &, &:global(.dark) {
+    :global(.dark) &,
+    &:global(.dark) {
       color: var(--x-link-dark-text);
 
       &:hover {
@@ -76,6 +78,7 @@ const { styles, classes, className } = useTheme('link', theme, props)
 
       &--shadow {
         box-shadow: inset 0 -0.315em 0 0 var(--x-link-dark-shadow);
+
         &:hover {
           box-shadow: inset 0 -1.325em 0 0 var(--x-link-dark-shadow);
         }
