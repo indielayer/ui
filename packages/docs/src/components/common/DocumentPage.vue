@@ -260,7 +260,9 @@ onUnmounted(() => {
 
 <style lang="postcss">
 .document-page {
-  h1, h2, h3 {
+  h1,
+  h2,
+  h3 {
     position: relative;
   }
 
@@ -268,7 +270,9 @@ onUnmounted(() => {
     @apply text-xl font-semibold mb-4 mt-8;
   }
 
-  h1 .anchor, h2 .anchor, h3 .anchor {
+  h1 .anchor,
+  h2 .anchor,
+  h3 .anchor {
     position: absolute;
     left: -24px;
     width: 30px;
@@ -276,7 +280,9 @@ onUnmounted(() => {
     color: #96a1b3 !important;
   }
 
-  h1:hover .anchor, h2:hover .anchor, h3:hover .anchor {
+  h1:hover .anchor,
+  h2:hover .anchor,
+  h3:hover .anchor {
     display: block;
   }
 }

@@ -1,6 +1,7 @@
-@import url(https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css);
+@import url("https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css");
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -15,20 +16,23 @@ html, body {
   }
 
   .text-h1 {
-    @apply text-5xl font-black
+    @apply text-5xl font-black;
   }
+
   .text-h2 {
-    @apply text-4xl font-black
+    @apply text-4xl font-black;
   }
+
   .text-h3 {
-    @apply text-2xl font-black
+    @apply text-2xl font-black;
   }
+
   .text-h4 {
-    @apply text-xl font-black
+    @apply text-xl font-black;
   }
 
   .text-overline {
-    @apply tracking-widest uppercase text-2xs
+    @apply tracking-widest uppercase text-2xs;
   }
 }
 

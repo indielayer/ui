@@ -73,13 +73,12 @@ onMounted(async () => {
 
 <style lang="postcss">
 .shiki {
-  /* font-family: 'Fira Code VF', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; */
   @apply rounded-md overflow-x-auto p-4 text-sm;
 
-  code { font-family: 'Fira Code', monospace; }
+  code { font-family: "Fira Code", monospace; }
 
   @supports (font-variation-settings: normal) {
-    code { font-family: 'Fira Code VF', monospace; }
+    code { font-family: "Fira Code VF", monospace; }
   }
 }
 </style>

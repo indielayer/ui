@@ -84,6 +84,9 @@ importers:
       '@indielayer/eslint-config-vue':
         specifier: ^3.2.0
         version: 3.2.0(eslint@8.43.0)
+      '@indielayer/stylelint-config':
+        specifier: ^1.0.0
+        version: 1.0.0(postcss@8.4.24)(stylelint@14.16.1)
       '@indielayer/ui':
         specifier: workspace:*
         version: link:../ui

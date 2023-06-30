@@ -26,6 +26,7 @@ import { version } from '@indielayer/ui'
 .logo-white {
   display: none;
 }
+
 html.dark .logo-white {
   display: block;
 }
