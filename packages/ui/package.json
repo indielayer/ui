@@ -29,9 +29,16 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.es.js",
+      "require": "./lib/index.cjs.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "sideEffects": false,
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "pnpm generate && vite build --watch",
     "build": "pnpm generate && vite build",
     "build:prod": "pnpm build && pnpm gen-types",
     "build:only": "vite build",
@@ -75,7 +82,7 @@
     "start-server-and-test": "^1.14.0",
     "stylelint": "^14.16.1",
     "tailwindcss": "^3.3.2",
-    "typescript": "~5.0.0",
+    "typescript": "^5.2.2",
     "vite": "^4.3.9",
     "vitest": "^0.32.2",
     "vue": "^3.3.4",
