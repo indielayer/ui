@@ -89,3 +89,4 @@ sw.*
 # Vim swap files
 *.swp
 packages/starter
+packages/ui/src/version.ts

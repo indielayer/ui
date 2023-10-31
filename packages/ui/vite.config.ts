@@ -9,6 +9,7 @@ import injectCss from './injectcss'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  publicDir: './src/exports',
   plugins: [
     vue(),
     vueJsx(),

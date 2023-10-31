@@ -1,4 +1,4 @@
-const indielayer = require('./tailwind.preset')
+const indielayer = require('./src/exports/tailwind.preset')
 
 module.exports = {
   mode: 'jit',
