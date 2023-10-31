@@ -20,10 +20,7 @@
   "files": [
     "lib",
     "src",
-    "volar.d.ts",
-    "nuxt.js",
-    "nuxt.plugin.js",
-    "tailwind.preset.js",
+    "*.d.ts",
     "README.md"
   ],
   "main": "lib/index.cjs.js",
@@ -34,7 +31,12 @@
       "import": "./lib/index.es.js",
       "require": "./lib/index.cjs.js",
       "types": "./lib/index.d.ts"
-    }
+    },
+    "./nuxt": "./lib/nuxt.mjs",
+    "./nuxt.plugin": "./lib/nuxt.plugin.js",
+    "./nuxt.plugin.js": "./lib/nuxt.plugin.js",
+    "./tailwind.preset": "./lib/tailwind.preset.js",
+    "./tailwind.preset.js": "./lib/tailwind.preset.js"
   },
   "sideEffects": false,
   "scripts": {
