@@ -21,6 +21,7 @@
     "lib",
     "src",
     "*.d.ts",
+    "exports",
     "README.md"
   ],
   "main": "lib/index.cjs.js",
@@ -32,11 +33,11 @@
       "require": "./lib/index.cjs.js",
       "types": "./lib/index.d.ts"
     },
-    "./nuxt": "./lib/nuxt.mjs",
-    "./nuxt.plugin": "./lib/nuxt.plugin.js",
-    "./nuxt.plugin.js": "./lib/nuxt.plugin.js",
-    "./tailwind.preset": "./lib/tailwind.preset.js",
-    "./tailwind.preset.js": "./lib/tailwind.preset.js"
+    "./nuxt": "./exports/nuxt.mjs",
+    "./nuxt.plugin": "./exports/nuxt.plugin.js",
+    "./nuxt.plugin.js": "./exports/nuxt.plugin.js",
+    "./tailwind.preset": "./exports/tailwind.preset.js",
+    "./tailwind.preset.js": "./exports/tailwind.preset.js"
   },
   "sideEffects": false,
   "scripts": {

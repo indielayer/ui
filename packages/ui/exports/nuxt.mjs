@@ -24,7 +24,7 @@ export default defineNuxtModule({
     // nuxt install
     nuxt.hook('components:dirs', (dirs) => {
       dirs.push({
-        path: fileURLToPath(new URL('./src/components', import.meta.url)),
+        path: fileURLToPath(new URL('../src/components', import.meta.url)),
         extensions: ['vue', 'tsx'],
         prefix: options?.prefix ? options?.prefix : 'X',
       })
