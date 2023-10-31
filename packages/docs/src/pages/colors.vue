@@ -5,8 +5,7 @@ import { useColors, useNotifications, colors as TailwindColors } from '@indielay
 const notifications = useNotifications('notifica')
 const { getPalette } = useColors()
 
-// const color500 = ref('#10B981')
-const color500 = ref('#F46262')
+const color500 = ref('#10B981')
 
 const palette = computed(() => getPalette(color500.value))
 
@@ -36,17 +35,8 @@ function copyPalette(val: any) {
       <div class="mt-4">
         <x-input v-model="color500" label="Change here the middle value (500) to generate a new palette"/>
       </div>
-      <div class="grid grid-cols-10 my-4 text-sm">
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[50]}`">50</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[100]}`">100</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[200]}`">200</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[300]}`">300</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[400]}`">400</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[500]}`">500</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[600]}`">600</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[700]}`">700</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[800]}`">800</div>
-        <div class="h-32 flex items-center justify-center" :style="`background-color: ${palette[900]}`">900</div>
+      <div class="grid grid-cols-11 my-4 text-sm">
+        <div v-for="shade in Object.keys(palette)" :key="shade" class="h-32 flex items-center justify-center" :style="`background-color: ${palette[shade]}`">{{ shade }}</div>
       </div>
 
       <x-button icon-left="copy" :color="color500" block @click="copyPalette(palette)">Copy Palette</x-button>
@@ -78,14 +68,15 @@ import UI, { colors } from '@indielayer/ui'
 const app = createApp(App)
 
 app.use(UI, {
-  prefix: 'X',
-  colors: {
-    primary: ${JSON.stringify(palette, null, 2)},
-    secondary: colors.slate,
-    success: colors.green,
-    warning: colors.yellow,
-    error: colors.red,
-  },
+  theme: {
+    colors: {
+      primary: ${JSON.stringify(palette, null, 2)},
+      secondary: colors.slate,
+      success: colors.green,
+      warning: colors.yellow,
+      error: colors.red,
+    },
+  }
 })`"
       />
 
@@ -123,7 +114,7 @@ module.exports = {
       <div class="grid gap-6 grid-cols-1 md:grid-cols-2 text-xs">
         <div v-for="(pal, key) in TailwindColors" :key="key">
           <div class="text-overline mb-2">{{ key }}</div>
-          <div class="grid grid-cols-10">
+          <div class="grid grid-cols-11">
             <div v-for="(color, palKey) in pal" :key="palKey" class="h-32 flex items-center justify-center" :style="`background-color: ${color}`">{{ palKey }}</div>
           </div>
         </div>

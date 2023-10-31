@@ -6,7 +6,7 @@ module.exports = {
     './index.html',
     './app.vue',
     './src/**/*.{vue,js,ts,jsx,tsx}',
-    'node_modules/@indielayer/ui/{lib,src}/**/*',
+    'node_modules/@indielayer/ui/src/**/*',
   ],
   darkMode: 'class',
   presets: [

@@ -3,7 +3,7 @@ import { computed, inject, unref } from 'vue'
 import { injectThemeKey } from './keys'
 import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-utils'
 
-export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900'
+export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'
 
 export interface ColorPalette {
   50: string;
@@ -16,6 +16,7 @@ export interface ColorPalette {
   700: string;
   800: string;
   900: string;
+  950: string;
 }
 
 export type ColorLibrary = Record<string, ColorPalette>
@@ -73,6 +74,7 @@ export const useColors = (): ColorComposition => {
       700: colorShade(color, -0.25),
       800: colorShade(color, -0.58),
       900: colorShade(color, -0.7),
+      950: colorShade(color, -0.8),
     }
 
     colorCache[color] = palette

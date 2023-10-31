@@ -5,12 +5,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     ['@indielayer/ui/nuxt', {
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
+      theme: {
+        colors: {
+          primary: colors.emerald,
+          secondary: colors.slate,
+          success: colors.green,
+          warning: colors.yellow,
+          error: colors.red,
+        },
       },
     }],
   ],
