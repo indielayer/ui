@@ -18,7 +18,8 @@
     "publish:prod": "changeset publish",
     "version:snapshot": "changeset version --snapshot dev",
     "publish:snapshot": "changeset publish --no-git-tag --snapshot --tag dev",
-    "changeset:status": "node .scripts/changesetStatus.js"
+    "changeset:status": "node .scripts/changesetStatus.js",
+    "release": "pnpm build && pnpm publish:prod"
   },
   "repository": {
     "type": "git",
