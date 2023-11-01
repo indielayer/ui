@@ -3,8 +3,7 @@
   "private": true,
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "scripts": {
-    "preinstall": "npm exec only-allow pnpm",
-    "postinstall": "simple-git-hooks",
+    "prepare": "is-ci || simple-git-hooks",
     "dev": "cd packages/ui && pnpm dev",
     "docs": "cd packages/docs && pnpm dev",
     "build": "cd packages/ui && pnpm build:prod",
@@ -36,8 +35,8 @@
     "@changesets/cli": "^2.26.2",
     "@indielayer/eslint-config-vue": "^3.3.0",
     "eslint": "^8.43.0",
+    "is-ci": "^3.0.1",
     "lint-staged": "^13.2.2",
-    "only-allow": "^1.1.1",
     "simple-git-hooks": "^2.8.1",
     "tsx": "^3.12.7"
   },
