@@ -7,7 +7,7 @@
 Messages must be matched by the following regex:
 
 ``` js
-/^(revert: )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore)(\(.+\))?: .{1,50}/
+/^(revert: )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|types)(\(.+\))?: .{1,50}/
 ```
 
 #### Examples
@@ -15,7 +15,7 @@ Messages must be matched by the following regex:
 Appears under "Features" header, `button` subheader:
 
 ```
-feat(button): add 'disabled' option
+feat(button): add disabled option
 ```
 
 ### Full Message Format

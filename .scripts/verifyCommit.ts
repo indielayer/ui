@@ -7,7 +7,7 @@ const msg = readFileSync(msgPath, 'utf-8').trim()
 
 const releaseRE = /^v\d/
 const commitRE =
-  /^(revert: )?(feat|fix|docs|dx|refactor|perf|test|workflow|build|ci|chore|types|wip|release|deps)(\(.+\))?: .{1,50}/
+  /^(revert: )?(feat|fix|docs|style|refactor|perf|test|build|ci|chore|types)(\(.+\))?: .{1,50}/
 
 if (!releaseRE.test(msg) && !commitRE.test(msg)) {
   console.log()

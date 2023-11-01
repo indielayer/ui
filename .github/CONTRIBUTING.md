@@ -6,19 +6,17 @@ Hi! I'm really excited that you are interested in contributing. Before submittin
 
 ## Pull Request Guidelines
 
-- The `master` branch is just a snapshot of the latest stable release. All development should be done in dedicated branches. **Do not submit PRs against the `master` branch.**
+- All development should be done in dedicated branches.
 
-- Checkout a topic branch from the relevant branch, e.g. `dev`, and merge back against that branch.
+- Checkout a topic branch from the relevant branch, e.g. `feat/xyz`, and merge back against that branch.
 
 - It's OK to have multiple small commits as you work on the PR - GitHub will automatically squash it before merging.
 
-- If fixing bug:
-  - If you are resolving a special issue, add `(fix #xxxx[,#xxxx])` (#xxxx is the issue id) in your PR title for a better release log, e.g. `update entities encoding/decoding (fix #3899)`.
-  - Provide a detailed description of the bug in the PR. Live demo preferred.
+- Follow and fill the PR template.
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 14+** and [pnpm](https://pnpm.io/).
+You will need [Node.js](http://nodejs.org) **version 18+** and [pnpm](https://pnpm.io/).
 
 After cloning the repo, run:
 
