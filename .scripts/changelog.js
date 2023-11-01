@@ -109,7 +109,7 @@ module.exports = {
       links.commit === null ? '' : ` (${links.commit})`
     ].join('')
 
-    const firstLineWithPrefix = `\n\n- ${firstLine}`
+    const firstLineWithPrefix = `- ${firstLine}`
 
     if (futureLines.length === 0) {
       return `${firstLineWithPrefix}${suffix}`
