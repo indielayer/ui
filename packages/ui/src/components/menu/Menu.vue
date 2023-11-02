@@ -57,6 +57,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
           :icon="item.collapseIcon || collapseIcon"
           :expanded="item.expanded || expanded"
           :disabled="disabled || item.disabled"
+          :show-icon="!!(item.collapseIcon || collapseIcon)"
           class="x-menu-inner space-y-1"
           @expand="$emit('expand')"
         >
