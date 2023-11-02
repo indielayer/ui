@@ -8,7 +8,7 @@ export default defineComponent({
   },
   setup(props) {
     return () => props.error
-        ? <p class="text-sm text-red-500 dark:text-red-400 mt-1">{props.error}</p>
-        : props.helper ? <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{props.helper}</p> : ''
+      ? <p class="text-sm text-red-500 dark:text-red-400 mt-1">{props.error}</p>
+      : props.helper ? <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{props.helper}</p> : ''
   },
 })

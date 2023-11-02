@@ -8,7 +8,7 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
-    "@indielayer/eslint-config-vue": "^3.3.0",
+    "@indielayer/eslint-config-vue": "^3.3.1",
     "@indielayer/ui": "^1.0.9",
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
