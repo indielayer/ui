@@ -4,7 +4,11 @@ import Icon from '../Icon.vue'
 
 describe('Icon', () => {
   it('renders without errors', () => {
-    const wrapper = mount(Icon)
+    const wrapper = mount(Icon, {
+      props: {
+        icon: 'star',
+      },
+    })
 
     expect(wrapper.vm).toBeTruthy()
   })

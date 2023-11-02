@@ -21,17 +21,4 @@ module.exports = {
       ],
     },
   ],
-  rules: {
-    '@typescript-eslint/naming-convention': [
-      'error',
-      {
-        'selector': 'variable',
-        'format': ['camelCase', 'UPPER_CASE', 'PascalCase'],
-      },
-    ],
-    'vue/component-name-in-template-casing': ['error', 'kebab-case', {
-      'registeredComponentsOnly': false,
-      'ignores': [],
-    }],
-  },
 }

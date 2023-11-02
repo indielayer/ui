@@ -9,8 +9,8 @@ const drawer = ref(false)
 </script>
 
 <template>
-  <PreToolbar />
-  <Toolbar class="border-y z-10" @open-drawer="drawer = true" />
+  <pre-toolbar />
+  <toolbar class="border-y z-10" @open-drawer="drawer = true" />
   <div class="lg:hidden border-b p-2">
     <x-button
       icon-left="menu"
@@ -20,12 +20,12 @@ const drawer = ref(false)
     >Menu</x-button>
   </div>
   <div class="flex-1 flex overflow-hidden">
-    <XDrawer v-model="drawer" breakpoint="lg" width="260" class="border-r">
-      <DocsMenu />
-    </XDrawer>
-    <XNotifications inject-key="notifica">
+    <x-drawer v-model="drawer" breakpoint="lg" width="260" class="border-r">
+      <docs-menu />
+    </x-drawer>
+    <x-notifications inject-key="notifica">
       <router-view class="flex-1 overflow-y-scroll" />
-    </XNotifications>
+    </x-notifications>
   </div>
-  <Cookies />
+  <cookies />
 </template>
