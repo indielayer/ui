@@ -11,7 +11,6 @@ import { useTheme } from '../../composables/theme'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XSpinner from '../../components/spinner/Spinner.vue'
-import XLink from '../../components/link/Link.vue'
 
 import theme from './MenuItem.theme'
 
@@ -60,14 +59,14 @@ const cItem = computed(() => ({
   ...props.item,
 }))
 
-const htmlTag = computed(() => cItem.value.to || cItem.value.href ? XLink : 'div')
+const htmlTag = computed(() => cItem.value.to || cItem.value.href ? 'router-link' : 'div')
 
 onMounted(() => {
   if (!elRef.value) return
 
   check()
 
-  if (htmlTag.value === XLink) useMutationObserver(elRef.value.$el, check, {
+  if (htmlTag.value === 'router-link') useMutationObserver(elRef.value.$el, check, {
     attributes: true,
     attributeFilter: ['class'],
   })
@@ -155,8 +154,7 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
 </template>
 
 <style lang="postcss" module scoped>
-  .menu-item,
-  .menu-item.x-link {
+  .menu-item {
     color: var(--x-menu-item-text);
     background-color: var(--x-menu-item-bg);
 
