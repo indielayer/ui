@@ -20,8 +20,8 @@ const drawer = ref(false)
     >Menu</x-button>
   </div>
   <div class="flex-1 flex overflow-hidden">
-    <x-drawer v-model="drawer" breakpoint="lg" width="260" class="border-r">
-      <docs-menu />
+    <x-drawer v-model="drawer" breakpoint="lg" width="260" class="border-r flex">
+      <docs-menu class="flex-1" />
     </x-drawer>
     <x-notifications inject-key="notifica">
       <router-view class="flex-1 overflow-y-scroll" />

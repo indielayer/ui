@@ -8,42 +8,56 @@ export default {
         { to: '/colors', label: 'Colors', icon: 'palette' },
         { to: '/icons', label: 'Icons', icon: 'star' },
       ],
-      inputComponents: [
-        { to: '/component/checkbox', label: 'Checkbox' },
-        { to: '/component/form', label: 'Form' },
-        { to: '/component/input', label: 'Input' },
-        { to: '/component/radio', label: 'Radio' },
-        { to: '/component/select', label: 'Select' },
-        { to: '/component/textarea', label: 'Textarea' },
-        { to: '/component/toggle', label: 'Toggle' },
-      ],
-      uiComponents: [
-        { to: '/component/alert', label: 'Alert' },
-        { to: '/component/avatar', label: 'Avatar' },
-        { to: '/component/badge', label: 'Badge' },
-        { to: '/component/breadcrumbs', label: 'Breadcrumbs' },
-        { to: '/component/button', label: 'Button' },
-        { to: '/component/card', label: 'Card' },
-        { to: '/component/collapse', label: 'Collapse' },
-        { to: '/component/container', label: 'Container' },
-        { to: '/component/divider', label: 'Divider' },
-        { to: '/component/drawer', label: 'Drawer' },
-        { to: '/component/icon', label: 'Icon' },
-        { to: '/component/link', label: 'Link' },
-        { to: '/component/menu', label: 'Menu' },
-        { to: '/component/modal', label: 'Modal' },
-        { to: '/component/notifications', label: 'Notifications' },
-        { to: '/component/pagination', label: 'Pagination' },
-        { to: '/component/popover', label: 'Popover' },
-        { to: '/component/progress', label: 'Progress' },
-        // { to: '/component/scroll', label: 'Scroll' },
-        { to: '/component/skeleton', label: 'Skeleton' },
-        { to: '/component/slider', label: 'Slider' },
-        { to: '/component/spinner', label: 'Spinner' },
-        { to: '/component/table', label: 'Table' },
-        { to: '/component/tabs', label: 'Tabs' },
-        { to: '/component/tag', label: 'Tag' },
-        { to: '/component/tooltip', label: 'Tooltip' },
+      components: [
+        {
+          label: 'Form',
+          icon: 'edit',
+          collapseIcon: 'chevron-down',
+          expanded: true,
+          items: [
+            { to: '/component/checkbox', label: 'Checkbox' },
+            { to: '/component/form', label: 'Form' },
+            { to: '/component/input', label: 'Input' },
+            { to: '/component/radio', label: 'Radio' },
+            { to: '/component/select', label: 'Select' },
+            { to: '/component/slider', label: 'Slider' },
+            { to: '/component/textarea', label: 'Textarea' },
+            { to: '/component/toggle', label: 'Toggle' },
+          ],
+        },
+        {
+          label: 'UI',
+          icon: 'cube',
+          collapseIcon: 'chevron-down',
+          expanded: true,
+          items: [
+            { to: '/component/alert', label: 'Alert' },
+            { to: '/component/avatar', label: 'Avatar' },
+            { to: '/component/badge', label: 'Badge' },
+            { to: '/component/breadcrumbs', label: 'Breadcrumbs' },
+            { to: '/component/button', label: 'Button' },
+            { to: '/component/card', label: 'Card' },
+            { to: '/component/collapse', label: 'Collapse' },
+            { to: '/component/container', label: 'Container' },
+            { to: '/component/divider', label: 'Divider' },
+            { to: '/component/drawer', label: 'Drawer' },
+            { to: '/component/icon', label: 'Icon' },
+            { to: '/component/link', label: 'Link' },
+            { to: '/component/menu', label: 'Menu' },
+            { to: '/component/modal', label: 'Modal' },
+            { to: '/component/notifications', label: 'Notifications' },
+            { to: '/component/pagination', label: 'Pagination' },
+            { to: '/component/popover', label: 'Popover' },
+            { to: '/component/progress', label: 'Progress' },
+            { to: '/component/scroll', label: 'Scroll' },
+            { to: '/component/skeleton', label: 'Skeleton' },
+            { to: '/component/spinner', label: 'Spinner' },
+            { to: '/component/table', label: 'Table' },
+            { to: '/component/tabs', label: 'Tabs' },
+            { to: '/component/tag', label: 'Tag' },
+            { to: '/component/tooltip', label: 'Tooltip' },
+          ],
+        },
       ],
     }
   },
@@ -55,21 +69,15 @@ export default {
     <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Documentation</div>
     <x-menu
       :items="docsMenu"
-      class="menu font-medium m-2"
+      class="m-4"
       color="primary"
       filled
     />
-    <div class="title text-overline text-sm font-light ml-6 mt-8 mb-4">Form Components</div>
+    <x-divider class="px-4"/>
+    <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Components</div>
     <x-menu
-      :items="inputComponents"
-      class="menu font-medium m-2"
-      color="primary"
-      filled
-    />
-    <div class="title text-overline text-sm font-light ml-6 mt-8 mb-4">UI Components</div>
-    <x-menu
-      :items="uiComponents"
-      class="menu font-medium m-2"
+      :items="components"
+      class="m-4"
       color="primary"
       filled
     />
