@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Drawer'
-const description = 'Drawer.'
+const description = 'Drawers are used to display content in a side panel.'
 const components = [XDrawer]
 const demos = [{
   name: 'Usage',

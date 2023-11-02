@@ -1,11 +1,5 @@
 <template>
-  <div class="text-xl">Examples</div>
-  <ul>
-    <li>scroll with shadow</li>
-    <li>horizontal</li>
-    <li>vertical</li>
-    <li>mousewheel horizontal scroll</li>
-    <li>hide scrollbar</li>
-    <li>infinite scroll</li>
-  </ul>
+  <x-scroll class="h-20">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, quod fuga deleniti eaque sit nemo, labore, quisquam est esse quidem corrupti quia illo totam. Dicta laborum hic cupiditate distinctio quas totam sed sunt sint mollitia nostrum, provident quasi quam, suscipit atque rem ut saepe quae! In ipsum, minus non deleniti quasi temporibus qui autem voluptates! Architecto iusto unde placeat mollitia doloremque amet vel necessitatibus sapiente ipsa tenetur temporibus quidem perferendis sunt, quibusdam porro minima error impedit! Voluptatum ratione porro praesentium est veniam commodi, veritatis nemo voluptates atque iste, neque illum nesciunt aspernatur reprehenderit. Deleniti, aspernatur iusto accusamus nulla quos magni.
+  </x-scroll>
 </template>

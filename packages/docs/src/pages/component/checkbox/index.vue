@@ -10,7 +10,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Checkbox'
-const description = 'checkbox.'
+const description = 'Checkboxes allow the user to select one or more items from a set. Checkboxes can be used to turn an option on or off.'
 const components = [XCheckbox]
 const demos = [{
   name: 'Usage',
@@ -33,7 +33,7 @@ const demos = [{
   code: StatesDemoCode,
   component: StatesDemo,
 }]
-const back = ''
+const back = 'button'
 const next = 'form'
 </script>
 

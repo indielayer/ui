@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Radio'
-const description = 'Radio.'
+const description = 'Radios allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side.'
 const components = [XRadio]
 const demos = [{
   name: 'Usage',

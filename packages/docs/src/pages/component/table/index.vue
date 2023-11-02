@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Table'
-const description = 'Table.'
+const description = 'Tables are used to display data in a tabular format.'
 const components = [XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow]
 const demos = [{
   name: 'Usage',

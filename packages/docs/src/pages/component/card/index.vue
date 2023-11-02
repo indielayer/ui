@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Card'
-const description = 'Card.'
+const description = 'Cards are used to display content in an organized manner.'
 const components = [XCard]
 const demos = [{
   name: 'Usage',
@@ -12,7 +12,7 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'button'
+const back = 'breadcrumbs'
 const next = 'collapse'
 </script>
 

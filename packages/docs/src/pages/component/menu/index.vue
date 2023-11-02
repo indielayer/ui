@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Menu'
-const description = 'Menu.'
+const description = 'Menus are used to display a list of options.'
 const components = [XMenu, XMenuItem]
 const demos = [{
   name: 'Usage',

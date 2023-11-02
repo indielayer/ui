@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Input'
-const description = 'Input.'
+const description = 'Inputs are used to collect user input :O'
 const components = [XInput]
 const demos = [{
   name: 'Usage',

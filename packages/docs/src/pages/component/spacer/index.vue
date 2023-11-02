@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { XAlert } from '@indielayer/ui'
+import { XSpacer } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
-const title = 'Alert'
-const description = 'Alerts are used to communicate a state that affects a system, feature or page.'
-const components = [XAlert]
+const title = 'Spacer'
+const description = 'Spacer is used to add space between elements inside a display flex wrapper.'
+const components = [XSpacer]
 const demos = [{
   name: 'Usage',
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'toggle'
-const next = 'avatar'
+const back = 'scroll'
+const next = ''
 </script>
 
 <template>
   <document-page
-    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/alert"
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/spacer"
     :title="title"
     :description="description"
     :components="components"

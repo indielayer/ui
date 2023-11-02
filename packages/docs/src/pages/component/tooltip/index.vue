@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Tooltip'
-const description = 'Tooltip.'
+const description = 'Tooltips are used to display a message when hovering over an element.'
 const components = [XTooltip]
 const demos = [{
   name: 'Usage',

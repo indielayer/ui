@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Modal'
-const description = 'Modal.'
+const description = 'Modals are used to display content on top of the current page.'
 const components = [XModal]
 const demos = [{
   name: 'Usage',

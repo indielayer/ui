@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { XAlert } from '@indielayer/ui'
+import { XImage } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
-const title = 'Alert'
-const description = 'Alerts are used to communicate a state that affects a system, feature or page.'
-const components = [XAlert]
+const title = 'Image'
+const description = 'Image is used to load an image file with a skeleton as placeholder and on load display the image.'
+const components = [XImage]
 const demos = [{
   name: 'Usage',
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'toggle'
-const next = 'avatar'
+const back = 'icon'
+const next = 'link'
 </script>
 
 <template>
   <document-page
-    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/alert"
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/image"
     :title="title"
     :description="description"
     :components="components"

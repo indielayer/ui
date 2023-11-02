@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Toggle'
-const description = 'Toggle.'
+const description = 'Toggles are used to switch between two states.'
 const components = [XToggle]
 const demos = [{
   name: 'Usage',
