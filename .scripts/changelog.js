@@ -3,8 +3,15 @@ const { getInfo, getInfoFromPullRequest } = require('@changesets/get-github-info
 module.exports = {
   getDependencyReleaseLine: async (
     changesets,
-    dependenciesUpdated
+    dependenciesUpdated,
+    options
   ) => {
+    if (!options.repo) {
+      throw new Error(
+        'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
+      );
+    }
+
     if (dependenciesUpdated.length === 0) return ''
 
     const changesetLink = `- Updated dependencies [${(
@@ -12,7 +19,7 @@ module.exports = {
         changesets.map(async (cs) => {
           if (cs.commit) {
             const { links } = await getInfo({
-              repo: 'indielayer/ui',
+              repo: options.repo,
               commit: cs.commit,
             })
 
@@ -30,7 +37,13 @@ module.exports = {
 
     return [changesetLink, ...updatedDepenenciesList].join('\n')
   },
-  getReleaseLine: async (changeset, type) => {
+  getReleaseLine: async (changeset, type, options) => {
+    if (!options || !options.repo) {
+      throw new Error(
+        'Please provide a repo to this changelog generator like this:\n"changelog": ["@changesets/changelog-github", { "repo": "org/repo" }]'
+      );
+    }
+
     let prFromSummary
     let commitFromSummary
     const usersFromSummary = []
@@ -62,14 +75,14 @@ module.exports = {
     const links = await (async () => {
       if (prFromSummary !== undefined) {
         let { links } = await getInfoFromPullRequest({
-          repo: 'indielayer/ui',
+          repo: options.repo,
           pull: prFromSummary,
         })
 
         if (commitFromSummary) {
           links = {
             ...links,
-            commit: `[\`${commitFromSummary}\`](https://github.com/indielayer/ui/commit/${commitFromSummary})`,
+            commit: `[\`${commitFromSummary}\`](https://github.com/${options.repo}/commit/${commitFromSummary})`,
           }
         }
 
@@ -79,7 +92,7 @@ module.exports = {
 
       if (commitToFetchFrom) {
         const { links } = await getInfo({
-          repo: 'indielayer/ui',
+          repo: options.repo,
           commit: commitToFetchFrom,
         })
 
