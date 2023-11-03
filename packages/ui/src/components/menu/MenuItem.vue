@@ -59,7 +59,12 @@ const cItem = computed(() => ({
   ...props.item,
 }))
 
-const htmlTag = computed(() => cItem.value.to || cItem.value.href ? 'router-link' : 'div')
+const htmlTag = computed(() => {
+  if (cItem.value.to) return 'router-link'
+  if (cItem.value.href) return 'a'
+
+  return 'div'
+})
 
 onMounted(() => {
   if (!elRef.value) return
@@ -116,6 +121,7 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
     ref="elRef"
     v-bind="cItem.attrs"
     :to="cItem.to"
+    :href="cItem.href"
     :target="cItem.target"
     :color="cItem.color"
     :style="styles"
