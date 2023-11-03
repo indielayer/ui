@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Breadcrumbs'
-const description = 'Breadcrumbs.'
+const description = 'Breadcrumbs are used to indicate the current page\'s location within a navigational hierarchy.'
 const components = [XBreadcrumbs]
 const demos = [{
   name: 'Usage',
@@ -13,7 +13,7 @@ const demos = [{
   component: UsageDemo,
 }]
 const back = 'badge'
-const next = 'button'
+const next = 'card'
 </script>
 
 <template>

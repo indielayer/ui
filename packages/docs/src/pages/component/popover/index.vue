@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Popover'
-const description = 'Popover.'
+const description = 'Popover is used to display content in a small overlay.'
 const components = [XPopover, XPopoverContainer]
 const demos = [{
   name: 'Usage',

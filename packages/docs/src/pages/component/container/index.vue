@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Container'
-const description = 'Container.'
+const description = 'Containers are used to wrap content in an organized manner.'
 const components = [XContainer]
 const demos = [{
   name: 'Usage',

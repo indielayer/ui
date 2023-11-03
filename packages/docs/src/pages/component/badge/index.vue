@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Badge'
-const description = 'Badge.'
+const description = 'Badges are used to display a small amount of information.'
 const components = [XBadge]
 const demos = [{
   name: 'Usage',

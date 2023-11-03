@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Pagination'
-const description = 'Pagination.'
+const description = 'Pagination is used to navigate through a list of items.'
 const components = [XPagination]
 const demos = [{
   name: 'Usage',

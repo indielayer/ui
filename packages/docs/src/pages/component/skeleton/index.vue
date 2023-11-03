@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Skeleton'
-const description = 'Skeleton.'
+const description = 'Skeletons are used to display a loading state.'
 const components = [XSkeleton]
 const demos = [{
   name: 'Usage',

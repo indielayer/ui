@@ -47,8 +47,8 @@ const demos = [{
   code: StatesDemoCode,
   component: StatesDemo,
 }]
-const back = 'breadcrumbs'
-const next = 'card'
+const back = ''
+const next = 'checkbox'
 </script>
 
 <template>

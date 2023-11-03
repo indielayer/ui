@@ -8,7 +8,7 @@ import VerticalDemoCode from './vertical.vue?raw'
 import VerticalDemo from './vertical.vue'
 
 const title = 'Divider'
-const description = 'divider.'
+const description = 'Dividers are used to separate content.'
 const components = [XDivider]
 const demos = [{
   name: 'Usage',

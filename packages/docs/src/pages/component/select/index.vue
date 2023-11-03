@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Select'
-const description = 'Select.'
+const description = 'Selects allow the user to select one or more options from a set.'
 const components = [XSelect]
 const demos = [{
   name: 'Usage',
@@ -27,7 +27,7 @@ const demos = [{
   component: StatesDemo,
 }]
 const back = 'radio'
-const next = 'textarea'
+const next = 'slider'
 </script>
 
 <template>

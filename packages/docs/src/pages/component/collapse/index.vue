@@ -6,7 +6,7 @@ import ExpandedDemoCode from './expanded.vue?raw'
 import ExpandedDemo from './expanded.vue'
 
 const title = 'Collapse'
-const description = 'Collapse.'
+const description = 'Collapse is used to show and hide content.'
 const components = [XCollapse]
 const demos = [{
   name: 'Usage',

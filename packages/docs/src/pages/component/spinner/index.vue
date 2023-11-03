@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Spinner'
-const description = 'Spinner.'
+const description = 'Spinners are used to indicate that an operation is in progress.'
 const components = [XSpinner]
 const demos = [{
   name: 'Usage',

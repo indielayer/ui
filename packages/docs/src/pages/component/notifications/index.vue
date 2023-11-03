@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Notifications'
-const description = 'Notifications.'
+const description = 'Notifications are used to display a message to the user.'
 const components = [XNotifications]
 const demos = [{
   name: 'Usage',

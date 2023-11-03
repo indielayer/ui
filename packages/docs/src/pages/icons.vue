@@ -5,30 +5,37 @@
       <h1 class="text-lg my-2 text-gray-500 dark:text-gray-400">Building your own SVG icon library from multiple open source libraries</h1>
       <x-divider class="mt-4 mb-8"/>
 
-      <p class="text-xl mt-8 my-4">SVG Icon Libraries - MIT License</p>
+      <p class="text-xl mt-8 my-4">SVG Icon Libraries</p>
       <div class="font-bold text-lg">
         <ul>
           <li><x-link
             external
             color="sky"
             underline
+            href="https://icones.js.org/"
+            target="_blank"
+          >Icônes - All the libraries</x-link></li>
+          <li><x-link
+            external
+            color="sky"
+            underline
             href="https://heroicons.com/"
             target="_blank"
-          >Hero Icons</x-link></li>
+          >Hero Icons (MIT)</x-link></li>
           <li><x-link
             external
             color="sky"
             underline
             href="https://tabler-icons.io/"
             target="_blank"
-          >Tabler Icons</x-link></li>
+          >Tabler Icons (MIT)</x-link></li>
           <li><x-link
             external
             color="sky"
             underline
             href="https://feathericons.com/"
             target="_blank"
-          >Feather Icons</x-link></li>
+          >Feather Icons (MIT)</x-link></li>
         </ul>
       </div>
 

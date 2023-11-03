@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Icon'
-const description = 'Icon.'
+const description = 'Icons are used to represent an action or an object.'
 const components = [XIcon]
 const demos = [{
   name: 'Usage',
@@ -20,7 +20,7 @@ const demos = [{
   component: VariantsDemo,
 }]
 const back = 'drawer'
-const next = 'link'
+const next = 'image'
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Link'
-const description = 'Link.'
+const description = 'Links are used to navigate to a different page.'
 const components = [XLink]
 const demos = [{
   name: 'Usage',
@@ -12,7 +12,7 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'icon'
+const back = 'image'
 const next = 'menu'
 </script>
 

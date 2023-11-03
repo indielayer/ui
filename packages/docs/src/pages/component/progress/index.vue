@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Progress'
-const description = 'Progress.'
+const description = 'Progress is used to show the progress of an operation.'
 const components = [XProgress]
 const demos = [{
   name: 'Usage',

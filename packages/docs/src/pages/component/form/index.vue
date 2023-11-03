@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Form'
-const description = 'Form.'
+const description = 'Forms are used to collect user input.'
 const components = [XForm]
 const demos = [{
   name: 'Usage',

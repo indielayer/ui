@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Textarea'
-const description = 'Textarea.'
+const description = 'Textareas allow the user to enter text.'
 const components = [XTextarea]
 const demos = [{
   name: 'Usage',
@@ -26,7 +26,7 @@ const demos = [{
   code: StatesDemoCode,
   component: StatesDemo,
 }]
-const back = 'select'
+const back = 'slider'
 const next = 'toggle'
 </script>
 

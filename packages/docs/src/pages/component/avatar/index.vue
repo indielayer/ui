@@ -8,7 +8,7 @@ import SizeDemoCode from './size.vue?raw'
 import SizeDemo from './size.vue'
 
 const title = 'Avatar'
-const description = 'User represententation in a virtual world or online community.'
+const description = 'Avatars are used to represent a user.'
 const components = [XAvatar]
 const demos = [{
   name: 'Usage',
