@@ -18,7 +18,8 @@ const menu1 = [{
 const menu2 = [{
   label: 'Menu item 1',
   value: '',
-  exact: true,
+  target: '_blank',
+  href: 'https://indielayer.com',
 }, {
   to: 'menu',
   label: 'Menu item 2',
