@@ -1,9 +1,23 @@
 <script lang="ts">
+export type AlertVariant = 'info' | 'success' | 'error' | 'warning' | undefined
+
+const alertProps = {
+  ...useColors.props(),
+  type: String as PropType<AlertVariant>,
+  glow: Boolean,
+  light: Boolean,
+  outlined: Boolean,
+  removable: Boolean,
+  closeLabel: String,
+}
+
+export type AlertProps = ExtractPublicPropTypes<typeof alertProps>
+
 export default { name: 'XAlert' }
 </script>
 
 <script setup lang="ts">
-import { computed, type PropType } from 'vue'
+import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useColors } from '../../composables/colors'
 import { useTheme } from '../../composables/theme'
 import { closeIcon, successIcon, errorIcon, warningIcon, infoIcon } from '../../common/icons'
@@ -12,14 +26,7 @@ import XIcon from '../icon/Icon.vue'
 
 import theme from './Alert.theme'
 
-const props = defineProps({
-  ...useColors.props(),
-  type: String as PropType<'info' | 'success' | 'error' | 'warning' | undefined>,
-  glow: Boolean,
-  light: Boolean,
-  outlined: Boolean,
-  removable: Boolean,
-})
+const props = defineProps(alertProps)
 
 defineEmits(['remove'])
 

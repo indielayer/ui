@@ -24,10 +24,9 @@ const create = (createOptions: IndielayerUIOptions = {}) => {
 
     if (options.components)
       options.components.forEach((component: any) => {
-        // TODO: remove me
         const name = component.name.startsWith('X') ? component.name.slice(1) : component.name
 
-        app.component(`${options.prefix}${name}`, component)
+        if (!app.component(`${options.prefix}${name}`)) app.component(`${options.prefix}${name}`, component)
       })
 
     app.provide(injectColorsKey, options.colors)

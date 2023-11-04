@@ -1,4 +1,4 @@
-export { default as XAlert } from './alert/Alert.vue'
+export * from './alert'
 export { default as XAvatar } from './avatar/Avatar.vue'
 export { default as XBadge } from './badge/Badge.vue'
 export { default as XBreadcrumbs } from './breadcrumbs/Breadcrumbs.vue'

@@ -2,11 +2,12 @@ import { computed, inject, unref, useSlots, type StyleValue } from 'vue'
 import { injectThemeKey } from './keys'
 import { useColors, type ColorComposition } from './colors'
 import { useCSS, type CSSComposition } from './css'
-import * as R from 'ramda'
-import { smartUnref } from '../common/utils'
+import { isFunction, isObject, mergeRightDeep, smartUnref } from '../common/utils'
 
 import type { Slots } from 'vue'
 
+export type ThemeVueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[]
+export type ThemeClasses = Record<string, string | ((params: ThemeParams) => ThemeVueClass)>
 export type ThemeParams = {
   props: any;
   slots: Slots;
@@ -20,7 +21,7 @@ export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, 
   const userTheme = inject(injectThemeKey, false)
 
   const rawClasses = computed(() => {
-    if (unref(userTheme)?.[namespace]) return R.mergeRight(defaultTheme.classes, unref(userTheme)[namespace].classes || {})
+    if (unref(userTheme)?.[namespace]) return mergeRightDeep(defaultTheme.classes, unref(userTheme)[namespace].classes || {})
 
     return defaultTheme.classes
   })
@@ -71,18 +72,18 @@ export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, 
   }
 }
 
-function getClasses(xs: any, params: ThemeParams): any {
-  return R.map((x) => R.is(Function, x)
-    ? x(params)
-    : R.is(Object, x) || R.is(Array, x)
-      ? getClasses(x, params)
-      : x, xs)
+function getClasses(classes: ThemeClasses, params: ThemeParams): any {
+  const parsedClasses: Record<string, string> = {}
+
+  Object.keys(classes).forEach((key) => {
+    const x = classes[key]
+
+    parsedClasses[key] = isFunction(x) ? x(params) : (isObject(x) ? getClasses(x, params) : x)
+  })
+
+  return parsedClasses
 }
 
 function getStyles(styles: any, params: ThemeParams) {
-  return R.is(Function, styles)
-    ? styles(params) || {}
-    : R.is(Object, styles)
-      ? styles
-      : {}
+  return isFunction(styles) ? (styles(params) || {}) : (isObject(styles) ? styles : {})
 }

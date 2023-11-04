@@ -1,4 +1,4 @@
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     XAlert: typeof import('@indielayer/ui')['XAlert']
     XAvatar: typeof import('@indielayer/ui')['XAvatar']

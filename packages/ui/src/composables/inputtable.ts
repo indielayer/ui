@@ -1,4 +1,4 @@
-import type { Ref, PropType } from 'vue'
+import type { PropType } from 'vue'
 import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import { injectFormKey } from './keys'
 

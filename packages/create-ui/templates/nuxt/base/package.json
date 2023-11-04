@@ -13,8 +13,7 @@
     "@types/node": "^18",
     "@vueuse/core": "^10.2.0",
     "autoprefixer": "^10.4.8",
-    "nuxt": "^3.6.1",
-    "ramda": "^0.28.0",
+    "nuxt": "^3.7.4",
     "tailwindcss": "^3.3.2"
   }
 }

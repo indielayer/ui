@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { unref, isRef } from 'vue'
 
-const isObject = (val: any) => val !== null && typeof val === 'object'
-const isArray = Array.isArray
+export const isObject = (val: unknown): val is object => val !== null && typeof val === 'object'
+export const isArray = (val: unknown): val is [] => Array.isArray(val)
+export const isFunction = (val: unknown): val is Function => typeof val === 'function'
 
 /**
  * Deeply unref a value, recursing into objects and arrays.
@@ -65,4 +67,25 @@ export const unrefObject = (obj: any) => {
   })
 
   return unreffed
+}
+
+export const mergeRightDeep = (source: any = {}, target: any = {}) => {
+  const sourceKeys = Object.keys(source)
+  const targetKeys = Object.keys(target)
+
+  const merged = { ...source }
+
+  targetKeys.forEach((key) => {
+    if (sourceKeys.includes(key)) {
+      if (isObject(source[key]) && isObject(target[key])) {
+        merged[key] = mergeRightDeep(source[key], target[key])
+      } else {
+        merged[key] = target[key]
+      }
+    } else {
+      merged[key] = target[key]
+    }
+  })
+
+  return merged
 }

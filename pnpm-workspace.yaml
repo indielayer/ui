@@ -1,5 +1,6 @@
 packages:
   - 'packages/ui'
   - 'packages/docs'
-  - 'packages/nuxt-demo'
+  - 'packages/demo-nuxt'
+  - 'packages/demo-vue'
   - 'packages/create-ui'

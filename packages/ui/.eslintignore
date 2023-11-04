@@ -13,4 +13,3 @@ yarn-error.log*
 Thumbs.db
 .nuxt
 lib
-vite.config.ts

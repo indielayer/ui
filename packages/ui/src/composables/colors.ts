@@ -1,7 +1,7 @@
-import * as R from 'ramda'
 import { computed, inject, unref } from 'vue'
 import { injectThemeKey } from './keys'
 import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-utils'
+import { mergeRightDeep } from '../common/utils'
 
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'
 
@@ -42,7 +42,7 @@ const defaultColors = {
 
 export const useColors = (): ColorComposition => {
   const globalTheme = inject(injectThemeKey,  {})
-  const customColors = computed(() => R.mergeRight(defaultColors, unref(globalTheme).colors))
+  const customColors = computed(() => mergeRightDeep(defaultColors, unref(globalTheme).colors || {}))
 
   const getTailwindColor = (color: string) => tailwindColors[color]
 
@@ -87,6 +87,8 @@ export const useColors = (): ColorComposition => {
     getColorOpacity,
   }
 }
+
+export type UseColorsProps = ReturnType<typeof useColors.props>
 
 useColors.props = (defaultColor?: string) => ({
   color: {

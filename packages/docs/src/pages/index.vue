@@ -93,15 +93,15 @@ app.use(UI, {
         :snippets="[{
           label: 'npm',
           lang: 'bash',
-          code: 'npm install @indielayer/ui ramda @vueuse/core -D'
+          code: 'npm install @indielayer/ui @vueuse/core -D'
         }, {
           label: 'yarn',
           lang: 'bash',
-          code: 'yarn add @indielayer/ui ramda @vueuse/core -D'
+          code: 'yarn add @indielayer/ui @vueuse/core -D'
         }, {
           label: 'pnpm',
           lang: 'bash',
-          code: 'pnpm add @indielayer/ui ramda @vueuse/core -D'
+          code: 'pnpm add @indielayer/ui @vueuse/core -D'
         }]"
       />
       <code-snippet
