@@ -1,7 +1,17 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { FormProps } from './Form.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<FormProps, InternalClasses> {}
+export interface FormTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<FormProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: '',
   },
 }
+
+export default theme

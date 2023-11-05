@@ -1,0 +1,10 @@
+export { default as XTable } from './Table.vue'
+export { default as XTableBody } from './TableBody'
+export { default as XTableCell } from './TableCell.vue'
+export { default as XTableHead } from './TableHead'
+export { default as XTableHeader } from './TableHeader.vue'
+export { default as XTableRow } from './TableRow.vue'
+
+export type { TableProps, TableHeader } from './Table.vue'
+export type { TableHeaderProps, TableHeaderAlign, TableHeaderSort } from './TableHeader.vue'
+export type { TableCellProps, TableCellTextAlign, TableCellVerticalAlign } from './TableCell.vue'

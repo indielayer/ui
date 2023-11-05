@@ -1,9 +1,34 @@
 <script lang="ts">
-export default { name: 'XSelect' }
+const selectProps = {
+  ...useCommon.props(),
+  ...useInteractive.props(),
+  ...useInputtable.props(),
+  placeholder: String,
+  options: Array as PropType<SelectOption[]>,
+  multiple: Boolean,
+  label: String,
+  helper: String,
+  flat: Boolean,
+}
+
+export type SelectOption = {
+  value: number | string;
+  disabled: boolean;
+  label: string;
+}
+
+export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
+
+export default {
+  name: 'XSelect',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useCommon } from '../../composables/common'
 import { useInputtable } from '../../composables/inputtable'
@@ -21,23 +46,7 @@ import XInputError from '../helpers/InputError'
 
 import theme from './Select.theme'
 
-export type SelectOption = {
-  value: number | string;
-  disabled: boolean;
-  label: string;
-}
-
-const  props = defineProps({
-  ...useCommon.props(),
-  ...useInteractive.props(),
-  ...useInputtable.props(),
-  placeholder: String,
-  options: Array as PropType<Array<SelectOption>>,
-  multiple: Boolean,
-  label: String,
-  helper: String,
-  flat: Boolean,
-})
+const  props = defineProps(selectProps)
 
 const emit = defineEmits(useInputtable.emits())
 

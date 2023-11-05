@@ -1,31 +1,34 @@
 <script lang="ts">
 const validators = {
-  sort: [1, -1],
-  textAlign: ['left', 'center', 'right', 'justify'],
+  sort: [1, -1, undefined] as const,
+  textAlign: ['left', 'center', 'right', 'justify'] as const,
 }
+
+const tableHeaderProps = {
+  sort: {
+    type: Number as PropType<TableHeaderSort>,
+    validator: (value: number) => validators.sort.includes(value as any),
+  },
+  sortable: Boolean,
+  textAlign: {
+    type: String as PropType<TableHeaderAlign>,
+    default: 'left',
+    validator: (value: string) => validators.textAlign.includes(value as any),
+  },
+  stickyHeader: Boolean,
+}
+
+export type TableHeaderSort = typeof validators.sort[number]
+export type TableHeaderAlign = typeof validators.textAlign[number]
+export type TableHeaderProps = ExtractPublicPropTypes<typeof tableHeaderProps>
 
 export default { name: 'XTableHeader', validators }
 </script>
 
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 
-export type Sort = 1 | -1 | undefined
-export type Align = 'left' | 'center' | 'right' | 'justify' | undefined
-
-const props = defineProps({
-  sort: {
-    type: Number as PropType<Sort>,
-    validator: (value: number) => validators.sort.includes(value),
-  },
-  sortable: Boolean,
-  textAlign: {
-    type: String as PropType<Align>,
-    default: 'left',
-    validator: (value: string) => validators.textAlign.includes(value),
-  },
-  stickyHeader: Boolean,
-})
+defineProps(tableHeaderProps)
 </script>
 
 <template>

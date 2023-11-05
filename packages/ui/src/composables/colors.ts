@@ -26,7 +26,7 @@ export interface ColorsProps {
 }
 
 export interface ColorComposition {
-  getPalette: (color: string) => ColorPalette;
+  getPalette: (color?: string) => ColorPalette;
   getColorOpacity: (color: string, opacity: number) => string;
 }
 
@@ -48,7 +48,7 @@ export const useColors = (): ColorComposition => {
 
   const getColorOpacity = (color: string, opacity: number) => setOpacity(color, opacity)
 
-  const getPalette = (color: string): ColorPalette => {
+  const getPalette = (color?: string): ColorPalette => {
     if (!color) return getTailwindColor('gray')
 
     const twColor = getTailwindColor(color)

@@ -1,3 +1,67 @@
+<script setup lang="ts">
+import { useNotifications, type TableHeader, type TableHeaderSort } from '@indielayer/ui'
+import { computed, ref } from 'vue'
+
+const notifications = useNotifications('notifica')
+
+const headers: TableHeader[] = [
+  { text: '#', value: 'id', sortable: true, align: 'center' },
+  { text: 'Title', value: 'title' },
+  { text: 'Description', value: 'description' },
+  { text: 'Published', value: 'published', sortable: true },
+  { text: 'Status', value: 'status' },
+]
+
+type Book = {
+  id: number;
+  title: string;
+  description: string;
+  published: number;
+  status: string;
+}
+
+const items = ref<Book[]>([{
+  id: 1,
+  title: 'Book of Magic',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 1000,
+  status: 'Tag label',
+}, {
+  id: 2,
+  title: 'Another book',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 5000,
+  status: 'Tag label',
+}, {
+  id: 3,
+  title: 'Clever cove',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 3000,
+  status: 'Tag label',
+}])
+
+const sort = ref([])
+
+function formatDate(val: any) {
+  return (new Date(val)).toISOString()
+}
+
+const itemsSorted = computed<Book[]>(() => {
+  const ite = items.value.slice(0)
+
+  return ite.sort((a: any, b: any) => {
+    for (const s of sort.value) {
+      const [key, asc] = (s as string).split(',')
+
+      if (a[key] > b[key]) return asc === '-1' ? -1 : 1
+      if (a[key] < b[key]) return asc === '-1' ? 1 : -1
+    }
+
+    return 0
+  })
+})
+</script>
+
 <template>
   <x-table
     v-model:sort="sort"
@@ -29,71 +93,3 @@
     </template>
   </x-table>
 </template>
-
-<script>
-import { useNotifications } from '@indielayer/ui'
-
-export default {
-  setup() {
-    const notifications = useNotifications('notifica')
-
-    return {
-      notifications,
-    }
-  },
-  data() {
-    return {
-      headers: [
-        { text: '#', value: 'id', sortable: true, align: 'center' },
-        { text: 'Title', value: 'title' },
-        { text: 'Description', value: 'description' },
-        { text: 'Published', value: 'published', sortable: true },
-        { text: 'Status', value: 'status' },
-      ],
-      items: [{
-        id: 1,
-        title: 'Book of Magic',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
-        published: Date.now() - 1000,
-        status: 'Tag label',
-      }, {
-        id: 2,
-        title: 'Another book',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
-        published: Date.now() - 5000,
-        status: 'Tag label',
-      }, {
-        id: 3,
-        title: 'Clever cove',
-        description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
-        published: Date.now() - 3000,
-        status: 'Tag label',
-      }],
-      sort: [],
-    }
-  },
-
-  computed: {
-    itemsSorted() {
-      const items = this.items.slice(0)
-
-      return items.sort((a, b) => {
-        for (const sort of this.sort) {
-          const [key, asc] = sort.split(',')
-
-          if (a[key] > b[key]) return asc === '-1' ? -1 : 1
-          if (a[key] < b[key]) return asc === '-1' ? 1 : -1
-        }
-
-        return 0
-      })
-    },
-  },
-
-  methods: {
-    formatDate(val) {
-      return (new Date(val)).toISOString()
-    },
-  },
-}
-</script>

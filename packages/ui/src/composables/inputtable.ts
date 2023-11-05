@@ -19,8 +19,8 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
   watch(() => props.name, (val) => { if (val) nameInternal.value = val })
 
   const form = inject(injectFormKey, {
-    registerInput: (inputName: string, methods: XFormInputMethods) => {},
-    unregisterInput: (inputName: string) => {},
+    registerInput: () => {},
+    unregisterInput: () => {},
     isInsideForm: false,
   })
 
@@ -34,7 +34,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     errorInternal.value = val
   }
 
-  const validate = (val: any): boolean => {
+  const validate = (val?: any): boolean => {
     val = val || props.modelValue
 
     isFirstValidation.value = false

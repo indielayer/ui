@@ -1,11 +1,19 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { TableProps } from './Table.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'loadingWrapper'
+
+interface InternalTheme extends ThemeComponent<TableProps, InternalClasses> {}
+export interface TableTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<TableProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props, data }: ThemeParams) => {
+    wrapper: ({ props, data }) => {
       const c = ['w-full relative']
 
-      if (props.scrollable === 'block') c.push('overflow-x-scroll sm:overflow-x-auto whitespace-wrap sm:whitespace-normal block sm:table')
+      if (props.scrollable) c.push('overflow-x-scroll sm:overflow-x-auto whitespace-wrap sm:whitespace-normal block sm:table')
 
       if (props.stickyHeader) c.push('relative')
 
@@ -17,3 +25,5 @@ export default {
     loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-50',
   },
 }
+
+export default theme

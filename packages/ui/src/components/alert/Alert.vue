@@ -1,9 +1,8 @@
 <script lang="ts">
-export type AlertVariant = 'info' | 'success' | 'error' | 'warning' | undefined
-
+const alertType = ['info', 'success', 'error', 'warning'] as const
 const alertProps = {
   ...useColors.props(),
-  type: String as PropType<AlertVariant>,
+  type: String as PropType<AlertType>,
   glow: Boolean,
   light: Boolean,
   outlined: Boolean,
@@ -11,9 +10,15 @@ const alertProps = {
   closeLabel: String,
 }
 
+export type AlertType = typeof alertType[number]
 export type AlertProps = ExtractPublicPropTypes<typeof alertProps>
 
-export default { name: 'XAlert' }
+export default {
+  name: 'XAlert',
+  validators: {
+    type: alertType,
+  },
+}
 </script>
 
 <script setup lang="ts">
@@ -67,11 +72,11 @@ const { styles, classes, className } = useTheme('alert', theme, props)
 
     <template v-if="removable">
       <div class="flex-grow"></div>
-      <span class="flex items-center cursor-pointer shrink-0" @click="(e: Event) => $emit('remove', e)">
+      <button class="shrink-0" :aria-label="closeLabel" @click="(e: Event) => $emit('remove', e)">
         <slot name="removeIcon">
           <x-icon :icon="closeIcon"/>
         </slot>
-      </span>
+      </button>
     </template>
   </div>
 </template>

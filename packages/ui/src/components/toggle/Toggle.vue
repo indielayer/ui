@@ -1,9 +1,27 @@
 <script lang="ts">
-export default { name: 'XToggle' }
+const toggleProps = {
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  ...useInteractive.props(),
+  ...useInputtable.props(),
+  id: String,
+  label: String,
+  helper: String,
+  glow: Boolean,
+}
+
+export type ToggleProps = ExtractPublicPropTypes<typeof toggleProps>
+
+export default {
+  name: 'XToggle',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type ExtractPublicPropTypes } from 'vue'
 import { useTheme } from '../../composables/theme'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
@@ -15,16 +33,7 @@ import XInputError from '../helpers/InputError'
 
 import theme from './Toggle.theme'
 
-const props = defineProps({
-  ...useCommon.props(),
-  ...useColors.props('primary'),
-  ...useInteractive.props(),
-  ...useInputtable.props(),
-  id: String,
-  label: String,
-  helper: String,
-  glow: Boolean,
-})
+const props = defineProps(toggleProps)
 
 const emit = defineEmits(useInputtable.emits(false))
 

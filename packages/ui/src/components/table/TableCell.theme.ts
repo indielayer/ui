@@ -1,8 +1,16 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { TableCellProps } from './TableCell.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<TableCellProps, InternalClasses> {}
+export interface TableCellTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<TableCellProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props }: ThemeParams) => {
+    wrapper: ({ props }) => {
       const c = ['last:pr-0 px-3']
 
       c.push(props.dense ? 'py-2' : 'py-4')
@@ -25,3 +33,5 @@ export default {
     },
   },
 }
+
+export default theme

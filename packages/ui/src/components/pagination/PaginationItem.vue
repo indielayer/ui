@@ -1,5 +1,15 @@
 <script lang="ts">
-import { useCommon } from '../../composables/common'
+const paginationItemProps = {
+  ...useCommon.props(),
+  value: {
+    type: Number,
+    default: 0,
+  },
+  selected: Boolean,
+  links: Boolean,
+}
+
+export type PaginationItemProps = ExtractPublicPropTypes<typeof paginationItemProps>
 
 export default {
   name: 'XPaginationItem',
@@ -11,20 +21,14 @@ export default {
 
 <script setup lang="ts">
 import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/common'
 
 import XButton from '../button/Button.vue'
 
 import theme from './PaginationItem.theme'
+import type { ExtractPublicPropTypes } from 'vue'
 
-const props = defineProps({
-  ...useCommon.props(),
-  value: {
-    type: Number,
-    default: 0,
-  },
-  selected: Boolean,
-  links: Boolean,
-})
+const props = defineProps(paginationItemProps)
 
 const emit = defineEmits(['input'])
 

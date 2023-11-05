@@ -1,6 +1,6 @@
 import type { PropType } from 'vue'
 
-export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined
+export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export const useCommon = () => {}
 

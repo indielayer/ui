@@ -1,8 +1,16 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { TagProps } from './Tag.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'loadingWrapper'
+
+interface InternalTheme extends ThemeComponent<TagProps, InternalClasses> {}
+export interface TagTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<TagProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props, data }: ThemeParams) => {
+    wrapper: ({ props, data }) => {
       let c = 'inline-flex items-center leading-none max-w-full'
 
       if (props.size === 'xs') c += ' px-2 py-1 text-xs'
@@ -17,7 +25,7 @@ export default {
     loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-50',
   },
 
-  styles: ({ colors, props, css }: ThemeParams) => {
+  styles: ({ colors, props, css }) => {
     const color = colors.getPalette(props.color)
 
     return css.variables({
@@ -30,3 +38,5 @@ export default {
     })
   },
 }
+
+export default theme

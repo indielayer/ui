@@ -1,21 +1,5 @@
 <script lang="ts">
-export default { name: 'XSlider' }
-</script>
-
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useEventListener } from '@vueuse/core'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInteractive } from '../../composables/interactive'
-import { useInputtable } from '../../composables/inputtable'
-import { useTheme } from '../../composables/theme'
-
-import XProgress from '../../components/progress/Progress.vue'
-
-import theme from './Slider.theme'
-
-const props = defineProps({
+const sliderProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
@@ -28,7 +12,31 @@ const props = defineProps({
     default: 1,
   },
   gradient: Boolean,
-})
+}
+
+export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
+export default {
+  name: 'XSlider',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { useEventListener } from '@vueuse/core'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { useInputtable } from '../../composables/inputtable'
+import { useTheme } from '../../composables/theme'
+
+import XProgress from '../../components/progress/Progress.vue'
+
+import theme from './Slider.theme'
+
+const props = defineProps(sliderProps)
 
 const emit = defineEmits(useInputtable.emits(false))
 

@@ -1,32 +1,7 @@
 <script lang="ts">
-export default { name: 'XTable' }
-</script>
-
-<script setup lang="ts">
-import type { PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
-
-import XTableHead from './TableHead'
-import XTableHeader, { type Sort, type Align } from './TableHeader.vue'
-import XTableBody from './TableBody'
-import XTableRow from './TableRow.vue'
-import XTableCell from './TableCell.vue'
-import XSpinner from '../spinner/Spinner.vue'
-
-import theme from './Table.theme'
-
-export type Header = {
-  sortable?: boolean;
-  sort?: string[];
-  align?: Align;
-  value?: string;
-  text?: string;
-  width?: string | number;
-}
-
-const props = defineProps({
+const tableProps = {
   headers: {
-    type: Array as PropType<Array<Header>>,
+    type: Array as PropType<TableHeader[]>,
     default: () => [],
   },
   items: {
@@ -34,7 +9,7 @@ const props = defineProps({
     default: () => [],
   },
   sort: {
-    type: Array as PropType<Array<string>>,
+    type: Array as PropType<string[]>,
     default: () => [],
   },
   loading: Boolean,
@@ -50,11 +25,46 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+}
+
+export type TableHeader = {
+  sortable?: boolean;
+  sort?: string[];
+  align?: TableHeaderAlign;
+  value?: string;
+  text?: string;
+  width?: string | number;
+}
+
+export type TableProps = ExtractPublicPropTypes<typeof tableProps>
+
+export default { name: 'XTable' }
+</script>
+
+<script setup lang="ts" generic="T">
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import { useTheme } from '../../composables/theme'
+
+import XTableHead from './TableHead'
+import XTableHeader, { type TableHeaderSort, type TableHeaderAlign } from './TableHeader.vue'
+import XTableBody from './TableBody'
+import XTableRow from './TableRow.vue'
+import XTableCell from './TableCell.vue'
+import XSpinner from '../spinner/Spinner.vue'
+
+import theme from './Table.theme'
+
+const props = defineProps({
+  ...tableProps,
+  items: {
+    type: Array as PropType<T[]>,
+    default: () => [],
+  },
 })
 
 const emit = defineEmits(['update:sort', 'click-row'])
 
-function getSort(headerValue: string | undefined, sort: string[]): Sort {
+function getSort(headerValue: string | undefined, sort: string[]): TableHeaderSort {
   if (!headerValue) return undefined
 
   for (let i = 0; i < sort.length; i++) {
@@ -69,7 +79,7 @@ function getSort(headerValue: string | undefined, sort: string[]): Sort {
   return undefined
 }
 
-function sortHeader(header: Header) {
+function sortHeader(header: TableHeader) {
   // update sort array
   const sort = props.sort.slice(0)
   let exists = false
@@ -133,7 +143,7 @@ const { styles, classes, className } = useTheme('table', theme, props)
       </x-table-head>
       <x-table-body>
         <x-table-row
-          v-for="(item, index) in items"
+          v-for="(item, index) in (items as T[])"
           :key="index"
           :pointer="pointer"
           :striped="striped"

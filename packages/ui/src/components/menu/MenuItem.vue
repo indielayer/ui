@@ -1,24 +1,9 @@
 <script lang="ts">
-export default { name: 'XMenuItem' }
-</script>
-
-<script setup lang="ts">
-import { ref, computed, watch, onMounted } from 'vue'
-import { useMutationObserver } from '@vueuse/core'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
-
-import XIcon from '../../components/icon/Icon.vue'
-import XSpinner from '../../components/spinner/Spinner.vue'
-
-import theme from './MenuItem.theme'
-
-const props = defineProps({
+const menuItemProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   item: {
-    type: Object,
+    type: Object as PropType<MenuArrayItem>,
     default: () => {},
   },
   active: Boolean,
@@ -27,7 +12,6 @@ const props = defineProps({
     default: () => {},
   },
   onClick: Function,
-  inactive: Boolean,
   value: [Number, String],
   to: String,
   exact: Boolean,
@@ -47,21 +31,46 @@ const props = defineProps({
   },
   selected: Boolean,
   disabled: Boolean,
-})
+}
+
+export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
+
+export default {
+  name: 'XMenuItem',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { ref, computed, watch, onMounted, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { useMutationObserver } from '@vueuse/core'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
+import { useTheme } from '../../composables/theme'
+
+import XIcon from '../../components/icon/Icon.vue'
+import XSpinner from '../../components/spinner/Spinner.vue'
+
+import theme from './MenuItem.theme'
+import type { MenuArrayItem } from './Menu.vue'
+
+const props = defineProps(menuItemProps)
 
 const emit = defineEmits(['active', 'click'])
 
 const elRef = ref()
 const isActive = ref(false)
 
-const cItem = computed(() => ({
+const computedProps = computed(() => ({
   ...props,
   ...props.item,
-}))
+} as MenuItemProps))
 
 const htmlTag = computed(() => {
-  if (cItem.value.to) return 'router-link'
-  if (cItem.value.href) return 'a'
+  if (computedProps.value.to) return 'router-link'
+  if (computedProps.value.href) return 'a'
 
   return 'div'
 })
@@ -78,24 +87,24 @@ onMounted(() => {
 })
 
 function onItemClick(e: Event) {
-  if (cItem.value.disabled) {
+  if (computedProps.value.disabled) {
     e.stopPropagation()
     e.preventDefault()
 
     return
   }
 
-  cItem.value.onClick && cItem.value.onClick(e)
+  computedProps.value.onClick && computedProps.value.onClick(e)
   emit('click', e)
 }
 
 function check() {
-  if (elRef.value && elRef.value.$el && (cItem.value.href || cItem.value.to)) {
-    const active = elRef.value.$el.classList.contains(cItem.value.exact ? 'router-link-exact-active' : 'router-link-active') || false
+  if (elRef.value && elRef.value.$el && (computedProps.value.href || computedProps.value.to)) {
+    const active = elRef.value.$el.classList.contains(computedProps.value.exact ? 'router-link-exact-active' : 'router-link-active') || false
 
     isActive.value = active
   } else {
-    isActive.value = cItem.value.active
+    isActive.value = !!computedProps.value.active
   }
 }
 
@@ -103,14 +112,9 @@ watch(() => isActive.value, (val) => {
   if (val) emit('active')
 })
 
-watch(() => cItem.value.active, (val) => {
-  isActive.value = val
+watch(() => computedProps.value.active, (val) => {
+  isActive.value = !!val
 })
-
-const computedProps = computed(() => ({
-  ...cItem.value,
-  filled: props.filled || props.item?.filled,
-}))
 
 const { styles, classes, className } = useTheme('menu-item', theme, computedProps, { isActive })
 </script>
@@ -119,11 +123,11 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
   <component
     :is="htmlTag"
     ref="elRef"
-    v-bind="cItem.attrs"
-    :to="cItem.to"
-    :href="cItem.href"
-    :target="cItem.target"
-    :color="cItem.color"
+    v-bind="computedProps.attrs"
+    :to="computedProps.to"
+    :href="computedProps.href"
+    :target="computedProps.target"
+    :color="computedProps.color"
     :style="styles"
     :class="[
       className,
@@ -134,26 +138,26 @@ const { styles, classes, className } = useTheme('menu-item', theme, computedProp
         'flex items-center': $slots.prefix || $slots.suffix
       }
     ]"
-    :title="cItem.label"
-    :alt="cItem.label"
+    :title="computedProps.label"
+    :alt="computedProps.label"
     @click="onItemClick"
   >
     <span v-if="$slots.prefix" class="mr-2 shrink-0">
       <slot name="prefix"></slot>
     </span>
-    <x-icon v-else-if="cItem.icon" :size="cItem.size" :icon="cItem.icon" class="mr-2"/>
+    <x-icon v-else-if="computedProps.icon" :size="computedProps.size" :icon="computedProps.icon" class="mr-2"/>
 
     <span class="flex-1 truncate">
-      <slot>{{ cItem.label }}</slot>
+      <slot>{{ computedProps.label }}</slot>
     </span>
 
     <span class="ml-1 shrink-0">
-      <x-spinner v-if="cItem.loading" :size="cItem.size" />
+      <x-spinner v-if="computedProps.loading" :size="computedProps.size" />
       <template v-else>
         <span v-if="$slots.suffix">
           <slot name="suffix"></slot>
         </span>
-        <x-icon v-else-if="cItem.iconRight" :size="cItem.size" :icon="cItem.iconRight"/>
+        <x-icon v-else-if="computedProps.iconRight" :size="computedProps.size" :icon="computedProps.iconRight"/>
       </template>
     </span>
   </component>

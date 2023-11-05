@@ -1,23 +1,26 @@
-import { computed, inject, unref, useSlots, type StyleValue } from 'vue'
+import { computed, inject, unref, useSlots, type StyleValue, type Slots, type UnwrapNestedRefs, type UnwrapRef, type MaybeRef } from 'vue'
 import { injectThemeKey } from './keys'
 import { useColors, type ColorComposition } from './colors'
 import { useCSS, type CSSComposition } from './css'
 import { isFunction, isObject, mergeRightDeep, smartUnref } from '../common/utils'
 
-import type { Slots } from 'vue'
-
 export type ThemeVueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[]
-export type ThemeClasses = Record<string, string | ((params: ThemeParams) => ThemeVueClass)>
-export type ThemeParams = {
-  props: any;
+export type ThemeClasses<P, K extends string = string, D = undefined> = Record<K, string | ((params: ThemeParams<P, D>) => ThemeVueClass)>
+export type ThemeStyles<P, D> = StyleValue | ((params: ThemeParams<P, D>) => StyleValue);
+export interface ThemeComponent<P = object, K extends string = string, D = object> {
+  classes?: ThemeClasses<P, K, D>;
+  styles?: ThemeStyles<P, D>;
+}
+export type ThemeParams<P = Record<string, any>, D = Record<string, any>> = {
+  props: UnwrapRef<P>;
   slots: Slots;
   colors: ColorComposition;
   css: CSSComposition;
   rtl?: boolean;
-  data?: any;
+  data: UnwrapNestedRefs<D>;
 }
 
-export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, data?: any) => {
+export const useTheme = <P extends object = object, K extends string = string, D extends object = object>(namespace: string, defaultTheme: ThemeComponent<P, K, D> = {}, props: MaybeRef<P> = {} as P, data: D = {} as D) => {
   const userTheme = inject(injectThemeKey, false)
 
   const rawClasses = computed(() => {
@@ -35,8 +38,7 @@ export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, 
   const slots = useSlots()
   const colors = useColors()
   const css = useCSS(namespace)
-
-  const classes = computed(() => getClasses(rawClasses.value, {
+  const classes = computed<Record<K, ThemeVueClass>>(() => getClasses(rawClasses.value, {
     props: unref(props),
     slots,
     data: smartUnref(data),
@@ -72,7 +74,7 @@ export const useTheme = (namespace: string, defaultTheme: any = {}, props: any, 
   }
 }
 
-function getClasses(classes: ThemeClasses, params: ThemeParams): any {
+function getClasses(classes: any, params: ThemeParams): any {
   const parsedClasses: Record<string, string> = {}
 
   Object.keys(classes).forEach((key) => {

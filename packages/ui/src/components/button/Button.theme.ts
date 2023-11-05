@@ -1,9 +1,17 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ButtonProps } from './Button.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'iconLeft' | 'iconRight'
+type InternalExtraData = { isButtonGroup: boolean; }
+
+interface InternalTheme extends ThemeComponent<ButtonProps, InternalClasses, InternalExtraData> {}
+export interface ButtonTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<ButtonProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper({ props, slots, data }: ThemeParams) {
-      /*tw*/
+    wrapper({ props, slots, data }) {
       const classes = ['relative transition duration-150 focus:outline-none inline-flex items-center justify-center font-medium whitespace-nowrap overflow-hidden align-middle active:!shadow-none border appearance-none']
 
       // radius
@@ -27,15 +35,15 @@ export default {
       return classes
     },
 
-    iconLeft: ({ slots }: ThemeParams) => slots.default ? 'mr-2' : 'm-0.5',
+    iconLeft: ({ slots }) => slots.default ? 'mr-2' : 'm-0.5',
 
-    iconRight: ({ slots }: ThemeParams) => slots.default ? 'ml-2' : 'm-0.5',
+    iconRight: ({ slots }) => slots.default ? 'ml-2' : 'm-0.5',
   },
 
-  styles({ props, colors, css, data }: ThemeParams) {
+  styles({ props, colors, css, data }) {
     const gray = colors.getPalette('gray')
     const color = props.color ? colors.getPalette(props.color) : gray
-    const vars: (object | string)[] = []
+    const vars = []
 
     const isLight = props.color && props.light
     const isDefault = !props.color && !props.ghost
@@ -226,3 +234,5 @@ export default {
     return vars
   },
 }
+
+export default theme

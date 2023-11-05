@@ -1,12 +1,20 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ModalProps } from './Modal.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'closeIcon' | 'header' | 'content' | 'actions'
+
+interface InternalTheme extends ThemeComponent<ModalProps, InternalClasses> {}
+export interface ModalTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<ModalProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'fixed z-40 inset-0 overflow-y-auto transition-all',
 
     backdrop: 'fixed inset-0 bg-gray-500 dark:bg-black transition-opacity',
 
-    modal: ({ props }: ThemeParams) => {
+    modal: ({ props }) => {
       let c = 'relative flex flex-col z-10 bg-white dark:bg-gray-900 rounded-md shadow-lg transform transition-all overflow-hidden max-h-full w-full'
 
       if (props.size === 'xs') c += ' sm:max-w-xs'
@@ -27,3 +35,5 @@ export default {
     actions: 'bg-slate-50 dark:bg-gray-800 p-4',
   },
 }
+
+export default theme

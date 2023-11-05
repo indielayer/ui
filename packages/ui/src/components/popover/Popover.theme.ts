@@ -1,9 +1,19 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { PopoverProps } from './Popover.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'content'
+
+interface InternalTheme extends ThemeComponent<PopoverProps, InternalClasses> {}
+export interface PopoverTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<PopoverProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'inline-block relative',
 
     content: 'max-w-xs',
   },
 }
+
+export default theme

@@ -1,8 +1,18 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { Ref } from 'vue'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { AvatarProps } from './Avatar.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+type InternalExtraData = { source: Ref<string | undefined>; }
+
+interface InternalTheme extends ThemeComponent<AvatarProps, InternalClasses, InternalExtraData> {}
+export interface AvatarTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<AvatarProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper({ props }: ThemeParams) {
+    wrapper({ props }) {
       const classes = ['relative inline-flex items-center justify-center overflow-hidden align-middle border box-content']
 
       // radius
@@ -19,7 +29,7 @@ export default {
     },
   },
 
-  styles({ props, colors, css, data }: ThemeParams) {
+  styles({ props, colors, css, data }) {
     const color = colors.getPalette(props.color)
 
     if (data.source) return css.variables({
@@ -37,3 +47,5 @@ export default {
     })
   },
 }
+
+export default theme

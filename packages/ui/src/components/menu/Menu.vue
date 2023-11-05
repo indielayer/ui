@@ -1,23 +1,8 @@
 <script lang="ts">
-export default { name: 'XMenu' }
-</script>
-
-<script setup lang="ts">
-import type { PropType } from 'vue'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
-
-import XMenuItem from './MenuItem.vue'
-import XCollapse from '../../components/collapse/Collapse.vue'
-import XDivider from '../../components/divider/Divider.vue'
-
-import theme from './Menu.theme'
-
-const props = defineProps({
+const menuProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
-  items: Array as PropType<Array<any>>,
+  items: Array as PropType<MenuArrayItem[]>,
   collapsible: {
     type: Boolean,
     default: true,
@@ -33,7 +18,56 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-})
+}
+
+export type MenuArrayItem = {
+  collapsible?: boolean;
+  collapseIcon?: string;
+  expanded?: boolean;
+  divider?: boolean;
+  items?: MenuArrayItem[];
+  value?: string | number;
+  to?: string | object;
+  href?: string;
+  target?: string;
+  exact?: boolean;
+  color?: string;
+  size?: Size;
+  label?: string;
+  icon?: string;
+  iconRight?: string;
+  loading?: boolean;
+  rounded?: boolean;
+  filled?: boolean;
+  disabled?: boolean;
+  active?: boolean;
+  attrs?: Record<string, unknown>;
+  onClick?: (e: MouseEvent) => void;
+}
+
+export type MenuProps = ExtractPublicPropTypes<typeof menuProps>
+
+export default {
+  name: 'XMenu',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import type { ExtractPublicPropTypes, PropType } from 'vue'
+import { useCommon, type Size } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/theme'
+
+import XMenuItem from './MenuItem.vue'
+import XCollapse from '../../components/collapse/Collapse.vue'
+import XDivider from '../../components/divider/Divider.vue'
+
+import theme from './Menu.theme'
+
+const props = defineProps(menuProps)
 
 const emit = defineEmits(['expand'])
 
@@ -64,10 +98,10 @@ const { styles, classes, className } = useTheme('menu', theme, props)
           <template #default="{ }">
             <x-menu-item
               :item="item"
-              :color="item.color || color"
-              :size="item.size || size"
               :rounded="rounded"
-              :filled="filled"
+              :color="item.color || color"
+              :filled="item.filled || filled"
+              :size="item.size || size"
               :disabled="disabled || item.disabled"
               class="pr-10 font-medium"
             />
@@ -94,6 +128,7 @@ const { styles, classes, className } = useTheme('menu', theme, props)
             :item="item"
             :rounded="rounded"
             :color="item.color || color"
+            :filled="item.filled || filled"
             :size="item.size || size"
             :disabled="disabled || item.disabled"
             class="font-medium"
@@ -119,12 +154,12 @@ const { styles, classes, className } = useTheme('menu', theme, props)
         <x-divider v-if="item.divider"/>
         <x-menu-item
           v-else
-          :color="item.color || color"
-          :size="item.size || size"
           :item="item"
-          :disabled="disabled || item.disabled"
-          :filled="filled"
           :rounded="rounded"
+          :color="item.color || color"
+          :filled="item.filled || filled"
+          :size="item.size || size"
+          :disabled="disabled || item.disabled"
           :class="{ 'my-2': item.divider }"
           @active="$emit('expand')"
         />

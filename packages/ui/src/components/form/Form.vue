@@ -1,30 +1,5 @@
 <script lang="ts">
-export default {
-  name: 'XForm',
-  inheritAttrs: false,
-}
-</script>
-
-<script setup lang="ts">
-import { provide, onMounted, watch, nextTick, type PropType } from 'vue'
-import { injectFormKey } from '../../composables/keys'
-import { useTheme } from '../../composables/theme'
-
-import theme from './Form.theme'
-
-export type FormError = {
-  field: string;
-  msg: string;
-}
-
-export type Form = {
-  name: string;
-  focus: () => void;
-  validate: () => boolean;
-  setError: (val: string) => void;
-}
-
-const props = defineProps({
+const formProps = {
   autoValidate: {
     type: Boolean,
     default: true,
@@ -38,14 +13,49 @@ const props = defineProps({
     type: [Array, Object] as PropType<[FormError[], FormError]>,
     default: () => ([]),
   },
-})
+}
+
+export type FormProps = ExtractPublicPropTypes<typeof formProps>
+
+export type FormInjection = {
+  registerInput: (name: string, focus: () => void, validate: () => boolean, setError: (val: string) => void) => void;
+  unregisterInput: (name: string) => void;
+  isInsideForm: boolean;
+}
+
+export type FormError = {
+  field: string;
+  msg: string;
+}
+
+export type FormInput = {
+  name: string;
+  focus: () => void;
+  validate: (val?: any) => boolean;
+  setError: (val: string) => void;
+}
+
+export default {
+  name: 'XForm',
+  inheritAttrs: false,
+}
+</script>
+
+<script setup lang="ts">
+import { provide, onMounted, watch, nextTick, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { injectFormKey } from '../../composables/keys'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Form.theme'
+
+const props = defineProps(formProps)
 
 const emit = defineEmits(['submit'])
 
-const inputs: Form[] = []
+const inputs: FormInput[] = []
 
 provide(injectFormKey, {
-  registerInput: (name: string, focus: () => void, validate: () => boolean, setError: (val: string) => void) => {
+  registerInput: (name: string, focus: () => void, validate: (val: any) => boolean, setError: (val: string) => void) => {
     const exists = inputs.find((i) => i.name === name)
 
     if (exists) {

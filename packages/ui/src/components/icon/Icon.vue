@@ -1,16 +1,5 @@
 <script lang="ts">
-export default { name: 'XIcon' }
-</script>
-
-<script setup lang="ts">
-import { inject, ref, watchEffect, normalizeStyle, unref, computed } from 'vue'
-import { useCommon } from '../../composables/common'
-import { injectIconsKey } from '../../composables/keys'
-import { useTheme } from '../../composables/theme'
-
-import theme from './Icon.theme'
-
-const props = defineProps({
+const iconProps = {
   ...useCommon.props(),
   icon: {
     type: String,
@@ -21,7 +10,27 @@ const props = defineProps({
     type: String,
     default: '0 0 24 24',
   },
-})
+}
+
+export type IconProps = ExtractPublicPropTypes<typeof iconProps>
+
+export default {
+  name: 'XIcon',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { inject, ref, watchEffect, normalizeStyle, unref, computed, type ExtractPublicPropTypes } from 'vue'
+import { useCommon } from '../../composables/common'
+import { injectIconsKey } from '../../composables/keys'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Icon.theme'
+
+const props = defineProps(iconProps)
 
 const icons: any = inject(injectIconsKey, () => ({}))
 
@@ -32,7 +41,7 @@ const computedViewBox = ref(props.viewBox)
 const attrs = ref({})
 
 watchEffect(() => {
-  const injectedIcon = icons && icons[props.icon]
+  const injectedIcon = icons && props.icon && icons[props.icon]
 
   isWrapSVG.value = false
   computedIcon.value = injectedIcon
@@ -56,7 +65,7 @@ watchEffect(() => {
       computedViewBox.value = injectedIcon.viewBox || injectedIcon.viewbox || props.viewBox
     }
   } else {
-    computedIcon.value = props.icon
+    computedIcon.value = props.icon || ''
   }
 })
 
