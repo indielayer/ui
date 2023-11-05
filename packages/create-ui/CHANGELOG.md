@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.1.0
+
+### Minor Changes
+
+- build: tree-shaking with preserveModules ([`4076456`](https://github.com/indielayer/ui/commit/4076456146733972f028defd6bdb801cbfe8f7b8))
+
 ## 1.0.6
 
 ### Patch Changes
