@@ -1,13 +1,23 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { Ref } from 'vue'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { MenuItemProps } from './MenuItem.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+type InternalExtraData = { isActive: Ref<boolean>; }
+
+interface InternalTheme extends ThemeComponent<MenuItemProps, InternalClasses, InternalExtraData> {}
+export interface MenuItemTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<MenuItemProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props, data }: ThemeParams) => {
+    wrapper: ({ props, data }) => {
       const classes: any[] = ['relative !flex items-center whitespace-nowrap px-3']
 
       classes.push({
         'font-medium': data.isActive,
-        'cursor-pointer': !props.disabled && !props.inactive,
+        'cursor-pointer': !props.disabled,
 
         // size
         'py-1 text-xs': props.size === 'xs',
@@ -23,7 +33,7 @@ export default {
     },
   },
 
-  styles: ({ colors, props, css, data }: ThemeParams) => {
+  styles: ({ colors, props, css, data }) => {
     const color = colors.getPalette(props.color || 'gray')
     const gray = colors.getPalette('gray')
 
@@ -105,3 +115,5 @@ export default {
     })
   },
 }
+
+export default theme

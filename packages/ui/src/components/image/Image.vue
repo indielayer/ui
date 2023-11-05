@@ -1,18 +1,22 @@
 <script lang="ts">
+const imageProps = {
+  src: String,
+}
+
+export type ImageProps = ExtractPublicPropTypes<typeof imageProps>
+
 export default { name: 'XImage' }
 </script>
 
 <script setup lang="ts">
-import { watch, ref } from 'vue'
+import { watch, ref, type ExtractPublicPropTypes } from 'vue'
 import { useTheme } from '../../composables/theme'
 
 import theme from './Image.theme'
 
 const fallback = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
-const props = defineProps({
-  src: String,
-})
+const props = defineProps(imageProps)
 
 const source = ref<string | undefined>(fallback)
 

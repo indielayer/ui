@@ -1,27 +1,6 @@
 <script lang="ts">
-import { useCommon } from '../../composables/common'
-
-export default {
-  name: 'XPagination',
-  validators: {
-    ...useCommon.validators(),
-  },
-}
-</script>
-
-<script setup lang="ts">
-import { computed, ref, watch, type PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { dotsIcon, prevIcon, nextIcon } from '../../common/icons'
-
-import XIcon from '../../components/icon/Icon.vue'
-import XInput from '../../components/input/Input.vue'
-import XButton from '../button/Button.vue'
-import XPaginationItem from './PaginationItem.vue'
-
-import theme from './Pagination.theme'
-
-const props = defineProps({
+const paginationVariant = ['simple', 'quick', 'dots'] as const
+const paginationProps = {
   ...useCommon.props(),
   links: Boolean,
   totalPages: {
@@ -33,10 +12,37 @@ const props = defineProps({
     default: 1,
   },
   variant: {
-    type: String as PropType<'simple' | 'quick' | 'dots'>,
+    type: String as PropType<PaginationVariant>,
     default: 'simple',
   },
-})
+}
+
+export type PaginationVariant = typeof paginationVariant[number]
+export type PaginationProps = ExtractPublicPropTypes<typeof paginationProps>
+
+export default {
+  name: 'XPagination',
+  validators: {
+    ...useCommon.validators(),
+    variant: paginationVariant,
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/common'
+import { dotsIcon, prevIcon, nextIcon } from '../../common/icons'
+
+import XIcon from '../../components/icon/Icon.vue'
+import XInput from '../../components/input/Input.vue'
+import XButton from '../button/Button.vue'
+import XPaginationItem from './PaginationItem.vue'
+
+import theme from './Pagination.theme'
+
+const props = defineProps(paginationProps)
 
 const emit = defineEmits(['update:modelValue'])
 

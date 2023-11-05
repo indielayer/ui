@@ -1,32 +1,19 @@
 <script lang="ts">
 const validators = {
-  align: ['bottom', 'center', 'left', 'right', 'top'],
-  position: ['bottom', 'left', 'right', 'top'],
+  align: ['bottom', 'center', 'left', 'right', 'top'] as const,
+  position: ['bottom', 'left', 'right', 'top'] as const,
 }
 
-export default {
-  name: 'XPopover',
-  validators,
-}
-</script>
-
-<script setup lang="ts">
-import { computed, ref, useCssModule, watch, type PropType } from 'vue'
-import { onClickOutside, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
-
-import theme from './Popover.theme'
-
-const props = defineProps({
+const popoverProps = {
   align: {
-    type: String as PropType<'bottom' | 'center' | 'left' | 'right' | 'top'>,
+    type: String as PropType<PopoverAlign>,
     default: 'center',
-    validator: (value: string) => validators.align.includes(value),
+    validator: (value: string) => validators.align.includes(value as PopoverAlign),
   },
   position: {
-    type: String as PropType<'bottom' | 'left' | 'right' | 'top'>,
+    type: String as PropType<PopoverPosition>,
     default: 'bottom',
-    validator: (value: string) => validators.position.includes(value),
+    validator: (value: string) => validators.position.includes(value as PopoverPosition),
   },
   dismissOnClick: {
     type: Boolean,
@@ -39,7 +26,26 @@ const props = defineProps({
   disabled: Boolean,
   hover: Boolean,
   block: Boolean,
-})
+}
+
+export type PopoverAlign = typeof validators.align[number]
+export type PopoverPosition = typeof validators.position[number]
+export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>
+
+export default {
+  name: 'XPopover',
+  validators,
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, useCssModule, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { onClickOutside, useEventListener } from '@vueuse/core'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Popover.theme'
+
+const props = defineProps(popoverProps)
 
 const emit = defineEmits(['open', 'close', 'toggle'])
 

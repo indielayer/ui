@@ -1,10 +1,20 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { Ref } from 'vue'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { CheckboxProps } from './Checkbox.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'box' | 'icon' | 'label'
+type InternalExtraData = { checked: Ref<boolean>; }
+
+interface InternalTheme extends ThemeComponent<CheckboxProps, InternalClasses, InternalExtraData> {}
+export interface CheckboxTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<CheckboxProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'inline-block relative cursor-pointer align-middle',
 
-    box: ({ props }: ThemeParams) => {
+    box: ({ props }) => {
       const classes = ['rounded flex justify-center items-center shrink-0 border-2 border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-4 w-4')
@@ -14,7 +24,7 @@ export default {
       return classes
     },
 
-    icon: ({ props }: ThemeParams) => {
+    icon: ({ props }) => {
       const classes = ['fill-current text-white dark:text-gray-900']
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-2 w-2')
@@ -24,7 +34,7 @@ export default {
       return classes
     },
 
-    label: ({ props }: ThemeParams) => {
+    label: ({ props }) => {
       const classes = ['inline-block font-medium text-gray-800 dark:text-gray-200 pl-2']
 
       if (props.size === 'xs') classes.push('text-xs')
@@ -36,10 +46,10 @@ export default {
     },
   },
 
-  styles({ props, colors, css, data }: ThemeParams) {
+  styles({ props, colors, css, data }) {
     const gray = colors.getPalette('gray')
     const color = colors.getPalette(props.color)
-    const vars: (object | string)[] = []
+    const vars = []
 
     if (props.loading) {
       return css.variables({
@@ -90,3 +100,5 @@ export default {
     return vars
   },
 }
+
+export default theme

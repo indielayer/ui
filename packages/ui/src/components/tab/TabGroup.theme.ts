@@ -1,10 +1,18 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { TabGroupProps } from './TabGroup.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'list' | 'tracker'
+
+interface InternalTheme extends ThemeComponent<TabGroupProps, InternalClasses> {}
+export interface TabGroupTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<TabGroupProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: '',
 
-    list: ({ props, colors, css }: ThemeParams) => {
+    list: ({ props }) => {
       const c = ['flex min-w-full w-fit']
 
       if (props.variant === 'line') c.push('border-b border-gray-200 dark:border-gray-700')
@@ -16,7 +24,7 @@ export default {
       return c
     },
 
-    tracker: ({ props }: ThemeParams) => {
+    tracker: ({ props }) => {
       const c = ['absolute transition-all duration-150']
 
       if (props.variant === 'line') c.push('h-[2px] -mt-[2px] bg-[color:var(--x-tabs-text)] dark:bg-[color:var(--x-tabs-dark-text)]')
@@ -27,7 +35,7 @@ export default {
     },
   },
 
-  styles: ({ props, colors, css }: ThemeParams) => {
+  styles: ({ props, colors, css }) => {
     const gray = colors.getPalette('gray')
     const color = colors.getPalette(props.color)
 
@@ -41,3 +49,5 @@ export default {
     })
   },
 }
+
+export default theme

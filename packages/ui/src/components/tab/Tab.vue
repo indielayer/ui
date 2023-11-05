@@ -1,20 +1,5 @@
 <script lang="ts">
-export default { name: 'XTab' }
-</script>
-
-<script setup lang="ts">
-import { inject, reactive, computed, ref, onMounted } from 'vue'
-import { useMutationObserver } from '@vueuse/core'
-import { injectTabKey } from '../../composables/keys'
-import { useCommon } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
-
-import XIcon from '../icon/Icon.vue'
-import XLink from '../link/Link.vue'
-
-import theme from './Tab.theme'
-
-const props = defineProps({
+const tabProps = {
   ...useCommon.props(),
   value: {
     type: [String, Number],
@@ -23,28 +8,53 @@ const props = defineProps({
     type: String,
     default: 'div',
   },
-  to: String,
+  to: [String, Object],
   label: String,
   icon: String,
   disabled: Boolean,
   exact: Boolean,
-})
+}
 
-const computedValue = computed(() => props.to || props.value )
+export type TabProps = ExtractPublicPropTypes<typeof tabProps>
+
+export default {
+  name: 'XTab',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes } from 'vue'
+import { useMutationObserver } from '@vueuse/core'
+import { injectTabKey } from '../../composables/keys'
+import { useCommon, type Size } from '../../composables/common'
+import { useTheme } from '../../composables/theme'
+
+import XIcon from '../icon/Icon.vue'
+import XLink from '../link/Link.vue'
+
+import theme from './Tab.theme'
+import type { TabGroupVariant } from './TabGroup.vue'
+
+const props = defineProps(tabProps)
+
+const computedValue = computed(() => (elRef.value as typeof XLink)?.$el?.href || props.value)
 const computedLabel = computed(() => props.label || props.value)
-const teleportTo = ref(null)
+const teleportTo = ref<HTMLElement | null>(null)
 const elRef = ref<HTMLElement | typeof XLink | null>(null)
 
 const tabs = inject(injectTabKey, {
   tabsContentRef: ref(null),
   activateTab: () => {},
   state: reactive({
-    active: false,
-    variant: 'line',
+    active: undefined,
+    variant: 'line' as TabGroupVariant,
     ghost: false,
     grow: false,
     exact: false,
-    size: 'md',
+    size: 'md' as Size,
     color: 'primary',
   }),
 })
@@ -76,8 +86,15 @@ const selected = computed(() => tabs.state.active === computedValue.value)
 
 const color = computed(() => tabs.state.color)
 
-function onClickTab() {
-  if (!props.to) tabs.activateTab(computedValue.value)
+function onClickTab(e: MouseEvent) {
+  if (props.disabled) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    return
+  }
+
+  if (!props.to && computedValue.value) tabs.activateTab(computedValue.value)
 }
 
 const { styles, classes, className } = useTheme('tab', theme, ref({
@@ -88,53 +105,53 @@ const { styles, classes, className } = useTheme('tab', theme, ref({
 </script>
 
 <template>
-  <li
+  <component
+    :is="to ? XLink : tag"
+    ref="elRef"
     :data-value="computedValue"
-    :style="styles"
-    class="shrink-0 font-medium"
+    :to="to"
+    :color="selected ? color : undefined"
+    :style="[
+      styles,
+      to && selected && tabs.state.variant === 'block'
+        ? '--x-link-text: var(--x-tabs-text); --x-link-text-hover: var(--x-tabs-text);'
+        : ''
+    ]"
     :class="[
       className,
-      { 'flex-1': tabs.state.grow }
+      classes.wrapper,
+      'shrink-0 font-medium',
+      {
+        'flex-1': tabs.state.grow,
+        'text-[color:var(--x-tabs-text)] dark:text-[color:var(--x-tabs-dark-text)]': selected,
+        'cursor-pointer': !disabled,
+        'cursor-not-allowed': disabled,
+        'cursor-not-allowed text-gray-500': disabled && !selected,
+      },
     ]"
+    :aria-disabled="disabled ? 'true' : undefined"
+    :aria-selected="selected ? 'true' : 'false'"
+    @click="onClickTab"
   >
-    <component
-      :is="to ? XLink : tag"
-      ref="elRef"
-      :to="to"
-      :color="selected ? color : undefined"
-      :class="[
-        classes.wrapper,
-        {
-          'text-[color:var(--x-tabs-text)] dark:text-[color:var(--x-tabs-dark-text)]': selected,
-          'cursor-pointer': !disabled,
-          'cursor-not-allowed': disabled,
-          'cursor-not-allowed text-gray-500': disabled && !selected,
-        },
-      ]"
-      :aria-disabled="disabled ? 'true' : undefined"
-      :aria-selected="selected ? 'true' : 'false'"
-      @click="onClickTab"
+    <slot
+      name="tab"
+      :label="label"
+      :value="value"
+      :size="computedSize"
+      :icon="icon"
     >
-      <slot
-        name="tab"
-        :label="label"
-        :value="value"
-        :size="computedSize"
-        :icon="icon"
-      >
-        <div class="flex items-center justify-center">
-          <x-icon
-            v-if="icon"
-            :icon="icon"
-            :size="computedSize"
-            :class="classes.icon"
-          />
-          <div :class="classes.label">{{ computedLabel }}</div>
-        </div>
-      </slot>
-      <teleport v-if="selected && teleportTo" :to="teleportTo">
-        <slot></slot>
-      </teleport>
-    </component>
-  </li>
+      <div class="flex items-center justify-center">
+        <x-icon
+          v-if="icon"
+          :icon="icon"
+          :size="computedSize"
+          :class="classes.icon"
+        />
+        <div :class="classes.label">{{ computedLabel }}</div>
+      </div>
+    </slot>
+    <teleport v-if="selected && teleportTo" :to="teleportTo">
+      <slot></slot>
+    </teleport>
+  </component>
 </template>

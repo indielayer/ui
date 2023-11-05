@@ -1,8 +1,13 @@
 <script lang="ts">
+const tooltipProps = {}
+
+export type TooltipProps = ExtractPublicPropTypes<typeof tooltipProps>
+
 export default { name: 'XTooltip' }
 </script>
 
 <script setup lang="ts">
+import type { ExtractPublicPropTypes } from 'vue'
 import XPopover from '../../components/popover/Popover.vue'
 import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 </script>

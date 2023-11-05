@@ -1,23 +1,9 @@
 <script lang="ts">
-export default {
-  name: 'XDrawer',
-  inheritAttrs: false,
-}
-</script>
-
-<script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect, type PropType } from 'vue'
-import { breakpointsTailwind, useBreakpoints, useEventListener, useSwipe, type Breakpoints, type UseSwipeDirection } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
-
-import XScroll from '../../components/scroll/Scroll.vue'
-
-import theme from './Drawer.theme'
-
-const props = defineProps({
+const drawerPosition = ['left', 'right', 'top', 'bottom'] as const
+const drawerProps = {
   modelValue: Boolean,
   position: {
-    type: String as PropType<'left' | 'right' | 'top' | 'bottom'>,
+    type: String as PropType<DrawerPosition>,
     default: 'left',
   },
   teleportTo: {
@@ -37,7 +23,30 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-})
+}
+
+export type DrawerPosition = typeof drawerPosition[number]
+export type DrawerProps = ExtractPublicPropTypes<typeof drawerProps>
+
+export default {
+  name: 'XDrawer',
+  inheritAttrs: false,
+  validators: {
+    position: drawerPosition,
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, onMounted, ref, watch, watchEffect, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { breakpointsTailwind, useBreakpoints, useEventListener, useSwipe, type Breakpoints, type UseSwipeDirection } from '@vueuse/core'
+import { useTheme } from '../../composables/theme'
+
+import XScroll from '../../components/scroll/Scroll.vue'
+
+import theme from './Drawer.theme'
+
+const props = defineProps(drawerProps)
 
 const emit = defineEmits(['update:modelValue'])
 

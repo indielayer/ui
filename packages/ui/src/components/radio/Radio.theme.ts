@@ -1,10 +1,20 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { Ref } from 'vue'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { RadioProps } from './Radio.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'circle' | 'circleIcon' | 'label' | 'content'
+type InternalExtraData = { selected: Ref<boolean>; }
+
+interface InternalTheme extends ThemeComponent<RadioProps, InternalClasses, InternalExtraData> {}
+export interface RadioTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<RadioProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'inline-block relative cursor-pointer focus:outline-none group',
 
-    circle: ({ props }: ThemeParams) => {
+    circle: ({ props }) => {
       let c = 'rounded-full flex justify-center items-center shrink-0 border-2 outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline'
 
       if (props.size === 'xs' || props.size === 'sm') c += ' h-4 w-4'
@@ -14,7 +24,7 @@ export default {
       return c
     },
 
-    circleIcon: ({ props, data }: ThemeParams) => {
+    circleIcon: ({ props, data }) => {
       const c = []
 
       if (!data.selected) c.push('opacity-0')
@@ -27,7 +37,7 @@ export default {
       return c
     },
 
-    label: ({ props, data }: ThemeParams) => {
+    label: ({ props, data }) => {
       let c = 'font-medium text-gray-800 dark:text-gray-200 pl-2'
 
       if (props.size === 'xs') c += ' text-xs'
@@ -38,7 +48,7 @@ export default {
       return c
     },
 
-    content: ({ props }: ThemeParams) => {
+    content: ({ props }) => {
       let c = 'pl-2'
 
       if (props.size === 'xs') c += ' text-xs'
@@ -50,7 +60,7 @@ export default {
     },
   },
 
-  styles: ({ props, colors, css, data }: ThemeParams) => {
+  styles: ({ props, colors, css, data }) => {
     const gray = colors.getPalette('gray')
     const color = colors.getPalette(props.color)
     const vars = []
@@ -119,3 +129,5 @@ export default {
     return vars
   },
 }
+
+export default theme

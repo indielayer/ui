@@ -1,9 +1,27 @@
 <script lang="ts">
-export default { name: 'XRadio' }
+const radioProps = {
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  ...useInteractive.props(),
+  ...useInputtable.props(),
+  value: [String, Number, Boolean, Function, Object, Array],
+  label: String,
+  helper: String,
+  glow: Boolean,
+}
+
+export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
+
+export default {
+  name: 'XRadio',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, type ExtractPublicPropTypes } from 'vue'
 import { useCommon } from '../../composables/common'
 import { useTheme } from '../../composables/theme'
 import { useColors } from '../../composables/colors'
@@ -15,16 +33,7 @@ import XInputError from '../helpers/InputError'
 
 import theme from './Radio.theme'
 
-const props = defineProps({
-  ...useCommon.props(),
-  ...useColors.props('primary'),
-  ...useInteractive.props(),
-  ...useInputtable.props(),
-  value: [String, Number, Boolean, Function, Object, Array],
-  label: String,
-  helper: String,
-  glow: Boolean,
-})
+const props = defineProps(radioProps)
 
 const emit = defineEmits(useInputtable.emits(false))
 

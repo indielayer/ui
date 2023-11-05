@@ -1,9 +1,31 @@
 <script lang="ts">
+const breadcrumbsProps = {
+  ...useColors.props(),
+  items: Array as PropType<BreadcrumbsItem[]>,
+  icon: {
+    type: String,
+    default: arrowRightIcon,
+  },
+  shadow: Boolean,
+  underline: Boolean,
+}
+
+export type BreadcrumbsItem = {
+  label: string;
+  to?: string | object;
+  href?: string;
+  color?: string;
+  icon?: string;
+  shadow?: boolean;
+  underline?: boolean;
+}
+export type BreadcrumbsProps = ExtractPublicPropTypes<typeof breadcrumbsProps>
+
 export default { name: 'XBreadcrumbs' }
 </script>
 
 <script setup lang="ts">
-import { computed, type PropType } from 'vue'
+import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useTheme } from '../../composables/theme'
 import { arrowRightIcon } from '../../common/icons'
 import { useColors } from '../../composables/colors'
@@ -13,26 +35,7 @@ import XLink from '../../components/link/Link.vue'
 
 import theme from './Breadcrumbs.theme'
 
-export type BreadcrumbItem = {
-  label: string;
-  to?: string | object;
-  href?: string;
-  color?: string;
-  icon?: string;
-  shadow?: boolean;
-  underline?: boolean;
-}
-
-const props = defineProps({
-  ...useColors.props(),
-  items: Array as PropType<Array<BreadcrumbItem>>,
-  icon: {
-    type: String,
-    default: arrowRightIcon,
-  },
-  shadow: Boolean,
-  underline: Boolean,
-})
+const props = defineProps(breadcrumbsProps)
 
 const lastItem = computed(() => props.items && props.items.length > 0 ? props.items[props.items.length - 1] : undefined)
 

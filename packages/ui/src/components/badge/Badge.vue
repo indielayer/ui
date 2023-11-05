@@ -1,16 +1,7 @@
 <script lang="ts">
-export default { name: 'XBadge' }
-</script>
-
-<script setup lang="ts">
-import { computed, useSlots, type PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-
-import theme from './Badge.theme'
-
-const props = defineProps({
+const badgeAlign = ['left', 'right'] as const
+const badgePosition = ['top', 'bottom'] as const
+const badgeProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   tag: {
@@ -18,11 +9,11 @@ const props = defineProps({
     default: 'div',
   },
   position: {
-    type: String as PropType<'top' | 'bottom'>,
+    type: String as PropType<BadgePosition>,
     default: 'top',
   },
   align: {
-    type: String as PropType<'left' | 'right'>,
+    type: String as PropType<BadgeAlign>,
     default: 'right',
   },
   offsetX: [Number, String],
@@ -34,7 +25,31 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-})
+}
+
+export type BadgePosition = typeof badgePosition[number]
+export type BadgeAlign = typeof badgeAlign[number]
+export type BadgeProps = ExtractPublicPropTypes<typeof badgeProps>
+
+export default {
+  name: 'XBadge',
+  validators: {
+    ...useCommon.validators(),
+    position: badgePosition,
+    align: badgeAlign,
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, useSlots, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+
+import theme from './Badge.theme'
+
+const props = defineProps(badgeProps)
 
 const slots = useSlots()
 

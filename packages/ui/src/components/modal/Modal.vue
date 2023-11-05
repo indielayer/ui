@@ -1,9 +1,28 @@
 <script lang="ts">
-export default { name: 'XModal' }
+const modalSize = ['xs', 'sm', 'md', 'lg', 'xl', 'full'] as const
+const modalProps = {
+  size: {
+    type: String as PropType<ModalSize>,
+    default: 'md',
+  },
+  modelValue: Boolean,
+  showClose: Boolean,
+  backdrop: Boolean,
+}
+
+export type ModalSize = typeof modalSize[number]
+export type ModalProps = ExtractPublicPropTypes<typeof modalProps>
+
+export default {
+  name: 'XModal',
+  validators: {
+    size: modalSize,
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type PropType } from 'vue'
+import { ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
 import { useTheme } from '../../composables/theme'
 import { closeIcon } from '../../common/icons'
@@ -13,15 +32,7 @@ import theme from './Modal.theme'
 import XScroll from '../../components/scroll/Scroll.vue'
 import XIcon from '../icon/Icon.vue'
 
-const props = defineProps({
-  size: {
-    type: String as PropType<'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'>,
-    default: 'md',
-  },
-  modelValue: Boolean,
-  showClose: Boolean,
-  backdrop: Boolean,
-})
+const props = defineProps(modalProps)
 
 const emit = defineEmits(['update:modelValue'])
 

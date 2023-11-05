@@ -1,10 +1,19 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { InputProps } from './Input.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'label' | 'input' | 'icon'
+type InternalExtraData = { errorInternal: any; }
+
+interface InternalTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
+export interface InputTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<InputProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'inline-block align-bottom text-left',
 
-    label: ({ props }: ThemeParams) => {
+    label: ({ props }) => {
       const classes = 'font-medium text-gray-800 dark:text-gray-200 mb-1'
 
       if (props.size === 'xs') return classes + ' text-xs'
@@ -12,10 +21,10 @@ export default {
       else if (props.size === 'lg') return classes + ' text-lg'
       else if (props.size === 'xl') return classes + ' text-xl'
 
-      return classes // + ' text-sm'
+      return classes
     },
 
-    input: ({ props, data }: ThemeParams) => {
+    input: ({ props, data }) => {
       const classes = ['appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out border-gray-300 dark:border-gray-700 border shadow-sm rounded-md']
 
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-gray-400 dark:hover:border-gray-500')
@@ -36,9 +45,11 @@ export default {
     icon: 'text-gray-600 dark:text-gray-300 absolute my-auto inset-y-0',
   },
 
-  styles: ({ colors, props, css }: ThemeParams) => {
+  styles: ({ colors, props, css }) => {
     const color = colors.getPalette(props.color)
 
     return css.get('border', color[400])
   },
 }
+
+export default theme

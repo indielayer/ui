@@ -1,13 +1,20 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { AlertProps } from './Alert.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<AlertProps, InternalClasses> {}
+export interface AlertTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<AlertProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    /*tw*/
-    wrapper: 'flex rounded-md space-x-2 px-4 py-2 border items-center',
+    wrapper: 'flex items-center rounded-md space-x-2 px-4 py-2 border',
   },
-  styles: ({ props, colors, css }: ThemeParams) => {
+  styles: ({ props, colors, css }) => {
     const color = colors.getPalette(props.color)
-    const vars: (object | string)[] = []
+    const vars = []
 
     if (props.glow) vars.push(css.get('glow', colors.getColorOpacity(color[500], 0.5)))
 
@@ -55,3 +62,5 @@ export default {
     return vars
   },
 }
+
+export default theme

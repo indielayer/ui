@@ -64,6 +64,7 @@ export default defineConfig(({ command, mode }) => {
       transformMode: {
         web: [/\.[jt]sx$/],
       },
+      exclude: ['**/lib/**', '**/node_modules/**', '**/dist/**', '**/cypress/**', '**/.{idea,git,cache,output,temp}/**'],
     },
   }
 })

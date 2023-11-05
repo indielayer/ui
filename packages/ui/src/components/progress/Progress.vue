@@ -1,32 +1,32 @@
 <script lang="ts">
-export default { name: 'XProgress' }
-</script>
-
-<script setup lang="ts">
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
-
-import theme from './Progress.theme'
-
-const props = defineProps({
+const progressProps = {
   ...useColors.props('primary'),
   percentage: {
     type: Number,
     default: 0,
     validator: (value: number) => value >= 0 && value <= 100,
   },
-  // variant: {
-  //   type: String as PropType<'bar' | 'score'>,
-  //   default: 'bar',
-  //   validator: (value: string) => validators.variant.includes(value),
-  // },
   gradient: Boolean,
   animate: {
     type: Boolean,
     default: true,
   },
   thick: Boolean,
-})
+}
+
+export type ProgressProps = ExtractPublicPropTypes<typeof progressProps>
+
+export default { name: 'XProgress' }
+</script>
+
+<script setup lang="ts">
+import type { ExtractPublicPropTypes } from 'vue'
+import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Progress.theme'
+
+const props = defineProps(progressProps)
 
 const { styles, classes, className } = useTheme('progress', theme, props)
 </script>

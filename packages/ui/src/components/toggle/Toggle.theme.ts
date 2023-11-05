@@ -1,10 +1,18 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ToggleProps } from './Toggle.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'label' | 'buttonWrapper' | 'button'
+
+interface InternalTheme extends ThemeComponent<ToggleProps, InternalClasses> {}
+export interface ToggleTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<ToggleProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: '',
 
-    label: ({ props }: ThemeParams) => {
+    label: ({ props }) => {
       const c = 'font-medium text-gray-800 dark:text-gray-200'
 
       if (props.size === 'xs') return c + ' text-xs'
@@ -15,7 +23,7 @@ export default {
       return c + ' text-sm'
     },
 
-    buttonWrapper: ({ props }: ThemeParams) => {
+    buttonWrapper: ({ props }) => {
       let c = 'relative shrink-0'
 
       if (props.size === 'sm' || props.size === 'xs') c += ' w-6'
@@ -26,7 +34,7 @@ export default {
       return c
     },
 
-    button: ({ props }: ThemeParams) => {
+    button: ({ props }) => {
       let c = 'rounded-full shadow transform transition duration-150 shrink-0'
 
       if (props.size === 'sm' || props.size === 'xs') c += ' h-3 w-3'
@@ -38,7 +46,7 @@ export default {
     },
   },
 
-  styles: ({ colors, props, css }: ThemeParams) => {
+  styles: ({ colors, props, css }) => {
     const color = colors.getPalette(props.color)
 
     return css.variables({
@@ -49,3 +57,5 @@ export default {
     })
   },
 }
+
+export default theme

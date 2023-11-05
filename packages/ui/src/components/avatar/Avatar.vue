@@ -1,22 +1,5 @@
 <script lang="ts">
-export default {
-  name: 'XAvatar',
-  validators: useCommon.validators(),
-}
-</script>
-
-<script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
-import { avatarIcon } from '../../common/icons'
-
-import XIcon from '../../components/icon/Icon.vue'
-
-import theme from './Avatar.theme'
-
-const props = defineProps({
+const avatarProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   tag: {
@@ -28,7 +11,28 @@ const props = defineProps({
   image: String,
   outlined: Boolean,
   rounded: Boolean,
-})
+}
+
+export type AvatarProps = ExtractPublicPropTypes<typeof avatarProps>
+
+export default {
+  name: 'XAvatar',
+  validators: useCommon.validators(),
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/theme'
+import { avatarIcon } from '../../common/icons'
+
+import XIcon from '../../components/icon/Icon.vue'
+
+import theme from './Avatar.theme'
+
+const props = defineProps(avatarProps)
 
 const source = ref<string>()
 const initials = computed(() => {

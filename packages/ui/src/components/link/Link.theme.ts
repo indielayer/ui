@@ -1,11 +1,19 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { LinkProps } from './Link.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<LinkProps, InternalClasses> {}
+export interface LinkTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<LinkProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'transition duration-300 ease-in-out cursor-pointer inline-flex',
   },
 
-  styles: ({ colors, props, css }: ThemeParams) => {
+  styles: ({ colors, props, css }) => {
     const color = colors.getPalette(props.color || 'gray')
 
     return css.variables({
@@ -24,3 +32,5 @@ export default {
     })
   },
 }
+
+export default theme

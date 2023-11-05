@@ -1,19 +1,5 @@
 <script lang="ts">
-export default { name: 'XTag' }
-</script>
-
-<script setup lang="ts">
-import { computed } from 'vue'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
-import { closeIcon } from '../../common/icons'
-
-import XIcon from '../icon/Icon.vue'
-
-import theme from './Tag.theme'
-
-const props = defineProps({
+const tagProps = {
   ...useCommon.props(),
   ...useColors.props('gray'),
   tag: {
@@ -23,7 +9,30 @@ const props = defineProps({
   rounded: Boolean,
   removable: Boolean,
   outlined: Boolean,
-})
+}
+
+export type TagProps = ExtractPublicPropTypes<typeof tagProps>
+
+export default {
+  name: 'XTag',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, type ExtractPublicPropTypes } from 'vue'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
+import { useTheme } from '../../composables/theme'
+import { closeIcon } from '../../common/icons'
+
+import XIcon from '../icon/Icon.vue'
+
+import theme from './Tag.theme'
+
+const props = defineProps(tagProps)
 
 defineEmits(['remove'])
 

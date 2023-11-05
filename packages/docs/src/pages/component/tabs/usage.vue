@@ -1,5 +1,5 @@
 <template>
-  <x-tab-group v-model="tab" class="pb-10" variant="line">
+  <!-- <x-tab-group v-model="tab" class="pb-10" variant="line">
     <x-tab value="a" label="Tab A" icon="smile">
       content a
     </x-tab>
@@ -110,14 +110,14 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tab-group>
+  </x-tab-group> -->
 
   <p>Automatic link as value</p>
-  <x-tab-group class="pb-10" exact>
+  <x-tab-group v-model="linkTab" class="pb-10" exact>
     <x-tab to="/component/tabs" label="Tabs link">
       content a
     </x-tab>
-    <x-tab to="/component" label="Tabs link B">
+    <x-tab to="/component/slider" label="Tabs link B">
       content b
     </x-tab>
   </x-tab-group>
@@ -125,6 +125,6 @@
 
 <script>
 export default {
-  data() { return { tab: 'a' } },
+  data() { return { tab: 'a', linkTab: null } },
 }
 </script>

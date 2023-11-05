@@ -1,21 +1,5 @@
 <script lang="ts">
-export default { name: 'XButton' }
-</script>
-
-<script setup lang="ts">
-import { computed, ref, inject, useAttrs, unref } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useInteractive } from '../../composables/interactive'
-import { injectButtonGroupKey } from '../../composables/keys'
-
-import XSpinner from '../spinner/Spinner.vue'
-import XIcon from '../icon/Icon.vue'
-
-import theme from './Button.theme'
-
-const props = defineProps({
+const buttonProps = {
   ...useCommon.props(),
   ...useColors.props(),
   ...useInteractive.props(),
@@ -38,7 +22,32 @@ const props = defineProps({
   light: Boolean,
   block: Boolean,
   flat: Boolean,
-})
+}
+
+export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
+
+export default {
+  name: 'XButton',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
+import { useInteractive } from '../../composables/interactive'
+import { injectButtonGroupKey } from '../../composables/keys'
+
+import XSpinner from '../spinner/Spinner.vue'
+import XIcon from '../icon/Icon.vue'
+
+import theme from './Button.theme'
+
+const props = defineProps(buttonProps)
 
 const elRef = ref<HTMLElement | null>(null)
 
@@ -47,6 +56,7 @@ const buttonGroup = inject(injectButtonGroupKey, {
   isButtonGroup: false,
   groupProps: {},
 })
+
 const { isButtonGroup } = buttonGroup
 const computedSize = computed(() => buttonGroup.groupProps.size || props.size)
 const computedFlat = computed(() => buttonGroup.groupProps.flat || props.flat)

@@ -1,7 +1,17 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { SkeletonProps } from './Skeleton.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<SkeletonProps, InternalClasses> {}
+export interface SkeletonTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<SkeletonProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
     wrapper: 'animate-pulse bg-gray-300 dark:bg-gray-600 rounded-md',
   },
 }
+
+export default theme

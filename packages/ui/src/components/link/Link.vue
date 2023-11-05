@@ -1,17 +1,5 @@
 <script lang="ts">
-export default { name: 'XLink' }
-</script>
-
-<script setup lang="ts">
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
-import { externalIcon } from '../../common/icons'
-
-import XIcon from '../icon/Icon.vue'
-
-import theme from './Link.theme'
-
-const props = defineProps({
+const linkProps = {
   ...useColors.props(),
   tag: {
     type: String,
@@ -21,7 +9,24 @@ const props = defineProps({
   shadow: Boolean,
   external: Boolean,
   underline: Boolean,
-})
+}
+
+export type LinkProps = ExtractPublicPropTypes<typeof linkProps>
+
+export default { name: 'XLink' }
+</script>
+
+<script setup lang="ts">
+import type { ExtractPublicPropTypes } from 'vue'
+import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/theme'
+import { externalIcon } from '../../common/icons'
+
+import XIcon from '../icon/Icon.vue'
+
+import theme from './Link.theme'
+
+const props = defineProps(linkProps)
 
 const { styles, classes, className } = useTheme('link', theme, props)
 </script>

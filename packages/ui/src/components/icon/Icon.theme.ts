@@ -1,8 +1,16 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { IconProps } from './Icon.vue'
 
-export default {
+type InternalClasses = 'wrapper'
+
+interface InternalTheme extends ThemeComponent<IconProps, InternalClasses> {}
+export interface IconTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<IconProps, InternalClasses>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props }: ThemeParams) => {
+    wrapper: ({ props }) => {
       const classes = 'inline'
 
       if (props.size === 'xs') return classes + ' h-3 w-3'
@@ -14,3 +22,5 @@ export default {
     },
   },
 }
+
+export default theme

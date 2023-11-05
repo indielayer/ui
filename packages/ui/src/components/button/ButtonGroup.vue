@@ -1,18 +1,5 @@
 <script lang="ts">
-export default { name: 'XButtonGroup' }
-</script>
-
-<script setup lang="ts">
-import { provide } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInteractive } from '../../composables/interactive'
-import { injectButtonGroupKey } from '../../composables/keys'
-
-import theme from './ButtonGroup.theme'
-
-const props = defineProps({
+const buttonGroupProps = {
   ...useCommon.props(),
   ...useColors.props(),
   ...useInteractive.props(),
@@ -24,7 +11,34 @@ const props = defineProps({
   rounded: Boolean,
   ghost: Boolean,
   light: Boolean,
-})
+  flat: Boolean,
+}
+
+export type ButtonGroupProps = ExtractPublicPropTypes<typeof buttonGroupProps>
+export type ButtonGroupInjection = {
+  groupProps: ButtonGroupProps;
+  isButtonGroup: boolean;
+}
+
+export default {
+  name: 'XButtonGroup',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { provide, type ExtractPublicPropTypes } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInteractive } from '../../composables/interactive'
+import { injectButtonGroupKey } from '../../composables/keys'
+
+import theme from './ButtonGroup.theme'
+
+const props = defineProps(buttonGroupProps)
 
 provide(injectButtonGroupKey, {
   groupProps: props,

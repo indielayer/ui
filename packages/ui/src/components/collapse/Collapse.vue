@@ -1,17 +1,5 @@
 <script lang="ts">
-export default { name: 'XCollapse' }
-</script>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
-
-import XIcon from '../../components/icon/Icon.vue'
-
-import theme from './Collapse.theme'
-
-const props = defineProps({
+const collapseProps = {
   ...useColors.props(),
   tag: {
     type: String,
@@ -21,7 +9,23 @@ const props = defineProps({
   expanded: Boolean,
   showIcon: Boolean,
   icon: String,
-})
+}
+
+export type CollapseProps = ExtractPublicPropTypes<typeof collapseProps>
+
+export default { name: 'XCollapse' }
+</script>
+
+<script setup lang="ts">
+import { ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/colors'
+
+import XIcon from '../../components/icon/Icon.vue'
+
+import theme from './Collapse.theme'
+
+const props = defineProps(collapseProps)
 
 const emit = defineEmits(['expand'])
 

@@ -1,15 +1,5 @@
 <script lang="ts">
-export default { name: 'XScroll' }
-</script>
-
-<script setup lang="ts">
-import { ref, toRefs } from 'vue'
-import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
-
-import theme from './Scroll.theme'
-
-const props = defineProps({
+const scrollProps = {
   shadow: Boolean,
   horizontal: Boolean,
   mousewheel: Boolean,
@@ -17,7 +7,21 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-})
+}
+
+export type ScrollProps = ExtractPublicPropTypes<typeof scrollProps>
+
+export default { name: 'XScroll' }
+</script>
+
+<script setup lang="ts">
+import { ref, toRefs, type ExtractPublicPropTypes } from 'vue'
+import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
+import { useTheme } from '../../composables/theme'
+
+import theme from './Scroll.theme'
+
+const props = defineProps(scrollProps)
 
 const scrollEl = ref<HTMLElement | null>(null)
 

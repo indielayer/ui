@@ -1,22 +1,5 @@
 <script lang="ts">
-export default { name: 'XInput' }
-</script>
-
-<script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
-import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
-
-import XIcon from '../icon/Icon.vue'
-import XInputError from '../helpers/InputError'
-
-import theme from './Input.theme'
-
-const props = defineProps({
+const inputProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
@@ -28,7 +11,7 @@ const props = defineProps({
   helper: String,
   label: String,
   dir: {
-    type: String,
+    type: String as PropType<'ltr' | 'rtl'>,
     default: 'ltr',
   },
   icon: String,
@@ -44,12 +27,40 @@ const props = defineProps({
     default: 'text',
   },
   block: Boolean,
-})
+}
+
+export type InputProps = ExtractPublicPropTypes<typeof inputProps>
+
+export default {
+  name: 'XInput',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { ref, type PropType, type ExtractPublicPropTypes, watch } from 'vue'
+import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/colors'
+import { useCommon } from '../../composables/common'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
+import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
+
+import XIcon from '../icon/Icon.vue'
+import XInputError from '../helpers/InputError'
+
+import theme from './Input.theme'
+
+const props = defineProps(inputProps)
 
 const emit = defineEmits(useInputtable.emits())
 
 const elRef = ref<HTMLInputElement | null>(null)
 const currentType = ref(props.type)
+
+watch(() => props.type, (newValue) => { currentType.value = newValue })
 
 function onChange(e: Event) {
   if (!e.target) return

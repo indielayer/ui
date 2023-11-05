@@ -1,22 +1,5 @@
 <script lang="ts">
-export default { name: 'XTextarea' }
-</script>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useResizeObserver, useEventListener } from '@vueuse/core'
-import { useCSS } from '../../composables/css'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
-
-import XInputError from '../helpers/InputError'
-
-import theme from './Textarea.theme'
-
-const props = defineProps({
+const textareaProps = {
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
@@ -38,7 +21,33 @@ const props = defineProps({
   },
   preventEnter: Boolean,
   block: Boolean,
-})
+}
+
+export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
+
+export default {
+  name: 'XTextarea',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
+</script>
+
+<script setup lang="ts">
+import { ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { useResizeObserver, useEventListener } from '@vueuse/core'
+import { useCSS } from '../../composables/css'
+import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/common'
+import { useColors } from '../../composables/colors'
+import { useInputtable } from '../../composables/inputtable'
+import { useInteractive } from '../../composables/interactive'
+
+import XInputError from '../helpers/InputError'
+
+import theme from './Textarea.theme'
+
+const props = defineProps(textareaProps)
 
 const emit = defineEmits(useInputtable.emits())
 

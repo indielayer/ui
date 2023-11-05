@@ -1,8 +1,18 @@
-import type { ThemeParams } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { TabProps } from './Tab.vue'
+import type { TabGroupInjection } from './TabGroup.vue'
 
-export default {
+type InternalClasses = 'wrapper' | 'label' | 'icon'
+type InternalExtraData = Pick<TabGroupInjection, 'state'>['state']
+
+interface InternalTheme extends ThemeComponent<TabProps, InternalClasses, InternalExtraData> {}
+export interface TabTheme extends Omit<InternalTheme, 'classes'> {
+  classes?: Partial<ThemeClasses<TabProps, InternalClasses, InternalExtraData>>;
+}
+
+const theme: InternalTheme = {
   classes: {
-    wrapper: ({ props, data }: ThemeParams) => {
+    wrapper: ({ props, data }) => {
       const c = ['py-2 transition-colors duration-150 ease-in-out whitespace-nowrap text-center']
 
       if (data.variant === 'block') c.push('px-8')
@@ -20,3 +30,5 @@ export default {
     icon: 'mr-1.5',
   },
 }
+
+export default theme

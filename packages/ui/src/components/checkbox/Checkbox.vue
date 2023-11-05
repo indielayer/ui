@@ -1,9 +1,26 @@
 <script lang="ts">
-export default { name: 'XCheckbox' }
+const checkboxProps = {
+  ...useCommon.props(),
+  ...useColors.props('primary'),
+  ...useInteractive.props(),
+  ...useInputtable.props(),
+  label: String,
+  helper: String,
+  glow: Boolean,
+}
+
+export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
+
+export default {
+  name: 'XCheckbox',
+  validators: {
+    ...useCommon.validators(),
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes } from 'vue'
 import { useTheme } from '../../composables/theme'
 import { useCommon } from '../../composables/common'
 import { useColors } from '../../composables/colors'
@@ -15,15 +32,7 @@ import XInputError from '../helpers/InputError'
 
 import theme from './Checkbox.theme'
 
-const props = defineProps({
-  ...useCommon.props(),
-  ...useColors.props('primary'),
-  ...useInteractive.props(),
-  ...useInputtable.props(),
-  label: String,
-  helper: String,
-  glow: Boolean,
-})
+const props = defineProps(checkboxProps)
 
 const emit = defineEmits(useInputtable.emits(false))
 

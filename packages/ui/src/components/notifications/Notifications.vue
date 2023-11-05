@@ -1,60 +1,15 @@
 <script lang="ts">
-const validators = {
-  align: ['left', 'right'],
-  position: ['bottom', 'top'],
-}
-
-export default {
-  name: 'XNotifications',
-  validators,
-}
-</script>
-
-<script setup lang="ts">
-import { ref, provide, watch, type PropType } from 'vue'
-import { injectNotificationKey } from '../../composables/keys'
-import { useColors } from '../../composables/colors'
-import { useCSS } from '../../composables/css'
-import { useTheme } from '../../composables/theme'
-import { closeIcon } from '../../common/icons'
-
-import XIcon from '../../components/icon/Icon.vue'
-import XSpacer from '../spacer/Spacer'
-
-import theme from './Notifications.theme'
-
-export type NotificationAlign = 'left' | 'right'
-export type NotificationPosition = 'bottom' | 'top'
-export type NotificationAction = {
-  onClick: () => void;
-  label: string;
-  color?: string;
-}
-export type NotificationEvent = {
-  id?: number;
-  icon?: string;
-  action?: NotificationAction;
-  iconColor?: string;
-  title?: string;
-  style?: string;
-  message?: string;
-  timeout?: number;
-  removable?: boolean;
-  align?: NotificationAlign;
-  position?: NotificationPosition;
-}
-
-const props = defineProps({
+const notificationsProps = {
   ...useColors.props('primary'),
   align: {
-    type: String as PropType<NotificationAlign>,
+    type: String as PropType<NotificationsAlign>,
     default: 'right',
-    validator: (value: string) => validators.align.includes(value),
+    validator: (value: string) => validators.align.includes(value as NotificationsAlign),
   },
   position: {
-    type: String as PropType<NotificationPosition>,
+    type: String as PropType<NotificationsPosition>,
     default: 'bottom',
-    validator: (value: string) => validators.position.includes(value),
+    validator: (value: string) => validators.position.includes(value as NotificationsPosition),
   },
   timeout: {
     type: Number,
@@ -68,7 +23,56 @@ const props = defineProps({
     type: [Symbol, String],
     default: injectNotificationKey,
   },
-})
+}
+
+const validators = {
+  align: ['left', 'right'] as const,
+  position: ['bottom', 'top'] as const,
+}
+
+export type NotificationsProps = ExtractPublicPropTypes<typeof notificationsProps>
+
+export type NotificationsAlign = typeof validators.align[number]
+export type NotificationsPosition = typeof validators.position[number]
+export type NotificationsAction = {
+  onClick: () => void;
+  label: string;
+  color?: string;
+}
+export type NotificationEvent = {
+  id?: number;
+  icon?: string;
+  action?: NotificationsAction;
+  iconColor?: string;
+  title?: string;
+  style?: string;
+  message?: string;
+  timeout?: number;
+  removable?: boolean;
+  align?: NotificationsAlign;
+  position?: NotificationsPosition;
+}
+
+export default {
+  name: 'XNotifications',
+  validators,
+}
+</script>
+
+<script setup lang="ts">
+import { ref, provide, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { injectNotificationKey } from '../../composables/keys'
+import { useColors } from '../../composables/colors'
+import { useCSS } from '../../composables/css'
+import { useTheme } from '../../composables/theme'
+import { closeIcon } from '../../common/icons'
+
+import XIcon from '../../components/icon/Icon.vue'
+import XSpacer from '../spacer/Spacer'
+
+import theme from './Notifications.theme'
+
+const props = defineProps(notificationsProps)
 
 const internalAlign = ref(props.align)
 const internalPosition = ref(props.position)
