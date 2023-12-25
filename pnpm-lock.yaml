@@ -104,13 +104,13 @@ importers:
 
   packages/demo-vue:
     dependencies:
-      '@indielayer/ui':
-        specifier: workspace:*
-        version: link:../ui
       vue:
         specifier: ^3.3.4
         version: 3.3.4
     devDependencies:
+      '@indielayer/ui':
+        specifier: workspace:*
+        version: link:../ui
       '@tsconfig/node18':
         specifier: ^18.2.2
         version: 18.2.2

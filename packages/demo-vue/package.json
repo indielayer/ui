@@ -9,10 +9,10 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
-    "@indielayer/ui": "workspace:*",
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "@indielayer/ui": "workspace:*",
     "@tsconfig/node18": "^18.2.2",
     "@types/node": "^18.18.5",
     "@vitejs/plugin-vue": "^4.4.0",
