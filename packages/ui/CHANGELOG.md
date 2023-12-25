@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.2.0
+
+### Minor Changes
+
+- fix: type module to enable es modules ([#27](https://github.com/indielayer/ui/pull/27)) ([`5623772`](https://github.com/indielayer/ui/commit/5623772e475f324518babded6f0c68900d7f6198))
+
 ## 1.1.0
 
 ### Minor Changes
