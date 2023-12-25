@@ -24,6 +24,7 @@
     "exports",
     "README.md"
   ],
+  "type": "module",
   "main": "lib/index.umd.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -48,7 +49,7 @@
     "build:stats": "VITE_VISUALIZER=Y npm run build",
     "generate": "pnpm gen-version",
     "gen-types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.vitest.json --composite false",
-    "gen-version": "node .scripts/gen-version.js",
+    "gen-version": "node .scripts/gen-version.cjs",
     "test": "pnpm test:unit",
     "test:unit": "vitest --environment jsdom",
     "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
