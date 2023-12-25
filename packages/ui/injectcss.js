@@ -1,7 +1,8 @@
 import fs from 'fs'
 import { resolve } from 'path'
-const cleanCSS = new (require('clean-css'))()
+import cleanCSS from 'clean-css'
 
+const cleanCss = new cleanCSS()
 const fileRegex = /\.(css|postcss)$/
 
 const injectCode = (code) =>
@@ -23,7 +24,7 @@ export default function libInjectCss() {
 
     transform(code, id) {
       if (fileRegex.test(id)) {
-        css.push(cleanCSS.minify(code).styles)
+        css.push(cleanCss.minify(code).styles)
 
         return {
           code: '',
