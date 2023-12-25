@@ -43,7 +43,7 @@ export default { name: 'XTable' }
 
 <script setup lang="ts" generic="T">
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import XTableHead from './TableHead'
 import XTableHeader, { type TableHeaderSort, type TableHeaderAlign } from './TableHeader.vue'

@@ -1,4 +1,4 @@
-import type { Tone, ColorLibrary } from './colors'
+import type { Tone, ColorLibrary } from '../composables/useColors'
 
 const isHex = (hex: string) => /^#(?:[A-Fa-f0-9]{3}){1,2}$/.test(hex)
 const isRGB = (rgb: string) => /^rgb[(](?:\s*0*(?:\d\d?(?:\.\d+)?(?:\s*%)?|\.\d+\s*%|100(?:\.0*)?\s*%|(?:1\d\d|2[0-4]\d|25[0-5])(?:\.\d+)?)\s*(?:,(?![)])|(?=[)]))){3}[)]$/.test(rgb)

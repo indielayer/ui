@@ -57,9 +57,9 @@ export default {
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { useCommon, type Size } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
+import { useCommon, type Size } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
+import { useTheme } from '../../composables/useTheme'
 
 import XMenuItem from './MenuItem.vue'
 import XCollapse from '../../components/collapse/Collapse.vue'

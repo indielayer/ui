@@ -41,11 +41,11 @@ export default {
 
 <script setup lang="ts">
 import { ref, type PropType, type ExtractPublicPropTypes, watch } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
+import { useTheme } from '../../composables/useTheme'
+import { useColors } from '../../composables/useColors'
+import { useCommon } from '../../composables/useCommon'
+import { useInputtable } from '../../composables/useInputtable'
+import { useInteractive } from '../../composables/useInteractive'
 import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'

@@ -1,7 +1,7 @@
 import { computed, inject, unref, useSlots, type StyleValue, type Slots, type UnwrapNestedRefs, type UnwrapRef, type MaybeRef } from 'vue'
 import { injectThemeKey } from './keys'
-import { useColors, type ColorComposition } from './colors'
-import { useCSS, type CSSComposition } from './css'
+import { useColors, type ColorComposition } from './useColors'
+import { useCSS, type CSSComposition } from './useCSS'
 import { isFunction, isObject, mergeRightDeep, smartUnref } from '../common/utils'
 
 export type ThemeVueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[]

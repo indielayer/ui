@@ -17,7 +17,7 @@ export default { name: 'XScroll' }
 <script setup lang="ts">
 import { ref, toRefs, type ExtractPublicPropTypes } from 'vue'
 import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Scroll.theme'
 

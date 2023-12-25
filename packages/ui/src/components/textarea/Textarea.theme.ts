@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { TextareaProps } from './Textarea.vue'
 
 type InternalClasses = 'wrapper' | 'label' | 'input'

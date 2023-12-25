@@ -23,9 +23,9 @@ export default {
 
 <script setup lang="ts">
 import { computed, type ExtractPublicPropTypes } from 'vue'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/useColors'
+import { useCommon } from '../../composables/useCommon'
+import { useTheme } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'

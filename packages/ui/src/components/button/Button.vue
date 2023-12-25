@@ -36,10 +36,10 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useInteractive } from '../../composables/interactive'
+import { useTheme } from '../../composables/useTheme'
+import { useColors } from '../../composables/useColors'
+import { useCommon } from '../../composables/useCommon'
+import { useInteractive } from '../../composables/useInteractive'
 import { injectButtonGroupKey } from '../../composables/keys'
 
 import XSpinner from '../spinner/Spinner.vue'

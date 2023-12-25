@@ -1,6 +1,6 @@
 import { computed, inject, unref } from 'vue'
 import { injectThemeKey } from './keys'
-import { isValidColor, tailwindColors, colorShade, setOpacity } from './colors-utils'
+import { isValidColor, tailwindColors, colorShade, setOpacity } from '../utils/colors'
 import { mergeRightDeep } from '../common/utils'
 
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'

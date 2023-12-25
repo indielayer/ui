@@ -43,9 +43,9 @@ export default {
 
 <script setup lang="ts">
 import { computed, useSlots, type PropType, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
 
 import theme from './Badge.theme'
 

@@ -20,8 +20,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
 
 import XButton from '../button/Button.vue'
 

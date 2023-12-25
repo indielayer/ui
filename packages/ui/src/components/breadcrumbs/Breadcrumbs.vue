@@ -26,9 +26,9 @@ export default { name: 'XBreadcrumbs' }
 
 <script setup lang="ts">
 import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 import { arrowRightIcon } from '../../common/icons'
-import { useColors } from '../../composables/colors'
+import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XLink from '../../components/link/Link.vue'

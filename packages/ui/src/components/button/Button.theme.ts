@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { ButtonProps } from './Button.vue'
 
 type InternalClasses = 'wrapper' | 'iconLeft' | 'iconRight'

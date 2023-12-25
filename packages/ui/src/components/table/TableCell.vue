@@ -30,7 +30,7 @@ export default {
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme  from './TableCell.theme'
 

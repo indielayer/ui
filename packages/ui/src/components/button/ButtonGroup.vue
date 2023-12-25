@@ -30,10 +30,10 @@ export default {
 
 <script setup lang="ts">
 import { provide, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInteractive } from '../../composables/interactive'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
+import { useInteractive } from '../../composables/useInteractive'
 import { injectButtonGroupKey } from '../../composables/keys'
 
 import theme from './ButtonGroup.theme'

@@ -44,7 +44,7 @@ export default {
 <script setup lang="ts">
 import { provide, onMounted, watch, nextTick, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { injectFormKey } from '../../composables/keys'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Form.theme'
 

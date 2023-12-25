@@ -62,9 +62,9 @@ export default {
 <script setup lang="ts">
 import { ref, provide, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { injectNotificationKey } from '../../composables/keys'
-import { useColors } from '../../composables/colors'
-import { useCSS } from '../../composables/css'
-import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/useColors'
+import { useCSS } from '../../composables/useCSS'
+import { useTheme } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
 
 import XIcon from '../../components/icon/Icon.vue'
