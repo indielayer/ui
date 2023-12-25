@@ -31,8 +31,8 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
 import { dotsIcon, prevIcon, nextIcon } from '../../common/icons'
 
 import XIcon from '../../components/icon/Icon.vue'

@@ -24,7 +24,7 @@ export default {
 <script setup lang="ts">
 import { ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
 
 import theme from './Modal.theme'

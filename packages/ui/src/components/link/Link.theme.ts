@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { LinkProps } from './Link.vue'
 
 type InternalClasses = 'wrapper'

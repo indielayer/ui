@@ -22,11 +22,11 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
+import { useInputtable } from '../../composables/useInputtable'
+import { useInteractive } from '../../composables/useInteractive'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XInputError from '../helpers/InputError'

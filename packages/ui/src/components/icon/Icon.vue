@@ -24,9 +24,9 @@ export default {
 
 <script setup lang="ts">
 import { inject, ref, watchEffect, normalizeStyle, unref, computed, type ExtractPublicPropTypes } from 'vue'
-import { useCommon } from '../../composables/common'
+import { useCommon } from '../../composables/useCommon'
 import { injectIconsKey } from '../../composables/keys'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Icon.theme'
 

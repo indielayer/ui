@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { TabProps } from './Tab.vue'
 import type { TabGroupInjection } from './TabGroup.vue'
 

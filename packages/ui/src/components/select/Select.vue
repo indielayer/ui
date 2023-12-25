@@ -30,10 +30,10 @@ export default {
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import { useCommon } from '../../composables/common'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
-import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/useCommon'
+import { useInputtable } from '../../composables/useInputtable'
+import { useInteractive } from '../../composables/useInteractive'
+import { useTheme } from '../../composables/useTheme'
 import { checkIcon, chevronDownIcon } from '../../common/icons'
 
 import XTag from '../../components/tag/Tag.vue'

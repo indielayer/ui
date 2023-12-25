@@ -23,8 +23,8 @@ export default {
 
 <script setup lang="ts">
 import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/useColors'
+import { useTheme } from '../../composables/useTheme'
 import { closeIcon, successIcon, errorIcon, warningIcon, infoIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'

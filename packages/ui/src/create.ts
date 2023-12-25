@@ -1,5 +1,5 @@
 import type { App } from 'vue'
-import type { ColorLibrary } from './composables/colors'
+import type { ColorLibrary } from './composables/useColors'
 import { injectColorsKey, injectIconsKey, injectThemeKey } from './composables/keys'
 
 export type IndielayerUIOptions = {

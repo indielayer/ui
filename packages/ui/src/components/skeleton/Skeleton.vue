@@ -13,7 +13,7 @@ export default { name: 'XSkeleton' }
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Skeleton.theme'
 

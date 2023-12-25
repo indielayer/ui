@@ -41,7 +41,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, useCssModule, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Popover.theme'
 

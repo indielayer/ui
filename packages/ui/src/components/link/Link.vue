@@ -18,8 +18,8 @@ export default { name: 'XLink' }
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useColors } from '../../composables/colors'
-import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/useColors'
+import { useTheme } from '../../composables/useTheme'
 import { externalIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'

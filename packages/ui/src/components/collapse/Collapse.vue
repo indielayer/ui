@@ -18,8 +18,8 @@ export default { name: 'XCollapse' }
 
 <script setup lang="ts">
 import { ref, watch, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
-import { useColors } from '../../composables/colors'
+import { useTheme } from '../../composables/useTheme'
+import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
 

@@ -26,11 +26,11 @@ export default {
 <script setup lang="ts">
 import { computed, ref, watch, type ExtractPublicPropTypes } from 'vue'
 import { useEventListener } from '@vueuse/core'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInteractive } from '../../composables/interactive'
-import { useInputtable } from '../../composables/inputtable'
-import { useTheme } from '../../composables/theme'
+import { useCommon } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
+import { useInteractive } from '../../composables/useInteractive'
+import { useInputtable } from '../../composables/useInputtable'
+import { useTheme } from '../../composables/useTheme'
 
 import XProgress from '../../components/progress/Progress.vue'
 

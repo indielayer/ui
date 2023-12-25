@@ -29,8 +29,8 @@ export default {
 import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabKey } from '../../composables/keys'
-import { useCommon, type Size } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
+import { useCommon, type Size } from '../../composables/useCommon'
+import { useTheme } from '../../composables/useTheme'
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'

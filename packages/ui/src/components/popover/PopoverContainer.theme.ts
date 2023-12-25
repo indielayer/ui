@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { PopoverContainerProps } from './PopoverContainer.vue'
 
 type InternalClasses = 'wrapper'

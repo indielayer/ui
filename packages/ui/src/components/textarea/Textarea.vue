@@ -36,12 +36,12 @@ export default {
 <script setup lang="ts">
 import { ref, watch, type ExtractPublicPropTypes } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
-import { useCSS } from '../../composables/css'
-import { useTheme } from '../../composables/theme'
-import { useCommon } from '../../composables/common'
-import { useColors } from '../../composables/colors'
-import { useInputtable } from '../../composables/inputtable'
-import { useInteractive } from '../../composables/interactive'
+import { useCSS } from '../../composables/useCSS'
+import { useTheme } from '../../composables/useTheme'
+import { useCommon } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
+import { useInputtable } from '../../composables/useInputtable'
+import { useInteractive } from '../../composables/useInteractive'
 
 import XInputError from '../helpers/InputError'
 

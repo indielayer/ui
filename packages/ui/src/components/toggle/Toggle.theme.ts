@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { ToggleProps } from './Toggle.vue'
 
 type InternalClasses = 'wrapper' | 'label' | 'buttonWrapper' | 'button'

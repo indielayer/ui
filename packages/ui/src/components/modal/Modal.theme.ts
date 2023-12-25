@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { ModalProps } from './Modal.vue'
 
 type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'closeIcon' | 'header' | 'content' | 'actions'

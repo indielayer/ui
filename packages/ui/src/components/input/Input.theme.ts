@@ -1,4 +1,4 @@
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { InputProps } from './Input.vue'
 
 type InternalClasses = 'wrapper' | 'label' | 'input' | 'icon'

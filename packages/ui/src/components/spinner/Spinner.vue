@@ -19,7 +19,7 @@ export default {
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useCommon } from '../../composables/common'
+import { useCommon } from '../../composables/useCommon'
 
 import XIcon from '../../components/icon/Icon.vue'
 

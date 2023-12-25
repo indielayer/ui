@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { ThemeClasses, ThemeComponent } from '../../composables/theme'
+import type { ThemeClasses, ThemeComponent } from '../../composables/useTheme'
 import type { AvatarProps } from './Avatar.vue'
 
 type InternalClasses = 'wrapper'

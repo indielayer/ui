@@ -40,7 +40,7 @@ export default {
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, watchEffect, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { breakpointsTailwind, useBreakpoints, useEventListener, useSwipe, type Breakpoints, type UseSwipeDirection } from '@vueuse/core'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
 

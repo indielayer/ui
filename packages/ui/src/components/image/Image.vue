@@ -10,7 +10,7 @@ export default { name: 'XImage' }
 
 <script setup lang="ts">
 import { watch, ref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/theme'
+import { useTheme } from '../../composables/useTheme'
 
 import theme from './Image.theme'
 

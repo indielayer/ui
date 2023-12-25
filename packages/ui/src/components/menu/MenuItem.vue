@@ -46,9 +46,9 @@ export default {
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
-import { useColors } from '../../composables/colors'
-import { useCommon } from '../../composables/common'
-import { useTheme } from '../../composables/theme'
+import { useColors } from '../../composables/useColors'
+import { useCommon } from '../../composables/useCommon'
+import { useTheme } from '../../composables/useTheme'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XSpinner from '../../components/spinner/Spinner.vue'
