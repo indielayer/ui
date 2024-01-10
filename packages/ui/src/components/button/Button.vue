@@ -39,14 +39,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
 import { injectButtonGroupKey } from '../../composables/keys'
 
-import XSpinner from '../spinner/Spinner.vue'
+import XLoader from '../loader/Loader.vue'
 import XIcon from '../icon/Icon.vue'
 
 const props = defineProps(buttonProps)
@@ -115,19 +115,26 @@ defineExpose({ focus, blur })
     :disabled="computedDisabled || loading"
     :type="tag === 'button' ? type : null"
   >
-    <x-spinner v-if="loading" :size="computedSize" class="absolute" />
-    <x-icon
-      v-if="computedIconLeft"
+    <x-loader
+      v-if="loading"
+      class="absolute"
       :size="computedSize"
-      :icon="computedIconLeft"
-      :class="[
-        classes.iconLeft,
-        { 'invisible': loading },
-      ]"
+      :label="loadingLabel"
+      :status="loadingStatus"
     />
-    <span :class="{ 'invisible': loading }">
-      <slot></slot>
-    </span>
+    <div :class="{ 'invisible': loading }">
+      <x-icon
+        v-if="computedIconLeft"
+        :size="computedSize"
+        :icon="computedIconLeft"
+        :class="[
+          classes.iconLeft,
+        ]"
+      />
+      <span>
+        <slot></slot>
+      </span>
+    </div>
     <x-icon
       v-if="iconRight"
       :size="computedSize"

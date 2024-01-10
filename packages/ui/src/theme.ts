@@ -17,6 +17,7 @@ import type {
   ImageTheme,
   InputTheme,
   LinkTheme,
+  LoaderTheme,
   MenuTheme,
   MenuItemTheme,
   ModalTheme,
@@ -58,6 +59,7 @@ export type ComponentThemes = {
   Image: ImageTheme;
   Input: InputTheme;
   Link: LinkTheme;
+  Loader: LoaderTheme;
   Menu: MenuTheme;
   MenuItem: MenuItemTheme;
   Modal: ModalTheme;
