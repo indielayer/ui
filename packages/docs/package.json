@@ -10,7 +10,7 @@
     "stylelint": "stylelint \"**/*.{css,vue,postcss,scss,sass}\" --ignore-path .gitignore"
   },
   "dependencies": {
-    "vue": "^3.3.4",
+    "vue": "^3.3.9",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {

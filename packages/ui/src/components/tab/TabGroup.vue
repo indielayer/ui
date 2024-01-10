@@ -38,6 +38,9 @@ export type TabGroupVariant = typeof validators.variant[number]
 export type TabGroupAlign = typeof validators.align[number]
 export type TabGroupProps = ExtractPublicPropTypes<typeof tabGroupProps>
 
+type InternalClasses = 'wrapper' | 'list' | 'tracker'
+export interface TabGroupTheme extends ThemeComponent<TabGroupProps, InternalClasses> {}
+
 export default {
   name: 'XTabGroup',
   validators,
@@ -50,11 +53,9 @@ import { useMutationObserver, useResizeObserver, useThrottleFn } from '@vueuse/c
 import { injectTabKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
-
-import theme from './TabGroup.theme'
 
 const props = defineProps(tabGroupProps)
 
@@ -138,7 +139,7 @@ onMounted(() => {
   updateTracker(active.value)
 })
 
-const { styles, classes, className } = useTheme('tabs', theme, props)
+const { styles, classes, className } = useTheme('TabGroup', {}, props)
 </script>
 
 <template>

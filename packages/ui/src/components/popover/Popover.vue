@@ -32,6 +32,9 @@ export type PopoverAlign = typeof validators.align[number]
 export type PopoverPosition = typeof validators.position[number]
 export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>
 
+type InternalClasses = 'wrapper' | 'content'
+export interface PopoverTheme extends ThemeComponent<PopoverProps, InternalClasses> {}
+
 export default {
   name: 'XPopover',
   validators,
@@ -41,9 +44,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, useCssModule, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Popover.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(popoverProps)
 
@@ -164,7 +165,7 @@ function toggle() {
   emit('toggle', isOpen.value)
 }
 
-const { styles, classes, className } = useTheme('popover', theme, props)
+const { styles, classes, className } = useTheme('Popover', {}, props)
 
 defineExpose({ open, close, toggle, isOpen })
 </script>

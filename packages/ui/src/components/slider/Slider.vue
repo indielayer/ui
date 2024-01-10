@@ -15,6 +15,10 @@ const sliderProps = {
 }
 
 export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
+
+type InternalClasses = 'wrapper' | 'label' | 'drag'
+export interface SliderTheme extends ThemeComponent<SliderProps, InternalClasses> {}
+
 export default {
   name: 'XSlider',
   validators: {
@@ -30,11 +34,9 @@ import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XProgress from '../../components/progress/Progress.vue'
-
-import theme from './Slider.theme'
 
 const props = defineProps(sliderProps)
 
@@ -160,7 +162,7 @@ const {
   isInsideForm,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('slider', theme, props)
+const { styles, classes, className } = useTheme('Slider', {}, props)
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

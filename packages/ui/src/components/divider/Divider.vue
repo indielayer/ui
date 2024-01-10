@@ -6,18 +6,19 @@ const dividerProps = {
 
 export type DividerProps = ExtractPublicPropTypes<typeof dividerProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'line'
+export interface DividerTheme extends ThemeComponent<DividerProps, InternalClasses> {}
+
 export default { name: 'XDivider' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Divider.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(dividerProps)
 
-const { styles, classes, className } = useTheme('divider', theme, props)
+const { styles, classes, className } = useTheme('Divider', {}, props)
 </script>
 
 <template>

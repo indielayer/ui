@@ -11,6 +11,9 @@ const paginationItemProps = {
 
 export type PaginationItemProps = ExtractPublicPropTypes<typeof paginationItemProps>
 
+type InternalClasses = 'wrapper'
+export interface PaginationItemTheme extends ThemeComponent<PaginationItemProps, InternalClasses> {}
+
 export default {
   name: 'XPaginationItem',
   validators: {
@@ -20,19 +23,18 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 
 import XButton from '../button/Button.vue'
 
-import theme from './PaginationItem.theme'
 import type { ExtractPublicPropTypes } from 'vue'
 
 const props = defineProps(paginationItemProps)
 
 const emit = defineEmits(['input'])
 
-const { styles, classes, className } = useTheme('pagination-item', theme, props)
+const { styles, classes, className } = useTheme('PaginationItem', {}, props)
 </script>
 
 <template>

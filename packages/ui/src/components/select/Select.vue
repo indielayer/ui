@@ -19,6 +19,10 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'box' | 'content' | 'iconWrapper' | 'icon'
+type InternalExtraData = { errorInternal: Ref<boolean>; }
+export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XSelect',
   validators: {
@@ -28,12 +32,12 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { checkIcon, chevronDownIcon } from '../../common/icons'
 
 import XTag from '../../components/tag/Tag.vue'
@@ -43,8 +47,6 @@ import XSpinner from '../../components/spinner/Spinner.vue'
 import XPopover from '../../components/popover/Popover.vue'
 import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 import XInputError from '../helpers/InputError'
-
-import theme from './Select.theme'
 
 const  props = defineProps(selectProps)
 
@@ -235,7 +237,7 @@ const {
   isInsideForm,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('select', theme, props, { errorInternal })
+const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

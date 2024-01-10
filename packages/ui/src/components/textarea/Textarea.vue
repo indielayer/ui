@@ -25,6 +25,11 @@ const textareaProps = {
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'input'
+type InternalExtraData = { errorInternal: Ref<boolean>; }
+
+export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XTextarea',
   validators: {
@@ -34,18 +39,16 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 
 import XInputError from '../helpers/InputError'
-
-import theme from './Textarea.theme'
 
 const props = defineProps(textareaProps)
 
@@ -94,7 +97,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('textarea', theme, props, { errorInternal })
+const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

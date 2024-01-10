@@ -20,6 +20,10 @@ export type ButtonGroupInjection = {
   isButtonGroup: boolean;
 }
 
+type InternalClasses = 'wrapper'
+type InternalExtraData = { isButtonGroupGroup: boolean; }
+export interface ButtonGroupTheme extends ThemeComponent<ButtonGroupProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XButtonGroup',
   validators: {
@@ -30,13 +34,11 @@ export default {
 
 <script setup lang="ts">
 import { provide, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { injectButtonGroupKey } from '../../composables/keys'
-
-import theme from './ButtonGroup.theme'
 
 const props = defineProps(buttonGroupProps)
 
@@ -45,7 +47,7 @@ provide(injectButtonGroupKey, {
   isButtonGroup: true,
 })
 
-const { className, classes, styles } = useTheme('button-group', theme, props)
+const { className, classes, styles } = useTheme('ButtonGroup', {}, props)
 </script>
 
 <template>

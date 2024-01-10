@@ -31,6 +31,10 @@ const inputProps = {
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'input' | 'icon'
+type InternalExtraData = { errorInternal: any; }
+export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XInput',
   validators: {
@@ -41,7 +45,7 @@ export default {
 
 <script setup lang="ts">
 import { ref, type PropType, type ExtractPublicPropTypes, watch } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -50,8 +54,6 @@ import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
 import XInputError from '../helpers/InputError'
-
-import theme from './Input.theme'
 
 const props = defineProps(inputProps)
 
@@ -95,7 +97,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('input', theme, props, { errorInternal })
+const { styles, classes, className } = useTheme('Input', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

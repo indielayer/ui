@@ -13,17 +13,18 @@ const collapseProps = {
 
 export type CollapseProps = ExtractPublicPropTypes<typeof collapseProps>
 
+type InternalClasses = 'wrapper' | 'icon' | 'content'
+export interface CollapseTheme extends ThemeComponent<CollapseProps, InternalClasses> {}
+
 export default { name: 'XCollapse' }
 </script>
 
 <script setup lang="ts">
 import { ref, watch, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
-
-import theme from './Collapse.theme'
 
 const props = defineProps(collapseProps)
 
@@ -100,7 +101,7 @@ function onExpand(anim = true) {
   emit('expand')
 }
 
-const { styles, classes, className } = useTheme('collapse', theme, props)
+const { styles, classes, className } = useTheme('Collapse', {}, props)
 
 defineExpose({ toggle, open, close })
 </script>

@@ -31,6 +31,9 @@ export type BadgePosition = typeof badgePosition[number]
 export type BadgeAlign = typeof badgeAlign[number]
 export type BadgeProps = ExtractPublicPropTypes<typeof badgeProps>
 
+type InternalClasses = 'wrapper'
+export interface BadgeTheme extends ThemeComponent<BadgeProps, InternalClasses> {}
+
 export default {
   name: 'XBadge',
   validators: {
@@ -43,11 +46,9 @@ export default {
 
 <script setup lang="ts">
 import { computed, useSlots, type PropType, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
-
-import theme from './Badge.theme'
 
 const props = defineProps(badgeProps)
 
@@ -79,7 +80,7 @@ const offsetStyle = computed(() => {
   return style
 })
 
-const { styles, classes, className } = useTheme('badge', theme, props)
+const { styles, classes, className } = useTheme('Badge', {}, props)
 </script>
 
 <template>

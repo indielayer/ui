@@ -12,6 +12,9 @@ const toggleProps = {
 
 export type ToggleProps = ExtractPublicPropTypes<typeof toggleProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'buttonWrapper' | 'button'
+export interface ToggleTheme extends ThemeComponent<ToggleProps, InternalClasses> {}
+
 export default {
   name: 'XToggle',
   validators: {
@@ -22,7 +25,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
@@ -30,8 +33,6 @@ import { useInteractive } from '../../composables/useInteractive'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XInputError from '../helpers/InputError'
-
-import theme from './Toggle.theme'
 
 const props = defineProps(toggleProps)
 
@@ -57,7 +58,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('toggle', theme, props)
+const { styles, classes, className } = useTheme('Toggle', {}, props)
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

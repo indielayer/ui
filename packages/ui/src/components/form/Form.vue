@@ -35,6 +35,9 @@ export type FormInput = {
   setError: (val: string) => void;
 }
 
+type InternalClasses = 'wrapper'
+export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
+
 export default {
   name: 'XForm',
   inheritAttrs: false,
@@ -44,9 +47,7 @@ export default {
 <script setup lang="ts">
 import { provide, onMounted, watch, nextTick, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { injectFormKey } from '../../composables/keys'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Form.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(formProps)
 
@@ -118,7 +119,7 @@ const submit = (e: Event) => {
   emit('submit', isFormValid)
 }
 
-const { styles, classes, className } = useTheme('form', theme, props)
+const { styles, classes, className } = useTheme('Form', {}, props)
 </script>
 
 <template>

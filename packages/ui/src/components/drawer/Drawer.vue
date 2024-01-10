@@ -28,6 +28,9 @@ const drawerProps = {
 export type DrawerPosition = typeof drawerPosition[number]
 export type DrawerProps = ExtractPublicPropTypes<typeof drawerProps>
 
+type InternalClasses = 'wrapper' | 'backdrop'
+export interface DrawerTheme extends ThemeComponent<DrawerProps, InternalClasses> {}
+
 export default {
   name: 'XDrawer',
   inheritAttrs: false,
@@ -40,11 +43,9 @@ export default {
 <script setup lang="ts">
 import { computed, onMounted, ref, watch, watchEffect, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { breakpointsTailwind, useBreakpoints, useEventListener, useSwipe, type Breakpoints, type UseSwipeDirection } from '@vueuse/core'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
-
-import theme from './Drawer.theme'
 
 const props = defineProps(drawerProps)
 
@@ -194,7 +195,7 @@ onMounted(() => {
   deferShow.value = true
 })
 
-const { styles, classes, className } = useTheme('drawer', theme, props)
+const { styles, classes, className } = useTheme('Drawer', {}, props)
 
 defineExpose({ open, close })
 </script>

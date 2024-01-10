@@ -17,6 +17,10 @@ const tabProps = {
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'icon'
+type InternalExtraData = Pick<TabGroupInjection, 'state'>['state']
+export interface TabTheme extends ThemeComponent<TabProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XTab',
   validators: {
@@ -30,13 +34,12 @@ import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
 
-import theme from './Tab.theme'
-import type { TabGroupVariant } from './TabGroup.vue'
+import type { TabGroupInjection, TabGroupVariant } from './TabGroup.vue'
 
 const props = defineProps(tabProps)
 
@@ -97,7 +100,7 @@ function onClickTab(e: MouseEvent) {
   if (!props.to && computedValue.value) tabs.activateTab(computedValue.value)
 }
 
-const { styles, classes, className } = useTheme('tab', theme, ref({
+const { styles, classes, className } = useTheme('Tab', {}, ref({
   ...props,
   size: computedSize.value,
   exact: computedExact.value,

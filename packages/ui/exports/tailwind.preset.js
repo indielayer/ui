@@ -1,55 +1,40 @@
-const colors = require('tailwindcss/colors')
+function getColorVar(color, level) {
+  if (level) return `rgb(var(--${color}-color-${level}))`
 
-module.exports = (useDark = true) => ({
+  return `rgb(var(--${color}-color))`
+}
+
+function getColorVarPallete(color) {
+  return {
+    50: getColorVar(color, 50),
+    100: getColorVar(color, 100),
+    200: getColorVar(color, 200),
+    300: getColorVar(color, 300),
+    400: getColorVar(color, 400),
+    500: getColorVar(color, 500),
+    600: getColorVar(color, 600),
+    700: getColorVar(color, 700),
+    800: getColorVar(color, 800),
+    900: getColorVar(color, 900),
+    950: getColorVar(color, 950),
+  }
+}
+
+module.exports = () => ({
   theme: {
     extend: {
       colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
+        primary: getColorVarPallete('primary'),
+        secondary: getColorVarPallete('secondary'),
+        success: getColorVarPallete('success'),
+        warning: getColorVarPallete('warning'),
+        error: getColorVarPallete('error'),
       },
-      borderColor: colors.gray[100],
+      borderColor: getColorVar('border'),
       fontFamily: {
-        sans: [
-          'Inter',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'ui-sans-serif',
-          'system-ui',
-          '"Segoe UI"',
-          'Roboto',
-          '"Helvetica Neue"',
-          'Arial',
-          '"Noto Sans"',
-          'sans-serif',
-          '"Apple Color Emoji"',
-          '"Segoe UI Emoji"',
-          '"Segoe UI Symbol"',
-          '"Noto Color Emoji"',
-        ],
+        sans: 'var(--font-family-sans)',
+        mono: 'var(--font-family-mono)',
       },
     },
   },
-  plugins: useDark ? [
-    ({ addBase, config }) => {
-      addBase({
-        html: {
-          color: config('theme.colors.gray.900'),
-          backgroundColor: 'white',
-        },
-        'html.dark': {
-          color: config('theme.colors.gray.100'),
-          backgroundColor: config('theme.colors.gray.900'),
-        },
-        '*, ::before, ::after': {
-          borderColor: colors.gray[200],
-        },
-        '.dark *, .dark ::before, .dark ::after': {
-          borderColor: colors.slate[700],
-        },
-      })
-    },
-  ] : [],
 })

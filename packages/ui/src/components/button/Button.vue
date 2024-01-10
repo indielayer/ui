@@ -26,6 +26,10 @@ const buttonProps = {
 
 export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
 
+type InternalClasses = 'wrapper' | 'iconLeft' | 'iconRight'
+type InternalExtraData = { isButtonGroup: boolean; }
+export interface ButtonTheme extends ThemeComponent<ButtonProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XButton',
   validators: {
@@ -35,8 +39,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
@@ -44,8 +48,6 @@ import { injectButtonGroupKey } from '../../composables/keys'
 
 import XSpinner from '../spinner/Spinner.vue'
 import XIcon from '../icon/Icon.vue'
-
-import theme from './Button.theme'
 
 const props = defineProps(buttonProps)
 
@@ -86,7 +88,7 @@ const computedProps = computed(() => ({
   rounded: props.rounded,
 }))
 
-const { className, classes, styles } = useTheme('button', theme, computedProps, {
+const { className, classes, styles } = useTheme('Button', {}, computedProps, {
   isButtonGroup,
 })
 

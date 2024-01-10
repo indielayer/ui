@@ -11,6 +11,10 @@ const checkboxProps = {
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 
+type InternalClasses = 'wrapper' | 'box' | 'icon' | 'label'
+type InternalExtraData = { checked: Ref<boolean>; }
+export interface CheckboxTheme extends ThemeComponent<CheckboxProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XCheckbox',
   validators: {
@@ -20,8 +24,8 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
@@ -29,8 +33,6 @@ import { useInputtable } from '../../composables/useInputtable'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XInputError from '../helpers/InputError'
-
-import theme from './Checkbox.theme'
 
 const props = defineProps(checkboxProps)
 
@@ -61,7 +63,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('checkbox', theme, props, { checked })
+const { styles, classes, className } = useTheme('Checkbox', {}, props, { checked })
 
 defineExpose({ focus, blur, toggle, reset, validate, setError })
 </script>

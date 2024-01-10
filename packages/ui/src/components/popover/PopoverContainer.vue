@@ -8,18 +8,19 @@ const popoverContainerProps = {
 
 export type PopoverContainerProps = ExtractPublicPropTypes<typeof popoverContainerProps>
 
+type InternalClasses = 'wrapper'
+export interface PopoverContainerTheme extends ThemeComponent<PopoverContainerProps, InternalClasses> {}
+
 export default { name: 'XPopoverContainer' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './PopoverContainer.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(popoverContainerProps)
 
-const { styles, classes, className } = useTheme('popover-container', theme, props)
+const { styles, classes, className } = useTheme('PopoverContainer', {}, props)
 </script>
 
 <template>

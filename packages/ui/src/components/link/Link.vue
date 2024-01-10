@@ -13,22 +13,23 @@ const linkProps = {
 
 export type LinkProps = ExtractPublicPropTypes<typeof linkProps>
 
+type InternalClasses = 'wrapper'
+export interface LinkTheme extends ThemeComponent<LinkProps, InternalClasses> {}
+
 export default { name: 'XLink' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { externalIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
 
-import theme from './Link.theme'
-
 const props = defineProps(linkProps)
 
-const { styles, classes, className } = useTheme('link', theme, props)
+const { styles, classes, className } = useTheme('Link', {}, props)
 </script>
 
 <template>

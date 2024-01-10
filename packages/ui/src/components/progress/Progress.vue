@@ -16,19 +16,20 @@ const progressProps = {
 
 export type ProgressProps = ExtractPublicPropTypes<typeof progressProps>
 
+type InternalClasses = 'wrapper' | 'list' | 'item'
+export interface ProgressTheme extends ThemeComponent<ProgressProps, InternalClasses> {}
+
 export default { name: 'XProgress' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Progress.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(progressProps)
 
-const { styles, classes, className } = useTheme('progress', theme, props)
+const { styles, classes, className } = useTheme('Progress', {}, props)
 </script>
 
 <template>

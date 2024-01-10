@@ -38,12 +38,15 @@ export type TableHeader = {
 
 export type TableProps = ExtractPublicPropTypes<typeof tableProps>
 
+type InternalClasses = 'wrapper' | 'loadingWrapper'
+export interface TableTheme extends ThemeComponent<TableProps, InternalClasses> {}
+
 export default { name: 'XTable' }
 </script>
 
 <script setup lang="ts" generic="T">
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XTableHead from './TableHead'
 import XTableHeader, { type TableHeaderSort, type TableHeaderAlign } from './TableHeader.vue'
@@ -51,8 +54,6 @@ import XTableBody from './TableBody'
 import XTableRow from './TableRow.vue'
 import XTableCell from './TableCell.vue'
 import XSpinner from '../spinner/Spinner.vue'
-
-import theme from './Table.theme'
 
 const props = defineProps({
   ...tableProps,
@@ -115,7 +116,7 @@ function getValue(item: any, path: string | string[] | undefined) {
   return result ?? ''
 }
 
-const { styles, classes, className } = useTheme('table', theme, props)
+const { styles, classes, className } = useTheme('Table', {}, props)
 </script>
 
 <template>

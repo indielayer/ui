@@ -1,6 +1,6 @@
 import { computed, inject, unref } from 'vue'
 import { injectThemeKey } from './keys'
-import { isValidColor, tailwindColors, colorShade, setOpacity } from '../utils/colors'
+import { isValidColor, tailwindColors, colorShade, setOpacity } from '../common/colors'
 import { mergeRightDeep } from '../common/utils'
 
 export type Tone = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'
@@ -40,13 +40,13 @@ const defaultColors = {
   error: tailwindColors.red,
 }
 
+const getTailwindColor = (color: string) => tailwindColors[color]
+
+const getColorOpacity = (color: string, opacity: number) => setOpacity(color, opacity)
+
 export const useColors = (): ColorComposition => {
   const globalTheme = inject(injectThemeKey,  {})
   const customColors = computed(() => mergeRightDeep(defaultColors, unref(globalTheme).colors || {}))
-
-  const getTailwindColor = (color: string) => tailwindColors[color]
-
-  const getColorOpacity = (color: string, opacity: number) => setOpacity(color, opacity)
 
   const getPalette = (color?: string): ColorPalette => {
     if (!color) return getTailwindColor('gray')
