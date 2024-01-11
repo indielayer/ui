@@ -2,10 +2,11 @@
 const breadcrumbsProps = {
   ...useColors.props(),
   items: Array as PropType<BreadcrumbsItem[]>,
-  icon: {
+  separator: {
     type: String,
-    default: arrowRightIcon,
+    default: '/',
   },
+  icon: String,
   shadow: Boolean,
   underline: Boolean,
 }
@@ -21,7 +22,7 @@ export type BreadcrumbsItem = {
 }
 export type BreadcrumbsProps = ExtractPublicPropTypes<typeof breadcrumbsProps>
 
-type InternalClasses = 'wrapper' | 'item'
+type InternalClasses = 'wrapper' | 'item' | 'separator'
 export interface BreadcrumbsTheme extends ThemeComponent<BreadcrumbsProps, InternalClasses> {}
 
 export default { name: 'XBreadcrumbs' }
@@ -30,7 +31,6 @@ export default { name: 'XBreadcrumbs' }
 <script setup lang="ts">
 import { type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { arrowRightIcon } from '../../common/icons'
 import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
@@ -61,12 +61,14 @@ const { styles, classes, className } = useTheme('Breadcrumbs', {}, props)
           <x-icon v-if="item.icon" :icon="item.icon" class="mr-1.5"/>
           {{ item.label }}
         </x-link>
-        <x-icon
-          v-if="index !== items.length - 1"
-          :icon="icon"
-          class="text-gray-400 mx-1.5"
-          size="sm"
-        />
+        <div v-if="index !== items.length - 1" :class="classes.separator">
+          <x-icon
+            v-if="icon"
+            :icon="icon"
+            size="sm"
+          />
+          <span v-else-if="separator">{{ separator }}</span>
+        </div>
       </li>
     </ul>
   </nav>
