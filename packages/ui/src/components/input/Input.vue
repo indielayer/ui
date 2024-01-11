@@ -53,7 +53,7 @@ import { useInteractive } from '../../composables/useInteractive'
 import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
-import XInputError from '../helpers/InputError'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(inputProps)
 
@@ -175,6 +175,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       />
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer :error="errorInternal" :helper="helper"/>
   </label>
 </template>

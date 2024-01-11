@@ -32,7 +32,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
-import XInputError from '../helpers/InputError'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(toggleProps)
 
@@ -119,6 +119,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-spinner v-if="loading" :size="size" class="ml-1" />
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer :error="errorInternal" :helper="helper"/>
   </label>
 </template>

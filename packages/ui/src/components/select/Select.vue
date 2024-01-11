@@ -46,7 +46,7 @@ import XMenuItem from '../../components/menu/MenuItem.vue'
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XPopover from '../../components/popover/Popover.vue'
 import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
-import XInputError from '../helpers/InputError'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const  props = defineProps(selectProps)
 
@@ -359,6 +359,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer :error="errorInternal" :helper="helper"/>
   </label>
 </template>

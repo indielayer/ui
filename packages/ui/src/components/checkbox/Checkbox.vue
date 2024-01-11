@@ -31,8 +31,8 @@ import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
 
-import XSpinner from '../../components/spinner/Spinner.vue'
-import XInputError from '../helpers/InputError'
+import XSpinner from '../spinner/Spinner.vue'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(checkboxProps)
 
@@ -116,7 +116,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer :error="errorInternal" :helper="helper"/>
   </label>
 </template>
 
