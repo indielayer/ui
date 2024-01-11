@@ -119,13 +119,15 @@ defineExpose({ focus, blur, reset, validate, setError })
     ></p>
 
     <div class="relative">
-      <x-icon
-        v-if="iconLeft"
-        :size="size"
-        :icon="iconLeft"
-        class="ml-2 left-1"
-        :class="classes.icon"
-      />
+      <slot name="prefix">
+        <x-icon
+          v-if="iconLeft"
+          :size="size"
+          :icon="iconLeft"
+          class="ml-2 left-1"
+          :class="classes.icon"
+        />
+      </slot>
 
       <input
         ref="elRef"
@@ -157,22 +159,23 @@ defineExpose({ focus, blur, reset, validate, setError })
         @change="onChange"
       />
 
-      <x-icon
-        v-if="iconRight"
-        :size="size"
-        :icon="iconRight"
-        class="mr-2 right-1"
-        :class="classes.icon"
-      />
-
-      <x-icon
-        v-else-if="type === 'password' && showPasswordToggle"
-        :size="size"
-        :icon="currentType === 'password' ? eyeIcon : eyeVisibleIcon"
-        class="mr-2 right-1 cursor-pointer"
-        :class="classes.icon"
-        @click="togglePasswordVisibility()"
-      />
+      <slot name="suffix">
+        <x-icon
+          v-if="iconRight"
+          :size="size"
+          :icon="iconRight"
+          class="mr-2 right-1"
+          :class="classes.icon"
+        />
+        <x-icon
+          v-else-if="type === 'password' && showPasswordToggle"
+          :size="size"
+          :icon="currentType === 'password' ? eyeIcon : eyeVisibleIcon"
+          class="mr-2 right-1 cursor-pointer"
+          :class="classes.icon"
+          @click="togglePasswordVisibility()"
+        />
+      </slot>
     </div>
 
     <x-input-footer :error="errorInternal" :helper="helper"/>

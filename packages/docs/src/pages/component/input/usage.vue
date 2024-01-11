@@ -8,6 +8,7 @@ const name = ref('')
     v-model="name"
     label="Label here"
     placeholder="Placeholder"
+    helper="Helper text here"
     block
   />
 </template>
