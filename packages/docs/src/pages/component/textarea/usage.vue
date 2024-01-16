@@ -3,6 +3,7 @@
     <x-textarea
       v-model="name"
       label="Normal textarea"
+      helper="Helper text"
       placeholder="Placeholder"
       :adjust-to-text="false"
     />
@@ -16,7 +17,7 @@ export default {
     return {
       name: '',
       multiline: 'auto\nadjusted\nheight',
-    } 
+    }
   },
 }
 </script>
