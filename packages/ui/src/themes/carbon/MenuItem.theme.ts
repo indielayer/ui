@@ -55,17 +55,17 @@ const theme: MenuItemTheme = {
       }
 
       return css.variables({
-        bg: props.selected ? gray[50] : 'transparent',
+        bg: props.selected ? gray[300] : 'transparent',
         text: gray[800],
         hover: {
-          bg: gray[50],
+          bg: gray[200],
           text: gray[900],
         },
         dark: {
-          bg: props.selected ? gray[800] : 'transparent',
+          bg: props.selected ? gray[700] : 'transparent',
           text: gray[200],
           hover: {
-            bg: gray[800],
+            bg: gray[600],
             text: gray[100],
           },
         },

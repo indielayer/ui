@@ -9,6 +9,7 @@ const selectProps = {
   label: String,
   helper: String,
   flat: Boolean,
+  native: Boolean,
 }
 
 export type SelectOption = {
@@ -260,22 +261,40 @@ defineExpose({ focus, blur, reset, validate, setError })
       v-text="label"
     ></p>
     <div class="relative">
+      <div v-if="native" :class="classes.box" @click="elRef?.click()">
+        <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+          <x-tag
+            v-for="value in selected"
+            :key="value"
+            size="sm"
+            class="mr-1"
+            removable
+            @remove="(e: Event) => { handleRemove(e, value) }"
+          >{{ getLabel(value) }}</x-tag>
+        </template>
+        <template v-else-if="!multiple && !isEmpty(selected)">
+          {{ getLabel(selected) }}
+        </template>
+        <template v-else>
+          <div
+            v-if="placeholder"
+            class="text-gray-400 dark:text-gray-500"
+          >
+            {{ placeholder }}
+          </div>
+          <div v-else>&nbsp;</div>
+        </template>
+      </div>
       <x-popover
+        v-else
         ref="popoverRef"
         block
-        :disabled="disabled || loading"
+        :disabled="disabled || loading || readonly"
         :dismiss-on-click="!multiple"
         align="left"
       >
         <div
-          :class="[
-            classes.box,
-            {
-              // error
-              'border-red-500 dark:border-red-400 group-focus:outline-red-500': errorInternal,
-              'group-focus:outline-[color:var(--x-select-border)]': !disabled && !errorInternal
-            },
-          ]"
+          :class="[classes.box]"
         >
           <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
             <x-tag
@@ -327,7 +346,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       <select
         ref="elRef"
         v-model="selected"
-        class="hidden"
+        :class="native ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
         :name="name"
         :disabled="disabled || loading"
         :multiple="multiple"
@@ -349,10 +368,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         <slot v-else name="icon">
           <x-icon
             :icon="chevronDownIcon"
-            :class="[
-              classes.icon,
-              disabled ? 'text-gray-600 dark:text-gray-500': 'text-gray-500 dark:text-gray-400'
-            ]"
+            :class="[classes.icon]"
           />
         </slot>
 
