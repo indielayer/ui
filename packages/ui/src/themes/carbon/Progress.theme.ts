@@ -14,7 +14,7 @@ const theme: ProgressTheme = {
     const vars = []
 
     vars.push(css.variables({
-      bg: color[500],
+      bg: 'black',
     }))
 
     if (props.gradient) vars.push({
