@@ -74,7 +74,7 @@ defineExpose({ focus, blur, reset, validate, setError })
   >
     <div class="flex items-center">
       <div
-        class="flex items-center rounded-full transition-colors duration-300 border-[3px] shrink-0 border-transparent"
+        class="flex items-center rounded-full transition-colors duration-300 border-[3px] shrink-0 !border-transparent"
         :style="styles"
         :class="{
           [`shadow-lg shadow-${color}-500/50`]: glow && modelValue,
