@@ -5,11 +5,10 @@ const theme: TagTheme = {
     wrapper: ({ props, data }) => {
       let c = 'inline-flex items-center leading-none max-w-full'
 
-      if (props.size === 'xs') c += ' px-2 py-1 text-xs'
-      else if (props.size === 'sm') c += ' px-2 py-1 text-sm'
-      else if (props.size === 'lg') c += ' px-4 py-3 text-lg'
-      else if (props.size === 'xl') c += ' px-6 py-6 text-xl'
-      else c += ' px-3 py-2'
+      if (props.size === 'xs' || props.size === 'sm') c += ' px-2 py-1 text-xs'
+      else if (props.size === 'lg') c += ' px-4 py-3'
+      else if (props.size === 'xl') c += ' px-5 py-5 text-lg'
+      else c += ' px-3 py-2 text-sm'
 
       return c
     },
