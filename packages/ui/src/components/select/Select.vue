@@ -263,14 +263,15 @@ defineExpose({ focus, blur, reset, validate, setError })
     <div class="relative">
       <div v-if="native" :class="classes.box" @click="elRef?.click()">
         <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-          <x-tag
-            v-for="value in selected"
-            :key="value"
-            size="sm"
-            class="mr-1"
-            removable
-            @remove="(e: Event) => { handleRemove(e, value) }"
-          >{{ getLabel(value) }}</x-tag>
+          <div class="flex gap-1">
+            <x-tag
+              v-for="value in selected"
+              :key="value"
+              size="sm"
+              removable
+              @remove="(e: Event) => { handleRemove(e, value) }"
+            >{{ getLabel(value) }}</x-tag>
+          </div>
         </template>
         <template v-else-if="!multiple && !isEmpty(selected)">
           {{ getLabel(selected) }}
@@ -297,14 +298,15 @@ defineExpose({ focus, blur, reset, validate, setError })
           :class="[classes.box]"
         >
           <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-            <x-tag
-              v-for="value in selected"
-              :key="value"
-              size="sm"
-              class="mr-1"
-              removable
-              @remove="(e: Event) => { handleRemove(e, value) }"
-            >{{ getLabel(value) }}</x-tag>
+            <div class="flex gap-1">
+              <x-tag
+                v-for="value in selected"
+                :key="value"
+                size="sm"
+                removable
+                @remove="(e: Event) => { handleRemove(e, value) }"
+              >{{ getLabel(value) }}</x-tag>
+            </div>
           </template>
           <template v-else-if="!multiple && !isEmpty(selected)">
             {{ getLabel(selected) }}

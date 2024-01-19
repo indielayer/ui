@@ -3,7 +3,7 @@ import type { TagTheme } from '../../components/tag'
 const theme: TagTheme = {
   classes: {
     wrapper: ({ props, data }) => {
-      let c = 'inline-flex items-center leading-none max-w-full'
+      let c = 'inline-flex items-center leading-none max-w-full '
 
       if (props.size === 'xs' || props.size === 'sm') c += ' px-2 py-1 text-xs'
       else if (props.size === 'lg') c += ' px-4 py-3'
@@ -20,10 +20,11 @@ const theme: TagTheme = {
     const color = colors.getPalette(props.color)
 
     return css.variables({
-      bg: color[100],
+      bg: color[200],
       text: color[800],
       border: color[800],
       dark: {
+        bg: color[700],
         text: props.outlined ? color[200] : color[800],
       },
     })

@@ -115,8 +115,8 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
         <x-input
           v-model="quickInput"
           :size="size"
-          class="w-[2.75rem] text-center"
-          hide-details
+          class="text-center w-16"
+          hide-footer
           @keydown.enter="onQuickInput"
         />
         <span class="text-gray-600 ml-2">of {{ totalPages }}</span>
