@@ -121,6 +121,7 @@ useInputtable.props = () => ({
     default: true,
   },
   error: String,
+  hideFooter: Boolean,
   rules: {
     type: Array,
     default: () => [],

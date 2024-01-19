@@ -178,6 +178,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       </slot>
     </div>
 
-    <x-input-footer :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>

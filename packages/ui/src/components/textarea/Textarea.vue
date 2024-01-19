@@ -144,6 +144,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       @input="onInput"
     ></textarea>
 
-    <x-input-footer :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>

@@ -112,7 +112,13 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
       />
       <div class="mx-9 flex items-center">
         <span class="text-gray-600 mr-2">Page</span>
-        <x-input v-model="quickInput" :size="size" class="w-[2.75rem] text-center" @keydown.enter="onQuickInput" />
+        <x-input
+          v-model="quickInput"
+          :size="size"
+          class="w-[2.75rem] text-center"
+          hide-details
+          @keydown.enter="onQuickInput"
+        />
         <span class="text-gray-600 ml-2">of {{ totalPages }}</span>
       </div>
       <x-button

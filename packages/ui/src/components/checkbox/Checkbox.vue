@@ -116,7 +116,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-footer :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>
 

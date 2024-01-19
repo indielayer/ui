@@ -119,6 +119,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-spinner v-if="loading" :size="size" class="ml-1" />
     </div>
 
-    <x-input-footer :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>

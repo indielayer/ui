@@ -8,6 +8,5 @@
     <x-button color="primary" disabled loading loading-label="Uploading..">Loading</x-button>
     <x-button color="primary" rounded>filled Rounded</x-button>
     <x-button color="primary" light outlined>light + outlined</x-button>
-    <x-loader label="Loading"/>
   </div>
 </template>
