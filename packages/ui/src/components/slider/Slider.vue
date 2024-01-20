@@ -16,7 +16,7 @@ const sliderProps = {
 
 export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
 
-type InternalClasses = 'wrapper' | 'label' | 'drag'
+type InternalClasses = 'wrapper' | 'drag'
 export interface SliderTheme extends ThemeComponent<SliderProps, InternalClasses> {}
 
 export default {
@@ -36,7 +36,8 @@ import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
-import XProgress from '../../components/progress/Progress.vue'
+import XLabel from '../label/Label.vue'
+import XProgress from '../progress/Progress.vue'
 
 const props = defineProps(sliderProps)
 
@@ -168,23 +169,20 @@ defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     ref="elRef"
     tabindex="0"
-    class="group relative"
+    class="group"
+    :style="styles"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm }
     ]"
-    :style="styles"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <div class="flex items-center relative w-full" >
       <slot name="prefix" :value="value"></slot>
       <div
@@ -215,5 +213,5 @@ defineExpose({ focus, blur, reset, validate, setError })
     </div>
 
     <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
-  </label>
+  </x-label>
 </template>

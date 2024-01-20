@@ -48,6 +48,7 @@ import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 
+import XLabel from '../label/Label.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(textareaProps)
@@ -103,21 +104,18 @@ defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     :style="styles"
-    class="relative"
+    :block="block"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm, 'w-full': block }
     ]"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <textarea
       ref="elRef"
       class=""
@@ -145,5 +143,5 @@ defineExpose({ focus, blur, reset, validate, setError })
     ></textarea>
 
     <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
-  </label>
+  </x-label>
 </template>

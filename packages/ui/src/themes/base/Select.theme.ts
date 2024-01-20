@@ -2,18 +2,7 @@ import type { SelectTheme } from '../../components/select'
 
 const theme: SelectTheme = {
   classes: {
-    wrapper: 'inline-block align-bottom text-left focus:outline-none',
-
-    label: ({ props }) => {
-      let c = 'font-medium text-gray-800 dark:text-gray-200 mb-1'
-
-      if (props.size === 'xs') c += ' text-xs'
-      else if (props.size === 'sm') c += ' text-sm'
-      else if (props.size === 'lg') c += ' text-lg'
-      else if (props.size === 'xl') c += ' text-xl'
-
-      return c
-    },
+    wrapper: '',
 
     box: ({ props, data }) => {
       const classes = ['w-full border border-gray-300 dark:border-gray-700 pr-8 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm']

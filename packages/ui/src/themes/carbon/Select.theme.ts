@@ -2,9 +2,7 @@ import { type SelectTheme } from '../../components/select'
 
 const theme: SelectTheme = {
   classes: {
-    wrapper: 'inline-block align-bottom text-left focus:outline-none',
-
-    label: 'text-xs text-gray-500 dark:text-gray-200 mb-2',
+    wrapper: '',
 
     box: ({ props, data }) => {
       const classes = ['w-full border-b text-sm px-4 border-gray-300 dark:border-gray-700 pr-8 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']

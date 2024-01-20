@@ -2,9 +2,7 @@ import type { SliderTheme } from '../../components/slider'
 
 const theme: SliderTheme = {
   classes: {
-    wrapper: 'inline-block align-bottom text-left focus:outline-none',
-
-    label: 'text-xs text-gray-500 dark:text-gray-200 mb-1',
+    wrapper: '',
 
     drag: 'w-[16px] h-[16px] -mt-[11px] -ml-[8px] rounded-full bg-gray-900',
   },

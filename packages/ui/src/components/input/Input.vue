@@ -31,7 +31,7 @@ const inputProps = {
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
-type InternalClasses = 'wrapper' | 'label' | 'input' | 'icon'
+type InternalClasses = 'wrapper' | 'input' | 'icon'
 type InternalExtraData = { errorInternal: any; }
 export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
 
@@ -52,6 +52,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
+import XLabel from '../label/Label.vue'
 import XIcon from '../icon/Icon.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
@@ -103,21 +104,18 @@ defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     :style="styles"
-    class="relative"
+    :block="block"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm, 'w-full': block }
     ]"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <div class="relative">
       <slot name="prefix">
         <x-icon
@@ -179,5 +177,5 @@ defineExpose({ focus, blur, reset, validate, setError })
     </div>
 
     <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
-  </label>
+  </x-label>
 </template>

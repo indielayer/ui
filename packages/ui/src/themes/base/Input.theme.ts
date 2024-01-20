@@ -2,18 +2,7 @@ import type { InputTheme } from '../../components/input'
 
 const theme: InputTheme = {
   classes: {
-    wrapper: 'inline-block align-bottom text-left',
-
-    label: ({ props }) => {
-      const classes = 'font-medium text-gray-800 dark:text-gray-200 mb-1'
-
-      if (props.size === 'xs') return classes + ' text-xs'
-      else if (props.size === 'sm') return classes + ' text-sm'
-      else if (props.size === 'lg') return classes + ' text-lg'
-      else if (props.size === 'xl') return classes + ' text-xl'
-
-      return classes
-    },
+    wrapper: '',
 
     input: ({ props, data }) => {
       const classes = ['appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out border-gray-300 dark:border-gray-700 border shadow-sm rounded-md']

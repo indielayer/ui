@@ -20,7 +20,7 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
-type InternalClasses = 'wrapper' | 'label' | 'box' | 'content' | 'iconWrapper' | 'icon'
+type InternalClasses = 'wrapper' | 'box' | 'content' | 'iconWrapper' | 'icon'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
@@ -41,12 +41,13 @@ import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { checkIcon, chevronDownIcon } from '../../common/icons'
 
-import XTag from '../../components/tag/Tag.vue'
-import XIcon from '../../components/icon/Icon.vue'
-import XMenuItem from '../../components/menu/MenuItem.vue'
-import XSpinner from '../../components/spinner/Spinner.vue'
-import XPopover from '../../components/popover/Popover.vue'
-import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
+import XLabel from '../label/Label.vue'
+import XTag from '../tag/Tag.vue'
+import XIcon from '../icon/Icon.vue'
+import XMenuItem from '../menu/MenuItem.vue'
+import XSpinner from '../spinner/Spinner.vue'
+import XPopover from '../popover/Popover.vue'
+import XPopoverContainer from '../popover/PopoverContainer.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const  props = defineProps(selectProps)
@@ -244,22 +245,20 @@ defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     ref="labelRef"
     tabindex="0"
-    class="group relative"
+    class="group"
     :style="styles"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm }
     ]"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
     <div class="relative">
       <div v-if="native" :class="classes.box" @click="elRef?.click()">
         <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
@@ -378,5 +377,5 @@ defineExpose({ focus, blur, reset, validate, setError })
     </div>
 
     <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
-  </label>
+  </x-label>
 </template>

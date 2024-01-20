@@ -2,9 +2,7 @@ import type { InputTheme } from '../../components/input'
 
 const theme: InputTheme = {
   classes: {
-    wrapper: 'inline-block align-bottom text-left',
-
-    label: 'text-xs text-gray-500 dark:text-gray-200 mb-2',
+    wrapper: '',
 
     input: ({ props, data }) => {
       const classes = ['appearance-none block w-full placeholder-gray-400 dark:placeholder-gray-500 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out border-gray-300 dark:border-gray-700 border-b text-sm px-4']
