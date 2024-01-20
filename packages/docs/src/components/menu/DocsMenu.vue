@@ -43,6 +43,7 @@ export default {
             { to: '/component/drawer', label: 'Drawer' },
             { to: '/component/icon', label: 'Icon' },
             { to: '/component/image', label: 'Image' },
+            { to: '/component/loader', label: 'Loader' },
             { to: '/component/link', label: 'Link' },
             { to: '/component/menu', label: 'Menu' },
             { to: '/component/modal', label: 'Modal' },

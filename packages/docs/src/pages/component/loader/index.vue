@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { XLink } from '@indielayer/ui'
+import { XLoader } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
-const title = 'Link'
-const description = 'Links are used to navigate to a different page.'
-const components = [XLink]
+const title = 'Loader'
+const description = 'Loader component is used to show a loading state.'
+const components = [XLoader]
 const demos = [{
   name: 'Usage',
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'image'
-const next = 'loader'
+const back = 'link'
+const next = 'menu'
 </script>
 
 <template>
   <document-page
-    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/link"
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/loader"
     :title="title"
     :description="description"
     :components="components"

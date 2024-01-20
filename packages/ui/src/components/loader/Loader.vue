@@ -1,15 +1,15 @@
 <script lang="ts">
 const loaderProps = {
   ...useCommon.props(),
-  icon: String,
-  label: String,
   status: {
     type: String as PropType<LoaderStatus>,
     default: 'active',
   },
+  icon: String,
+  label: String,
 }
 
-export type LoaderStatus = 'active' | 'finished' | 'error'
+export type LoaderStatus = 'active' | 'success' | 'error'
 export type LoaderProps = ExtractPublicPropTypes<typeof loaderProps>
 
 type InternalClasses = 'wrapper' | 'iconSuccess' | 'iconError' | 'label'
@@ -19,6 +19,7 @@ export default {
   name: 'XLoader',
   validators: {
     ...useCommon.validators(),
+    status: ['active', 'success', 'error'],
   },
 }
 </script>
@@ -42,7 +43,7 @@ const { styles, classes, className } = useTheme('Loader', {}, props)
   <div :class="[className, classes.wrapper]" :style="styles">
     <x-spinner v-if="status === 'active'" :size="size" :icon="icon"/>
     <x-icon
-      v-else-if="status === 'finished'"
+      v-else-if="status === 'success'"
       :class="classes.iconSuccess"
       :size="size"
       :icon="successIcon"
