@@ -25,7 +25,7 @@ const textareaProps = {
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
 
-type InternalClasses = 'wrapper' | 'label' | 'input'
+type InternalClasses = 'wrapper' | 'input'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 
 export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}

@@ -1,6 +1,6 @@
 import type { UITheme } from '../../theme'
-import * as components from './_components'
-import rawStyles from './_styles.css?raw'
+import * as components from './components'
+import rawStyles from './styles.css?raw'
 
 const theme: UITheme = {
   name: 'Carbon',

@@ -4,11 +4,18 @@ const name = ref('')
 </script>
 
 <template>
-  <x-input
-    v-model="name"
-    label="Label here"
-    placeholder="Placeholder"
-    helper="Helper text here"
-    block
-  />
+  <div class="flex">
+    <x-input
+      v-model="name"
+      label="Label here"
+      placeholder="Placeholder"
+      helper="Helper text here"
+    />
+    <x-textarea
+      v-model="name"
+      label="Label here"
+      placeholder="Placeholder"
+      helper="Helper text here"
+    />
+  </div>
 </template>
