@@ -18,7 +18,7 @@ export default { name: 'XScroll' }
 </script>
 
 <script setup lang="ts">
-import { ref, toRefs, type ExtractPublicPropTypes } from 'vue'
+import { ref, toRefs, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
@@ -44,6 +44,8 @@ function triggerScroll() {
 }
 
 const { styles, classes, className } = useTheme('Scroll', {}, props)
+
+defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
 </script>
 
 <template>

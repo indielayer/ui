@@ -15,7 +15,9 @@ const theme: TabTheme = {
       return c
     },
 
-    label: '',
+    content: 'flex items-center justify-center',
+
+    label: 'font-medium',
 
     icon: 'mr-1.5',
   },

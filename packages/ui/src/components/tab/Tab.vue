@@ -17,8 +17,10 @@ const tabProps = {
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
 
-type InternalClasses = 'wrapper' | 'label' | 'icon'
-type InternalExtraData = Pick<TabGroupInjection, 'state'>['state']
+type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon'
+type InternalExtraData = {
+  selected: boolean;
+} & Pick<TabGroupInjection, 'state'>['state']
 export interface TabTheme extends ThemeComponent<TabProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -104,7 +106,10 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
   ...props,
   size: computedSize.value,
   exact: computedExact.value,
-}), tabs.state)
+}), {
+  ...tabs.state,
+  selected,
+})
 </script>
 
 <template>
@@ -117,16 +122,16 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
     :style="[
       styles,
       to && selected && tabs.state.variant === 'block'
-        ? '--x-link-text: var(--x-tabs-text); --x-link-text-hover: var(--x-tabs-text);'
+        ? '--x-link-text: var(--x-tab-group-text); --x-link-text-hover: var(--x-tab-group-text);'
         : ''
     ]"
     :class="[
       className,
       classes.wrapper,
-      'shrink-0 font-medium',
+      'shrink-0',
       {
         'flex-1': tabs.state.grow,
-        'text-[color:var(--x-tabs-text)] dark:text-[color:var(--x-tabs-dark-text)]': selected,
+        'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected,
         'cursor-pointer': !disabled,
         'cursor-not-allowed': disabled,
         'cursor-not-allowed text-gray-500': disabled && !selected,
@@ -143,7 +148,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
       :size="computedSize"
       :icon="icon"
     >
-      <div class="flex items-center justify-center">
+      <div :class="classes.content">
         <x-icon
           v-if="icon"
           :icon="icon"
