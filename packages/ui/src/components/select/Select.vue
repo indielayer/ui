@@ -33,7 +33,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -55,9 +55,9 @@ const  props = defineProps(selectProps)
 const emit = defineEmits(useInputtable.emits())
 
 const elRef = ref<HTMLElement | null>(null)
-const labelRef = ref<HTMLElement | null>(null)
-const itemsRef = ref<typeof XMenuItem[] | null>(null)
-const popoverRef = ref<typeof XPopover | null>(null)
+const labelRef = ref<InstanceType<typeof XLabel> | null>(null)
+const itemsRef = ref<InstanceType<typeof XMenuItem>[] | null>(null)
+const popoverRef = ref<InstanceType<typeof XPopover> | null>(null)
 const selectedIndex = ref<number | undefined>()
 
 const selected = computed<any | any[]>({
@@ -100,13 +100,41 @@ const internalOptions = computed(() => {
 
 const availableOptions = computed(() => props.options?.filter((option) => !option.disabled))
 
-watch(() => popoverRef.value?.isOpen, () => {
-  if (popoverRef.value?.isOpen && (props.multiple || typeof selectedIndex.value === 'undefined'))
-    findSelectableIndex(-1)
+const isOpen = computed(() => popoverRef.value?.isOpen)
+
+watch(isOpen, (isOpenValue) => {
+  if (isOpenValue) {
+    findSelectedIndex()
+    setTimeout(() => {
+      scrollToIndex(selectedIndex.value || 0)
+    }, 50)
+
+    if (props.multiple || typeof selectedIndex.value === 'undefined') {
+      findSelectableIndex(-1)
+    }
+  }
 })
 
+function findSelectedIndex() {
+  if (props.multiple) {
+    if (Array.isArray(selected.value) && selected.value.length > 0) {
+      const index = internalOptions.value.findIndex((option) => option.value === selected.value[0])
+
+      if (index !== -1) selectedIndex.value = index
+    }
+  } else {
+    const index = internalOptions.value.findIndex((option) => option.value === selected.value)
+
+    if (index !== -1) selectedIndex.value = index
+  }
+}
+
+function scrollToIndex(index: number) {
+  if (itemsRef.value) itemsRef.value[index]?.$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+}
+
 watch(selectedIndex, (index) => {
-  if (typeof index !== 'undefined' && itemsRef.value) itemsRef.value[index].$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  if (typeof index !== 'undefined' && itemsRef.value) scrollToIndex(index)
 })
 
 function findSelectableIndex(start: number | undefined, direction = 'down') {
@@ -139,44 +167,6 @@ function findSelectableIndex(start: number | undefined, direction = 'down') {
   }
 }
 
-useEventListener(labelRef, 'keydown', handleKeydown)
-
-function handleKeydown(e: KeyboardEvent) {
-  if (internalOptions.value.length === 0) return
-
-  if (e.code === 'ArrowDown') {
-    e.preventDefault()
-    if (!popoverRef.value?.isOpen) {
-      popoverRef.value?.open()
-
-      return
-    }
-    findSelectableIndex(selectedIndex.value, 'down')
-  } else if (e.code === 'ArrowUp') {
-    e.preventDefault()
-    if (!popoverRef.value?.isOpen) return
-    findSelectableIndex(selectedIndex.value, 'up')
-  } else if (e.code === 'Enter' || e.code === 'Space') {
-    e.preventDefault()
-    e.stopPropagation()
-    if (!popoverRef.value?.isOpen) {
-      popoverRef.value?.open()
-
-      return
-    }
-    if (typeof selectedIndex.value !== 'undefined') {
-      handleOptionClick(internalOptions.value[selectedIndex.value].value)
-      if (!props.multiple) popoverRef.value?.close()
-    }
-  } else if (e.code === 'Escape') {
-    e.preventDefault()
-    e.stopPropagation()
-    popoverRef.value?.close()
-  } else if (e.code === 'Tab') {
-    popoverRef.value?.close()
-  }
-}
-
 function handleOptionClick(value: string | number) {
   const option = props.options?.find((i) => i.value === value)
 
@@ -196,6 +186,12 @@ function handleOptionClick(value: string | number) {
     }
   } else {
     selected.value = value
+  }
+
+  if (!props.native) {
+    nextTick(() => {
+      labelRef.value?.$el.focus()
+    })
   }
 }
 
@@ -236,8 +232,69 @@ const {
   reset,
   validate,
   setError,
+  isFocused,
   isInsideForm,
-} = useInputtable(props, { focus, emit, withListeners: false })
+} = useInputtable(props, { focus, emit, withListeners: true })
+
+let keyNavigationListener: null | (() => void) = null
+
+watch([isFocused, isOpen], ([isFocusedValue, isOpenValue]) => {
+  if ((isFocusedValue || isOpenValue)) {
+    if (!keyNavigationListener) keyNavigationListener = useEventListener(document, 'keydown', handleKeyNavigation)
+  } else {
+    if (keyNavigationListener) {
+      keyNavigationListener()
+      keyNavigationListener = null
+    }
+  }
+}, {
+  immediate: true,
+})
+
+function handleKeyNavigation(e: KeyboardEvent) {
+  if (internalOptions.value.length === 0) return
+
+  if (e.code === 'ArrowDown') {
+    e.preventDefault()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    findSelectableIndex(selectedIndex.value, 'down')
+  } else if (e.code === 'ArrowUp') {
+    e.preventDefault()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    findSelectableIndex(selectedIndex.value, 'up')
+  } else if (e.code === 'Enter' || e.code === 'Space') {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    if (typeof selectedIndex.value !== 'undefined') {
+      handleOptionClick(internalOptions.value[selectedIndex.value].value)
+      if (!props.multiple) popoverRef.value?.hide()
+    }
+  } else if (e.code === 'Tab') {
+    if (isOpen.value) {
+      e.preventDefault()
+      popoverRef.value?.hide()
+
+      if (!props.native) {
+        nextTick(() => {
+          labelRef.value?.$el.focus()
+        })
+      }
+    }
+  }
+}
 
 const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
 
@@ -258,11 +315,12 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    v-on="inputListeners"
   >
     <div class="relative">
-      <div v-if="native" :class="classes.box" @click="elRef?.click()">
+      <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">
         <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-          <div class="flex gap-1">
+          <div class="flex gap-1 flex-wrap">
             <x-tag
               v-for="value in selected"
               :key="value"
@@ -297,7 +355,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           :class="[classes.box]"
         >
           <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-            <div class="flex gap-1">
+            <div class="flex gap-1 flex-wrap">
               <x-tag
                 v-for="value in selected"
                 :key="value"
@@ -335,6 +393,7 @@ defineExpose({ focus, blur, reset, validate, setError })
                 :selected="index === selectedIndex"
                 color="primary"
                 filled
+                @click="() => !multiple && popoverRef?.hide()"
               />
             </template>
             <div v-else class="px-2 text-center text-gray-400">
@@ -347,12 +406,11 @@ defineExpose({ focus, blur, reset, validate, setError })
       <select
         ref="elRef"
         v-model="selected"
-        :class="native ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
+        :class="native && !multiple ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
         :name="name"
         :disabled="disabled || loading"
         :multiple="multiple"
         :readonly="readonly"
-        v-on="inputListeners"
       >
         <option
           v-for="(option, index) in options"

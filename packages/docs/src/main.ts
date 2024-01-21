@@ -19,6 +19,7 @@ const app = createApp(App)
 app.use(UI, {
   prefix: 'X',
   icons,
+  // theme: BaseTheme,
   theme: CarbonTheme,
 })
 

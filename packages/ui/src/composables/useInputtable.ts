@@ -74,10 +74,12 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     return true
   }
 
+  const isFocused = ref(false)
+
   const inputListeners = withListeners ? computed(() => {
     return {
-      blur: (event: Event) => emit('blur', event),
-      focus: (event: Event) => emit('focus', event),
+      focus: (event: Event) => { isFocused.value = true; emit('focus', event) },
+      blur: (event: Event) => { isFocused.value = false; emit('blur', event) },
       input: (event: Event) => {
         if (props.validateOnInput && !isFirstValidation.value) validate((event.target as HTMLInputElement).value)
         emit('update:modelValue', (event.target as HTMLInputElement).value)
@@ -97,6 +99,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
   return {
     isFirstValidation,
     errorInternal,
+    isFocused,
     isInsideForm: form.isInsideForm,
     inputListeners,
     reset,

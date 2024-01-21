@@ -41,12 +41,14 @@ const { styles, classes, className } = useTheme('Label', {}, props)
     :style="styles"
     :class="[className, classes.wrapper]"
   >
-    <p
+    <component
+      :is="tag === 'fieldset' ? 'legend' : 'p'"
       v-if="label"
       :title="label"
       :class="classes.label"
-      v-text="label"
-    ></p>
+    >
+      {{ label }}
+    </component>
     <slot></slot>
   </component>
 </template>

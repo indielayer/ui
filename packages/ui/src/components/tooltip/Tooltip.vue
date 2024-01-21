@@ -13,7 +13,7 @@ import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 </script>
 
 <template>
-  <x-popover hover>
+  <x-popover :triggers="['hover']">
     <slot></slot>
     <template #content>
       <div class="dark">

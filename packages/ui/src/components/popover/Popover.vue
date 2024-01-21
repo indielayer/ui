@@ -1,35 +1,54 @@
 <script lang="ts">
 const validators = {
-  align: ['bottom', 'center', 'left', 'right', 'top'] as const,
-  position: ['bottom', 'left', 'right', 'top'] as const,
+  placement: ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end'] as const,
 }
 
 const popoverProps = {
-  align: {
-    type: String as PropType<PopoverAlign>,
-    default: 'center',
-    validator: (value: string) => validators.align.includes(value as PopoverAlign),
-  },
-  position: {
-    type: String as PropType<PopoverPosition>,
-    default: 'bottom',
-    validator: (value: string) => validators.position.includes(value as PopoverPosition),
-  },
-  dismissOnClick: {
-    type: Boolean,
-    default: true,
-  },
-  autoAlign: {
-    type: Boolean,
-    default: true,
-  },
   disabled: Boolean,
-  hover: Boolean,
-  block: Boolean,
+  positioningDisabled: Boolean,
+  placement: {
+    type: String as PropType<Placement>,
+    default: 'bottom-start',
+  },
+  delay: {
+    type: [String, Number, Object] as PropType<string | number | { show: number; hide: number; }>,
+    default: 0,
+  },
+  distance: [Number, String],
+  skidding: [Number, String],
+  triggers: {
+    type: Array as PropType<Array<TriggerEvent>>,
+    default: () => ['click'],
+  },
+  showTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
+  hideTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
+  popperTriggers: Array as PropType<Array<TriggerEvent>>,
+  popperShowTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
+  popperHideTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
+  container: {
+    type: [String, Object, Element, Boolean],
+    default: 'body',
+  },
+  boundary: [String, Element],
+  strategy: {
+    type: String as PropType<'absolute' | 'fixed'>,
+    default: 'absolute',
+  },
+  autoHide: {
+    type: [Boolean, Function] as PropType<boolean | ((event: Event) => boolean)>,
+    default: true,
+  },
+  shown: Boolean,
+  handleResize: {
+    type: Boolean,
+    default: true,
+  },
+  instantMove: Boolean,
+  eagerMount: Boolean,
+  popperClass: [String, Array, Object],
+  computeTransformOrigin: Boolean,
 }
 
-export type PopoverAlign = typeof validators.align[number]
-export type PopoverPosition = typeof validators.position[number]
 export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>
 
 type InternalClasses = 'wrapper' | 'content'
@@ -42,216 +61,142 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, useCssModule, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
-import { onClickOutside, useEventListener } from '@vueuse/core'
+import { type PropType, type ExtractPublicPropTypes, ref } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { Dropdown as VDropdown, type Placement, type TriggerEvent } from 'floating-vue'
 
 const props = defineProps(popoverProps)
 
-const emit = defineEmits(['open', 'close', 'toggle'])
+const elRef = ref<InstanceType<typeof VDropdown> | null>(null)
 
-const elRef = ref<HTMLElement | null>(null)
-const contentRef = ref<HTMLElement | null>(null)
+defineEmits(['show', 'hide', 'update:shown', 'apply-show', 'apply-hide', 'close-group', 'close-directive', 'auto-hide', 'resize'])
+
+function show(): void {
+  elRef.value?.show()
+}
+
+function hide(): void {
+  elRef.value?.hide()
+}
+
+function toggle(): void {
+  if (isOpen.value) hide()
+  else show()
+}
+
 const isOpen = ref(false)
 
-let stopClickOutside: undefined | (() => void) = undefined
-
-watch(isOpen, (newValue) => {
-  if (props.hover) return
-
-  if (newValue) {
-    checkVisibility()
-  } else {
-    resetOutbounds()
-  }
-
-  if (stopClickOutside) {
-    stopClickOutside()
-    stopClickOutside = undefined
-  }
-
-  if (newValue) {
-    setTimeout(() => {
-      stopClickOutside = onClickOutside(elRef, close)
-    })
-  }
-})
-
-const $style = useCssModule()
-const isOutLeft = ref(false)
-const isOutRight = ref(false)
-const isOutTop = ref(false)
-const isOutBottom = ref(false)
-const contentClasses = computed(() => {
-  const c = []
-
-  let align = props.align
-  let position = props.position
-
-  if (isOutTop.value) {
-    if (position === 'top') position = 'bottom'
-    else if ((position === 'left' || position === 'right')) align = 'top'
-  }
-
-  if (isOutBottom.value) {
-    if (position === 'bottom') position = 'top'
-    else if ((position === 'left' || position === 'right')) align = 'bottom'
-  }
-
-  if (isOutLeft.value) {
-    if (position === 'left') position = 'right'
-    else if ((position === 'top' || position === 'bottom')) align = 'left'
-  }
-
-  if (isOutRight.value) {
-    if (position === 'right') position = 'left'
-    else if ((position === 'top' || position === 'bottom')) align = 'right'
-  }
-
-  if (position === 'top') c.push(`bottom-full ${$style['popover-top']}`)
-  if (position === 'bottom') c.push(`top-full bottom-0 ${$style['popover-bottom']}`)
-  if (position === 'right') c.push(`left-full ${$style['popover-right']}`)
-  if (position === 'left') c.push(`right-full left-auto ${$style['popover-left']}`)
-
-  if (align === 'left' && ['bottom', 'top'].includes(position)) c.push('left-0 right-auto')
-  if (align === 'center' && ['bottom', 'top'].includes(position)) c.push('left-1/2 right-auto -translate-x-1/2')
-  if (align === 'right' && ['bottom', 'top'].includes(position)) c.push('right-0 left-auto')
-  if (align === 'top' && ['left', 'right'].includes(position)) c.push('top-0 bottom-auto')
-  if (align === 'center' && ['left', 'right'].includes(position)) c.push('-translate-y-1/2 top-1/2 bottom-auto')
-  if (align === 'bottom' && ['left', 'right'].includes(position)) c.push('bottom-0')
-
-  if (props.block) c.push('min-w-full')
-
-  return c
-})
-
-if (props.hover) {
-  useEventListener(elRef, 'mouseenter', checkVisibility)
-  useEventListener(elRef, 'mouseleave', resetOutbounds)
-}
-
-function resetOutbounds() {
-  isOutLeft.value = false
-  isOutRight.value = false
-  isOutTop.value = false
-  isOutBottom.value = false
-}
-
-function checkVisibility() {
-  if (!contentRef.value) return
-  const clientRect = contentRef.value.getBoundingClientRect()
-
-  isOutLeft.value = clientRect.left < 0
-  isOutRight.value = clientRect.right > (window.innerWidth || document.documentElement.clientWidth)
-  isOutTop.value = clientRect.top < 0
-  isOutBottom.value = clientRect.bottom > (window.innerHeight || document.documentElement.clientHeight)
-}
-
-function close() {
-  if (props.disabled) return
-  isOpen.value = false
-  emit('close')
-}
-
-function open() {
-  if (props.disabled) return
-  isOpen.value = true
-  emit('open')
-}
-
-function toggle() {
-  if (props.disabled) return
-  isOpen.value = !isOpen.value
-  emit('toggle', isOpen.value)
-}
+defineExpose({ show, hide, toggle, isOpen })
 
 const { styles, classes, className } = useTheme('Popover', {}, props)
-
-defineExpose({ open, close, toggle, isOpen })
 </script>
 
 <template>
-  <div
+  <v-dropdown
     ref="elRef"
-    class="inline-block relative"
     :style="styles"
-    :class="[
-      className,
-      classes.wrapper,
-      $style.popover,
-      [hover ? $style.hover : ''],
-      [isOpen ? $style['is-open'] : ''],
-      { 'w-full': block }
+    :class="[className, classes.wrapper]"
+    :positioning-disabled="positioningDisabled"
+    :placement="placement"
+    :disabled="disabled"
+    :delay="delay"
+    :shown="shown"
+    :distance="distance"
+    :skidding="skidding"
+    :triggers="triggers"
+    :show-triggers="showTriggers"
+    :hide-triggers="hideTriggers"
+    :popper-triggers="popperTriggers"
+    :popper-show-triggers="popperShowTriggers"
+    :popper-hide-triggers="popperHideTriggers"
+    :container="container"
+    :boundary="boundary"
+    :strategy="strategy"
+    :auto-hide="autoHide"
+    :handle-resize="handleResize"
+    :instant-move="instantMove"
+    :eager-mount="eagerMount"
+    :popper-class="[
+      classes.content,
+      popperClass
     ]"
+    :compute-transform-origin="computeTransformOrigin"
+    @show="() => { isOpen = true; $emit('show') }"
+    @hide="() => { isOpen = false; $emit('hide') }"
+    @update:shown="(shown) => $emit('update:shown', shown)"
+    @apply-show="() => $emit('apply-show')"
+    @apply-hide="() => $emit('apply-hide')"
+    @close-group="() => $emit('close-group')"
+    @close-directive="() => $emit('close-directive')"
+    @auto-hide="() => $emit('auto-hide')"
+    @resize="() => $emit('resize')"
   >
-    <div class="flex" @click="!hover ? toggle() : null">
-      <slot></slot>
-    </div>
-
-    <div
-      ref="contentRef"
-      class="absolute transform transition-transform z-40 h-fit"
-      :class="[
-        $style['popover-content'],
-        contentClasses,
-        classes.content
-      ]"
-      @click="dismissOnClick ? close() : null"
-    >
+    <slot></slot>
+    <template #popper>
       <slot name="content"></slot>
-    </div>
-  </div>
+    </template>
+  </v-dropdown>
 </template>
 
-<style lang="postcss" module>
-.popover {
-  .popover-content {
+<style lang="postcss">
+.resize-observer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  pointer-events: none;
+  display: block;
+  overflow: hidden;
+  opacity: 0;
+
+  object {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+/* stylelint-disable selector-class-pattern */
+.v-popper__popper {
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  outline: none;
+
+  &.v-popper__popper--hidden {
     visibility: hidden;
-    transition-duration: 0.1s;
-    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+    pointer-events: none;
   }
 
-  .popover-top {
-    --tw-translate-y: 0.5rem;
-  }
-
-  .popover-right {
-    --tw-translate-x: -0.5rem;
-  }
-
-  .popover-bottom {
-    --tw-translate-y: -0.5rem;
-  }
-
-  .popover-left {
-    --tw-translate-x: 0.5rem;
-  }
-
-  &.is-open .popover-content,
-  &.hover:hover .popover-content {
+  &.v-popper__popper--shown {
     visibility: visible;
-    transition-duration: 0.15s;
-    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    opacity: 1;
+    transition: opacity 0.15s;
   }
 
-  &.is-open .popover-top,
-  &.hover:hover .popover-top {
-    --tw-translate-y: -0.25rem;
+  &.v-popper__popper--skip-transition,
+  &.v-popper__popper.v-popper__popper--skip-transition > .v-popper__wrapper {
+    transition: none !important;
   }
+}
 
-  &.is-open .popover-right,
-  &.hover:hover .popover-right {
-    --tw-translate-x: 0.25rem;
-  }
-
-  &.is-open .popover-bottom,
-  &.hover:hover .popover-bottom {
-    --tw-translate-y: 0.25rem;
-  }
-
-  &.is-open .popover-left,
-  &.hover:hover .popover-left {
-    --tw-translate-x: -0.25rem;
-  }
+.v-popper__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
 }
 </style>

@@ -1,21 +1,27 @@
 <template>
-  <x-select
-    v-model="selected"
-    label="Simple select"
-    :options="options"
-    helper="Helper text"
-    native
-    placeholder="Placeholder"
-  />
-  <x-select v-model="selected" label="Options array" :options="options" class="mx-4"/>
-
-  <x-select
-    v-model="selectedMultiple"
-    label="Multi select"
-    placeholder="Let's go baby"
-    :options="options"
-    multiple
-  />
+  <div class="grid grid-cols-3 gap-4">
+    <x-select
+      v-model="selected"
+      label="Simple native select"
+      placeholder="Placeholder"
+      :options="options"
+      helper="Helper text"
+      native
+    />
+    <x-select
+      v-model="selected"
+      label="Dropdown select"
+      placeholder="Placeholder"
+      :options="options"
+    />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select"
+      placeholder="Let's go baby"
+      :options="options"
+      multiple
+    />
+  </div>
 </template>
 
 <script>

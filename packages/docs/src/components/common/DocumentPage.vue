@@ -95,7 +95,7 @@ const componentsProperties = computed(() => {
     })
 
     // vue 3 events
-    if (comp['emits']) properties[componentName]['emits'] = comp['emits'].map((k) => ({ name: k }))
+    if (comp['emits']) properties[componentName]['emits'] = Array.isArray(comp['emits']) ? comp['emits'].map((k) => ({ name: k })) : Object.keys(comp['emits']).map((k) => ({ name: k }))
     if (comp['expose']) properties[componentName]['methods'] = comp['expose'].map((k) => ({ name: k }))
   })
 
