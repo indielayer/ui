@@ -1,5 +1,5 @@
 <template>
-  <div class="space-x-4">
+  <div class="grid grid-cols-3 gap-4">
     <x-textarea v-model="sizes" label="xs" size="xs" />
     <x-textarea v-model="sizes" label="xs" size="sm" />
     <x-textarea v-model="sizes" label="md" />

@@ -45,6 +45,7 @@ declare module 'vue' {
     XTabGroup: typeof import('@indielayer/ui')['XTabGroup']
     XTag: typeof import('@indielayer/ui')['XTag']
     XTextarea: typeof import('@indielayer/ui')['XTextarea']
+    XThemeProvider: typeof import('@indielayer/ui')['XThemeProvider']
     XToggle: typeof import('@indielayer/ui')['XToggle']
     XTooltip: typeof import('@indielayer/ui')['XTooltip']
   }

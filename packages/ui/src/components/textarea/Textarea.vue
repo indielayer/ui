@@ -9,16 +9,16 @@ const textareaProps = {
     type: String,
     default: 'ltr',
   },
-  rows: [Number, String],
+  rows: {
+    type: [Number, String],
+    default: 2,
+  },
   max: [Number, String],
   maxlength: [Number, String],
   min: [Number, String],
   minlength: [Number, String],
   placeholder: String,
-  adjustToText: {
-    type: Boolean,
-    default: true,
-  },
+  adjustToText: Boolean,
   preventEnter: Boolean,
   block: Boolean,
 }

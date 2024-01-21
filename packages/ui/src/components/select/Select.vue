@@ -190,6 +190,8 @@ function handleOptionClick(value: string | number) {
 
   if (!props.native) {
     nextTick(() => {
+      elRef.value?.dispatchEvent(new Event('input'))
+      elRef.value?.dispatchEvent(new Event('change'))
       labelRef.value?.$el.focus()
     })
   }
@@ -234,6 +236,7 @@ const {
   setError,
   isFocused,
   isInsideForm,
+  isFirstValidation,
 } = useInputtable(props, { focus, emit, withListeners: true })
 
 let keyNavigationListener: null | (() => void) = null
@@ -315,7 +318,10 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
-    v-on="inputListeners"
+    v-on="{
+      focus: inputListeners.focus,
+      blur: inputListeners.blur,
+    }"
   >
     <div class="relative">
       <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">
@@ -406,11 +412,13 @@ defineExpose({ focus, blur, reset, validate, setError })
       <select
         ref="elRef"
         v-model="selected"
+        tabindex="-1"
         :class="native && !multiple ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
         :name="name"
         :disabled="disabled || loading"
         :multiple="multiple"
         :readonly="readonly"
+        v-on="inputListeners"
       >
         <option
           v-for="(option, index) in options"
