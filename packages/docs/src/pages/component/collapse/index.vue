@@ -19,7 +19,7 @@ const demos = [{
   code: ExpandedDemoCode,
   component: ExpandedDemo,
 }]
-const back = 'card'
+const back = 'carousel'
 const next = 'container'
 </script>
 

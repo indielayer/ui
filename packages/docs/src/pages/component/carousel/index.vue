@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { XCard } from '@indielayer/ui'
+import { XCarousel } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
-const title = 'Card'
-const description = 'Cards are used to display content in an organized manner.'
-const components = [XCard]
+const title = 'Carousel'
+const description = 'A carousel is a rotating set of images.'
+const components = [XCarousel]
 const demos = [{
   name: 'Usage',
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'breadcrumbs'
-const next = 'carousel'
+const back = 'card'
+const next = 'collapse'
 </script>
 
 <template>
   <document-page
-    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/card"
+    github="https://github.com/indielayer/ui/blob/main/packages/docs/src/pages/component/carousel"
     :title="title"
     :description="description"
     :components="components"

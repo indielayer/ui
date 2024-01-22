@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
-import Alert from '../Alert.vue'
+import Carousel from '../Carousel.vue'
 
-describe('Alert', () => {
+describe('Carousel', () => {
   it('renders properly', () => {
-    const wrapper = mount(Alert)
+    const wrapper = mount(Carousel)
 
     expect(wrapper.vm).toBeTruthy()
   })

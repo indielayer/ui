@@ -5,6 +5,8 @@ export { default as Breadcrumbs } from '../../components/breadcrumbs/theme/Bread
 export { default as Button } from '../../components/button/theme/Button.base.theme'
 export { default as ButtonGroup } from '../../components/button/theme/ButtonGroup.base.theme'
 export { default as Card } from '../../components/card/theme/Card.base.theme'
+export { default as Carousel } from '../../components/carousel/theme/Carousel.base.theme'
+export { default as CarouselSlide } from '../../components/carousel/theme/CarouselSlide.base.theme'
 export { default as Checkbox } from '../../components/checkbox/theme/Checkbox.base.theme'
 export { default as Collapse } from '../../components/collapse/theme/Collapse.base.theme'
 export { default as Container } from '../../components/container/theme/Container.base.theme'

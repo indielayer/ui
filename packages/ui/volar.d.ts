@@ -7,6 +7,8 @@ declare module 'vue' {
     XButton: typeof import('@indielayer/ui')['XButton']
     XButtonGroup: typeof import('@indielayer/ui')['XButtonGroup']
     XCard: typeof import('@indielayer/ui')['XCard']
+    XCarousel: typeof import('@indielayer/ui')['XCarousel']
+    XCarouselSlide: typeof import('@indielayer/ui')['XCarouselSlide']
     XCheckbox: typeof import('@indielayer/ui')['XCheckbox']
     XCollapse: typeof import('@indielayer/ui')['XCollapse']
     XContainer: typeof import('@indielayer/ui')['XContainer']

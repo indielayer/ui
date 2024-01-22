@@ -37,6 +37,7 @@ export default {
             { to: '/component/badge', label: 'Badge' },
             { to: '/component/breadcrumbs', label: 'Breadcrumbs' },
             { to: '/component/card', label: 'Card' },
+            { to: '/component/carousel', label: 'Carousel' },
             { to: '/component/collapse', label: 'Collapse' },
             { to: '/component/container', label: 'Container' },
             { to: '/component/divider', label: 'Divider' },

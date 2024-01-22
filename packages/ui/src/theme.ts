@@ -7,6 +7,8 @@ import type {
   ButtonTheme,
   ButtonGroupTheme,
   CardTheme,
+  CarouselTheme,
+  CarouselSlideTheme,
   CheckboxTheme,
   CollapseTheme,
   ContainerTheme,
@@ -51,6 +53,8 @@ export type ComponentThemes = {
   Button: ButtonTheme;
   ButtonGroup: ButtonGroupTheme;
   Card: CardTheme;
+  Carousel: CarouselTheme;
+  CarouselSlide: CarouselSlideTheme;
   Checkbox: CheckboxTheme;
   Collapse: CollapseTheme;
   Container: ContainerTheme;
