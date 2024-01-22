@@ -46,7 +46,7 @@ const slidesRef = ref<HTMLElement | null>(null)
 const current = ref(0)
 const total = computed(() => slidesRef.value?.children.length || 0)
 
-let autoplayInterval: number | null = null
+let autoplayInterval: ReturnType<typeof setInterval> | null = null
 
 onMounted(() => {
   moveSlides()
