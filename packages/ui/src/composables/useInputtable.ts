@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { MaybeRef, PropType } from 'vue'
 import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import { injectFormKey } from './keys'
 
@@ -76,7 +76,14 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
 
   const isFocused = ref(false)
 
-  const inputListeners = withListeners ? computed(() => {
+  type InputListeners = {
+    focus: (event: Event) => void;
+    blur: (event: Event) => void;
+    input: (event: Event) => void;
+    change: (event: Event) => void;
+  }
+
+  const inputListeners: MaybeRef<InputListeners> = withListeners ? computed<InputListeners>(() => {
     return {
       focus: (event: Event) => { isFocused.value = true; emit('focus', event) },
       blur: (event: Event) => { isFocused.value = false; emit('blur', event) },
@@ -86,7 +93,12 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
       },
       change: (event: Event) => emit('change', event),
     }
-  }) : {}
+  }) : {
+    focus: () => {},
+    blur: () => {},
+    input: () => {},
+    change: () => {},
+  }
 
   onMounted(() => {
     form.registerInput(nameInternal.value, focus, validate, setError)

@@ -46,7 +46,7 @@ const theme: SelectTheme = {
     },
   },
 
-  styles: ({ props, colors, css }) => {
+  styles: ({ colors, css }) => {
     const color = colors.getPalette('primary')
 
     return css.get('border', color[500])

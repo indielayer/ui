@@ -2,7 +2,7 @@ import type { TableTheme } from '../Table.vue'
 
 const theme: TableTheme = {
   classes: {
-    wrapper: ({ props, data }) => {
+    wrapper: ({ props }) => {
       const c = ['w-full relative']
 
       if (props.scrollable) c.push('overflow-x-scroll sm:overflow-x-auto whitespace-wrap sm:whitespace-normal block sm:table')

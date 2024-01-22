@@ -3,11 +3,14 @@ const validators = {
   placement: ['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left', 'left-start', 'left-end', 'right', 'right-start', 'right-end'] as const,
 }
 
+export type PopoverPlacement = Placement
+export type PopoverTriggerEvent = TriggerEvent
+
 const popoverProps = {
   disabled: Boolean,
   positioningDisabled: Boolean,
   placement: {
-    type: String as PropType<Placement>,
+    type: String as PropType<PopoverPlacement>,
     default: 'bottom-start',
   },
   delay: {
@@ -17,14 +20,14 @@ const popoverProps = {
   distance: [Number, String],
   skidding: [Number, String],
   triggers: {
-    type: Array as PropType<Array<TriggerEvent>>,
+    type: Array as PropType<Array<PopoverTriggerEvent>>,
     default: () => ['click'],
   },
-  showTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
-  hideTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
-  popperTriggers: Array as PropType<Array<TriggerEvent>>,
-  popperShowTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
-  popperHideTriggers: [Array, Function] as PropType<Array<TriggerEvent> | ((triggers: Array<TriggerEvent>) => Array<TriggerEvent>)>,
+  showTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+  hideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+  popperTriggers: Array as PropType<Array<PopoverTriggerEvent>>,
+  popperShowTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+  popperHideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
   container: {
     type: [String, Object, Element, Boolean],
     default: 'body',

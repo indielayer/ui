@@ -32,7 +32,7 @@ import type { ExtractPublicPropTypes } from 'vue'
 
 const props = defineProps(paginationItemProps)
 
-const emit = defineEmits(['input'])
+defineEmits(['input'])
 
 const { styles, classes, className } = useTheme('PaginationItem', {}, props)
 </script>

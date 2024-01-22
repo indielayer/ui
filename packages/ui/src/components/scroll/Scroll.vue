@@ -26,7 +26,7 @@ const props = defineProps(scrollProps)
 
 const scrollEl = ref<HTMLElement | null>(null)
 
-const { x, y, isScrolling, arrivedState, directions } = useScroll(scrollEl)
+const { arrivedState } = useScroll(scrollEl)
 const { left, right, top, bottom } = toRefs(arrivedState)
 
 useResizeObserver(scrollEl, triggerScroll)

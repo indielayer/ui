@@ -2,7 +2,7 @@ import type { TagTheme } from '../Tag.vue'
 
 const theme: TagTheme = {
   classes: {
-    wrapper: ({ props, data }) => {
+    wrapper: ({ props }) => {
       let c = 'inline-flex items-center leading-none max-w-full '
 
       if (props.size === 'xs' || props.size === 'sm') c += ' px-2 py-1 text-xs'

@@ -27,7 +27,7 @@ const theme: RadioTheme = {
       return c
     },
 
-    label: ({ props, data }) => {
+    label: ({ props }) => {
       let c = 'font-medium text-gray-800 dark:text-gray-200 pl-2'
 
       if (props.size === 'xs') c += ' text-xs'

@@ -33,7 +33,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -236,8 +236,16 @@ const {
   setError,
   isFocused,
   isInsideForm,
-  isFirstValidation,
 } = useInputtable(props, { focus, emit, withListeners: true })
+
+const labelListeners = computed(() => {
+  const { focus, blur } = unref(inputListeners)
+
+  return {
+    focus,
+    blur,
+  }
+})
 
 let keyNavigationListener: null | (() => void) = null
 
@@ -318,10 +326,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
-    v-on="{
-      focus: inputListeners.focus,
-      blur: inputListeners.blur,
-    }"
+    v-on="labelListeners"
   >
     <div class="relative">
       <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">

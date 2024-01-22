@@ -70,7 +70,7 @@ import XDivider from '../../components/divider/Divider.vue'
 
 const props = defineProps(menuProps)
 
-const emit = defineEmits(['expand'])
+defineEmits(['expand'])
 
 const { styles, classes, className } = useTheme('Menu', {}, props)
 </script>
