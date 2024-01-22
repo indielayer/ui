@@ -1,5 +1,22 @@
 # @indielayer/ui
 
+## 1.3.0
+
+### Minor Changes
+
+- feat: add dynamic themefication
+  style: add carbon theme
+  ([#31](https://github.com/indielayer/ui/pull/31)) ([`1c80129`](https://github.com/indielayer/ui/commit/1c8012943bb9827c803e222da636d5e702564adb))
+- feat: add hide-footer prop
+  feat: add loader component
+  refactor: popover with external lib
+  feat: add carousel component
+  ([#31](https://github.com/indielayer/ui/pull/31)) ([`1c80129`](https://github.com/indielayer/ui/commit/1c8012943bb9827c803e222da636d5e702564adb))
+
+### Patch Changes
+
+- refactor: change composables file names ([#29](https://github.com/indielayer/ui/pull/29)) ([`1f3b647`](https://github.com/indielayer/ui/commit/1f3b6470d2a23e09a954055863b104a514b835bb))
+
 ## 1.2.0
 
 ### Minor Changes
