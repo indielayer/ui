@@ -13,6 +13,9 @@ const tagProps = {
 
 export type TagProps = ExtractPublicPropTypes<typeof tagProps>
 
+type InternalClasses = 'wrapper' | 'loadingWrapper'
+export interface TagTheme extends ThemeComponent<TagProps, InternalClasses> {}
+
 export default {
   name: 'XTag',
   validators: {
@@ -25,12 +28,10 @@ export default {
 import { computed, type ExtractPublicPropTypes } from 'vue'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
-
-import theme from './Tag.theme'
 
 const props = defineProps(tagProps)
 
@@ -45,7 +46,7 @@ const closeIconSize = computed(() => {
   return 'sm'
 })
 
-const { styles, classes, className } = useTheme('tag', theme, props)
+const { styles, classes, className } = useTheme('Tag', {}, props)
 </script>
 
 <template>

@@ -13,6 +13,11 @@ const iconProps = {
 }
 
 export type IconProps = ExtractPublicPropTypes<typeof iconProps>
+export type Icon = string | { icon: string; filled?: boolean; viewBox?: string; }
+export type IconInjection = Record<string, Icon>
+
+type InternalClasses = 'wrapper'
+export interface IconTheme extends ThemeComponent<IconProps, InternalClasses> {}
 
 export default {
   name: 'XIcon',
@@ -26,16 +31,14 @@ export default {
 import { inject, ref, watchEffect, normalizeStyle, unref, computed, type ExtractPublicPropTypes } from 'vue'
 import { useCommon } from '../../composables/useCommon'
 import { injectIconsKey } from '../../composables/keys'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Icon.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(iconProps)
 
-const icons: any = inject(injectIconsKey, () => ({}))
+const icons = inject(injectIconsKey, {})
 
 const isWrapSVG = ref(false)
-const computedIcon = ref('')
+const computedIcon = ref<Icon | undefined>('')
 const computedFilled = ref(props.filled)
 const computedViewBox = ref(props.viewBox)
 const attrs = ref({})
@@ -62,7 +65,7 @@ watchEffect(() => {
     } else if (typeof injectedIcon === 'object') {
       computedIcon.value = injectedIcon.icon
       computedFilled.value = injectedIcon.filled || props.filled
-      computedViewBox.value = injectedIcon.viewBox || injectedIcon.viewbox || props.viewBox
+      computedViewBox.value = injectedIcon.viewBox || props.viewBox
     }
   } else {
     computedIcon.value = props.icon || ''
@@ -88,7 +91,7 @@ function getSVG(svgString: string) {
   }
 }
 
-const { styles, classes, className } = useTheme('icon', theme, props)
+const { styles, classes, className } = useTheme('Icon', {}, props)
 
 const normalizedStyle = computed(() => normalizeStyle(unref(styles)))
 </script>

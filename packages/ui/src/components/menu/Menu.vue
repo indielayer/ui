@@ -47,6 +47,9 @@ export type MenuArrayItem = {
 
 export type MenuProps = ExtractPublicPropTypes<typeof menuProps>
 
+type InternalClasses = 'wrapper'
+export interface MenuTheme extends ThemeComponent<MenuProps, InternalClasses> {}
+
 export default {
   name: 'XMenu',
   validators: {
@@ -59,19 +62,17 @@ export default {
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XMenuItem from './MenuItem.vue'
 import XCollapse from '../../components/collapse/Collapse.vue'
 import XDivider from '../../components/divider/Divider.vue'
 
-import theme from './Menu.theme'
-
 const props = defineProps(menuProps)
 
-const emit = defineEmits(['expand'])
+defineEmits(['expand'])
 
-const { styles, classes, className } = useTheme('menu', theme, props)
+const { styles, classes, className } = useTheme('Menu', {}, props)
 </script>
 
 <template>

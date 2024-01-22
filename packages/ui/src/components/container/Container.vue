@@ -8,18 +8,19 @@ const containerProps = {
 
 export type ContainerProps = ExtractPublicPropTypes<typeof containerProps>
 
+type InternalClasses = 'wrapper'
+export interface ContainerTheme extends ThemeComponent<ContainerProps, InternalClasses> {}
+
 export default { name: 'XContainer' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Container.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(containerProps)
 
-const { styles, classes, className } = useTheme('container', theme, props)
+const { styles, classes, className } = useTheme('Container', {}, props)
 </script>
 
 <template>

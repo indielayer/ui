@@ -13,7 +13,7 @@ const demos = [{
   component: UsageDemo,
 }]
 const back = 'image'
-const next = 'menu'
+const next = 'loader'
 </script>
 
 <template>

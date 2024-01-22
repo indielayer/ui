@@ -5,6 +5,6 @@ export { default as XTableHead } from './TableHead'
 export { default as XTableHeader } from './TableHeader.vue'
 export { default as XTableRow } from './TableRow.vue'
 
-export type { TableProps, TableHeader } from './Table.vue'
+export type { TableProps, TableHeader, TableTheme } from './Table.vue'
 export type { TableHeaderProps, TableHeaderAlign, TableHeaderSort } from './TableHeader.vue'
-export type { TableCellProps, TableCellTextAlign, TableCellVerticalAlign } from './TableCell.vue'
+export type { TableCellProps, TableCellTextAlign, TableCellVerticalAlign, TableCellTheme } from './TableCell.vue'

@@ -35,6 +35,10 @@ const menuItemProps = {
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
 
+type InternalClasses = 'wrapper'
+type InternalExtraData = { isActive: Ref<boolean>; }
+export interface MenuItemTheme extends ThemeComponent<MenuItemProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XMenuItem',
   validators: {
@@ -44,16 +48,15 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { ref, computed, watch, onMounted, type ExtractPublicPropTypes, type PropType, type Ref } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XSpinner from '../../components/spinner/Spinner.vue'
 
-import theme from './MenuItem.theme'
 import type { MenuArrayItem } from './Menu.vue'
 
 const props = defineProps(menuItemProps)
@@ -116,7 +119,7 @@ watch(() => computedProps.value.active, (val) => {
   isActive.value = !!val
 })
 
-const { styles, classes, className } = useTheme('menu-item', theme, computedProps, { isActive })
+const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, { isActive })
 </script>
 
 <template>

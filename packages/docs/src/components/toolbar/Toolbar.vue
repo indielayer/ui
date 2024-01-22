@@ -1,5 +1,24 @@
 <script setup lang="ts">
-import { version } from '@indielayer/ui'
+import { inject, ref, unref, watch } from 'vue'
+import { version, type UITheme } from '@indielayer/ui'
+
+const selectTheme = inject('selectTheme', {
+  theme: {} as UITheme,
+  themes: [],
+  setTheme(key: string) {},
+})
+
+const selected = ref(unref(selectTheme.theme).name)
+
+const options = selectTheme.themes.map((t: any) => ({
+  value: t.name, label: t.name,
+}))
+
+watch(selected, (val) => {
+  if (val) {
+    selectTheme.setTheme(val)
+  }
+})
 </script>
 
 <template>
@@ -14,6 +33,8 @@ import { version } from '@indielayer/ui'
       <x-spacer/>
 
       <div class="flex items-center font-semibold text-sm">
+        <x-select v-model="selected" :options="options" hide-footer size="sm"/>
+        <x-divider vertical style="height: 10px;" class="px-2"/>
         <div class="tracking-wide text-xs">v{{ version }}</div>
         <x-divider vertical style="height: 10px;" class="px-2"/>
         <x-link href="https://github.com/indielayer/ui" target="_blank" external>Github</x-link>

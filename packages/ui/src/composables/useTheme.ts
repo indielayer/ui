@@ -1,14 +1,18 @@
-import { computed, inject, unref, useSlots, type StyleValue, type Slots, type UnwrapNestedRefs, type UnwrapRef, type MaybeRef } from 'vue'
+import { computed, inject, unref, useSlots, type Slots, type UnwrapNestedRefs, type UnwrapRef, type MaybeRef, type CSSProperties } from 'vue'
 import { injectThemeKey } from './keys'
 import { useColors, type ColorComposition } from './useColors'
 import { useCSS, type CSSComposition } from './useCSS'
 import { isFunction, isObject, mergeRightDeep, smartUnref } from '../common/utils'
+import type { ComponentThemes } from 'src/theme'
+
+export type Stylish = false | null | undefined | string | CSSProperties;
+export type StyleValue = Stylish | Array<Stylish>;
 
 export type ThemeVueClass = string | Record<string, boolean> | (string | Record<string, boolean>)[]
 export type ThemeClasses<P, K extends string = string, D = undefined> = Record<K, string | ((params: ThemeParams<P, D>) => ThemeVueClass)>
 export type ThemeStyles<P, D> = StyleValue | ((params: ThemeParams<P, D>) => StyleValue);
 export interface ThemeComponent<P = object, K extends string = string, D = object> {
-  classes?: ThemeClasses<P, K, D>;
+  classes?: Partial<ThemeClasses<P, K, D>>;
   styles?: ThemeStyles<P, D>;
 }
 export type ThemeParams<P = Record<string, any>, D = Record<string, any>> = {
@@ -20,24 +24,26 @@ export type ThemeParams<P = Record<string, any>, D = Record<string, any>> = {
   data: UnwrapNestedRefs<D>;
 }
 
-export const useTheme = <P extends object = object, K extends string = string, D extends object = object>(namespace: string, defaultTheme: ThemeComponent<P, K, D> = {}, props: MaybeRef<P> = {} as P, data: D = {} as D) => {
-  const userTheme = inject(injectThemeKey, false)
+export const useTheme = <P extends object = object, K extends string = string, D extends object = object>(namespace: keyof ComponentThemes, defaultTheme: ThemeComponent<P, K, D> = {}, props: MaybeRef<P> = {} as P, data: D = {} as D) => {
+  const userTheme = inject(injectThemeKey, {})
 
   const rawClasses = computed(() => {
-    if (unref(userTheme)?.[namespace]) return mergeRightDeep(defaultTheme.classes, unref(userTheme)[namespace].classes || {})
+    if (unref(userTheme)?.components?.[namespace]) return mergeRightDeep(defaultTheme.classes || {}, unref(userTheme).components?.[namespace].classes || {})
 
-    return defaultTheme.classes
+    return defaultTheme.classes || {}
   })
 
+  const cssNamespace = namespace.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`).replace(/^-/, '')
+
   const classPrefix = computed(() => unref(userTheme)?.classPrefix ?? 'x-')
-  const className = computed(() => `${classPrefix.value}${namespace}`)
+  const className = computed(() => `${classPrefix.value}${cssNamespace}`)
 
   const rtl = computed(() => unref(userTheme)?.rtl ?? false)
 
   // compute theme
   const slots = useSlots()
   const colors = useColors()
-  const css = useCSS(namespace)
+  const css = useCSS(cssNamespace)
   const classes = computed<Record<K, ThemeVueClass>>(() => getClasses(rawClasses.value, {
     props: unref(props),
     slots,
@@ -48,7 +54,7 @@ export const useTheme = <P extends object = object, K extends string = string, D
   }))
 
   const styles = computed(() => {
-    const componentTheme = unref(userTheme)?.[namespace] || {}
+    const componentTheme = unref(userTheme)?.components?.[namespace] || {}
     const params = {
       props: unref(props),
       slots,

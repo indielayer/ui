@@ -22,6 +22,9 @@ export type TableCellTextAlign = typeof validators.textAlign[number]
 export type TableCellVerticalAlign = typeof validators.verticalAlign[number]
 export type TableCellProps = ExtractPublicPropTypes<typeof tableCellProps>
 
+type InternalClasses = 'wrapper'
+export interface TableCellTheme extends ThemeComponent<TableCellProps, InternalClasses> {}
+
 export default {
   name: 'XTableCell',
   validators,
@@ -30,9 +33,7 @@ export default {
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes, PropType } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme  from './TableCell.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(tableCellProps)
 
@@ -40,7 +41,7 @@ if (props.truncate && !props.fixed) {
   console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
 }
 
-const { styles, classes, className } = useTheme('table-cell', theme, props)
+const { styles, classes, className } = useTheme('TableCell', {}, props)
 </script>
 
 <template>

@@ -12,6 +12,10 @@ const radioProps = {
 
 export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
 
+type InternalClasses = 'wrapper' | 'circle' | 'circleIcon' | 'label' | 'content'
+type InternalExtraData = { selected: Ref<boolean>; }
+export interface RadioTheme extends ThemeComponent<RadioProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XRadio',
   validators: {
@@ -21,17 +25,15 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useCommon } from '../../composables/useCommon'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
-import XInputError from '../helpers/InputError'
-
-import theme from './Radio.theme'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(radioProps)
 
@@ -57,7 +59,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('radio', theme, props, { selected })
+const { styles, classes, className } = useTheme('Radio', {}, props, { selected })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -123,7 +125,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>
 

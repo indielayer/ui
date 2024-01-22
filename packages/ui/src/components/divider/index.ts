@@ -1,3 +1,2 @@
 export { default as XDivider } from './Divider.vue'
-export type { DividerProps } from './Divider.vue'
-export type { DividerTheme } from './Divider.theme'
+export type { DividerProps, DividerTheme } from './Divider.vue'

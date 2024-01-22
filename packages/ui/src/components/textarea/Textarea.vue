@@ -9,21 +9,26 @@ const textareaProps = {
     type: String,
     default: 'ltr',
   },
-  rows: [Number, String],
+  rows: {
+    type: [Number, String],
+    default: 2,
+  },
   max: [Number, String],
   maxlength: [Number, String],
   min: [Number, String],
   minlength: [Number, String],
   placeholder: String,
-  adjustToText: {
-    type: Boolean,
-    default: true,
-  },
+  adjustToText: Boolean,
   preventEnter: Boolean,
   block: Boolean,
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
+
+type InternalClasses = 'wrapper' | 'input'
+type InternalExtraData = { errorInternal: Ref<boolean>; }
+
+export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}
 
 export default {
   name: 'XTextarea',
@@ -34,18 +39,17 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 
-import XInputError from '../helpers/InputError'
-
-import theme from './Textarea.theme'
+import XLabel from '../label/Label.vue'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(textareaProps)
 
@@ -94,27 +98,24 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('textarea', theme, props, { errorInternal })
+const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     :style="styles"
-    class="relative"
+    :block="block"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm, 'w-full': block }
     ]"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <textarea
       ref="elRef"
       class=""
@@ -141,6 +142,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       @input="onInput"
     ></textarea>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
-  </label>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+  </x-label>
 </template>

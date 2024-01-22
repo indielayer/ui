@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { MaybeRef, PropType } from 'vue'
 import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
 import { injectFormKey } from './keys'
 
@@ -74,17 +74,31 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     return true
   }
 
-  const inputListeners = withListeners ? computed(() => {
+  const isFocused = ref(false)
+
+  type InputListeners = {
+    focus: (event: Event) => void;
+    blur: (event: Event) => void;
+    input: (event: Event) => void;
+    change: (event: Event) => void;
+  }
+
+  const inputListeners: MaybeRef<InputListeners> = withListeners ? computed<InputListeners>(() => {
     return {
-      blur: (event: Event) => emit('blur', event),
-      focus: (event: Event) => emit('focus', event),
+      focus: (event: Event) => { isFocused.value = true; emit('focus', event) },
+      blur: (event: Event) => { isFocused.value = false; emit('blur', event) },
       input: (event: Event) => {
         if (props.validateOnInput && !isFirstValidation.value) validate((event.target as HTMLInputElement).value)
         emit('update:modelValue', (event.target as HTMLInputElement).value)
       },
       change: (event: Event) => emit('change', event),
     }
-  }) : {}
+  }) : {
+    focus: () => {},
+    blur: () => {},
+    input: () => {},
+    change: () => {},
+  }
 
   onMounted(() => {
     form.registerInput(nameInternal.value, focus, validate, setError)
@@ -97,6 +111,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
   return {
     isFirstValidation,
     errorInternal,
+    isFocused,
     isInsideForm: form.isInsideForm,
     inputListeners,
     reset,
@@ -121,6 +136,7 @@ useInputtable.props = () => ({
     default: true,
   },
   error: String,
+  hideFooter: Boolean,
   rules: {
     type: Array,
     default: () => [],

@@ -74,6 +74,7 @@
     "c8": "^7.12.0",
     "clean-css": "^5.3.0",
     "eslint": "^8.43.0",
+    "floating-vue": "^5.2.0",
     "jsdom": "^22.1.0",
     "postcss": "^8.4.4",
     "rollup-plugin-visualizer": "^5.9.2",
@@ -82,7 +83,7 @@
     "typescript": "^5.2.2",
     "vite": "^4.4.11",
     "vitest": "^0.32.2",
-    "vue": "^3.3.4",
+    "vue": "^3.3.9",
     "vue-tsc": "^1.8.2"
   },
   "browserslist": [

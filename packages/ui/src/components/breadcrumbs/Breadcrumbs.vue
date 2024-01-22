@@ -2,10 +2,11 @@
 const breadcrumbsProps = {
   ...useColors.props(),
   items: Array as PropType<BreadcrumbsItem[]>,
-  icon: {
+  separator: {
     type: String,
-    default: arrowRightIcon,
+    default: '/',
   },
+  icon: String,
   shadow: Boolean,
   underline: Boolean,
 }
@@ -21,25 +22,23 @@ export type BreadcrumbsItem = {
 }
 export type BreadcrumbsProps = ExtractPublicPropTypes<typeof breadcrumbsProps>
 
+type InternalClasses = 'wrapper' | 'item' | 'separator'
+export interface BreadcrumbsTheme extends ThemeComponent<BreadcrumbsProps, InternalClasses> {}
+
 export default { name: 'XBreadcrumbs' }
 </script>
 
 <script setup lang="ts">
-import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-import { arrowRightIcon } from '../../common/icons'
+import { type ExtractPublicPropTypes, type PropType } from 'vue'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XLink from '../../components/link/Link.vue'
 
-import theme from './Breadcrumbs.theme'
-
 const props = defineProps(breadcrumbsProps)
 
-const lastItem = computed(() => props.items && props.items.length > 0 ? props.items[props.items.length - 1] : undefined)
-
-const { styles, classes, className } = useTheme('breadcrumbs', theme, props)
+const { styles, classes, className } = useTheme('Breadcrumbs', {}, props)
 </script>
 
 <template>
@@ -50,7 +49,7 @@ const { styles, classes, className } = useTheme('breadcrumbs', theme, props)
     :style="styles"
   >
     <ul :class="classes.wrapper">
-      <li v-for="(item, index) in items?.slice(0,-1)" :key="index" :class="classes.item">
+      <li v-for="(item, index) in items" :key="index" :class="classes.item">
         <x-link
           :to="item.to"
           :href="item.href"
@@ -62,11 +61,14 @@ const { styles, classes, className } = useTheme('breadcrumbs', theme, props)
           <x-icon v-if="item.icon" :icon="item.icon" class="mr-1.5"/>
           {{ item.label }}
         </x-link>
-        <x-icon :icon="icon" class="text-gray-400 mx-1.5" size="sm" />
-      </li>
-      <li v-if="lastItem" :class="classes.lastItem">
-        <x-icon v-if="lastItem.icon" :icon="lastItem.icon" class="mr-1"/>
-        {{ lastItem.label }}
+        <div v-if="index !== items.length - 1" :class="classes.separator">
+          <x-icon
+            v-if="icon"
+            :icon="icon"
+            size="sm"
+          />
+          <span v-else-if="separator">{{ separator }}</span>
+        </div>
       </li>
     </ul>
   </nav>

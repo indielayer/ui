@@ -5,5 +5,5 @@ export type {
   NotificationsAction,
   NotificationsAlign,
   NotificationsPosition,
+  NotificationsTheme,
 } from './Notifications.vue'
-export type { NotificationsTheme } from './Notifications.theme'

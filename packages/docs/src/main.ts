@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import UI from '@indielayer/ui'
+import UI, { BaseTheme, CarbonTheme } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
 import icons from './icons'
@@ -13,14 +13,14 @@ import DocumentPage from './components/common/DocumentPage.vue'
 
 // css
 import './assets/css/tailwind.css'
-import theme from './theme'
 
 const app = createApp(App)
 
 app.use(UI, {
   prefix: 'X',
   icons,
-  theme,
+  // theme: BaseTheme,
+  theme: CarbonTheme,
 })
 
 app.use(router)

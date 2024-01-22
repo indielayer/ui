@@ -8,18 +8,19 @@ const skeletonProps = {
 
 export type SkeletonProps = ExtractPublicPropTypes<typeof skeletonProps>
 
+type InternalClasses = 'wrapper'
+export interface SkeletonTheme extends ThemeComponent<SkeletonProps, InternalClasses> {}
+
 export default { name: 'XSkeleton' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Skeleton.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(skeletonProps)
 
-const { styles, classes, className } = useTheme('skeleton', theme, props)
+const { styles, classes, className } = useTheme('Skeleton', {}, props)
 </script>
 
 <template>

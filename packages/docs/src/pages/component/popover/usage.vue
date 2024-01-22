@@ -1,6 +1,6 @@
 <template>
   <div class="space-x-2">
-    <x-popover align="left">
+    <x-popover placement="top-start">
       <x-button>Click me to open popover</x-button>
       <template #content>
         <x-popover-container class="p-2">

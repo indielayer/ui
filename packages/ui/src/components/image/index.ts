@@ -1,3 +1,2 @@
 export { default as XImage } from './Image.vue'
-export type { ImageProps } from './Image.vue'
-export type { ImageTheme } from './Image.theme'
+export type { ImageProps, ImageTheme } from './Image.vue'

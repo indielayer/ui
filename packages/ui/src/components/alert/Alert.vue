@@ -13,6 +13,9 @@ const alertProps = {
 export type AlertType = typeof alertType[number]
 export type AlertProps = ExtractPublicPropTypes<typeof alertProps>
 
+type InternalClasses = 'wrapper'
+export interface AlertTheme extends ThemeComponent<AlertProps, InternalClasses> {}
+
 export default {
   name: 'XAlert',
   validators: {
@@ -24,12 +27,10 @@ export default {
 <script setup lang="ts">
 import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { closeIcon, successIcon, errorIcon, warningIcon, infoIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
-
-import theme from './Alert.theme'
 
 const props = defineProps(alertProps)
 
@@ -44,7 +45,7 @@ const icon = computed(() => {
   return ''
 })
 
-const { styles, classes, className } = useTheme('alert', theme, props)
+const { styles, classes, className } = useTheme('Alert', {}, props)
 </script>
 
 <template>
@@ -69,7 +70,6 @@ const { styles, classes, className } = useTheme('alert', theme, props)
     <div>
       <slot></slot>
     </div>
-
     <template v-if="removable">
       <div class="flex-grow"></div>
       <button class="shrink-0" :aria-label="closeLabel" @click="(e: Event) => $emit('remove', e)">

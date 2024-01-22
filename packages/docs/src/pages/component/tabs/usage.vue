@@ -1,5 +1,12 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const tab = ref('a')
+const linkTab = ref(null)
+</script>
+
 <template>
-  <!-- <x-tab-group v-model="tab" class="pb-10" variant="line">
+  <x-tab-group v-model="tab" class="pb-10" variant="line" :full-width="false">
     <x-tab value="a" label="Tab A" icon="smile">
       content a
     </x-tab>
@@ -110,7 +117,7 @@
     <x-tab value="e" label="Tab e">
       content e
     </x-tab>
-  </x-tab-group> -->
+  </x-tab-group>
 
   <p>Automatic link as value</p>
   <x-tab-group v-model="linkTab" class="pb-10" exact>
@@ -122,9 +129,3 @@
     </x-tab>
   </x-tab-group>
 </template>
-
-<script>
-export default {
-  data() { return { tab: 'a', linkTab: null } },
-}
-</script>

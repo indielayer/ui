@@ -6,9 +6,11 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
+import SizeDemoCode from './size.vue?raw'
+import SizeDemo from './size.vue'
 
 const title = 'Input'
-const description = 'Inputs are used to collect user input :O'
+const description = 'This is a text input component that allows users to enter and edit text.'
 const components = [XInput]
 const demos = [{
   name: 'Usage',
@@ -20,6 +22,11 @@ const demos = [{
   description: '',
   code: VariantsDemoCode,
   component: VariantsDemo,
+}, {
+  name: 'Size',
+  description: '',
+  code: SizeDemoCode,
+  component: SizeDemo,
 }, {
   name: 'States',
   description: '',

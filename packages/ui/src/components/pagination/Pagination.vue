@@ -20,6 +20,9 @@ const paginationProps = {
 export type PaginationVariant = typeof paginationVariant[number]
 export type PaginationProps = ExtractPublicPropTypes<typeof paginationProps>
 
+type InternalClasses = 'wrapper' | 'dots'
+export interface PaginationTheme extends ThemeComponent<PaginationProps, InternalClasses> {}
+
 export default {
   name: 'XPagination',
   validators: {
@@ -31,7 +34,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { dotsIcon, prevIcon, nextIcon } from '../../common/icons'
 
@@ -39,8 +42,6 @@ import XIcon from '../../components/icon/Icon.vue'
 import XInput from '../../components/input/Input.vue'
 import XButton from '../button/Button.vue'
 import XPaginationItem from './PaginationItem.vue'
-
-import theme from './Pagination.theme'
 
 const props = defineProps(paginationProps)
 
@@ -91,7 +92,7 @@ const quickButtonSize = computed(() => {
   return 'sm'
 })
 
-const { styles, classes, className } = useTheme('pagination', theme, props)
+const { styles, classes, className } = useTheme('Pagination', {}, props)
 </script>
 
 <template>
@@ -111,7 +112,13 @@ const { styles, classes, className } = useTheme('pagination', theme, props)
       />
       <div class="mx-9 flex items-center">
         <span class="text-gray-600 mr-2">Page</span>
-        <x-input v-model="quickInput" :size="size" class="w-[2.75rem] text-center" @keydown.enter="onQuickInput" />
+        <x-input
+          v-model="quickInput"
+          :size="size"
+          class="text-center w-16"
+          hide-footer
+          @keydown.enter="onQuickInput"
+        />
         <span class="text-gray-600 ml-2">of {{ totalPages }}</span>
       </div>
       <x-button

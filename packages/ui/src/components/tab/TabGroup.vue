@@ -19,6 +19,10 @@ const tabGroupProps = {
   ghost: Boolean,
   grow: Boolean,
   exact: Boolean,
+  fullWidth: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type TabGroupInjection = {
@@ -38,6 +42,9 @@ export type TabGroupVariant = typeof validators.variant[number]
 export type TabGroupAlign = typeof validators.align[number]
 export type TabGroupProps = ExtractPublicPropTypes<typeof tabGroupProps>
 
+type InternalClasses = 'wrapper' | 'list' | 'tracker' | 'scroller'
+export interface TabGroupTheme extends ThemeComponent<TabGroupProps, InternalClasses> {}
+
 export default {
   name: 'XTabGroup',
   validators,
@@ -50,17 +57,15 @@ import { useMutationObserver, useResizeObserver, useThrottleFn } from '@vueuse/c
 import { injectTabKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
-
-import theme from './TabGroup.theme'
 
 const props = defineProps(tabGroupProps)
 
 const emit = defineEmits(['update:modelValue'])
 
-const scrollRef = ref<typeof XScroll | null>(null)
+const scrollRef = ref<InstanceType<typeof XScroll> | null>(null)
 const wrapperRef = ref<HTMLElement | null>(null)
 const trackerRef = ref<HTMLElement | null>(null)
 const tabsRef = ref<HTMLElement | null>(null)
@@ -111,7 +116,7 @@ const updateTracker = useThrottleFn(async (value: string | number | undefined) =
   const center = tabEl.offsetLeft - (tabsRef.value.getBoundingClientRect().width - tabEl.getBoundingClientRect().width) / 2
 
   if (scrollRef.value.scrollEl) scrollRef.value.scrollEl.scrollTo({ left: center, behavior: 'smooth' })
-}, 100)
+}, 100, true)
 
 const showTracker = ref(true)
 
@@ -138,7 +143,9 @@ onMounted(() => {
   updateTracker(active.value)
 })
 
-const { styles, classes, className } = useTheme('tabs', theme, props)
+useResizeObserver(tabsRef, () => { updateTracker(active.value) })
+
+const { styles, classes, className } = useTheme('TabGroup', {}, props)
 </script>
 
 <template>
@@ -157,10 +164,7 @@ const { styles, classes, className } = useTheme('tabs', theme, props)
         :scrollbar="false"
         horizontal
         mousewheel
-        :class="{
-          'rounded-md': variant === 'block',
-          'bg-slate-100 dark:bg-gray-800 p-1': variant === 'block' && !ghost
-        }"
+        :class="classes.scroller"
       >
         <div
           ref="tabsRef"

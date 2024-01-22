@@ -31,6 +31,10 @@ const inputProps = {
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
+type InternalClasses = 'wrapper' | 'input' | 'icon'
+type InternalExtraData = { errorInternal: any; }
+export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XInput',
   validators: {
@@ -41,17 +45,16 @@ export default {
 
 <script setup lang="ts">
 import { ref, type PropType, type ExtractPublicPropTypes, watch } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
+import XLabel from '../label/Label.vue'
 import XIcon from '../icon/Icon.vue'
-import XInputError from '../helpers/InputError'
-
-import theme from './Input.theme'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(inputProps)
 
@@ -95,35 +98,34 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
-const { styles, classes, className } = useTheme('input', theme, props, { errorInternal })
+const { styles, classes, className } = useTheme('Input', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     :style="styles"
-    class="relative"
+    :block="block"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm, 'w-full': block }
     ]"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <div class="relative">
-      <x-icon
-        v-if="iconLeft"
-        :size="size"
-        :icon="iconLeft"
-        class="ml-2 left-1"
-        :class="classes.icon"
-      />
+      <slot name="prefix">
+        <x-icon
+          v-if="iconLeft"
+          :size="size"
+          :icon="iconLeft"
+          class="ml-2 left-1"
+          :class="classes.icon"
+        />
+      </slot>
 
       <input
         ref="elRef"
@@ -155,24 +157,25 @@ defineExpose({ focus, blur, reset, validate, setError })
         @change="onChange"
       />
 
-      <x-icon
-        v-if="iconRight"
-        :size="size"
-        :icon="iconRight"
-        class="mr-2 right-1"
-        :class="classes.icon"
-      />
-
-      <x-icon
-        v-else-if="type === 'password' && showPasswordToggle"
-        :size="size"
-        :icon="currentType === 'password' ? eyeIcon : eyeVisibleIcon"
-        class="mr-2 right-1 cursor-pointer"
-        :class="classes.icon"
-        @click="togglePasswordVisibility()"
-      />
+      <slot name="suffix">
+        <x-icon
+          v-if="iconRight"
+          :size="size"
+          :icon="iconRight"
+          class="mr-2 right-1"
+          :class="classes.icon"
+        />
+        <x-icon
+          v-else-if="type === 'password' && showPasswordToggle"
+          :size="size"
+          :icon="currentType === 'password' ? eyeIcon : eyeVisibleIcon"
+          class="mr-2 right-1 cursor-pointer"
+          :class="classes.icon"
+          @click="togglePasswordVisibility()"
+        />
+      </slot>
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
-  </label>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+  </x-label>
 </template>

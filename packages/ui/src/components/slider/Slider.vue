@@ -15,6 +15,10 @@ const sliderProps = {
 }
 
 export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
+
+type InternalClasses = 'wrapper' | 'drag'
+export interface SliderTheme extends ThemeComponent<SliderProps, InternalClasses> {}
+
 export default {
   name: 'XSlider',
   validators: {
@@ -30,11 +34,10 @@ import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
-import XProgress from '../../components/progress/Progress.vue'
-
-import theme from './Slider.theme'
+import XLabel from '../label/Label.vue'
+import XProgress from '../progress/Progress.vue'
 
 const props = defineProps(sliderProps)
 
@@ -160,29 +163,26 @@ const {
   isInsideForm,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('slider', theme, props)
+const { styles, classes, className } = useTheme('Slider', {}, props)
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     ref="elRef"
     tabindex="0"
-    class="group relative"
+    class="group"
+    :style="styles"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm }
     ]"
-    :style="styles"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
-
     <div class="flex items-center relative w-full" >
       <slot name="prefix" :value="value"></slot>
       <div
@@ -213,5 +213,5 @@ defineExpose({ focus, blur, reset, validate, setError })
     </div>
 
     <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
-  </label>
+  </x-label>
 </template>

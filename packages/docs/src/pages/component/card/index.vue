@@ -13,7 +13,7 @@ const demos = [{
   component: UsageDemo,
 }]
 const back = 'breadcrumbs'
-const next = 'collapse'
+const next = 'carousel'
 </script>
 
 <template>

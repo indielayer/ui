@@ -12,6 +12,9 @@ const toggleProps = {
 
 export type ToggleProps = ExtractPublicPropTypes<typeof toggleProps>
 
+type InternalClasses = 'wrapper' | 'label' | 'buttonWrapper' | 'button'
+export interface ToggleTheme extends ThemeComponent<ToggleProps, InternalClasses> {}
+
 export default {
   name: 'XToggle',
   validators: {
@@ -22,16 +25,14 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
-import XInputError from '../helpers/InputError'
-
-import theme from './Toggle.theme'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(toggleProps)
 
@@ -57,7 +58,7 @@ const {
   setError,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('toggle', theme, props)
+const { styles, classes, className } = useTheme('Toggle', {}, props)
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -73,7 +74,7 @@ defineExpose({ focus, blur, reset, validate, setError })
   >
     <div class="flex items-center">
       <div
-        class="flex items-center rounded-full transition-colors duration-300 border-[3px] shrink-0 border-transparent"
+        class="flex items-center rounded-full transition-colors duration-300 border-[3px] shrink-0 !border-transparent"
         :style="styles"
         :class="{
           [`shadow-lg shadow-${color}-500/50`]: glow && modelValue,
@@ -118,6 +119,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-spinner v-if="loading" :size="size" class="ml-1" />
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
   </label>
 </template>

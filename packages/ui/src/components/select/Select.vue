@@ -9,6 +9,7 @@ const selectProps = {
   label: String,
   helper: String,
   flat: Boolean,
+  native: Boolean,
 }
 
 export type SelectOption = {
@@ -19,6 +20,10 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
+type InternalClasses = 'wrapper' | 'box' | 'content' | 'iconWrapper' | 'icon'
+type InternalExtraData = { errorInternal: Ref<boolean>; }
+export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XSelect',
   validators: {
@@ -28,32 +33,31 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { checkIcon, chevronDownIcon } from '../../common/icons'
 
-import XTag from '../../components/tag/Tag.vue'
-import XIcon from '../../components/icon/Icon.vue'
-import XMenuItem from '../../components/menu/MenuItem.vue'
-import XSpinner from '../../components/spinner/Spinner.vue'
-import XPopover from '../../components/popover/Popover.vue'
-import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
-import XInputError from '../helpers/InputError'
-
-import theme from './Select.theme'
+import XLabel from '../label/Label.vue'
+import XTag from '../tag/Tag.vue'
+import XIcon from '../icon/Icon.vue'
+import XMenuItem from '../menu/MenuItem.vue'
+import XSpinner from '../spinner/Spinner.vue'
+import XPopover from '../popover/Popover.vue'
+import XPopoverContainer from '../popover/PopoverContainer.vue'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const  props = defineProps(selectProps)
 
 const emit = defineEmits(useInputtable.emits())
 
 const elRef = ref<HTMLElement | null>(null)
-const labelRef = ref<HTMLElement | null>(null)
-const itemsRef = ref<typeof XMenuItem[] | null>(null)
-const popoverRef = ref<typeof XPopover | null>(null)
+const labelRef = ref<InstanceType<typeof XLabel> | null>(null)
+const itemsRef = ref<InstanceType<typeof XMenuItem>[] | null>(null)
+const popoverRef = ref<InstanceType<typeof XPopover> | null>(null)
 const selectedIndex = ref<number | undefined>()
 
 const selected = computed<any | any[]>({
@@ -96,13 +100,41 @@ const internalOptions = computed(() => {
 
 const availableOptions = computed(() => props.options?.filter((option) => !option.disabled))
 
-watch(() => popoverRef.value?.isOpen, () => {
-  if (popoverRef.value?.isOpen && (props.multiple || typeof selectedIndex.value === 'undefined'))
-    findSelectableIndex(-1)
+const isOpen = computed(() => popoverRef.value?.isOpen)
+
+watch(isOpen, (isOpenValue) => {
+  if (isOpenValue) {
+    findSelectedIndex()
+    setTimeout(() => {
+      scrollToIndex(selectedIndex.value || 0)
+    }, 50)
+
+    if (props.multiple || typeof selectedIndex.value === 'undefined') {
+      findSelectableIndex(-1)
+    }
+  }
 })
 
+function findSelectedIndex() {
+  if (props.multiple) {
+    if (Array.isArray(selected.value) && selected.value.length > 0) {
+      const index = internalOptions.value.findIndex((option) => option.value === selected.value[0])
+
+      if (index !== -1) selectedIndex.value = index
+    }
+  } else {
+    const index = internalOptions.value.findIndex((option) => option.value === selected.value)
+
+    if (index !== -1) selectedIndex.value = index
+  }
+}
+
+function scrollToIndex(index: number) {
+  if (itemsRef.value) itemsRef.value[index]?.$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+}
+
 watch(selectedIndex, (index) => {
-  if (typeof index !== 'undefined' && itemsRef.value) itemsRef.value[index].$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  if (typeof index !== 'undefined' && itemsRef.value) scrollToIndex(index)
 })
 
 function findSelectableIndex(start: number | undefined, direction = 'down') {
@@ -135,44 +167,6 @@ function findSelectableIndex(start: number | undefined, direction = 'down') {
   }
 }
 
-useEventListener(labelRef, 'keydown', handleKeydown)
-
-function handleKeydown(e: KeyboardEvent) {
-  if (internalOptions.value.length === 0) return
-
-  if (e.code === 'ArrowDown') {
-    e.preventDefault()
-    if (!popoverRef.value?.isOpen) {
-      popoverRef.value?.open()
-
-      return
-    }
-    findSelectableIndex(selectedIndex.value, 'down')
-  } else if (e.code === 'ArrowUp') {
-    e.preventDefault()
-    if (!popoverRef.value?.isOpen) return
-    findSelectableIndex(selectedIndex.value, 'up')
-  } else if (e.code === 'Enter' || e.code === 'Space') {
-    e.preventDefault()
-    e.stopPropagation()
-    if (!popoverRef.value?.isOpen) {
-      popoverRef.value?.open()
-
-      return
-    }
-    if (typeof selectedIndex.value !== 'undefined') {
-      handleOptionClick(internalOptions.value[selectedIndex.value].value)
-      if (!props.multiple) popoverRef.value?.close()
-    }
-  } else if (e.code === 'Escape') {
-    e.preventDefault()
-    e.stopPropagation()
-    popoverRef.value?.close()
-  } else if (e.code === 'Tab') {
-    popoverRef.value?.close()
-  }
-}
-
 function handleOptionClick(value: string | number) {
   const option = props.options?.find((i) => i.value === value)
 
@@ -192,6 +186,14 @@ function handleOptionClick(value: string | number) {
     }
   } else {
     selected.value = value
+  }
+
+  if (!props.native) {
+    nextTick(() => {
+      elRef.value?.dispatchEvent(new Event('input'))
+      elRef.value?.dispatchEvent(new Event('change'))
+      labelRef.value?.$el.focus()
+    })
   }
 }
 
@@ -232,58 +234,147 @@ const {
   reset,
   validate,
   setError,
+  isFocused,
   isInsideForm,
-} = useInputtable(props, { focus, emit, withListeners: false })
+} = useInputtable(props, { focus, emit, withListeners: true })
 
-const { styles, classes, className } = useTheme('select', theme, props, { errorInternal })
+const labelListeners = computed(() => {
+  const { focus, blur } = unref(inputListeners)
+
+  return {
+    focus,
+    blur,
+  }
+})
+
+let keyNavigationListener: null | (() => void) = null
+
+watch([isFocused, isOpen], ([isFocusedValue, isOpenValue]) => {
+  if ((isFocusedValue || isOpenValue)) {
+    if (!keyNavigationListener) keyNavigationListener = useEventListener(document, 'keydown', handleKeyNavigation)
+  } else {
+    if (keyNavigationListener) {
+      keyNavigationListener()
+      keyNavigationListener = null
+    }
+  }
+}, {
+  immediate: true,
+})
+
+function handleKeyNavigation(e: KeyboardEvent) {
+  if (internalOptions.value.length === 0) return
+
+  if (e.code === 'ArrowDown') {
+    e.preventDefault()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    findSelectableIndex(selectedIndex.value, 'down')
+  } else if (e.code === 'ArrowUp') {
+    e.preventDefault()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    findSelectableIndex(selectedIndex.value, 'up')
+  } else if (e.code === 'Enter' || e.code === 'Space') {
+    e.preventDefault()
+    e.stopPropagation()
+    if (!isOpen.value) {
+      popoverRef.value?.show()
+
+      return
+    }
+    if (typeof selectedIndex.value !== 'undefined') {
+      handleOptionClick(internalOptions.value[selectedIndex.value].value)
+      if (!props.multiple) popoverRef.value?.hide()
+    }
+  } else if (e.code === 'Tab') {
+    if (isOpen.value) {
+      e.preventDefault()
+      popoverRef.value?.hide()
+
+      if (!props.native) {
+        nextTick(() => {
+          labelRef.value?.$el.focus()
+        })
+      }
+    }
+  }
+}
+
+const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
-  <label
+  <x-label
     ref="labelRef"
     tabindex="0"
-    class="group relative"
+    class="group"
     :style="styles"
+    :disabled="disabled"
+    :required="required"
+    :is-inside-form="isInsideForm"
+    :label="label"
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm }
     ]"
+    v-on="labelListeners"
   >
-    <p
-      v-if="label"
-      :class="classes.label"
-      v-text="label"
-    ></p>
     <div class="relative">
-      <x-popover
-        ref="popoverRef"
-        block
-        :disabled="disabled || loading"
-        :dismiss-on-click="!multiple"
-        align="left"
-      >
-        <div
-          :class="[
-            classes.box,
-            {
-              // error
-              'border-red-500 dark:border-red-400 group-focus:outline-red-500': errorInternal,
-              'group-focus:outline-[color:var(--x-select-border)]': !disabled && !errorInternal
-            },
-          ]"
-        >
-          <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+      <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">
+        <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+          <div class="flex gap-1 flex-wrap">
             <x-tag
               v-for="value in selected"
               :key="value"
               size="sm"
-              class="mr-1"
               removable
               @remove="(e: Event) => { handleRemove(e, value) }"
             >{{ getLabel(value) }}</x-tag>
+          </div>
+        </template>
+        <template v-else-if="!multiple && !isEmpty(selected)">
+          {{ getLabel(selected) }}
+        </template>
+        <template v-else>
+          <div
+            v-if="placeholder"
+            class="text-gray-400 dark:text-gray-500"
+          >
+            {{ placeholder }}
+          </div>
+          <div v-else>&nbsp;</div>
+        </template>
+      </div>
+      <x-popover
+        v-else
+        ref="popoverRef"
+        block
+        :disabled="disabled || loading || readonly"
+        :dismiss-on-click="!multiple"
+        align="left"
+      >
+        <div
+          :class="[classes.box]"
+        >
+          <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+            <div class="flex gap-1 flex-wrap">
+              <x-tag
+                v-for="value in selected"
+                :key="value"
+                size="sm"
+                removable
+                @remove="(e: Event) => { handleRemove(e, value) }"
+              >{{ getLabel(value) }}</x-tag>
+            </div>
           </template>
           <template v-else-if="!multiple && !isEmpty(selected)">
             {{ getLabel(selected) }}
@@ -313,6 +404,7 @@ defineExpose({ focus, blur, reset, validate, setError })
                 :selected="index === selectedIndex"
                 color="primary"
                 filled
+                @click="() => !multiple && popoverRef?.hide()"
               />
             </template>
             <div v-else class="px-2 text-center text-gray-400">
@@ -325,7 +417,8 @@ defineExpose({ focus, blur, reset, validate, setError })
       <select
         ref="elRef"
         v-model="selected"
-        class="hidden"
+        tabindex="-1"
+        :class="native && !multiple ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
         :name="name"
         :disabled="disabled || loading"
         :multiple="multiple"
@@ -347,16 +440,13 @@ defineExpose({ focus, blur, reset, validate, setError })
         <slot v-else name="icon">
           <x-icon
             :icon="chevronDownIcon"
-            :class="[
-              classes.icon,
-              disabled ? 'text-gray-600 dark:text-gray-500': 'text-gray-500 dark:text-gray-400'
-            ]"
+            :class="[classes.icon]"
           />
         </slot>
 
       </div>
     </div>
 
-    <x-input-error :error="errorInternal" :helper="helper"/>
-  </label>
+    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+  </x-label>
 </template>

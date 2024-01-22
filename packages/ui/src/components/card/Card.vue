@@ -9,18 +9,19 @@ const cardProps = {
 
 export type CardProps = ExtractPublicPropTypes<typeof cardProps>
 
+type InternalClasses = 'wrapper'
+export interface CardTheme extends ThemeComponent<CardProps, InternalClasses> {}
+
 export default { name: 'XCard' }
 </script>
 
 <script setup lang="ts">
 import type { ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Card.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(cardProps)
 
-const { styles, classes, className } = useTheme('card', theme, props)
+const { styles, classes, className } = useTheme('Card', {}, props)
 </script>
 
 <template>

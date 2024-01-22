@@ -13,6 +13,9 @@ const modalProps = {
 export type ModalSize = typeof modalSize[number]
 export type ModalProps = ExtractPublicPropTypes<typeof modalProps>
 
+type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'closeIcon' | 'header' | 'content' | 'actions'
+export interface ModalTheme extends ThemeComponent<ModalProps, InternalClasses> {}
+
 export default {
   name: 'XModal',
   validators: {
@@ -24,10 +27,8 @@ export default {
 <script setup lang="ts">
 import { ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
-
-import theme from './Modal.theme'
 
 import XScroll from '../../components/scroll/Scroll.vue'
 import XIcon from '../icon/Icon.vue'
@@ -95,7 +96,7 @@ function open() {
   })
 }
 
-const { styles, classes, className } = useTheme('modal', theme, props)
+const { styles, classes, className } = useTheme('Modal', {}, props)
 
 defineExpose({ open, close })
 </script>

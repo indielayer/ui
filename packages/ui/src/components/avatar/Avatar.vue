@@ -15,6 +15,10 @@ const avatarProps = {
 
 export type AvatarProps = ExtractPublicPropTypes<typeof avatarProps>
 
+type InternalClasses = 'wrapper'
+type InternalExtraData = { source: Ref<string | undefined>; }
+export interface AvatarTheme extends ThemeComponent<AvatarProps, InternalClasses, InternalExtraData> {}
+
 export default {
   name: 'XAvatar',
   validators: useCommon.validators(),
@@ -22,15 +26,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { avatarIcon } from '../../common/icons'
 
 import XIcon from '../../components/icon/Icon.vue'
-
-import theme from './Avatar.theme'
 
 const props = defineProps(avatarProps)
 
@@ -59,7 +61,7 @@ if (typeof window !== 'undefined' && Image) {
   })
 }
 
-const { styles, classes, className } = useTheme('avatar', theme, props, { source })
+const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
 </script>
 
 <template>

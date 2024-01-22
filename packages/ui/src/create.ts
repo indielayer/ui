@@ -1,22 +1,21 @@
 import type { App } from 'vue'
-import type { ColorLibrary } from './composables/useColors'
-import { injectColorsKey, injectIconsKey, injectThemeKey } from './composables/keys'
+import { injectIconsKey, injectOptionsKey, injectThemeKey } from './composables/keys'
+import { injectThemeStyles, type UITheme } from './theme'
 
-export type IndielayerUIOptions = {
+export type UIOptions = {
   prefix?: string;
-  components?: any;
-  colors?: ColorLibrary;
-  icons?: any;
-  theme?: any;
+  components?: any[];
+  icons?: Record<string, any>;
+  theme?: UITheme;
 }
 
-const defaultOptions: IndielayerUIOptions = {
+const defaultOptions: UIOptions = {
   prefix: 'X',
 }
 
-const create = (createOptions: IndielayerUIOptions = {}) => {
-  const install = (app: App, installOptions: IndielayerUIOptions = {}) => {
-    const options = {
+const create = (createOptions: UIOptions = {}) => {
+  const install = (app: App, installOptions: UIOptions = {}) => {
+    const options: UIOptions = {
       ...defaultOptions,
       ...createOptions,
       ...installOptions,
@@ -29,9 +28,11 @@ const create = (createOptions: IndielayerUIOptions = {}) => {
         if (!app.component(`${options.prefix}${name}`)) app.component(`${options.prefix}${name}`, component)
       })
 
-    app.provide(injectColorsKey, options.colors)
+    app.provide(injectOptionsKey, options)
     app.provide(injectIconsKey, options.icons || {})
     app.provide(injectThemeKey, options.theme || {})
+
+    if (options.theme?.styles) injectThemeStyles(options.theme.name || '', options.theme.styles)
   }
 
   return {

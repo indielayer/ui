@@ -7,8 +7,5 @@ describe('Alert', () => {
     const wrapper = mount(Alert)
 
     expect(wrapper.vm).toBeTruthy()
-    // expect(wrapper.isVueInstance()).toBeTruthy()
-
-    // expect(wrapper.text()).toContain('Hi there!')
   })
 })

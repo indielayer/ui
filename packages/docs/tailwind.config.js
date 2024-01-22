@@ -1,4 +1,3 @@
-const colors = require('tailwindcss/colors')
 const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
@@ -11,15 +10,4 @@ module.exports = {
   presets: [
     indielayer(),
   ],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
-      },
-    },
-  },
 }

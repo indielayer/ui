@@ -1,7 +1,5 @@
 export { default as XButton } from './Button.vue'
-export type { ButtonProps } from './Button.vue'
-export type { ButtonTheme } from './Button.theme'
+export type { ButtonProps, ButtonTheme } from './Button.vue'
 
 export { default as XButtonGroup } from './ButtonGroup.vue'
-export type { ButtonGroupProps, ButtonGroupInjection } from './ButtonGroup.vue'
-export type { ButtonGroupTheme } from './ButtonGroup.theme'
+export type { ButtonGroupProps, ButtonGroupInjection, ButtonGroupTheme } from './ButtonGroup.vue'

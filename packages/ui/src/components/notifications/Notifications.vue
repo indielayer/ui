@@ -53,6 +53,18 @@ export type NotificationEvent = {
   position?: NotificationsPosition;
 }
 
+export type NotificationInjection = {
+  log: (notification: NotificationEvent | string) => void;
+  info: (notification: NotificationEvent | string) => void;
+  warn: (notification: NotificationEvent | string) => void;
+  error: (notification: NotificationEvent | string) => void;
+  warning: (notification: NotificationEvent | string) => void;
+  success: (notification: NotificationEvent | string) => void;
+}
+
+type InternalClasses = 'wrapper' | 'list' | 'item'
+export interface NotificationsTheme extends ThemeComponent<NotificationsProps, InternalClasses> {}
+
 export default {
   name: 'XNotifications',
   validators,
@@ -64,13 +76,11 @@ import { ref, provide, watch, type PropType, type ExtractPublicPropTypes } from 
 import { injectNotificationKey } from '../../composables/keys'
 import { useColors } from '../../composables/useColors'
 import { useCSS } from '../../composables/useCSS'
-import { useTheme } from '../../composables/useTheme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { closeIcon } from '../../common/icons'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XSpacer from '../spacer/Spacer'
-
-import theme from './Notifications.theme'
 
 const props = defineProps(notificationsProps)
 
@@ -81,7 +91,7 @@ const listRef = ref<HTMLElement | null>(null)
 const css = useCSS('notification')
 const colors = useColors()
 
-provide(props.injectKey, {
+provide<NotificationInjection>(props.injectKey, {
   log,
   info,
   warn,
@@ -216,7 +226,7 @@ function setTimer(notification: NotificationEvent, timeout: number) {
   }, timeout)
 }
 
-const { styles, classes, className } = useTheme('notification', theme, props)
+const { styles, classes, className } = useTheme('Notifications', {}, props)
 
 defineExpose({ log, info, success, warn, warning: warn, error })
 </script>

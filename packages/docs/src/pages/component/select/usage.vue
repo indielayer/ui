@@ -1,21 +1,27 @@
 <template>
-  <x-select
-    v-model="selected"
-    label="Simple select"
-    :options="options"
-    placeholder="Placeholder"
-    class="w-64"
-  />
-  <x-select v-model="selected" label="Options array" :options="options" class="mx-4"/>
-
-  <x-select
-    v-model="selectedMultiple"
-    label="Multi select"
-    placeholder="Let's go baby"
-    :options="options"
-    multiple
-    class="w-64"
-  />
+  <div class="grid grid-cols-3 gap-4">
+    <x-select
+      v-model="selected"
+      label="Simple native select"
+      placeholder="Placeholder"
+      :options="options"
+      helper="Helper text"
+      native
+    />
+    <x-select
+      v-model="selected"
+      label="Dropdown select"
+      placeholder="Placeholder"
+      :options="options"
+    />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select"
+      placeholder="Let's go baby"
+      :options="options"
+      multiple
+    />
+  </div>
 </template>
 
 <script>
@@ -23,7 +29,7 @@ export default {
   data() {
     return {
       selected: null,
-      selectedMultiple: [],
+      selectedMultiple: ['A', 'B'],
       options: [
         { value: 'A', label: 'Option Ao qoiw oqi jdoqiwd oqid joqiw jdoijoi' },
         { value: 'B', label: 'Option B' },

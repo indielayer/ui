@@ -11,21 +11,22 @@ const scrollProps = {
 
 export type ScrollProps = ExtractPublicPropTypes<typeof scrollProps>
 
+type InternalClasses = 'wrapper'
+export interface ScrollTheme extends ThemeComponent<ScrollProps, InternalClasses> {}
+
 export default { name: 'XScroll' }
 </script>
 
 <script setup lang="ts">
-import { ref, toRefs, type ExtractPublicPropTypes } from 'vue'
+import { ref, toRefs, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useScroll, useResizeObserver, useEventListener } from '@vueuse/core'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Scroll.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(scrollProps)
 
 const scrollEl = ref<HTMLElement | null>(null)
 
-const { x, y, isScrolling, arrivedState, directions } = useScroll(scrollEl)
+const { arrivedState } = useScroll(scrollEl)
 const { left, right, top, bottom } = toRefs(arrivedState)
 
 useResizeObserver(scrollEl, triggerScroll)
@@ -42,7 +43,9 @@ function triggerScroll() {
   scrollEl.value?.dispatchEvent(new CustomEvent('scroll'))
 }
 
-const { styles, classes, className } = useTheme('scroll', theme, props)
+const { styles, classes, className } = useTheme('Scroll', {}, props)
+
+defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
 </script>
 
 <template>

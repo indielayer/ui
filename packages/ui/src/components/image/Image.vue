@@ -5,14 +5,15 @@ const imageProps = {
 
 export type ImageProps = ExtractPublicPropTypes<typeof imageProps>
 
+type InternalClasses = 'wrapper'
+export interface ImageTheme extends ThemeComponent<ImageProps, InternalClasses> {}
+
 export default { name: 'XImage' }
 </script>
 
 <script setup lang="ts">
 import { watch, ref, type ExtractPublicPropTypes } from 'vue'
-import { useTheme } from '../../composables/useTheme'
-
-import theme from './Image.theme'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const fallback = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='
 
@@ -33,7 +34,7 @@ if (typeof window !== 'undefined' && Image) {
   })
 }
 
-const { styles, classes, className } = useTheme('image', theme, props)
+const { styles, classes, className } = useTheme('Image', {}, props)
 </script>
 
 <template>

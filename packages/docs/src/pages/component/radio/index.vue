@@ -6,6 +6,8 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
+import SizeDemoCode from './size.vue?raw'
+import SizeDemo from './size.vue'
 
 const title = 'Radio'
 const description = 'Radios allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side.'
@@ -25,6 +27,11 @@ const demos = [{
   description: '',
   code: StatesDemoCode,
   component: StatesDemo,
+}, {
+  name: 'Size',
+  description: '',
+  code: SizeDemoCode,
+  component: SizeDemo,
 }]
 const back = 'input'
 const next = 'select'
