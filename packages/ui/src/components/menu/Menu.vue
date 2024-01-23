@@ -65,7 +65,7 @@ import { useColors } from '../../composables/useColors'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XMenuItem from './MenuItem.vue'
-import XCollapse from '../../components/collapse/Collapse.vue'
+import XAccordionItem from '../../components/accordion/AccordionItem.vue'
 import XDivider from '../../components/divider/Divider.vue'
 
 const props = defineProps(menuProps)
@@ -87,7 +87,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
   >
     <template v-for="(item, index) in items" :key="index">
       <template v-if="item.items">
-        <x-collapse
+        <x-accordion-item
           v-if="item.collapsible !== false"
           :icon="item.collapseIcon || collapseIcon"
           :expanded="item.expanded || expanded"
@@ -123,7 +123,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
               @expand="expand(false)"
             />
           </template>
-        </x-collapse>
+        </x-accordion-item>
         <template v-else>
           <x-menu-item
             :item="item"

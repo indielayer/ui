@@ -1,5 +1,7 @@
 declare module 'vue' {
   export interface GlobalComponents {
+    XAccordion: typeof import('@indielayer/ui')['XAccordion']
+    XAccordionItem: typeof import('@indielayer/ui')['XAccordionItem']
     XAlert: typeof import('@indielayer/ui')['XAlert']
     XAvatar: typeof import('@indielayer/ui')['XAvatar']
     XBadge: typeof import('@indielayer/ui')['XBadge']
@@ -10,7 +12,6 @@ declare module 'vue' {
     XCarousel: typeof import('@indielayer/ui')['XCarousel']
     XCarouselSlide: typeof import('@indielayer/ui')['XCarouselSlide']
     XCheckbox: typeof import('@indielayer/ui')['XCheckbox']
-    XCollapse: typeof import('@indielayer/ui')['XCollapse']
     XContainer: typeof import('@indielayer/ui')['XContainer']
     XDivider: typeof import('@indielayer/ui')['XDivider']
     XDrawer: typeof import('@indielayer/ui')['XDrawer']

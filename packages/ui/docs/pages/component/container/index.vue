@@ -12,7 +12,7 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'collapse'
+const back = 'carousel'
 const next = 'divider'
 </script>
 

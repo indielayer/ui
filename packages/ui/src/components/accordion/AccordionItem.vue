@@ -1,34 +1,57 @@
 <script lang="ts">
-const collapseProps = {
-  ...useColors.props(),
+const accordionItemAlign = ['left', 'right'] as const
+const accordionItemProps = {
   tag: {
     type: String,
     default: 'div',
   },
   disabled: Boolean,
   expanded: Boolean,
-  showIcon: Boolean,
+  showIcon: {
+    type: Boolean,
+    default: true,
+  },
   icon: String,
+  iconAlign: {
+    type: String as PropType<AccordionItemAlign>,
+    default: 'right',
+  },
 }
 
-export type CollapseProps = ExtractPublicPropTypes<typeof collapseProps>
+export type AccordionItemAlign = typeof accordionItemAlign[number]
+export type AccordionItemProps = ExtractPublicPropTypes<typeof accordionItemProps>
 
 type InternalClasses = 'wrapper' | 'icon' | 'content'
-export interface CollapseTheme extends ThemeComponent<CollapseProps, InternalClasses> {}
+type InternalData = {
+  collapsed: boolean;
+}
+export interface AccordionItemTheme extends ThemeComponent<AccordionItemProps, InternalClasses, InternalData> {}
 
-export default { name: 'XCollapse' }
+export default {
+  name: 'XAccordionItem',
+  validators: {
+    iconAlign: accordionItemAlign,
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes, type PropType, inject, computed, reactive } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { useColors } from '../../composables/useColors'
 
 import XIcon from '../../components/icon/Icon.vue'
+import { injectAccordionKey } from '../../composables/keys'
 
-const props = defineProps(collapseProps)
+const props = defineProps(accordionItemProps)
 
 const emit = defineEmits(['expand'])
+
+const accordionProps = inject(injectAccordionKey, {})
+
+const computedIconAlign = computed(() => accordionProps.iconAlign || props.iconAlign)
+const computedProps = reactive({
+  iconAlign: computedIconAlign,
+})
 
 const collapsed = ref(!props.expanded)
 const animated = ref(true)
@@ -101,7 +124,10 @@ function onExpand(anim = true) {
   emit('expand')
 }
 
-const { styles, classes, className } = useTheme('Collapse', {}, props)
+const { styles, classes, className } = useTheme('AccordionItem', {}, {
+  ...props,
+  ...computedProps,
+}, { collapsed })
 
 defineExpose({ toggle, open, close })
 </script>
@@ -114,7 +140,7 @@ defineExpose({ toggle, open, close })
     :aria-disabled="disabled"
     :aria-expanded="collapsed ? 'false' : 'true'"
   >
-    <div
+    <button
       :class="classes.wrapper"
       @click="toggle"
     >
@@ -123,29 +149,19 @@ defineExpose({ toggle, open, close })
       </div>
 
       <div v-if="showIcon" :class="classes.icon">
-        <span
-          class="flex transform transition-transform duration-150"
-          :class="[
-            {
-              'rotate-180': !collapsed,
-              'text-gray-300': disabled
-            }
-          ]"
+        <x-icon v-if="icon" :icon="icon" />
+        <svg
+          v-else
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          fill="none"
+          role="presentation"
+          class="stroke-2 w-4 h-4"
         >
-          <x-icon v-if="icon" :icon="icon" />
-          <svg
-            v-else
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            fill="none"
-            role="presentation"
-            class="stroke-2 w-5 h-5"
-          >
-            <path d="M19 9l-7 7-7-7" />
-          </svg>
-        </span>
+          <path d="M19 9l-7 7-7-7" />
+        </svg>
       </div>
-    </div>
+    </button>
 
     <template v-if="$slots.summary">
       <slot name="summary"></slot>

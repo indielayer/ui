@@ -12,7 +12,7 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'toggle'
+const back = 'accordion'
 const next = 'avatar'
 </script>
 

@@ -63,12 +63,12 @@ function copy(text: string) {
     </h2>
     <p>{{ description }}</p>
     <slot></slot>
-    <x-collapse ref="codeRef" :expanded="expanded">
+    <x-accordion-item ref="codeRef" :expanded="expanded" :show-icon="false">
       <template #content>
         <div class="mt-4">
           <code-snippet :code="code" :lang="lang" :show-copy-button="false"/>
         </div>
       </template>
-    </x-collapse>
+    </x-accordion-item>
   </div>
 </template>

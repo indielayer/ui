@@ -1,5 +1,7 @@
 import type { ColorLibrary } from './composables/useColors'
 import type {
+  AccordionTheme,
+  AccordionItemTheme,
   AlertTheme,
   AvatarTheme,
   BadgeTheme,
@@ -10,7 +12,6 @@ import type {
   CarouselTheme,
   CarouselSlideTheme,
   CheckboxTheme,
-  CollapseTheme,
   ContainerTheme,
   DividerTheme,
   DrawerTheme,
@@ -46,6 +47,8 @@ import type {
 } from './components'
 
 export type ComponentThemes = {
+  Accordion: AccordionTheme;
+  AccordionItem: AccordionItemTheme;
   Alert: AlertTheme;
   Avatar: AvatarTheme;
   Badge: BadgeTheme;
@@ -56,7 +59,6 @@ export type ComponentThemes = {
   Carousel: CarouselTheme;
   CarouselSlide: CarouselSlideTheme;
   Checkbox: CheckboxTheme;
-  Collapse: CollapseTheme;
   Container: ContainerTheme;
   Divider: DividerTheme;
   Drawer: DrawerTheme;
