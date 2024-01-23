@@ -1,10 +1,11 @@
-const indielayer = require('./exports/tailwind.preset')
+import preset from './exports/tailwind.preset'
 
-module.exports = {
-  mode: 'jit',
-  content: [
-    './src/**/*.vue',
-  ],
+/** @type {import('tailwindcss').Config} */
+export default {
   darkMode: 'class',
-  presets: [indielayer()],
+  presets: [preset()],
+  content: [
+    './index.html',
+    './{src,docs}/**/*.{vue,js,ts,jsx,tsx}',
+  ],
 }

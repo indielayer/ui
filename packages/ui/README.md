@@ -31,13 +31,13 @@ npm init @indielayer/ui
 
 ### Documentation
 
-The documentation is located inside [/packages/docs](./packages/docs)
+The documentation is located inside [/packages/ui/docs](./packages/ui/docs)
 
-- Run `pnpm build` once from project root to build the UI library
-- Run `pnpm run docs` from project root to enter docs dev mode
+- Run `pnpm dev` for development
+- Run `pnpm build:docs` from project root to build the documentation
 
 ## License
 
 [MIT](./LICENSE)
 
-Copyright (c) 2023, Indielayer
+Copyright (c) 2024, Indielayer

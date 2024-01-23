@@ -14,6 +14,12 @@ export default defineConfig(({ command, mode }) => {
   const isBuild = command === 'build'
   const viteEnv = loadEnv(mode, `.env.${mode}`)
 
+  if (mode === 'docs') {
+    return {
+      plugins: [vue(), vueJsx()],
+    }
+  }
+
   const plugins: PluginOption = [
     vue(),
     vueJsx(),
