@@ -99,7 +99,7 @@ function onClickTab(e: MouseEvent) {
     return
   }
 
-  if (!props.to && computedValue.value) tabs.activateTab(computedValue.value)
+  if (!props.to && typeof computedValue.value !== 'undefined') tabs.activateTab(computedValue.value)
 }
 
 const { styles, classes, className } = useTheme('Tab', {}, ref({
