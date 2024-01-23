@@ -4,7 +4,7 @@
     "pnpm-lock.yaml": true
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "explicit"
   },
   "stylelint.validate": [
     "css",

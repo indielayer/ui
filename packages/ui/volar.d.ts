@@ -19,6 +19,7 @@ declare module 'vue' {
     XImage: typeof import('@indielayer/ui')['XImage']
     XInput: typeof import('@indielayer/ui')['XInput']
     XInputFooter: typeof import('@indielayer/ui')['XInputFooter']
+    XLabel: typeof import('@indielayer/ui')['XLabel']
     XLink: typeof import('@indielayer/ui')['XLink']
     XLoader: typeof import('@indielayer/ui')['XLoader']
     XMenu: typeof import('@indielayer/ui')['XMenu']
