@@ -13,6 +13,7 @@ const tabProps = {
   icon: String,
   disabled: Boolean,
   exact: Boolean,
+  removable: Boolean,
 }
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
@@ -40,6 +41,8 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
+
+import { closeIcon } from '../../common/icons'
 
 import type { TabGroupInjection, TabGroupVariant } from './TabGroup.vue'
 
@@ -102,6 +105,8 @@ function onClickTab(e: MouseEvent) {
   if (!props.to && typeof computedValue.value !== 'undefined') tabs.activateTab(computedValue.value)
 }
 
+defineEmits(['remove'])
+
 const { styles, classes, className } = useTheme('Tab', {}, ref({
   ...props,
   size: computedSize.value,
@@ -156,6 +161,13 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
           :class="classes.icon"
         />
         <div :class="classes.label">{{ computedLabel }}</div>
+        <x-icon
+          v-if="removable"
+          size="sm"
+          :icon="closeIcon"
+          class="ml-2 cursor-pointer hover:text-gray-700 transition-colors duration-150"
+          @click="(e: Event) => $emit('remove', e)"
+        />
       </div>
     </slot>
     <teleport v-if="selected && teleportTo" :to="teleportTo">

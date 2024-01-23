@@ -62,7 +62,7 @@ const linkTab = ref(null)
       content e
     </x-tab>
   </x-tab-group>
-  <x-tab-group v-model="tab" class="pb-10" variant="block">
+  <x-tab-group v-model="tab" class="pb-10" variant="block" grow>
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>
@@ -86,10 +86,10 @@ const linkTab = ref(null)
     grow
     :full-width="false"
   >
-    <x-tab value="a" label="Tab A">
+    <x-tab value="a" label="Tab A" removable>
       content a
     </x-tab>
-    <x-tab value="b" label="Tab B">
+    <x-tab value="b" label="Tab B" icon="smile">
       content b
     </x-tab>
     <x-tab value="c" label="Tab c">
