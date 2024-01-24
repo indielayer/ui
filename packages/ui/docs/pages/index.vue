@@ -15,7 +15,7 @@
           color="primary"
         >@indielayer/create-ui</x-link>, the official Indielayer UI project scaffolding tool. You will be presented with prompts for a number of optional features such as TypeScript.
       </p>
-      <code-snippet :code="`npm init ../../../src`" lang="bash"/>
+      <code-snippet :code="`npm init @indielayer/ui`" lang="bash"/>
       <pre class="bg-slate-600 text-slate-50 text-xs mt-4 px-4 py-2 rounded-md">? Project type: › - Use arrow-keys. Return to submit.
 ❯   Vue 3
     Nuxt 3</pre>
@@ -26,15 +26,15 @@
         :snippets="[{
           label: 'npm',
           lang: 'bash',
-          code: 'npm install ../../../src'
+          code: 'npm install @indielayer/ui'
         }, {
           label: 'yarn',
           lang: 'bash',
-          code: 'yarn add ../../../src'
+          code: 'yarn add @indielayer/ui'
         }, {
           label: 'pnpm',
           lang: 'bash',
-          code: 'pnpm add ../../../src'
+          code: 'pnpm add @indielayer/ui'
         }]"
       />
 
@@ -47,7 +47,7 @@
         lang="js"
         :code="`// tailwind.config.js
 const colors = require('tailwindcss/colors')
-const indielayer = require('../../../src/tailwind.preset')
+const indielayer = require('@indielayer/ui/tailwind.preset')
 
 module.exports = {
   darkMode: 'class',

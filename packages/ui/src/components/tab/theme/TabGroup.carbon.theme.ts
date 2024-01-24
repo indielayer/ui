@@ -18,7 +18,7 @@ const theme: TabGroupTheme = {
       const c = ['flex min-w-full w-fit']
 
       if (props.variant === 'line') c.push('border-b border-gray-200 dark:border-gray-700')
-      if (props.variant === 'line' && !props.grow) c.push('space-x-8')
+      if (props.variant === 'line' && !props.grow) c.push('')
       if (props.variant === 'block') c.push('z-[1] py-1.5')
       if (props.align === 'center') c.push('justify-center')
       if (props.align === 'right') c.push('justify-end')
@@ -31,7 +31,7 @@ const theme: TabGroupTheme = {
 
       if (props.variant === 'line') c.push('h-[2px] -mt-[2px] bg-[color:var(--x-tab-group-text)] dark:bg-[color:var(--x-tab-group-dark-text)]')
 
-      if (props.variant === 'block') c.push('border-t-2 border-[color:var(--x-tab-group-text)] h-full top-0 bg-gray-100 dark:bg-gray-700')
+      if (props.variant === 'block') c.push('border-t-2 border-[color:var(--x-tab-group-text)] dark:border-[color:var(--x-tab-group-dark-text)] h-full top-0 bg-gray-100 dark:bg-gray-700')
 
       return c
     },

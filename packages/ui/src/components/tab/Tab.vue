@@ -6,7 +6,7 @@ const tabProps = {
   },
   tag: {
     type: String,
-    default: 'div',
+    default: 'button',
   },
   to: [String, Object],
   label: String,
@@ -165,7 +165,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
           v-if="removable"
           size="sm"
           :icon="closeIcon"
-          class="ml-2 cursor-pointer hover:text-gray-700 transition-colors duration-150"
+          class="ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-500 transition-colors duration-150"
           @click="(e: Event) => $emit('remove', e)"
         />
       </div>
