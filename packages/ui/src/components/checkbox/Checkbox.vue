@@ -11,7 +11,7 @@ const checkboxProps = {
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 
-type InternalClasses = 'wrapper' | 'box' | 'icon' | 'label'
+type InternalClasses = 'wrapper' | 'content' | 'box' | 'icon' | 'label'
 type InternalExtraData = { checked: Ref<boolean>; }
 export interface CheckboxTheme extends ThemeComponent<CheckboxProps, InternalClasses, InternalExtraData> {}
 
@@ -79,8 +79,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
   >
     <div
       ref="elRef"
-      class="flex items-center"
-      :class="{ 'cursor-not-allowed': disabled }"
+      :class="classes.content"
       tabindex="0"
       @keypress.prevent.stop.space="toggle"
     >

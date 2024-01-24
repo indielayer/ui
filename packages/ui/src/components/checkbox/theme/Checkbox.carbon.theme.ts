@@ -5,11 +5,19 @@ const theme: CheckboxTheme = {
     wrapper: 'inline-block relative cursor-pointer align-middle',
 
     box: ({ props }) => {
-      const classes = ['rounded-sm flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
+      const classes = ['rounded-sm flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)] mt-0.5']
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-3 w-3')
       else if (props.size === 'xl') classes.push('h-5 w-5')
       else classes.push('h-4 w-4')
+
+      return classes
+    },
+
+    content: ({ props }) => {
+      const classes = ['flex']
+
+      if (props.disabled) classes.push('cursor-not-allowed')
 
       return classes
     },
@@ -25,7 +33,7 @@ const theme: CheckboxTheme = {
     },
 
     label: ({ props }) => {
-      const classes = ['inline-block text-gray-800 dark:text-gray-200 pl-2 text-sm']
+      const classes = ['text-gray-800 dark:text-gray-200 pl-2 text-sm']
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')

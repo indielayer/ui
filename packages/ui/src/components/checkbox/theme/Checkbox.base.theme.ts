@@ -14,6 +14,14 @@ const theme: CheckboxTheme = {
       return classes
     },
 
+    content: ({ props }) => {
+      const classes = ['flex items-center']
+
+      if (props.disabled) classes.push('cursor-not-allowed')
+
+      return classes
+    },
+
     icon: ({ props }) => {
       const classes = ['fill-current text-white dark:text-gray-900']
 
