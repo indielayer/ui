@@ -4,27 +4,43 @@ const theme: ModalTheme = {
   classes: {
     wrapper: 'fixed z-40 inset-0 overflow-y-auto transition-all',
 
-    backdrop: 'fixed inset-0 bg-gray-500 dark:bg-black transition-opacity',
+    backdrop: ({ data }) => {
+      const classes = ['fixed inset-0 bg-gray-500 dark:bg-black transition-opacity']
 
-    modal: ({ props }) => {
-      let c = 'relative flex flex-col z-10 bg-white dark:bg-gray-900 rounded-md shadow-lg transform transition-all overflow-hidden max-h-full w-full'
+      if (data.visible) classes.push('ease-out duration-200 opacity-30 dark:opacity-70')
+      else classes.push('ease-in duration-100 opacity-0')
 
-      if (props.size === 'xs') c += ' sm:max-w-xs'
-      else if (props.size === 'sm') c += ' sm:max-w-sm'
-      else if (props.size === 'lg') c += ' sm:max-w-xl'
-      else if (props.size === 'xl') c += ' sm:max-w-3xl'
-      else c += ' sm:max-w-lg'
-
-      return c
+      return classes
     },
 
-    closeIcon: 'flex absolute p-1 top-4 z-10 right-4 rounded-full bg-opacity-10 hover:bg-opacity-30 cursor-pointer',
+    modal: ({ props, data }) => {
+      const classes = ['relative flex flex-col z-10 bg-white dark:bg-gray-900 rounded-md shadow-lg transform transition-all overflow-hidden max-h-full w-full']
 
-    header: 'text-lg font-semibold px-6 py-4 border-b',
+      if (data.visible) classes.push('ease-out duration-200 opacity-100 translate-y-0 sm:scale-100')
+      else classes.push('ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95')
+
+      if (props.size === 'xs') classes.push('sm:max-w-xs')
+      else if (props.size === 'sm') classes.push('sm:max-w-sm')
+      else if (props.size === 'lg') classes.push('sm:max-w-xl')
+      else if (props.size === 'xl') classes.push('sm:max-w-3xl')
+      else classes.push('sm:max-w-lg')
+
+      return classes
+    },
+
+    closeIcon: '!absolute top-2 z-10 right-2',
+
+    header: 'text-lg pl-6 py-4 border-b pr-12',
 
     content: 'px-6 py-4',
 
-    actions: 'bg-slate-50 dark:bg-gray-800 p-4',
+    actions: 'bg-slate-50 dark:bg-gray-800 p-4 grid grid-flow-col gap-4',
+
+    label: 'text-xs text-gray-500 mb-1',
+
+    title: 'text-xl font-semibold mb-4',
+
+    description: 'text-sm',
   },
 }
 

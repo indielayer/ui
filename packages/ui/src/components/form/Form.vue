@@ -42,7 +42,6 @@ export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
 
 export default {
   name: 'XForm',
-  inheritAttrs: false,
 }
 </script>
 
@@ -75,8 +74,10 @@ provide(injectFormKey, {
   isInsideForm: true,
 })
 
-onMounted(() => {
-  if (props.autoFocus && inputs && inputs.length > 0) inputs[0].focus()
+onMounted(async () => {
+  if (props.autoFocus && inputs && inputs.length > 0) {
+    setTimeout(inputs[0].focus, 50)
+  }
 })
 
 watch(() => props.errors, (errors) => {
