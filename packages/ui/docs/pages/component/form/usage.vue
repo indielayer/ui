@@ -27,7 +27,7 @@ function onSubmit(isValid) {
 </script>
 
 <template>
-  <x-form @submit="onSubmit">
+  <x-form title="Edit user information" description="Almost all fields are required" @submit="onSubmit">
     <div class="grid grid-cols-2 gap-4">
       <x-input
         v-model="email"
@@ -70,6 +70,12 @@ function onSubmit(isValid) {
       label="Country"
     />
     <x-checkbox v-model="agree" :rules="[rules.isRequired]" name="agree" label="Agree with all the terms"/>
-    <x-button block color="primary" type="submit">Submit</x-button>
+
+    <template #secondary-action>
+      <x-button color="gray">Cancel</x-button>
+    </template>
+    <template #primary-action>
+      <x-button color="primary" type="submit">Submit</x-button>
+    </template>
   </x-form>
 </template>

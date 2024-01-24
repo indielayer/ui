@@ -13,6 +13,8 @@ const formProps = {
     type: [Array, Object] as PropType<[FormError[], FormError]>,
     default: () => ([]),
   },
+  title: String,
+  description: String,
 }
 
 export type FormProps = ExtractPublicPropTypes<typeof formProps>
@@ -35,7 +37,7 @@ export type FormInput = {
   setError: (val: string) => void;
 }
 
-type InternalClasses = 'wrapper'
+type InternalClasses = 'wrapper' | 'title' | 'description' | 'footer'
 export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
 
 export default {
@@ -131,8 +133,22 @@ const { styles, classes, className } = useTheme('Form', {}, props)
     ]"
     @submit="submit"
   >
+    <slot name="header">
+      <div v-if="title || description" class="mb-10">
+        <p v-if="title" :class="classes.title">{{ title }}</p>
+        <p v-if="description" :class="classes.description">{{ description }}</p>
+      </div>
+    </slot>
+
     <fieldset :disabled="disabled">
       <slot></slot>
     </fieldset>
+
+    <slot name="footer">
+      <div :class="classes.footer">
+        <slot name="primary-action"></slot>
+        <slot name="secondary-action"></slot>
+      </div>
+    </slot>
   </form>
 </template>

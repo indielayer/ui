@@ -1,7 +1,15 @@
 import type { FormTheme } from '../Form.vue'
 
-import BaseTheme from './Form.base.theme'
+const theme: FormTheme = {
+  classes: {
+    wrapper: 'relative',
 
-const theme: FormTheme = BaseTheme
+    title: 'text-xl mb-1',
+
+    description: 'text-gray-500',
+
+    footer: 'grid grid-cols-2 gap-4 lg:flex',
+  },
+}
 
 export default theme
