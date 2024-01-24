@@ -54,6 +54,7 @@ export default {
             { to: '/component/progress', label: 'Progress' },
             { to: '/component/skeleton', label: 'Skeleton' },
             { to: '/component/spinner', label: 'Spinner' },
+            { to: '/component/stepper', label: 'Stepper' },
             { to: '/component/table', label: 'Table' },
             { to: '/component/tabs', label: 'Tabs' },
             { to: '/component/tag', label: 'Tag' },

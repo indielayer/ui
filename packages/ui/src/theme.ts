@@ -37,6 +37,7 @@ import type {
   SelectTheme,
   SkeletonTheme,
   SliderTheme,
+  StepperTheme,
   TabTheme,
   TabGroupTheme,
   TableTheme,
@@ -84,6 +85,7 @@ export type ComponentThemes = {
   Select: SelectTheme;
   Skeleton: SkeletonTheme;
   Slider: SliderTheme;
+  Stepper: StepperTheme;
   Tab: TabTheme;
   TabGroup: TabGroupTheme;
   Table: TableTheme;

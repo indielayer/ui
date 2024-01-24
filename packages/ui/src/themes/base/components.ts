@@ -35,6 +35,7 @@ export { default as Scroll } from '../../components/scroll/theme/Scroll.base.the
 export { default as Select } from '../../components/select/theme/Select.base.theme'
 export { default as Skeleton } from '../../components/skeleton/theme/Skeleton.base.theme'
 export { default as Slider } from '../../components/slider/theme/Slider.base.theme'
+export { default as Stepper } from '../../components/stepper/theme/Stepper.base.theme'
 export { default as Tab } from '../../components/tab/theme/Tab.base.theme'
 export { default as TabGroup } from '../../components/tab/theme/TabGroup.base.theme'
 export { default as Table } from '../../components/table/theme/Table.base.theme'

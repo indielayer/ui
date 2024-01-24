@@ -39,6 +39,7 @@ declare module 'vue' {
     XSlider: typeof import('@indielayer/ui')['XSlider']
     XSpacer: typeof import('@indielayer/ui')['XSpacer']
     XSpinner: typeof import('@indielayer/ui')['XSpinner']
+    XStepper: typeof import('@indielayer/ui')['XStepper']
     XTable: typeof import('@indielayer/ui')['XTable']
     XTableBody: typeof import('@indielayer/ui')['XTableBody']
     XTableCell: typeof import('@indielayer/ui')['XTableCell']

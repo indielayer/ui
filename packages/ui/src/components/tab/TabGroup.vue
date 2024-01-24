@@ -54,7 +54,7 @@ export default {
 <script setup lang="ts">
 import { reactive, computed, provide, type PropType, ref, watch, onMounted, watchEffect, type ExtractPublicPropTypes, type Ref, nextTick } from 'vue'
 import { useMutationObserver, useResizeObserver, useThrottleFn } from '@vueuse/core'
-import { injectTabKey } from '../../composables/keys'
+import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -92,7 +92,7 @@ function activateTab(tab: string | number | null) {
   emit('update:modelValue', tab)
 }
 
-provide(injectTabKey, {
+provide(injectTabGroupKey, {
   tabsContentRef,
   activateTab,
   state,

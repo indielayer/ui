@@ -10,7 +10,7 @@ import type { AccordionProps } from '../components/accordion'
 
 export const injectOptionsKey = Symbol() as InjectionKey<UIOptions>
 export const injectThemeKey = Symbol() as InjectionKey<MaybeRef<UITheme>>
-export const injectTabKey = Symbol() as InjectionKey<TabGroupInjection>
+export const injectTabGroupKey = Symbol() as InjectionKey<TabGroupInjection>
 export const injectFormKey = Symbol() as InjectionKey<FormInjection>
 export const injectIconsKey = Symbol() as InjectionKey<IconInjection>
 export const injectButtonGroupKey = Symbol() as InjectionKey<ButtonGroupInjection>

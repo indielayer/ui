@@ -35,7 +35,7 @@ export default {
 <script setup lang="ts">
 import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
-import { injectTabKey } from '../../composables/keys'
+import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
@@ -53,7 +53,7 @@ const computedLabel = computed(() => props.label || props.value)
 const teleportTo = ref<HTMLElement | null>(null)
 const elRef = ref<HTMLElement | typeof XLink | null>(null)
 
-const tabs = inject(injectTabKey, {
+const tabs = inject(injectTabGroupKey, {
   tabsContentRef: ref(null),
   activateTab: () => {},
   state: reactive({

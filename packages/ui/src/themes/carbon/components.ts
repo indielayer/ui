@@ -35,6 +35,7 @@ export { default as Scroll } from '../../components/scroll/theme/Scroll.carbon.t
 export { default as Select } from '../../components/select/theme/Select.carbon.theme'
 export { default as Skeleton } from '../../components/skeleton/theme/Skeleton.carbon.theme'
 export { default as Slider } from '../../components/slider/theme/Slider.carbon.theme'
+export { default as Stepper } from '../../components/stepper/theme/Stepper.carbon.theme'
 export { default as Tab } from '../../components/tab/theme/Tab.carbon.theme'
 export { default as TabGroup } from '../../components/tab/theme/TabGroup.carbon.theme'
 export { default as Table } from '../../components/table/theme/Table.carbon.theme'

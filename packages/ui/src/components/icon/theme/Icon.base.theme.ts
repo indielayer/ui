@@ -3,7 +3,7 @@ import type { IconTheme } from '../Icon.vue'
 const theme: IconTheme = {
   classes: {
     wrapper: ({ props }) => {
-      const classes = 'inline'
+      const classes = 'inline shrink-0'
 
       if (props.size === 'xs') return classes + ' h-3 w-3'
       else if (props.size === 'sm') return classes + ' h-4 w-4'
