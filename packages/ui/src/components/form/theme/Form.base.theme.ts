@@ -4,11 +4,13 @@ const theme: FormTheme = {
   classes: {
     wrapper: 'relative',
 
+    content: 'grid gap-4',
+
     title: 'text-xl mb-1',
 
     description: 'text-gray-500',
 
-    footer: 'space-x-4',
+    footer: 'space-x-4 mt-4',
   },
 }
 

@@ -177,6 +177,7 @@ defineExpose({ open, close })
           :errors="formErrors"
           :class="classes.modal"
           auto-focus
+          :has-footer="false"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
@@ -202,6 +203,7 @@ defineExpose({ open, close })
           <x-button
             v-if="showClose"
             ghost
+            size="lg"
             tabindex="-1"
             :icon="closeIcon"
             :class="classes.closeIcon"

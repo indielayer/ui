@@ -28,7 +28,7 @@ const theme: AccordionItemTheme = {
       return classes
     },
 
-    content: 'px-4 transition-[height] duration-150 overflow-y-hidden',
+    content: 'transition-[height] duration-150 overflow-y-hidden',
   },
 }
 

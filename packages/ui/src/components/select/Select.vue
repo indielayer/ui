@@ -6,16 +6,14 @@ const selectProps = {
   placeholder: String,
   options: Array as PropType<SelectOption[]>,
   multiple: Boolean,
-  label: String,
-  helper: String,
   flat: Boolean,
   native: Boolean,
 }
 
 export type SelectOption = {
   value: number | string;
-  disabled: boolean;
   label: string;
+  disabled?: boolean;
 }
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
@@ -230,6 +228,7 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   inputListeners,
   reset,
   validate,
@@ -415,6 +414,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </x-popover>
 
       <select
+        :id="id"
         ref="elRef"
         v-model="selected"
         tabindex="-1"
@@ -447,6 +447,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>

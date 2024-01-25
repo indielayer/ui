@@ -16,6 +16,7 @@ import type {
   DividerTheme,
   DrawerTheme,
   FormTheme,
+  FormGroupTheme,
   IconTheme,
   ImageTheme,
   InputTheme,
@@ -64,6 +65,7 @@ export type ComponentThemes = {
   Divider: DividerTheme;
   Drawer: DrawerTheme;
   Form: FormTheme;
+  FormGroup: FormGroupTheme;
   Icon: IconTheme;
   Image: ImageTheme;
   Input: InputTheme;

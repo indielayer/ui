@@ -14,6 +14,7 @@ export { default as Container } from '../../components/container/theme/Container
 export { default as Divider } from '../../components/divider/theme/Divider.carbon.theme'
 export { default as Drawer } from '../../components/drawer/theme/Drawer.carbon.theme'
 export { default as Form } from '../../components/form/theme/Form.carbon.theme'
+export { default as FormGroup } from '../../components/formGroup/theme/FormGroup.carbon.theme'
 export { default as Icon } from '../../components/icon/theme/Icon.carbon.theme'
 export { default as Image } from '../../components/image/theme/Image.carbon.theme'
 export { default as Input } from '../../components/input/theme/Input.carbon.theme'

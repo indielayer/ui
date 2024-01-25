@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { XForm } from '../../../../src'
+import { XFormGroup } from '../../../../src'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
-const title = 'Form'
-const description = 'Forms are used to collect user input.'
-const components = [XForm]
+const title = 'FormGroup'
+const description = 'A form group is a wrapper for form elements.'
+const components = [XFormGroup]
 const demos = [{
   name: 'Usage',
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
 }]
-const back = 'checkbox'
-const next = 'formGroup'
+const back = 'form'
+const next = 'input'
 </script>
 
 <template>
   <document-page
-    github="https://github.com/indielayer/ui/blob/main/packages/ui/docs/pages/component/form"
+    github="https://github.com/indielayer/ui/blob/main/packages/ui/docs/pages/component/checkbox"
     :title="title"
     :description="description"
     :components="components"

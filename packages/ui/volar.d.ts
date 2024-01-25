@@ -16,6 +16,7 @@ declare module 'vue' {
     XDivider: typeof import('@indielayer/ui')['XDivider']
     XDrawer: typeof import('@indielayer/ui')['XDrawer']
     XForm: typeof import('@indielayer/ui')['XForm']
+    XFormGroup: typeof import('@indielayer/ui')['XFormGroup']
     XIcon: typeof import('@indielayer/ui')['XIcon']
     XImage: typeof import('@indielayer/ui')['XImage']
     XInput: typeof import('@indielayer/ui')['XInput']

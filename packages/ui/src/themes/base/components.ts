@@ -14,6 +14,7 @@ export { default as Container } from '../../components/container/theme/Container
 export { default as Divider } from '../../components/divider/theme/Divider.base.theme'
 export { default as Drawer } from '../../components/drawer/theme/Drawer.base.theme'
 export { default as Form } from '../../components/form/theme/Form.base.theme'
+export { default as FormGroup } from '../../components/formGroup/theme/FormGroup.base.theme'
 export { default as Icon } from '../../components/icon/theme/Icon.base.theme'
 export { default as Image } from '../../components/image/theme/Image.base.theme'
 export { default as Input } from '../../components/input/theme/Input.base.theme'

@@ -21,7 +21,7 @@ const drawer = ref(false)
   </div>
   <div class="flex-1 flex overflow-hidden">
     <x-drawer v-model="drawer" breakpoint="lg" width="260" class="border-r flex">
-      <docs-menu class="flex-1" />
+      <docs-menu class="flex-1" @close="drawer = false" />
     </x-drawer>
     <x-notifications inject-key="notifica">
       <router-view class="flex-1 overflow-y-scroll" />

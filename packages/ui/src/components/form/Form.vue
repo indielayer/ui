@@ -15,6 +15,10 @@ const formProps = {
   },
   title: String,
   description: String,
+  hasFooter: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type FormProps = ExtractPublicPropTypes<typeof formProps>
@@ -37,7 +41,7 @@ export type FormInput = {
   setError: (val: string) => void;
 }
 
-type InternalClasses = 'wrapper' | 'title' | 'description' | 'footer'
+type InternalClasses = 'wrapper' | 'content' | 'title' | 'description' | 'footer'
 export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
 
 export default {
@@ -141,11 +145,11 @@ const { styles, classes, className } = useTheme('Form', {}, props)
       </div>
     </slot>
 
-    <fieldset :disabled="disabled">
+    <fieldset :disabled="disabled" :class="classes.content">
       <slot></slot>
     </fieldset>
 
-    <slot name="footer">
+    <slot v-if="hasFooter" name="footer">
       <div :class="classes.footer">
         <slot name="primary-action"></slot>
         <slot name="secondary-action"></slot>

@@ -24,7 +24,9 @@ function toggleCode() {
   expandedSync.value = !expandedSync.value
 }
 
-function copy(text: string) {
+function copy(text?: string) {
+  if (!text) return
+
   const el = document.createElement('textarea')
 
   el.value = text
@@ -32,7 +34,7 @@ function copy(text: string) {
   el.select()
   document.execCommand('copy')
   document.body.removeChild(el)
-  notifications.success('Copied to clipboard!')
+  notifications?.success('Copied to clipboard!')
 }
 </script>
 
@@ -43,9 +45,13 @@ function copy(text: string) {
       <div class="mr-2 cursor-pointer" @click="toggleCode">{{ title }}</div>
       <x-spacer/>
       <x-tooltip position="top">
-        <x-link :href="`${github}/${title?.toLowerCase()}.vue`" target="blank">
-          <x-button icon="edit" ghost size="sm"/>
-        </x-link>
+        <x-button
+          icon="edit"
+          ghost
+          size="sm"
+          :href="`${github}/${title?.toLowerCase()}.vue`"
+          target="blank"
+        />
         <template #tooltip>
           Edit on <span class="text-gray-300">GitHub</span>
         </template>

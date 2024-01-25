@@ -59,7 +59,7 @@ function onSubmit(isValid: boolean) {
       <x-button color="gray" size="lg">Tertiary</x-button>
     </template> -->
     <template #secondary-action>
-      <x-button color="gray" size="lg" @click="show = false">Cancel</x-button>
+      <x-button color="gray" size="lg" tabindex="-1" @click="show = false">Cancel</x-button>
     </template>
     <template #primary-action>
       <x-button color="primary" size="lg" type="submit">Confirm</x-button>

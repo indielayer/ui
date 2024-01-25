@@ -3,8 +3,6 @@ const textareaProps = {
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  helper: String,
-  label: String,
   dir: {
     type: String,
     default: 'ltr',
@@ -91,6 +89,7 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   isInsideForm,
   inputListeners,
   reset,
@@ -117,6 +116,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     ]"
   >
     <textarea
+      :id="id"
       ref="elRef"
       class=""
       :style="style"
@@ -142,6 +142,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       @input="onInput"
     ></textarea>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>

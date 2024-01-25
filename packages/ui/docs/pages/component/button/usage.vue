@@ -5,7 +5,7 @@
     <x-button color="primary" light>Light</x-button>
     <x-button color="primary" ghost>Ghost</x-button>
     <x-button color="primary" outlined>Outlined</x-button>
-    <x-button color="primary" disabled loading loading-label="Uploading..">Loading</x-button>
+    <x-button color="primary" loading loading-label="Uploading..">Loading</x-button>
     <x-button color="primary" rounded>filled Rounded</x-button>
     <x-button color="primary" light outlined>light + outlined</x-button>
   </div>

@@ -8,8 +8,6 @@ const inputProps = {
     type: Boolean,
     default: true,
   },
-  helper: String,
-  label: String,
   dir: {
     type: String as PropType<'ltr' | 'rtl'>,
     default: 'ltr',
@@ -91,6 +89,7 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   isInsideForm,
   inputListeners,
   reset,
@@ -128,6 +127,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </slot>
 
       <input
+        :id="id"
         ref="elRef"
         :class="[
           classes.input,
@@ -176,6 +176,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       </slot>
     </div>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>

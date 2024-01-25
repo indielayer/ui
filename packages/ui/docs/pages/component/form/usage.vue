@@ -1,5 +1,5 @@
-<script setup>
-import { useNotifications } from '../../../../src'
+<script setup lang="ts">
+import { useNotifications, type SelectOption } from '../../../../src'
 import { ref } from 'vue'
 
 const notifications = useNotifications('notifica')
@@ -7,22 +7,27 @@ const notifications = useNotifications('notifica')
 const email = ref('')
 const password = ref('')
 const description = ref('')
+const checked = ref()
+const selected = ref()
 const country = ref('')
-const country2 = ref('')
-const countries = [
+const countries: SelectOption[] = [
   { label: 'United States', value: 'us' },
   { label: 'Canada', value: 'ca' },
   { label: 'Mexico', value: 'mx' },
 ]
 const agree = ref(false)
 const rules = {
-  isEmail: (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
-  isRequired: (v) => !!v  || 'Field is required',
+  isEmail: (v: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+  isRequired: (v: string) => {
+    if (Array.isArray(v)) return !!v.length || 'Field is required'
+
+    return !!v  || 'Field is required'
+  },
 }
 
-function onSubmit(isValid) {
-  if (isValid) notifications.success('Valid! Sumitted.')
-  else notifications.error('Invalid! Form has errors')
+function onSubmit(isValid: string) {
+  if (isValid) notifications?.success('Valid! Sumitted.')
+  else notifications?.error('Invalid! Form has errors')
 }
 </script>
 
@@ -46,26 +51,29 @@ function onSubmit(isValid) {
         helper="Must be between 8 and 10 characters"
       />
     </div>
+
     <x-textarea
       v-model="description"
       name="description"
       label="Description"
       placeholder="Description"
     />
+
+    <x-form-group v-model="selected" label="Group of checkboxes" helper="Helper text" :rules="[rules.isRequired]">
+      <x-checkbox value="a" label="Lorem ipsum dolor" />
+      <x-checkbox value="b" label="Second option" />
+    </x-form-group>
+
+    <x-form-group v-model="checked" label="Group of radio buttons" helper="Helper text" :rules="[rules.isRequired]">
+      <x-radio name="inputName" value="a" label="Option A" />
+      <x-radio name="inputName" value="b" label="Option B" />
+    </x-form-group>
+
     <x-select
       v-model="country"
       :rules="[rules.isRequired]"
       :options="countries"
-      native
       name="country"
-      placeholder="Select a country"
-      label="Country"
-    />
-    <x-select
-      v-model="country2"
-      :rules="[rules.isRequired]"
-      :options="countries"
-      name="country2"
       placeholder="Select another country"
       label="Country"
     />

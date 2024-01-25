@@ -18,6 +18,7 @@ export default {
             { to: '/component/button', label: 'Button' },
             { to: '/component/checkbox', label: 'Checkbox' },
             { to: '/component/form', label: 'Form' },
+            { to: '/component/formGroup', label: 'Form Group' },
             { to: '/component/input', label: 'Input' },
             { to: '/component/radio', label: 'Radio' },
             { to: '/component/select', label: 'Select' },
@@ -85,6 +86,7 @@ export default {
       class="m-4"
       color="primary"
       filled
+      @item-click="$emit('close')"
     />
     <x-divider class="px-4"/>
     <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Components</div>
@@ -93,6 +95,7 @@ export default {
       class="m-4"
       color="primary"
       filled
+      @item-click="$emit('close')"
     />
   </div>
 </template>

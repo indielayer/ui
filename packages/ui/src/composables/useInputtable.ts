@@ -1,6 +1,6 @@
 import type { MaybeRef, PropType } from 'vue'
 import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
-import { injectFormKey } from './keys'
+import { injectFormGroupKey, injectFormKey } from './keys'
 
 export interface XFormInputMethods {
   focus: () => void;
@@ -11,12 +11,25 @@ export interface XFormInputMethods {
 export const useInputtable = (props: any, { focus, emit, withListeners = true }: { focus: () => void; emit: any; withListeners?: boolean; }) => {
   const isFirstValidation = ref(true)
   const errorInternal = ref(props.error)
+  const hideFooterInternal = ref(props.hideFooter)
 
   const name = props.name ? props.name : (Math.random() + 1).toString(36).substring(7)
   const nameInternal = ref(name)
 
   watch(() => props.error, (val) => { errorInternal.value = val })
   watch(() => props.name, (val) => { if (val) nameInternal.value = val })
+
+  const formGroup = inject(injectFormGroupKey, {
+    registerInputGroup: () => {},
+    unregisterInputGroup: () => {},
+    setValue: () => {},
+    isInsideFormGroup: false,
+    value: undefined,
+  })
+
+  if (formGroup.isInsideFormGroup) {
+    hideFooterInternal.value = true
+  }
 
   const form = inject(injectFormKey, {
     registerInput: () => {},
@@ -101,19 +114,31 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
   }
 
   onMounted(() => {
-    form.registerInput(nameInternal.value, focus, validate, setError)
+    if (formGroup.isInsideFormGroup) {
+      formGroup.registerInputGroup(nameInternal.value, focus)
+    } else {
+      form.registerInput(nameInternal.value, focus, validate, setError)
+    }
   })
 
   onUnmounted(() => {
-    form.unregisterInput(nameInternal.value)
+    if (formGroup.isInsideFormGroup) {
+      formGroup.unregisterInputGroup(nameInternal.value)
+    } else {
+      form.unregisterInput(nameInternal.value)
+    }
+
   })
 
   return {
     isFirstValidation,
     errorInternal,
+    hideFooterInternal,
     isFocused,
     isInsideForm: form.isInsideForm,
+    isInsideFormGroup: formGroup.isInsideFormGroup,
     inputListeners,
+    formGroup,
     reset,
     validate,
     setError,
@@ -128,6 +153,7 @@ useInputtable.emits = (withListeners = true): string[] => {
 
 useInputtable.props = () => ({
   modelValue: [String, Number, Boolean, Object, Array] as PropType<string | number | boolean | object | any[] | undefined>,
+  id: String,
   name: String,
   readonly: Boolean,
   required: Boolean,
@@ -135,6 +161,8 @@ useInputtable.props = () => ({
     type: Boolean,
     default: true,
   },
+  label: String,
+  helper: String,
   error: String,
   hideFooter: Boolean,
   rules: {
