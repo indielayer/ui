@@ -62,7 +62,8 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useFocusTrap } from '../../composables/useFocusTrap'
 import { closeIcon } from '../../common/icons'
 
-import XScroll from '../../components/scroll/Scroll.vue'
+import XButton from '../button/Button.vue'
+import XScroll from '../scroll/Scroll.vue'
 import XForm, { type FormError } from '../form/Form.vue'
 import { useSlots } from 'vue'
 

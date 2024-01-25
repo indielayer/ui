@@ -18,7 +18,7 @@ const tabProps = {
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
 
-type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon'
+type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon' | 'tabpanel'
 type InternalExtraData = {
   selected: boolean;
 } & Pick<TabGroupInjection, 'state'>['state']
@@ -171,7 +171,9 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
       </div>
     </slot>
     <teleport v-if="selected && teleportTo" :to="teleportTo">
-      <slot></slot>
+      <div role="tabpanel" :class="classes.tabpanel">
+        <slot></slot>
+      </div>
     </teleport>
   </component>
 </template>

@@ -20,6 +20,8 @@ const theme: TabTheme = {
     label: 'font-medium',
 
     icon: 'mr-1.5',
+
+    tabpanel: 'py-2',
   },
 }
 

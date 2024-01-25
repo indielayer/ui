@@ -36,6 +36,7 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     plugins,
+    publicDir: 'exports',
     build: {
       outDir: 'lib',
       lib: {

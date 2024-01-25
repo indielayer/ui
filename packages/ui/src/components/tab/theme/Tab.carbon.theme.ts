@@ -26,6 +26,8 @@ const theme: TabTheme = {
     },
 
     icon: 'mr-1.5',
+
+    tabpanel: 'py-4',
   },
 }
 
