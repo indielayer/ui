@@ -5,6 +5,7 @@ const checkboxProps = {
   ...useInteractive.props(),
   ...useInputtable.props(),
   value: [String, Number],
+  indeterminate: Boolean,
   glow: Boolean,
 }
 
@@ -133,7 +134,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
         :id="id"
         v-model="checked"
         :name="name"
-        :aria-checked="checked ? 'true' : 'false'"
+        :aria-checked="indeterminate ? 'mixed' : (checked ? 'true' : 'false')"
         :aria-disabled="disabled ? 'true' : undefined"
         type="checkbox"
         class="invisible absolute"
@@ -148,6 +149,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
         ]"
       >
         <x-spinner v-if="loading" :size="size" class="absolute" />
+        <span v-else-if="indeterminate" name="check-icon" class="w-2/3 h-[2px] bg-white dark:bg-gray-900"></span>
         <slot v-else name="icon">
           <svg
             viewBox="0 0 20 20"
