@@ -3,13 +3,7 @@ const validators = {
   verticalAlign: ['baseline', 'bottom', 'middle', 'text-bottom', 'text-top', 'top'],
 }
 
-export default { name: 'XTableRow', validators }
-</script>
-
-<script setup lang="ts">
-import { computed, type PropType } from 'vue'
-
-const props = defineProps({
+const tableRowProps = {
   pointer: Boolean,
   striped: Boolean,
   verticalAlign: {
@@ -17,7 +11,21 @@ const props = defineProps({
     default: 'top',
     validator: (value: string) => validators.verticalAlign.includes(value),
   },
-})
+}
+
+export type TableRowProps = ExtractPublicPropTypes<typeof tableRowProps>
+
+type InternalClasses = 'row'
+export interface TableRowTheme extends ThemeComponent<TableRowProps, InternalClasses> {}
+
+export default { name: 'XTableRow', validators }
+</script>
+
+<script setup lang="ts">
+import { computed, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+
+const props = defineProps(tableRowProps)
 
 const alignClass = computed(() => {
   if (props.verticalAlign === 'baseline') return 'align-baseline'
@@ -29,18 +37,12 @@ const alignClass = computed(() => {
 
   return ''
 })
+
+const { styles, classes, className } = useTheme('TableRow', {}, props)
 </script>
 
 <template>
-  <tr
-    :class="[
-      striped ? 'odd:bg-gray-50 dark:odd:bg-gray-800' : 'border-b border-gray-200 dark:border-gray-700',
-      {
-        'hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer': pointer,
-      },
-      alignClass
-    ]"
-  >
+  <tr :style="styles" :class="[className, classes.row, alignClass]">
     <slot></slot>
   </tr>
 </template>

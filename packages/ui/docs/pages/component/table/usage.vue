@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNotifications, type TableHeader, type TableHeaderSort } from '../../../../src'
+import { useNotifications, type TableHeader } from '../../../../src'
 import { computed, ref } from 'vue'
 
 const notifications = useNotifications('notifica')
@@ -7,7 +7,7 @@ const notifications = useNotifications('notifica')
 const headers: TableHeader[] = [
   { text: '#', value: 'id', sortable: true, align: 'center' },
   { text: 'Title', value: 'title' },
-  { text: 'Description', value: 'description' },
+  { text: 'Description', value: 'description', truncate: true, width: 400 },
   { text: 'Published', value: 'published', sortable: true },
   { text: 'Status', value: 'status' },
 ]
@@ -65,9 +65,10 @@ const itemsSorted = computed<Book[]>(() => {
 <template>
   <x-table
     v-model:sort="sort"
+    pointer
     :headers="headers"
     :items="itemsSorted"
-    @click-row="notifications.log('open')"
+    @click-row="notifications?.log('open')"
   >
     <template #item-published="{ item }">
       {{ formatDate(item.published) }}
@@ -83,7 +84,7 @@ const itemsSorted = computed<Book[]>(() => {
     striped
     :headers="headers"
     :items="itemsSorted"
-    @click-row="notifications.log('open')"
+    @click-row="notifications?.log('open')"
   >
     <template #item-published="{ item }">
       {{ formatDate(item.published) }}

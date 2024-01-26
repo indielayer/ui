@@ -19,7 +19,7 @@ const theme: TableCellTheme = {
       else if (props.verticalAlign === 'text-top') c.push('align-text-top')
       else if (props.verticalAlign === 'top') c.push('align-top')
 
-      if (props.truncate && props.fixed) c.push('truncate')
+      if (props.truncate) c.push('truncate')
 
       return c
     },

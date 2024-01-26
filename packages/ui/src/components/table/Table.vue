@@ -13,6 +13,12 @@ const tableProps = {
     default: () => [],
   },
   loading: Boolean,
+  loadingSkeleton: Boolean,
+  loadingLines: {
+    type: [Number, String],
+    default: 3,
+  },
+  error: Boolean,
   dense: Boolean,
   fixed: Boolean,
   striped: Boolean,
@@ -34,11 +40,13 @@ export type TableHeader = {
   value?: string;
   text?: string;
   width?: string | number;
+  truncate?: boolean;
+  skeletonShape?: SkeletonShape;
 }
 
 export type TableProps = ExtractPublicPropTypes<typeof tableProps>
 
-type InternalClasses = 'wrapper' | 'loadingWrapper'
+type InternalClasses = 'wrapper' | 'table' | 'loadingWrapper'
 export interface TableTheme extends ThemeComponent<TableProps, InternalClasses> {}
 
 export default { name: 'XTable' }
@@ -48,12 +56,15 @@ export default { name: 'XTable' }
 import type { ExtractPublicPropTypes, PropType } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
-import XTableHead from './TableHead'
+import XTableHead from './TableHead.vue'
 import XTableHeader, { type TableHeaderSort, type TableHeaderAlign } from './TableHeader.vue'
 import XTableBody from './TableBody'
 import XTableRow from './TableRow.vue'
 import XTableCell from './TableCell.vue'
 import XSpinner from '../spinner/Spinner.vue'
+
+import XSkeleton from '../skeleton/Skeleton.vue'
+import type { SkeletonShape } from '../skeleton/Skeleton.vue'
 
 const props = defineProps({
   ...tableProps,
@@ -120,13 +131,13 @@ const { styles, classes, className } = useTheme('Table', {}, props)
 </script>
 
 <template>
-  <div class="w-full overflow-x-auto">
+  <div :class="[className, classes.wrapper]">
+    <slot name="title"></slot>
+    <slot name="actions"></slot>
+
     <table
       :style="styles"
-      :class="[
-        className,
-        classes.wrapper,
-      ]"
+      :class="classes.table"
     >
       <x-table-head>
         <x-table-header
@@ -139,29 +150,76 @@ const { styles, classes, className } = useTheme('Table', {}, props)
           :width="header.width"
           @click="header.sortable ? sortHeader(header) : null"
         >
-          {{ header.text }}
+          <slot :name="`header-${header.value}`" :header="header">
+            {{ header.text }}
+          </slot>
         </x-table-header>
       </x-table-head>
       <x-table-body>
-        <x-table-row
-          v-for="(item, index) in (items as T[])"
-          :key="index"
-          :pointer="pointer"
-          :striped="striped"
-          @click="$emit('click-row', item)"
-        >
-          <x-table-cell
-            v-for="(header, index2) in headers"
-            :key="index2"
-            :text-align="header.align"
-            :dense="dense"
-            :fixed="fixed"
+        <template v-if="loading">
+          <x-table-row
+            v-for="(item, index) in Number(loadingLines)"
+            :key="index"
+            :striped="striped"
           >
-            <slot :name="`item-${header.value}`" :item="item">
-              {{ getValue(item, header.value) }}
-            </slot>
-          </x-table-cell>
-        </x-table-row>
+            <x-table-cell
+              v-for="(header, index2) in headers"
+              :key="index2"
+              :text-align="header.align"
+              :width="header.width"
+              :dense="dense"
+              :fixed="fixed"
+            >
+              <slot :name="`loading-${header.value}`" :item="item">
+                <x-skeleton
+                  class="max-w-[60%]"
+                  :shape="header.skeletonShape || 'line'"
+                  :class="{
+                    'mx-auto': header.align === 'center',
+                    'ml-auto': header.align === 'right',
+                  }"
+                />
+              </slot>
+            </x-table-cell>
+          </x-table-row>
+        </template>
+        <template v-else-if="error">
+          <tr>
+            <td :colspan="headers.length">
+              <slot name="error"></slot>
+            </td>
+          </tr>
+        </template>
+        <template v-else-if="!items || items.length === 0">
+          <tr>
+            <td :colspan="headers.length">
+              <slot name="empty"></slot>
+            </td>
+          </tr>
+        </template>
+        <template v-else>
+          <x-table-row
+            v-for="(item, index) in items"
+            :key="index"
+            :pointer="pointer"
+            :striped="striped"
+            @click="$emit('click-row', item)"
+          >
+            <x-table-cell
+              v-for="(header, index2) in headers"
+              :key="index2"
+              :text-align="header.align"
+              :truncate="header.truncate"
+              :width="header.width"
+              :dense="dense"
+              :fixed="fixed"
+            >
+              <slot :name="`item-${header.value}`" :item="item">
+                {{ getValue(item, header.value) }}
+              </slot>
+            </x-table-cell>
+          </x-table-row>
+        </template>
       </x-table-body>
       <div
         v-if="loading"

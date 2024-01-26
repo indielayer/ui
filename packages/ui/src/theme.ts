@@ -43,6 +43,9 @@ import type {
   TabGroupTheme,
   TableTheme,
   TableCellTheme,
+  TableHeadTheme,
+  TableHeaderTheme,
+  TableRowTheme,
   TagTheme,
   TextareaTheme,
   ToggleTheme,
@@ -92,6 +95,9 @@ export type ComponentThemes = {
   TabGroup: TabGroupTheme;
   Table: TableTheme;
   TableCell: TableCellTheme;
+  TableHead: TableHeadTheme;
+  TableHeader: TableHeaderTheme;
+  TableRow: TableRowTheme;
   Tag: TagTheme;
   Textarea: TextareaTheme;
   Toggle: ToggleTheme;
