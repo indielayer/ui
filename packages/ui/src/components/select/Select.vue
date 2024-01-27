@@ -37,7 +37,7 @@ import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { checkIcon, chevronDownIcon } from '../../common/icons'
+import { checkIcon, selectIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
 import XTag from '../tag/Tag.vue'
@@ -334,7 +334,8 @@ defineExpose({ focus, blur, reset, validate, setError })
             <x-tag
               v-for="value in selected"
               :key="value"
-              size="sm"
+              size="xs"
+              outlined
               removable
               @remove="(e: Event) => { handleRemove(e, value) }"
             >{{ getLabel(value) }}</x-tag>
@@ -369,7 +370,8 @@ defineExpose({ focus, blur, reset, validate, setError })
               <x-tag
                 v-for="value in selected"
                 :key="value"
-                size="sm"
+                size="xs"
+                outlined
                 removable
                 @remove="(e: Event) => { handleRemove(e, value) }"
               >{{ getLabel(value) }}</x-tag>
@@ -439,7 +441,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         <x-spinner v-if="loading" :size="size" />
         <slot v-else name="icon">
           <x-icon
-            :icon="chevronDownIcon"
+            :icon="selectIcon"
             :class="[classes.icon]"
           />
         </slot>

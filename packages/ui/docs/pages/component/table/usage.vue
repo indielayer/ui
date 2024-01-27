@@ -65,11 +65,22 @@ const itemsSorted = computed<Book[]>(() => {
 <template>
   <x-table
     v-model:sort="sort"
-    pointer
+    expandable
     :headers="headers"
     :items="itemsSorted"
-    @click-row="notifications?.log('open')"
   >
+    <template #expanded-row="{ item }">
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+      {{ item }}
+    </template>
+
     <template #item-published="{ item }">
       {{ formatDate(item.published) }}
     </template>

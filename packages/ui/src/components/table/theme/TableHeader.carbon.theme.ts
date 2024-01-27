@@ -5,7 +5,7 @@ const theme: TableHeaderTheme = {
     th: ({ props }) => {
       const classes = ['relative py-3.5 font-semibold text-sm px-3 bg-gray-200 dark:bg-gray-700 select-none']
 
-      if (props.sortable) classes.push('cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-150 ease-in-out pr-6')
+      if (props.sortable) classes.push('cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-150 ease-in-out pr-5')
 
       if (props.stickyHeader) classes.push('sticky top-0')
 

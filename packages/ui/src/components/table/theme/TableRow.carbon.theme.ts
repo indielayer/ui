@@ -11,7 +11,7 @@ const theme: TableRowTheme = {
         classes.push('border-b border-gray-200 dark:border-gray-700')
       }
 
-      if (props.pointer) classes.push('hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer')
+      if (props.pointer) classes.push('hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer')
 
       return classes
     },
