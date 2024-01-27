@@ -27,7 +27,7 @@ const theme: SelectTheme = {
       return classes
     },
 
-    content: 'py-1 max-h-72 overflow-scroll',
+    content: 'py-1 max-h-72 overflow-y-auto',
 
     iconWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2',
 

@@ -252,7 +252,7 @@ const { styles, classes, className } = useTheme('Table', {}, props)
           </x-table-row>
           <tr v-if="expandable">
             <td colspan="999">
-              <div class="overflow-hidden" :class="[internalItems[index]?.__expanded ? '' : 'max-h-0']">
+              <div class="overflow-hidden transition-opacity" :class="[internalItems[index]?.__expanded ? '' : 'opacity-0 max-h-0']">
                 <slot name="expanded-row" :item="item"></slot>
               </div>
             </td>
