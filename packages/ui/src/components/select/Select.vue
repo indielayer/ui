@@ -357,10 +357,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-popover
         v-else
         ref="popoverRef"
-        block
         :disabled="disabled || loading || readonly"
-        :dismiss-on-click="!multiple"
-        align="left"
       >
         <div
           :class="[classes.box]"

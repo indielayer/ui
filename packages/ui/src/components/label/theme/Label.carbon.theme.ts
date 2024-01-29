@@ -1,7 +1,5 @@
 import type { LabelTheme } from '../Label.vue'
 
-import BaseTheme from './Label.base.theme'
-
 const theme: LabelTheme = {
   classes: {
     wrapper: ({ props }) => {

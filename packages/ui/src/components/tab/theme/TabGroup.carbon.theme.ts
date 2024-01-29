@@ -31,7 +31,7 @@ const theme: TabGroupTheme = {
 
       if (props.variant === 'line') c.push('h-[2px] -mt-[2px] bg-[color:var(--x-tab-group-text)] dark:bg-[color:var(--x-tab-group-dark-text)]')
 
-      if (props.variant === 'block') c.push('border-t-2 border-[color:var(--x-tab-group-text)] dark:border-[color:var(--x-tab-group-dark-text)] h-full top-0 bg-gray-100 dark:bg-gray-700')
+      if (props.variant === 'block') c.push('border-t-2 border-solid border-[color:var(--x-tab-group-text)] dark:border-[color:var(--x-tab-group-dark-text)] h-full top-0 bg-gray-100 dark:bg-gray-700')
 
       return c
     },

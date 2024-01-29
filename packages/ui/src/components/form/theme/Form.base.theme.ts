@@ -4,7 +4,7 @@ const theme: FormTheme = {
   classes: {
     wrapper: 'relative',
 
-    content: 'grid gap-4',
+    content: '',
 
     title: 'text-xl mb-1',
 
