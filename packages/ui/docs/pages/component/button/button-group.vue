@@ -11,7 +11,7 @@
     </x-button-group>
     <x-button-group color="indigo" outlined disabled>
       <x-button>left</x-button>
-      <x-button loading loading-label="Loading..">middle</x-button>
+      <x-button>middle</x-button>
       <x-button>right</x-button>
     </x-button-group>
   </div>
