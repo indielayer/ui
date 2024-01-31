@@ -6,16 +6,14 @@ const selectProps = {
   placeholder: String,
   options: Array as PropType<SelectOption[]>,
   multiple: Boolean,
-  label: String,
-  helper: String,
   flat: Boolean,
   native: Boolean,
 }
 
 export type SelectOption = {
   value: number | string;
-  disabled: boolean;
   label: string;
+  disabled?: boolean;
 }
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
@@ -39,7 +37,7 @@ import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { checkIcon, chevronDownIcon } from '../../common/icons'
+import { checkIcon, selectIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
 import XTag from '../tag/Tag.vue'
@@ -230,6 +228,7 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   inputListeners,
   reset,
   validate,
@@ -335,7 +334,8 @@ defineExpose({ focus, blur, reset, validate, setError })
             <x-tag
               v-for="value in selected"
               :key="value"
-              size="sm"
+              size="xs"
+              outlined
               removable
               @remove="(e: Event) => { handleRemove(e, value) }"
             >{{ getLabel(value) }}</x-tag>
@@ -357,10 +357,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-popover
         v-else
         ref="popoverRef"
-        block
         :disabled="disabled || loading || readonly"
-        :dismiss-on-click="!multiple"
-        align="left"
       >
         <div
           :class="[classes.box]"
@@ -370,7 +367,8 @@ defineExpose({ focus, blur, reset, validate, setError })
               <x-tag
                 v-for="value in selected"
                 :key="value"
-                size="sm"
+                size="xs"
+                outlined
                 removable
                 @remove="(e: Event) => { handleRemove(e, value) }"
               >{{ getLabel(value) }}</x-tag>
@@ -415,6 +413,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </x-popover>
 
       <select
+        :id="id"
         ref="elRef"
         v-model="selected"
         tabindex="-1"
@@ -439,7 +438,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         <x-spinner v-if="loading" :size="size" />
         <slot v-else name="icon">
           <x-icon
-            :icon="chevronDownIcon"
+            :icon="selectIcon"
             :class="[classes.icon]"
           />
         </slot>
@@ -447,6 +446,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>

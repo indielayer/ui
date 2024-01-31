@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.app.json",
-  "exclude": [],
+  "exclude": ["docs/**/*.vue", "./volar.d.ts"],
   "compilerOptions": {
     "composite": true,
     "lib": [],

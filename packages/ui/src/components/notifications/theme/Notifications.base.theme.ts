@@ -2,7 +2,7 @@ import type { NotificationsTheme } from '../Notifications.vue'
 
 const theme: NotificationsTheme = {
   classes: {
-    wrapper: 'fixed z-40 w-full sm:w-auto overflow-y-auto max-h-screen',
+    wrapper: 'fixed z-50 w-full sm:w-auto overflow-y-auto max-h-screen',
 
     list: 'flex flex-col items-end w-full sm:w-[520px] px-4',
 

@@ -4,10 +4,10 @@
     {
       "type": "npm",
       "script": "dev",
-      "path": "packages/docs",
+      "path": "packages/ui",
       "isBackground": true,
       "problemMatcher": [],
-      "label": "npm: dev - packages/docs",
+      "label": "npm: dev - packages/ui",
       "detail": "vite"
     },
     {

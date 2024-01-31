@@ -4,15 +4,15 @@ const checkboxProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  label: String,
-  helper: String,
+  value: [String, Number],
+  indeterminate: Boolean,
   glow: Boolean,
 }
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 
-type InternalClasses = 'wrapper' | 'box' | 'icon' | 'label'
-type InternalExtraData = { checked: Ref<boolean>; }
+type InternalClasses = 'wrapper' | 'content' | 'box' | 'icon' | 'label'
+type InternalExtraData = { checked: Ref<boolean>; isInsideForm: boolean; isInsideFormGroup: boolean;}
 export interface CheckboxTheme extends ThemeComponent<CheckboxProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes, type Ref, unref, nextTick } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
@@ -41,14 +41,6 @@ const emit = defineEmits(useInputtable.emits(false))
 const elRef = ref<HTMLElement | null>(null)
 const checked = ref(false)
 
-watch(() => props.modelValue, (value) => {
-  checked.value = !!value
-}, { immediate: true })
-
-watch(() => checked.value, (value) => {
-  emit('update:modelValue', value)
-})
-
 function toggle() {
   checked.value = !checked.value
 }
@@ -57,13 +49,69 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   isInsideForm,
+  isInsideFormGroup,
+  isFirstValidation,
+  formGroup,
   reset,
   validate,
   setError,
 } = useInputtable(props, { focus, emit, withListeners: false })
 
-const { styles, classes, className } = useTheme('Checkbox', {}, props, { checked })
+if (isInsideFormGroup) {
+  watch(() => formGroup.value, () => {
+    const formGroupValue = unref(formGroup.value)
+
+    if (formGroupValue && Array.isArray(formGroupValue) && formGroupValue.includes(props.value as never)) checked.value = true
+    else checked.value = false
+  }, { immediate: true, deep: true })
+
+  watch(() => checked.value, (value) => {
+    if (!props.value) return
+
+    const formGroupValue = unref(formGroup.value)
+
+    if (value) {
+      if (formGroupValue && Array.isArray(formGroupValue)) {
+        if (!formGroupValue.includes(props.value as never)) {
+          const newValue = [...formGroupValue, props.value]
+
+          formGroup.setValue(newValue as any)
+        }
+      } else {
+        formGroup.setValue([props.value as any])
+      }
+    } else {
+      if (formGroupValue && Array.isArray(formGroupValue) && formGroupValue.includes(props.value as never)) {
+        const index = formGroupValue.findIndex((v) => v === props.value)
+        const newValue = [...formGroupValue]
+
+        newValue.splice(index, 1)
+        formGroup.setValue(newValue as any)
+      }
+    }
+  })
+} else {
+  watch(() => props.modelValue, (value) => {
+    checked.value = !!value
+  }, { immediate: true })
+
+  watch(() => checked.value, (value) => {
+    emit('update:modelValue', value)
+  })
+}
+
+const listeners = {
+  input: () => {
+    if (isInsideFormGroup) return
+    setTimeout(() => {
+      if (props.validateOnInput && !isFirstValidation.value) validate(props.modelValue)
+    }, 0)
+  },
+}
+
+const { styles, classes, className } = useTheme('Checkbox', {}, props, { checked, isInsideForm, isInsideFormGroup })
 
 defineExpose({ focus, blur, toggle, reset, validate, setError })
 </script>
@@ -74,25 +122,25 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
     :class="[
       className,
       classes.wrapper,
-      { 'mb-3': isInsideForm }
     ]"
   >
     <div
       ref="elRef"
-      class="flex items-center"
-      :class="{ 'cursor-not-allowed': disabled }"
+      :class="classes.content"
       tabindex="0"
       @keypress.prevent.stop.space="toggle"
     >
       <input
+        :id="id"
         v-model="checked"
-        :aria-checked="checked ? 'true' : 'false'"
+        :name="name"
+        :aria-checked="indeterminate ? 'mixed' : (checked ? 'true' : 'false')"
         :aria-disabled="disabled ? 'true' : undefined"
         type="checkbox"
         class="invisible absolute"
         :disabled="disabled || loading"
-        :name="name"
         :required="required"
+        v-on="listeners"
       />
       <div
         :class="[
@@ -101,6 +149,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
         ]"
       >
         <x-spinner v-if="loading" :size="size" class="absolute" />
+        <span v-else-if="indeterminate" name="check-icon" class="w-2/3 h-[2px] bg-white dark:bg-gray-900"></span>
         <slot v-else name="icon">
           <svg
             viewBox="0 0 20 20"
@@ -116,7 +165,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
       </div>
     </div>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </label>
 </template>
 

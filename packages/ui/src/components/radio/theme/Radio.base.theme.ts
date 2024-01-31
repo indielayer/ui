@@ -2,7 +2,13 @@ import type { RadioTheme } from '../Radio.vue'
 
 const theme: RadioTheme = {
   classes: {
-    wrapper: 'inline-block relative cursor-pointer focus:outline-none group',
+    wrapper: ({ data }) => {
+      const classes = ['inline-block relative cursor-pointer focus:outline-none group']
+
+      if (data.isInsideForm) classes.push('mb-3')
+
+      return classes
+    },
 
     circle: ({ props }) => {
       let c = 'rounded-full flex justify-center items-center shrink-0 border-2 outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline'

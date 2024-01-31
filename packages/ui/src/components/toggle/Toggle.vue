@@ -4,9 +4,6 @@ const toggleProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  id: String,
-  label: String,
-  helper: String,
   glow: Boolean,
 }
 
@@ -53,6 +50,7 @@ const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
+  hideFooterInternal,
   reset,
   validate,
   setError,
@@ -119,6 +117,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-spinner v-if="loading" :size="size" class="ml-1" />
     </div>
 
-    <x-input-footer v-if="!hideFooter" :error="errorInternal" :helper="helper"/>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </label>
 </template>

@@ -44,10 +44,10 @@ const theme: MenuItemTheme = {
             text: color[500],
           },
           dark: {
-            bg: props.selected ? color[800] : color[700],
+            bg: props.selected ? color[700] : color[700],
             text: color[100],
             hover: {
-              bg: props.selected ? color[800] : color[700],
+              bg: props.selected ? color[700] : color[700],
               text: color[100],
             },
           },

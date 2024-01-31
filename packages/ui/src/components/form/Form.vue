@@ -13,6 +13,12 @@ const formProps = {
     type: [Array, Object] as PropType<[FormError[], FormError]>,
     default: () => ([]),
   },
+  title: String,
+  description: String,
+  hasFooter: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type FormProps = ExtractPublicPropTypes<typeof formProps>
@@ -35,12 +41,11 @@ export type FormInput = {
   setError: (val: string) => void;
 }
 
-type InternalClasses = 'wrapper'
+type InternalClasses = 'wrapper' | 'content' | 'title' | 'description' | 'footer'
 export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
 
 export default {
   name: 'XForm',
-  inheritAttrs: false,
 }
 </script>
 
@@ -73,8 +78,10 @@ provide(injectFormKey, {
   isInsideForm: true,
 })
 
-onMounted(() => {
-  if (props.autoFocus && inputs && inputs.length > 0) inputs[0].focus()
+onMounted(async () => {
+  if (props.autoFocus && inputs && inputs.length > 0) {
+    setTimeout(inputs[0].focus, 50)
+  }
 })
 
 watch(() => props.errors, (errors) => {
@@ -131,8 +138,22 @@ const { styles, classes, className } = useTheme('Form', {}, props)
     ]"
     @submit="submit"
   >
-    <fieldset :disabled="disabled">
+    <slot name="header">
+      <div v-if="title || description" class="mb-10">
+        <p v-if="title" :class="classes.title">{{ title }}</p>
+        <p v-if="description" :class="classes.description">{{ description }}</p>
+      </div>
+    </slot>
+
+    <fieldset :disabled="disabled" :class="classes.content">
       <slot></slot>
     </fieldset>
+
+    <slot v-if="hasFooter" name="footer">
+      <div :class="classes.footer">
+        <slot name="primary-action"></slot>
+        <slot name="secondary-action"></slot>
+      </div>
+    </slot>
   </form>
 </template>

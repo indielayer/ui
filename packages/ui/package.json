@@ -42,9 +42,11 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "pnpm generate && vite build --watch",
+    "dev": "vite dev --mode docs",
     "build": "pnpm generate && vite build",
+    "build:docs": "pnpm build --mode docs",
     "build:prod": "pnpm build && pnpm gen-types",
+    "build:watch": "pnpm generate && vite build --watch",
     "build:only": "vite build",
     "build:stats": "VITE_VISUALIZER=Y npm run build",
     "generate": "pnpm gen-version",
@@ -78,12 +80,14 @@
     "jsdom": "^22.1.0",
     "postcss": "^8.4.4",
     "rollup-plugin-visualizer": "^5.9.2",
+    "shiki": "1.0.0-beta.1",
     "stylelint": "^14.16.1",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.2.2",
     "vite": "^4.4.11",
     "vitest": "^0.32.2",
     "vue": "^3.3.9",
+    "vue-router": "^4.2.2",
     "vue-tsc": "^1.8.2"
   },
   "browserslist": [

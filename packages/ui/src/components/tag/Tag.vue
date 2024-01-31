@@ -13,7 +13,7 @@ const tagProps = {
 
 export type TagProps = ExtractPublicPropTypes<typeof tagProps>
 
-type InternalClasses = 'wrapper' | 'loadingWrapper'
+type InternalClasses = 'wrapper'
 export interface TagTheme extends ThemeComponent<TagProps, InternalClasses> {}
 
 export default {
@@ -52,13 +52,13 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
 <template>
   <component
     :is="tag"
-    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border-[color:var(--x-tag-border)"
+    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]"
     :style="styles"
     :class="
       [
         className,
         classes.wrapper,
-        outlined ? 'border' : 'bg-[color:var(--x-tag-bg)]',
+        outlined ? 'border' : 'bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
         rounded ? 'rounded-full' : 'rounded'
       ]"
   >
@@ -70,7 +70,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
       <x-icon
         :size="closeIconSize"
         :icon="closeIcon"
-        class="ml-1 cursor-pointer hover:text-gray-700 transition-colors duration-150"
+        class="ml-1.5 cursor-pointer hover:text-gray-700 transition-colors duration-150"
         @click="(e: Event) => $emit('remove', e)"
       />
     </span>

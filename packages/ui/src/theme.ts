@@ -1,5 +1,7 @@
 import type { ColorLibrary } from './composables/useColors'
 import type {
+  AccordionTheme,
+  AccordionItemTheme,
   AlertTheme,
   AvatarTheme,
   BadgeTheme,
@@ -10,11 +12,11 @@ import type {
   CarouselTheme,
   CarouselSlideTheme,
   CheckboxTheme,
-  CollapseTheme,
   ContainerTheme,
   DividerTheme,
   DrawerTheme,
   FormTheme,
+  FormGroupTheme,
   IconTheme,
   ImageTheme,
   InputTheme,
@@ -36,16 +38,22 @@ import type {
   SelectTheme,
   SkeletonTheme,
   SliderTheme,
+  StepperTheme,
   TabTheme,
   TabGroupTheme,
   TableTheme,
   TableCellTheme,
+  TableHeadTheme,
+  TableHeaderTheme,
+  TableRowTheme,
   TagTheme,
   TextareaTheme,
   ToggleTheme,
 } from './components'
 
 export type ComponentThemes = {
+  Accordion: AccordionTheme;
+  AccordionItem: AccordionItemTheme;
   Alert: AlertTheme;
   Avatar: AvatarTheme;
   Badge: BadgeTheme;
@@ -56,11 +64,11 @@ export type ComponentThemes = {
   Carousel: CarouselTheme;
   CarouselSlide: CarouselSlideTheme;
   Checkbox: CheckboxTheme;
-  Collapse: CollapseTheme;
   Container: ContainerTheme;
   Divider: DividerTheme;
   Drawer: DrawerTheme;
   Form: FormTheme;
+  FormGroup: FormGroupTheme;
   Icon: IconTheme;
   Image: ImageTheme;
   Input: InputTheme;
@@ -82,10 +90,14 @@ export type ComponentThemes = {
   Select: SelectTheme;
   Skeleton: SkeletonTheme;
   Slider: SliderTheme;
+  Stepper: StepperTheme;
   Tab: TabTheme;
   TabGroup: TabGroupTheme;
   Table: TableTheme;
   TableCell: TableCellTheme;
+  TableHead: TableHeadTheme;
+  TableHeader: TableHeaderTheme;
+  TableRow: TableRowTheme;
   Tag: TagTheme;
   Textarea: TextareaTheme;
   Toggle: ToggleTheme;

@@ -2,19 +2,21 @@ import type { TableTheme } from '../Table.vue'
 
 const theme: TableTheme = {
   classes: {
-    wrapper: ({ props }) => {
-      const c = ['w-full relative']
+    wrapper: 'w-full h-full overflow-x-auto',
 
-      if (props.scrollable) c.push('overflow-x-scroll sm:overflow-x-auto whitespace-wrap sm:whitespace-normal block sm:table')
+    table: ({ props }) => {
+      const classes = ['w-full relative']
 
-      if (props.stickyHeader) c.push('relative')
+      if (props.scrollable) classes.push('overflow-x-scroll sm:overflow-x-auto whitespace-wrap sm:whitespace-normal')
 
-      if (props.fixed) c.push('table-fixed')
+      if (props.stickyHeader) classes.push('relative')
 
-      return c
+      if (props.fixed) classes.push('md:table-fixed')
+
+      return classes
     },
 
-    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-50',
+    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-30',
   },
 }
 

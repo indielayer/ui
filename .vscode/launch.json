@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Debug Docs",
       "webRoot": "${workspaceFolder}",
-      "preLaunchTask": "npm: dev - packages/docs",
+      "preLaunchTask": "npm: dev - packages/ui",
       "postDebugTask": "stop server",
       "url": "http://localhost:3001",
     }

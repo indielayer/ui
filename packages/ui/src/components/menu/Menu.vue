@@ -65,12 +65,12 @@ import { useColors } from '../../composables/useColors'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XMenuItem from './MenuItem.vue'
-import XCollapse from '../../components/collapse/Collapse.vue'
+import XAccordionItem from '../../components/accordion/AccordionItem.vue'
 import XDivider from '../../components/divider/Divider.vue'
 
 const props = defineProps(menuProps)
 
-defineEmits(['expand'])
+defineEmits(['expand', 'item-click'])
 
 const { styles, classes, className } = useTheme('Menu', {}, props)
 </script>
@@ -87,7 +87,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
   >
     <template v-for="(item, index) in items" :key="index">
       <template v-if="item.items">
-        <x-collapse
+        <x-accordion-item
           v-if="item.collapsible !== false"
           :icon="item.collapseIcon || collapseIcon"
           :expanded="item.expanded || expanded"
@@ -121,9 +121,10 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
               :rounded="rounded"
               :filled="filled"
               @expand="expand(false)"
+              @item-click="$emit('item-click')"
             />
           </template>
-        </x-collapse>
+        </x-accordion-item>
         <template v-else>
           <x-menu-item
             :item="item"
@@ -134,6 +135,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
             :disabled="disabled || item.disabled"
             class="font-medium"
             inactive
+            @click="$emit('item-click')"
           />
           <x-menu
             class="x-menu-inner space-y-1 ml-4 border-l border-gray-100 dark:border-gray-700"
@@ -162,6 +164,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
           :size="item.size || size"
           :disabled="disabled || item.disabled"
           :class="{ 'my-2': item.divider }"
+          @click="$emit('item-click')"
           @active="$emit('expand')"
         />
       </template>

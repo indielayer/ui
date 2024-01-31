@@ -3,9 +3,9 @@ import type { TabTheme } from '../Tab.vue'
 const theme: TabTheme = {
   classes: {
     wrapper: ({ props, data }) => {
-      const c = ['py-2 transition-colors duration-150 ease-in-out whitespace-nowrap text-left min-w-[8rem]']
+      const c = ['py-2 transition-colors duration-150 ease-in-out whitespace-nowrap text-left']
 
-      if (data.variant === 'block') c.push('px-8')
+      if (data.variant === 'block') c.push('px-4')
       else c.push('px-4')
 
       if (props.size === 'lg') c.push('text-lg')
@@ -26,6 +26,8 @@ const theme: TabTheme = {
     },
 
     icon: 'mr-1.5',
+
+    tabpanel: 'py-4',
   },
 }
 

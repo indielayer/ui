@@ -6,18 +6,19 @@ const tabProps = {
   },
   tag: {
     type: String,
-    default: 'div',
+    default: 'button',
   },
   to: [String, Object],
   label: String,
   icon: String,
   disabled: Boolean,
   exact: Boolean,
+  removable: Boolean,
 }
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
 
-type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon'
+type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon' | 'tabpanel'
 type InternalExtraData = {
   selected: boolean;
 } & Pick<TabGroupInjection, 'state'>['state']
@@ -34,12 +35,14 @@ export default {
 <script setup lang="ts">
 import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
-import { injectTabKey } from '../../composables/keys'
+import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
+
+import { closeIcon } from '../../common/icons'
 
 import type { TabGroupInjection, TabGroupVariant } from './TabGroup.vue'
 
@@ -50,7 +53,7 @@ const computedLabel = computed(() => props.label || props.value)
 const teleportTo = ref<HTMLElement | null>(null)
 const elRef = ref<HTMLElement | typeof XLink | null>(null)
 
-const tabs = inject(injectTabKey, {
+const tabs = inject(injectTabGroupKey, {
   tabsContentRef: ref(null),
   activateTab: () => {},
   state: reactive({
@@ -99,8 +102,10 @@ function onClickTab(e: MouseEvent) {
     return
   }
 
-  if (!props.to && computedValue.value) tabs.activateTab(computedValue.value)
+  if (!props.to && typeof computedValue.value !== 'undefined') tabs.activateTab(computedValue.value)
 }
+
+defineEmits(['remove'])
 
 const { styles, classes, className } = useTheme('Tab', {}, ref({
   ...props,
@@ -156,10 +161,19 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
           :class="classes.icon"
         />
         <div :class="classes.label">{{ computedLabel }}</div>
+        <x-icon
+          v-if="removable"
+          size="sm"
+          :icon="closeIcon"
+          class="ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-500 transition-colors duration-150"
+          @click="(e: Event) => $emit('remove', e)"
+        />
       </div>
     </slot>
     <teleport v-if="selected && teleportTo" :to="teleportTo">
-      <slot></slot>
+      <div role="tabpanel" :class="classes.tabpanel">
+        <slot></slot>
+      </div>
     </teleport>
   </component>
 </template>

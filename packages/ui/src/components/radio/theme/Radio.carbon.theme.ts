@@ -2,16 +2,22 @@ import type { RadioTheme } from  '../Radio.vue'
 
 const theme: RadioTheme = {
   classes: {
-    wrapper: 'inline-block relative cursor-pointer focus:outline-none group',
+    wrapper: ({ data }) => {
+      const classes = ['inline-block relative cursor-pointer focus:outline-none group']
+
+      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-8')
+
+      return classes
+    },
 
     circle: ({ props }) => {
-      let c = 'rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline'
+      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline']
 
-      if (props.size === 'xs' || props.size === 'sm') c += ' h-4 w-4'
-      if (props.size === 'xl') c += ' h-6 w-6'
-      else c += ' h-5 w-5'
+      if (props.size === 'xs' || props.size === 'sm') classes.push('h-3 w-3')
+      else if (props.size === 'xl') classes.push('h-5 w-5')
+      else classes.push('h-4 w-4')
 
-      return c
+      return classes
     },
 
     circleIcon: ({ props, data }) => {
@@ -84,7 +90,7 @@ const theme: RadioTheme = {
       } else {
         vars.push(css.variables({
           bg: '#fff',
-          border: props.glow ? color[300] : gray[300],
+          border: props.glow ? color[300] : gray[900],
           dark: {
             bg: gray[900],
             border: props.glow ? color[300] : gray[300],

@@ -4,7 +4,6 @@ const sliderProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  label: String,
   min: Number,
   max: Number,
   step: {
@@ -183,7 +182,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       classes.wrapper,
     ]"
   >
-    <div class="flex items-center relative w-full" >
+    <div class="flex items-center relative w-full">
       <slot name="prefix" :value="value"></slot>
       <div
         ref="progressRef"

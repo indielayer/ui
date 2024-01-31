@@ -2,7 +2,13 @@ import type { CheckboxTheme } from '../Checkbox.vue'
 
 const theme: CheckboxTheme = {
   classes: {
-    wrapper: 'inline-block relative cursor-pointer align-middle',
+    wrapper: ({ data }) => {
+      const classes = ['inline-block relative cursor-pointer align-middle']
+
+      if (data.isInsideForm) classes.push('mb-3')
+
+      return classes
+    },
 
     box: ({ props }) => {
       const classes = ['rounded flex justify-center items-center shrink-0 border-2 border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
@@ -10,6 +16,14 @@ const theme: CheckboxTheme = {
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-4 w-4')
       else if (props.size === 'xl') classes.push('h-6 w-6')
       else classes.push('h-5 w-5')
+
+      return classes
+    },
+
+    content: ({ props }) => {
+      const classes = ['flex items-center']
+
+      if (props.disabled) classes.push('cursor-not-allowed')
 
       return classes
     },

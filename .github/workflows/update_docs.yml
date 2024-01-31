@@ -34,10 +34,10 @@ jobs:
       - name: Build documentation
         run: |
           pnpm run build:docs
-          cp ./packages/docs/dist/index.html ./packages/docs/dist/404.html
+          cp ./packages/ui/dist/index.html ./packages/ui/dist/404.html
 
       - name: Update pages
-        working-directory: ./packages/docs/dist
+        working-directory: ./packages/ui/dist
         run: |
           git config --global init.defaultBranch master
           git init

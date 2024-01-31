@@ -18,7 +18,7 @@ const theme: SelectTheme = {
       } else if (props.readonly) {
         classes.push('bg-white dark:bg-gray-900 text-gray-700')
       } else {
-        classes.push('bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200')
+        classes.push('bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200')
       }
 
       if (data.errorInternal) {
@@ -30,7 +30,7 @@ const theme: SelectTheme = {
       return classes
     },
 
-    content: 'py-1 max-h-72 overflow-scroll',
+    content: 'py-1 max-h-72 overflow-y-auto',
 
     iconWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2',
 

@@ -13,19 +13,19 @@ const theme: TagTheme = {
 
       return c
     },
-
-    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-50',
   },
 
   styles: ({ colors, props, css }) => {
     const color = colors.getPalette(props.color)
 
     return css.variables({
-      bg: color[100],
+      bg: color[200],
       text: color[800],
       border: color[800],
       dark: {
-        text: props.outlined ? color[200] : color[800],
+        bg: color[800],
+        border: color[400],
+        text: props.outlined ? color[200] : color[100],
       },
     })
   },

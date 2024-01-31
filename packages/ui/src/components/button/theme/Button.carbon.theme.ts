@@ -3,7 +3,7 @@ import type { ButtonTheme } from '../Button.vue'
 const theme: ButtonTheme = {
   classes: {
     wrapper({ props, slots, data }) {
-      const classes = ['relative transition duration-150 focus:outline-none inline-flex whitespace-nowrap overflow-hidden align-top appearance-none text-sm active:shadow-none border !leading-[1.28572] tracking-wide font-light']
+      const classes = ['relative transition duration-150 inline-flex whitespace-nowrap overflow-hidden align-top appearance-none text-sm active:shadow-none border !leading-[1.28572] tracking-wide font-light']
 
       // radius
       if (!data.isButtonGroup) classes.push(props.rounded ? 'rounded-full' : '')

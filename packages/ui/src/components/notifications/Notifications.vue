@@ -286,25 +286,25 @@ defineExpose({ log, info, success, warn, warning: warn, error })
             viewBox="0 0 20 20"
           />
           <div class="flex items-center flex-wrap">
-            <span v-if="notification.title" class="font-semibold mr-2">{{ notification.title }}</span>
+            <span v-if="notification.title" class="font-medium mr-2">{{ notification.title }}</span>
             <span>{{ notification.message }}</span>
           </div>
           <x-spacer/>
-          <div
+          <button
             v-if="notification.action"
             class="
                 ml-3
-                font-semibold
+                font-medium
                 cursor-pointer
                 text-[color:var(--x-notification-action)]
                 hover:text-[color:var(--x-notification-action-hover)]
                 dark:text-[color:var(--x-notification-dark-action)]
                 dark:hover:text-[color:var(--x-notification-dark-action-hover)]
               "
-            @click="notification.action.onClick"
+            @click="() => { notification.action?.onClick(); remove(notification); }"
           >
             {{ notification.action.label }}
-          </div>
+          </button>
           <x-icon
             v-if="notification.removable"
             :icon="closeIcon"

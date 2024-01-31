@@ -10,7 +10,7 @@ const tableCellProps = {
   },
   truncate: Boolean,
   dense: Boolean,
-  fixed: Boolean,
+  width: [String, Number],
   verticalAlign: {
     type: String as PropType<TableCellVerticalAlign>,
     default: 'middle',
@@ -32,22 +32,21 @@ export default {
 </script>
 
 <script setup lang="ts">
-import type { ExtractPublicPropTypes, PropType } from 'vue'
+import { computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(tableCellProps)
 
-if (props.truncate && !props.fixed) {
-  console.warn('Table must have "fixed" property set to true when using TableCell "truncate" property')
-}
+const computedWidth = computed(() => typeof props.width === 'number' ? `${props.width}px` : props.width)
 
 const { styles, classes, className } = useTheme('TableCell', {}, props)
 </script>
 
 <template>
   <td
-    :style="styles"
+    :style="[styles, { width: computedWidth, minWidth: computedWidth, maxWidth: computedWidth }]"
     :class="[
+      'relative',
       className,
       classes.wrapper,
     ]"

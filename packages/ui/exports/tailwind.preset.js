@@ -28,6 +28,7 @@ module.exports = () => ({
         secondary: getColorVarPallete('secondary'),
         success: getColorVarPallete('success'),
         warning: getColorVarPallete('warning'),
+        danger: getColorVarPallete('error'),
         error: getColorVarPallete('error'),
       },
       borderColor: getColorVar('border'),
