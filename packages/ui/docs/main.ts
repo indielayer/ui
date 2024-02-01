@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import UI, { BaseTheme, CarbonTheme } from '../src'
+import UI, { BaseTheme } from '../src'
 import App from './App.vue'
 import router from './router'
 import icons from './icons'
@@ -19,8 +19,7 @@ const app = createApp(App)
 app.use(UI, {
   prefix: 'X',
   icons,
-  // theme: BaseTheme,
-  theme: CarbonTheme,
+  theme: BaseTheme,
 })
 
 app.use(router)

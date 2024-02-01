@@ -20,6 +20,7 @@
   "files": [
     "lib",
     "src",
+    "docs",
     "*.d.ts",
     "exports",
     "README.md"

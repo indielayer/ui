@@ -4,7 +4,7 @@ const theme: SliderTheme = {
   classes: {
     wrapper: '',
 
-    drag: 'w-[16px] h-[16px] -mt-[11px] -ml-[8px] rounded-full bg-gray-900',
+    drag: 'w-[16px] h-[16px] -mt-[11px] -ml-[8px] rounded-full bg-gray-900 dark:bg-gray-100',
   },
 
   styles: ({ props, colors, css }) => {
