@@ -17,6 +17,7 @@ export default defineConfig(({ command, mode }) => {
 
   if (mode === 'docs') {
     return {
+      base: '/ui/',
       plugins: [vue(), vueJsx()],
       resolve: {
         alias: {
