@@ -58,6 +58,8 @@ const routes: RouteRecordRaw[] = [{
 }, {
   path: '/play',
   component: PlayPage,
+}, {
+  path: '/:pathMatch(.*)*', name: 'NotFound', redirect: { name: 'getting-started' },
 }]
 
 const router = createRouter({
