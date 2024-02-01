@@ -90,3 +90,4 @@ sw.*
 *.swp
 packages/starter
 packages/ui/src/version.ts
+.vercel
