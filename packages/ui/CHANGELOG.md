@@ -1,5 +1,20 @@
 # @indielayer/ui
 
+## 1.4.0
+
+### Minor Changes
+
+- fix(tab): update value
+  chore: merge documentation inside ui
+  feat(tab): add carbon block
+  feat(form): add title and description
+  fix(tab): dark mode
+  feat: add stepper component
+  feat(modal): add composed view
+  feat: add formgroup component
+  feat(checkbox): add indeterminate state
+  ([#32](https://github.com/indielayer/ui/pull/32)) ([`e0f6980`](https://github.com/indielayer/ui/commit/e0f6980f5d4fde2a906579a20160cde5b0fc3c77))
+
 ## 1.3.0
 
 ### Minor Changes
