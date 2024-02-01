@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useNotifications } from '../../../../src'
+import { useNotifications } from '@indielayer/ui'
 
 const show = ref(false)
 

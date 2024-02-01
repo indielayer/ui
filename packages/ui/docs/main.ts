@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import UI, { BaseTheme } from '../src'
+import UI, { BaseTheme } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
 import icons from './icons'

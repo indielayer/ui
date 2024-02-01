@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { useNotifications } from '../../../../src'
+import { useNotifications } from '@indielayer/ui'
 
 export default {
   setup() {

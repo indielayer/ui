@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XAccordion, XAccordionItem } from '../../../../src'
+import { XAccordion, XAccordionItem } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

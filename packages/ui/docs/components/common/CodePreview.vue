@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNotifications } from '../../../src'
+import { useNotifications } from '@indielayer/ui'
 import { ref } from 'vue'
 
 const props = defineProps({

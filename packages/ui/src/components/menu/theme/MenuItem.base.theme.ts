@@ -65,7 +65,7 @@ const theme: MenuItemTheme = {
           bg: props.selected ? gray[800] : 'transparent',
           text: gray[200],
           hover: {
-            bg: gray[800],
+            bg: gray[600],
             text: gray[100],
           },
         },

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XImage } from '../../../../src'
+import { XImage } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

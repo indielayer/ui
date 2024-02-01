@@ -24,6 +24,7 @@ export type AccordionItemProps = ExtractPublicPropTypes<typeof accordionItemProp
 type InternalClasses = 'wrapper' | 'icon' | 'content'
 type InternalData = {
   collapsed: boolean;
+  isInsideAccordion: boolean;
 }
 export interface AccordionItemTheme extends ThemeComponent<AccordionItemProps, InternalClasses, InternalData> {}
 
@@ -46,7 +47,9 @@ const props = defineProps(accordionItemProps)
 
 const emit = defineEmits(['expand'])
 
-const accordionProps = inject(injectAccordionKey, {})
+const accordionProps = inject(injectAccordionKey, {
+  isInsideAccordion: false,
+})
 
 const computedIconAlign = computed(() => accordionProps.iconAlign || props.iconAlign)
 const computedProps = reactive({
@@ -127,7 +130,7 @@ function onExpand(anim = true) {
 const { styles, classes, className } = useTheme('AccordionItem', {}, {
   ...props,
   ...computedProps,
-}, { collapsed })
+}, { collapsed, isInsideAccordion: accordionProps.isInsideAccordion })
 
 defineExpose({ toggle, open, close })
 </script>

@@ -104,7 +104,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
               :filled="item.filled || filled"
               :size="item.size || size"
               :disabled="disabled || item.disabled"
-              class="pr-10 font-medium"
+              class="font-medium"
             />
           </template>
           <template #content="{ expand }">

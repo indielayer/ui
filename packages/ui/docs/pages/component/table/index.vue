@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow } from '../../../../src'
+import { XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 import StatesDemoCode from './states.vue?raw'

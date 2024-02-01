@@ -58,7 +58,7 @@ module.exports = {
     './index.html',
     './**/*.vue',
     './src/**/*.{vue,js,ts,jsx,tsx}',
-    'node_modules/../../../src/{lib,src}/**/*',
+    'node_modules/@indielayer/ui/{lib,src}/**/*',
   ],
   theme: {
     extend: {
@@ -79,7 +79,7 @@ module.exports = {
       <code-snippet
         lang="js"
         :code="`import { createApp } from 'vue'
-import UI from '../../../src'
+import UI from '@indielayer/ui'
 
 const app = createApp(App)
 
@@ -93,25 +93,25 @@ app.use(UI, {
         :snippets="[{
           label: 'npm',
           lang: 'bash',
-          code: 'npm install ../../../src @vueuse/core floating-vue -D'
+          code: 'npm install @indielayer/ui @vueuse/core floating-vue -D'
         }, {
           label: 'yarn',
           lang: 'bash',
-          code: 'yarn add ../../../src @vueuse/core floating-vue -D'
+          code: 'yarn add @indielayer/ui @vueuse/core floating-vue -D'
         }, {
           label: 'pnpm',
           lang: 'bash',
-          code: 'pnpm add ../../../src @vueuse/core floating-vue -D'
+          code: 'pnpm add @indielayer/ui @vueuse/core floating-vue -D'
         }]"
       />
       <code-snippet
         lang="js"
-        :code="`import { colors } from '../../../../src'
+        :code="`import { colors } from '@indielayer/ui'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    ['../../../src/nuxt', {
+    ['@indielayer/ui/nuxt', {
       theme: {
         colors: {
           primary: colors.emerald,
@@ -142,7 +142,7 @@ export default defineNuxtConfig({
       <code-snippet
         lang="js"
         :code="`import { createApp } from 'vue'
-import { createUI, XButton, XAlert } from '../../../../src'
+import { createUI, XButton, XAlert } from '@indielayer/ui'
 
 const app = createApp(App)
 

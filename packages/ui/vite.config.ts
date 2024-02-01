@@ -1,5 +1,6 @@
 /// <reference types="vitest" />
 import { resolve } from 'path'
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv, type PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -17,6 +18,12 @@ export default defineConfig(({ command, mode }) => {
   if (mode === 'docs') {
     return {
       plugins: [vue(), vueJsx()],
+      resolve: {
+        alias: {
+          '@': fileURLToPath(new URL('./docs', import.meta.url)),
+          '@indielayer/ui': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+      },
     }
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XDrawer } from '../../../../src'
+import { XDrawer } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

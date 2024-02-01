@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XTabGroup, XTab } from '../../../../src'
+import { XTabGroup, XTab } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

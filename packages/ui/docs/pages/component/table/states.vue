@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type TableHeader } from '../../../../src'
+import { type TableHeader } from '@indielayer/ui'
 import { ref } from 'vue'
 
 const headers: TableHeader[] = [

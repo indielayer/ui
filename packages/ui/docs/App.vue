@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { provide, ref } from 'vue'
 import { RouterView } from 'vue-router'
-import { BaseTheme, CarbonTheme } from '../src'
+import { BaseTheme, CarbonTheme } from '@indielayer/ui'
 
 const lastTheme = localStorage.getItem('THEME') || ''
 

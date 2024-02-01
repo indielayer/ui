@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XModal } from '../../../../src'
+import { XModal } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 import ComposedDemoCode from './composed.vue?raw'

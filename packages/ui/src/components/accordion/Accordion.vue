@@ -16,6 +16,10 @@ const accordionProps = {
 
 export type AccordionProps = ExtractPublicPropTypes<typeof accordionProps>
 
+export type AccordionInjection = AccordionProps & {
+  isInsideAccordion: boolean;
+}
+
 type InternalClasses = 'wrapper'
 export interface AccordionTheme extends ThemeComponent<AccordionProps, InternalClasses> {}
 
@@ -33,7 +37,7 @@ import { injectAccordionKey } from '../../composables/keys'
 
 const props = defineProps(accordionProps)
 
-provide(injectAccordionKey, props)
+provide(injectAccordionKey, { ...props, isInsideAccordion: true })
 
 const { styles, classes, className } = useTheme('Accordion', {}, props)
 </script>

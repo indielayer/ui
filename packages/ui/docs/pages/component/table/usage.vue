@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNotifications, type TableHeader } from '../../../../src'
+import { useNotifications, type TableHeader } from '@indielayer/ui'
 import { computed, ref } from 'vue'
 
 const notifications = useNotifications('notifica')

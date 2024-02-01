@@ -1,5 +1,10 @@
 <script lang="ts">
-const carouselSlideProps = {}
+const carouselSlideProps = {
+  tag: {
+    type: String,
+    default: 'div',
+  },
+}
 
 export type CarouselSlideProps = ExtractPublicPropTypes<typeof carouselSlideProps>
 
@@ -8,7 +13,6 @@ export interface CarouselSlideTheme extends ThemeComponent<CarouselSlideProps, I
 
 export default {
   name: 'XCarouselSlide',
-  validators: {},
 }
 </script>
 
@@ -22,7 +26,8 @@ const { styles, classes, className } = useTheme('CarouselSlide', {}, props)
 </script>
 
 <template>
-  <div
+  <component
+    :is="tag"
     :style="styles"
     :class="[
       className,
@@ -31,7 +36,7 @@ const { styles, classes, className } = useTheme('CarouselSlide', {}, props)
     ]"
   >
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <style lang="postcss" scoped module>

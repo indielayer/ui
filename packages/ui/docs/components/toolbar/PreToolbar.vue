@@ -1,18 +1,18 @@
+<script setup lang="ts">
+import ToolbarColorToggle from './ToolbarColorToggle.vue'
+</script>
+
 <template>
-  <div class="flex justify-items-center items-center py-2 text-gray-500 dark:text-gray-300 px-4">
-    <toolbar-color-toggle />
-    <x-spacer/>
-    <a target="_blank" class="mx-4" href="https://twitter.com/indielayer"><x-icon icon="twitter"/></a>
-    <a target="_blank" href="https://github.com/indielayer"><x-icon icon="github"/></a>
+  <div class="bg-gray-900 dark border-b">
+    <x-container fluid>
+      <div class="flex justify-items-center items-center py-2 text-slate-500 dark:text-slate-300 h-10 text-sm">
+        <toolbar-color-toggle />
+        <p class="text-secondary-300 font-semibold ml-2 truncate">
+          Indielayer UI - Vue.js 3 / Nuxt.js 3 UI Library with Tailwind CSS 3. ⚡️ &nbsp;Build and prototype fast web applications.
+        </p>
+        <x-spacer/>
+        <a target="_blank" href="https://github.com/indielayer"><x-icon size="sm" icon="github"/></a>
+      </div>
+    </x-container>
   </div>
 </template>
-
-<script>
-import ToolbarColorToggle from './ToolbarColorToggle.vue'
-
-export default {
-  components: {
-    ToolbarColorToggle,
-  },
-}
-</script>

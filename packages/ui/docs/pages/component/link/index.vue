@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XLink } from '../../../../src'
+import { XLink } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useNotifications, type SelectOption } from '../../../../src'
+import { useNotifications, type SelectOption } from '@indielayer/ui'
 import { ref } from 'vue'
 
 const notifications = useNotifications('notifica')
@@ -77,7 +77,14 @@ function onSubmit(isValid: string) {
       placeholder="Select another country"
       label="Country"
     />
-    <x-checkbox v-model="agree" :rules="[rules.isRequired]" name="agree" label="Agree with all the terms"/>
+
+    <x-checkbox
+      v-model="agree"
+      :rules="[rules.isRequired]"
+      name="agree"
+      label="Agree with all the terms"
+      helper="Have you read them?"
+    />
 
     <template #secondary-action>
       <x-button color="gray">Cancel</x-button>

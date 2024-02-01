@@ -1,47 +1,49 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const colorMode = ref('light')
+
+try {
+  const storedMode = localStorage.getItem('color-mode')
+
+  if (storedMode) {
+    colorMode.value = storedMode
+  } else {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      colorMode.value = 'dark'
+    }
+  }
+} catch (e) {
+  colorMode.value = 'light'
+}
+
+updateMode()
+
+function toggle() {
+  colorMode.value = (colorMode.value === 'light') ? 'dark' : 'light'
+
+  updateMode()
+
+  try {
+    localStorage.setItem('color-mode', colorMode.value)
+  } catch (e) {
+    colorMode.value = 'light'
+  }
+}
+
+function updateMode() {
+  colorMode.value === 'light'
+    ? document.querySelector('html')?.classList.remove('dark')
+    : document.querySelector('html')?.classList.add('dark')
+}
+</script>
+
 <template>
   <x-button
     ghost
+    size="sm"
     class="-ml-2"
     :icon-left="colorMode === 'light' ? 'sun' : 'moon'"
     @click="toggle"
   />
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      colorMode: 'light',
-    }
-  },
-  created() {
-    try {
-      const colorMode = localStorage.getItem('color-mode')
-
-      if (colorMode) this.colorMode = colorMode
-    } catch (e) {
-      this.colorMode = 'light'
-    }
-
-    this.updateMode()
-  },
-  methods: {
-    toggle() {
-      this.colorMode = (this.colorMode === 'light') ? 'dark' : 'light'
-
-      this.updateMode()
-
-      try {
-        localStorage.setItem('color-mode', this.colorMode)
-      } catch (e) {
-        this.colorMode = 'light'
-      }
-    },
-    updateMode() {
-      this.colorMode === 'light'
-        ? document.querySelector('html').classList.remove('dark')
-        : document.querySelector('html').classList.add('dark')
-    },
-  },
-}
-</script>

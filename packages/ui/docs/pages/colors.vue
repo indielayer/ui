@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useColors, useNotifications, colors as TailwindColors } from '../../src'
+import { useColors, useNotifications, colors as TailwindColors } from '@indielayer/ui'
 
 const notifications = useNotifications('notifica')
 const { getPalette } = useColors()
@@ -63,7 +63,7 @@ function copyPalette(val: any) {
       <code-snippet
         lang="js"
         :code="`import { createApp } from 'vue'
-import UI, { colors } from '../../../../src'
+import UI, { colors } from '@indielayer/ui'
 
 const app = createApp(App)
 

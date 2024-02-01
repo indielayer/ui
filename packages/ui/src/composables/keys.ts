@@ -5,7 +5,7 @@ import type { ButtonGroupInjection } from '../components/button/ButtonGroup.vue'
 import type { NotificationInjection } from '../components/notifications/Notifications.vue'
 import type { IconInjection } from '../components/icon/Icon.vue'
 import type { FormGroupInjection } from '../components/formGroup'
-import type { AccordionProps } from '../components/accordion'
+import type { AccordionInjection } from '../components/accordion'
 import type { UIOptions } from '../create'
 import type { UITheme } from '../theme'
 
@@ -17,4 +17,4 @@ export const injectFormGroupKey = Symbol() as InjectionKey<FormGroupInjection>
 export const injectIconsKey = Symbol() as InjectionKey<IconInjection>
 export const injectButtonGroupKey = Symbol() as InjectionKey<ButtonGroupInjection>
 export const injectNotificationKey = Symbol() as InjectionKey<NotificationInjection>
-export const injectAccordionKey = Symbol() as InjectionKey<AccordionProps>
+export const injectAccordionKey = Symbol() as InjectionKey<AccordionInjection>

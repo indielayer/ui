@@ -4,6 +4,10 @@ const containerProps = {
     type: String,
     default: 'div',
   },
+  fluid: {
+    type: Boolean,
+    default: false,
+  },
 }
 
 export type ContainerProps = ExtractPublicPropTypes<typeof containerProps>

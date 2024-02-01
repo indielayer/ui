@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject, ref, unref, watch } from 'vue'
-import { version, type UITheme } from '../../../src'
+import { version, type UITheme } from '@indielayer/ui'
 
 const selectTheme = inject('selectTheme', {
   theme: {} as UITheme,
@@ -22,12 +22,17 @@ watch(selected, (val) => {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-secondary-700 px-4">
-    <div class="flex justify-items-center items-center py-5">
-      <a href="/" class="flex items-start">
-        <img class="logo-dark" src="../../assets/images/logo.png" width="180" alt=""/>
-        <img class="logo-white" src="../../assets/images/logo_white.png" width="180" alt=""/>
-        <div class="px-2 text-overline font-bold">UI</div>
+  <div class="bg-white dark:bg-gray-800 border-b px-4">
+    <div class="flex justify-items-center items-center h-[70px]">
+      <a href="/" class="flex items-center md:ml-4">
+        <img src="@/assets/images/logo_mini.svg" width="26" alt="Indielayer"/>
+        <x-divider vertical class="h-[40px] mx-3"/>
+        <img class="logo-dark" src="@/assets/images/logo_word.svg" width="120" alt="Indielayer UI"/>
+        <img class="logo-white" src="@/assets/images/logo_word_dark.svg" width="120" alt="Indielayer UI"/>
+
+        <div class="flex items-center text-xs tracking-widest">
+          <div class="pl-2 font-bold text-primary-500">UI</div>
+        </div>
       </a>
 
       <x-spacer/>
@@ -36,8 +41,8 @@ watch(selected, (val) => {
         <x-select v-model="selected" :options="options" hide-footer size="sm"/>
         <x-divider vertical style="height: 10px;" class="px-2"/>
         <div class="tracking-wide text-xs">v{{ version }}</div>
-        <x-divider vertical style="height: 10px;" class="px-2"/>
-        <x-link href="https://github.com/indielayer/ui" target="_blank" external>Github</x-link>
+        <x-divider vertical style="height: 10px;" class="px-2 hidden sm:block"/>
+        <x-link href="https://github.com/indielayer/ui" target="_blank" external class="hidden sm:block">Github</x-link>
       </div>
     </div>
   </div>

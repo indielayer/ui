@@ -80,7 +80,7 @@ export default {
 
 <template>
   <div style="min-width: 240px;" class="pb-4">
-    <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Documentation</div>
+    <div class="title text-overline text-xs font-light ml-6 mt-6 mb-4">Documentation</div>
     <x-menu
       :items="docsMenu"
       class="m-4"
@@ -89,7 +89,7 @@ export default {
       @item-click="$emit('close')"
     />
     <x-divider class="px-4"/>
-    <div class="title text-overline text-sm font-light ml-6 mt-6 mb-4">Components</div>
+    <div class="title text-overline text-xs font-light ml-6 mt-8 mb-4">Components</div>
     <x-menu
       :items="components"
       class="m-4"

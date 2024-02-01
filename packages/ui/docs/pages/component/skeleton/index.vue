@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XSkeleton } from '../../../../src'
+import { XSkeleton } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

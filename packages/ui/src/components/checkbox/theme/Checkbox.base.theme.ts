@@ -5,7 +5,7 @@ const theme: CheckboxTheme = {
     wrapper: ({ data }) => {
       const classes = ['inline-block relative cursor-pointer align-middle']
 
-      if (data.isInsideForm) classes.push('mb-3')
+      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-3')
 
       return classes
     },

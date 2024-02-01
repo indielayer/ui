@@ -75,7 +75,7 @@ export default {
 }`,
       installExample: `// main.js
 import { createApp } from 'vue'
-import UI from '../../../src'
+import UI from '@indielayer/ui'
 import icons from './icons'
 
 const app = createApp(App)

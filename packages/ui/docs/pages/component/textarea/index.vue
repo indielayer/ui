@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XTextarea } from '../../../../src'
+import { XTextarea } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 import VariantsDemoCode from './variants.vue?raw'

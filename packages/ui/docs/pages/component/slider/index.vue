@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XSlider } from '../../../../src'
+import { XSlider } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 

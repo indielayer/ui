@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XRadio } from '../../../../src'
+import { XRadio } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 import VariantsDemoCode from './variants.vue?raw'

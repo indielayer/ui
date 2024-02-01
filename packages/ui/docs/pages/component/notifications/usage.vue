@@ -1,5 +1,5 @@
 <script setup>
-import { useNotifications } from '../../../../src'
+import { useNotifications } from '@indielayer/ui'
 
 const notification = useNotifications('notifica')
 

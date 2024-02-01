@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import PreToolbar from '../components/toolbar/PreToolbar.vue'
 import Toolbar from '../components/toolbar/Toolbar.vue'
-import Cookies from '../components/Cookies.vue'
 import DocsMenu from '../components/menu/DocsMenu.vue'
 
 const drawer = ref(false)
@@ -27,5 +26,4 @@ const drawer = ref(false)
       <router-view class="flex-1 overflow-y-scroll" />
     </x-notifications>
   </div>
-  <cookies />
 </template>

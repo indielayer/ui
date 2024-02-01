@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { XAlert } from '../../../../src'
+import { XAlert } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
