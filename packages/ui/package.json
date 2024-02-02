@@ -35,6 +35,7 @@
       "require": "./lib/index.umd.js",
       "types": "./lib/index.d.ts"
     },
+    "./docs/*": "./docs/*",
     "./nuxt": "./exports/nuxt.mjs",
     "./nuxt.plugin": "./exports/nuxt.plugin.js",
     "./nuxt.plugin.js": "./exports/nuxt.plugin.js",

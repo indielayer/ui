@@ -171,7 +171,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
       </div>
     </slot>
     <teleport v-if="selected && teleportTo" :to="teleportTo">
-      <div role="tabpanel" :class="classes.tabpanel">
+      <div v-if="$slots.default" role="tabpanel" :class="classes.tabpanel">
         <slot></slot>
       </div>
     </teleport>
