@@ -23,6 +23,10 @@ const popoverProps = {
     type: Array as PropType<Array<PopoverTriggerEvent>>,
     default: () => ['click'],
   },
+  hideArrow: {
+    type: Boolean,
+    default: true,
+  },
   showTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
   hideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
   popperTriggers: Array as PropType<Array<PopoverTriggerEvent>>,
@@ -121,7 +125,8 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
     :eager-mount="eagerMount"
     :popper-class="[
       classes.content,
-      popperClass
+      popperClass,
+      hideArrow ? 'v-popper__popper--no-arrow' : '',
     ]"
     :compute-transform-origin="computeTransformOrigin"
     @show="() => { isOpen = true; $emit('show') }"
@@ -142,6 +147,9 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
 </template>
 
 <style lang="postcss">
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable no-descending-specificity */
+/* stylelint-disable selector-class-pattern */
 .resize-observer {
   position: absolute;
   top: 0;
@@ -168,7 +176,7 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
     z-index: -1;
   }
 }
-/* stylelint-disable selector-class-pattern */
+
 .v-popper__popper {
   z-index: 10000;
   top: 0;
@@ -200,6 +208,73 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   left: 0;
   width: 100%;
   height: 100%;
+  display: none;
+}
+
+.v-popper__arrow-container {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.v-popper__arrow-inner {
+  border-style: solid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  border-width: 7px;
+}
+.v-popper__arrow-outer { display: none; }
+
+.v-popper__popper[data-popper-placement^="top"] .v-popper__arrow-inner,
+.v-popper__popper[data-popper-placement^="bottom"] .v-popper__arrow-inner { left: -2px; }
+
+.v-popper__popper[data-popper-placement^="top"] .v-popper__arrow-inner {
+  border-bottom-width: 0;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+.v-popper__popper[data-popper-placement^="top"] .v-popper__arrow-inner { top: -2px; }
+.v-popper__popper[data-popper-placement^="bottom"] .v-popper__arrow-container { top: 0; }
+
+.v-popper__popper[data-popper-placement^="bottom"] .v-popper__arrow-inner {
+  border-top-width: 0;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+}
+.v-popper__popper[data-popper-placement^="bottom"] .v-popper__arrow-inner { top: -4px; }
+
+.v-popper__popper[data-popper-placement^="left"] .v-popper__arrow-inner,
+.v-popper__popper[data-popper-placement^="right"] .v-popper__arrow-inner { top: -2px; }
+
+.v-popper__popper[data-popper-placement^="right"] .v-popper__arrow-inner {
+  border-left-width: 0;
+  border-left-color: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+.v-popper__popper[data-popper-placement^="right"] .v-popper__arrow-inner { left: -4px; }
+.v-popper__popper[data-popper-placement^="left"] .v-popper__arrow-container { right: -10px; }
+
+.v-popper__popper[data-popper-placement^="left"] .v-popper__arrow-inner {
+  border-right-width: 0;
+  border-top-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+.v-popper__popper[data-popper-placement^="left"] .v-popper__arrow-inner { left: -2px; }
+
+.v-popper--theme-dropdown .v-popper__arrow-inner {
+  visibility: visible;
+  border-color: #374151;
+}
+
+.v-popper__popper--no-arrow .v-popper__arrow-container {
   display: none;
 }
 </style>

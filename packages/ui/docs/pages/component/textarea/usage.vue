@@ -1,22 +1,18 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const multiline = ref('')
+</script>
+
 <template>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-2 gap-4">
     <x-textarea
-      v-model="name"
+      v-model="multiline"
       label="Normal textarea"
       helper="Helper text"
+      resizable
       placeholder="Placeholder"
     />
     <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text />
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      name: '',
-      multiline: 'auto\nadjusted\nheight',
-    }
-  },
-}
-</script>

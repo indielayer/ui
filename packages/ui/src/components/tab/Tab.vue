@@ -139,7 +139,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
         'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected,
         'cursor-pointer': !disabled,
         'cursor-not-allowed': disabled,
-        'cursor-not-allowed text-gray-500': disabled && !selected,
+        'cursor-not-allowed text-secondary-500': disabled && !selected,
       },
     ]"
     :aria-disabled="disabled ? 'true' : undefined"
@@ -165,7 +165,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
           v-if="removable"
           size="sm"
           :icon="closeIcon"
-          class="ml-2 cursor-pointer hover:text-gray-700 dark:hover:text-gray-500 transition-colors duration-150"
+          class="ml-2 cursor-pointer hover:text-secondary-700 dark:hover:text-secondary-500 transition-colors duration-150"
           @click="(e: Event) => $emit('remove', e)"
         />
       </div>

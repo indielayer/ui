@@ -2,7 +2,7 @@ import type { CardTheme } from '../Card.vue'
 
 const theme: CardTheme = {
   classes: {
-    wrapper: ({ props }) => `rounded bg-white dark:bg-gray-800${props.flat ? '' : ' shadow'}`,
+    wrapper: ({ props }) => `bg-slate-50 dark:bg-slate-800 rounded-md ${props.flat ? '' : 'shadow'}`,
   },
 }
 

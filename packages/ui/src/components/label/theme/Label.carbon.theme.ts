@@ -11,7 +11,7 @@ const theme: LabelTheme = {
       return classes
     },
 
-    label: 'text-xs text-gray-500 dark:text-gray-200 mb-2',
+    label: 'text-xs text-secondary-500 dark:text-secondary-200 mb-2',
   },
 }
 

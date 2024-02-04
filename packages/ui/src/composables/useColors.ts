@@ -33,7 +33,7 @@ export interface ColorComposition {
 const colorCache: ColorLibrary = {}
 
 const defaultColors = {
-  primary: tailwindColors.sky,
+  primary: tailwindColors.emerald,
   secondary: tailwindColors.slate,
   success: tailwindColors.green,
   warning: tailwindColors.yellow,

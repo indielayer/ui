@@ -8,7 +8,7 @@ const theme: FormTheme = {
 
     title: 'text-xl mb-1',
 
-    description: 'text-gray-500',
+    description: 'text-secondary-500',
 
     footer: 'space-x-4 mt-4',
   },

@@ -11,7 +11,7 @@ const theme: AccordionItemTheme = {
         if (props.iconAlign === 'left') classes.push('pl-8 pr-4')
         else classes.push('pr-8 pl-4')
         classes.push('py-2')
-        if (!props.disabled) classes.push('hover:bg-gray-50 dark:hover:bg-gray-600')
+        if (!props.disabled) classes.push('hover:bg-secondary-50 dark:hover:bg-secondary-600')
       }
 
       if (!props.disabled) classes.push('cursor-pointer')
@@ -23,7 +23,7 @@ const theme: AccordionItemTheme = {
       const classes = ['absolute flex transform transition-transform duration-150']
 
       if (!data.collapsed) classes.push('rotate-180')
-      if (props.disabled) classes.push('text-gray-300')
+      if (props.disabled) classes.push('text-secondary-300')
 
       if (props.iconAlign === 'left') classes.push('left-2')
       else classes.push('right-2')

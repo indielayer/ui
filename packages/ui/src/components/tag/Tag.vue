@@ -70,7 +70,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
       <x-icon
         :size="closeIconSize"
         :icon="closeIcon"
-        class="ml-1.5 cursor-pointer hover:text-gray-700 transition-colors duration-150"
+        class="ml-1.5 cursor-pointer hover:text-secondary-700 transition-colors duration-150"
         @click="(e: Event) => $emit('remove', e)"
       />
     </span>

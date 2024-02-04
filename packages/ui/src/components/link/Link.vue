@@ -1,6 +1,6 @@
 <script lang="ts">
 const linkProps = {
-  ...useColors.props('primary'),
+  ...useColors.props('secondary'),
   tag: {
     type: String,
     default: 'a',

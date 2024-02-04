@@ -1,5 +1,5 @@
 <template>
-  <div class="space-x-2">
+  <div class="grid gap-4">
     <x-popover placement="top-start">
       <x-button>Click me to open popover</x-button>
       <template #content>
@@ -9,8 +9,8 @@
       </template>
     </x-popover>
 
-    <x-popover align="top" position="left">
-      <x-avatar class="cursor-pointer shadow" name="John Smith" />
+    <x-popover>
+      <x-avatar class="cursor-pointer shadow relative" name="John Smith" />
       <template #content>
         <x-popover-container class="p-2">
           another one

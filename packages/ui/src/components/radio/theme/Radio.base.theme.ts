@@ -11,13 +11,13 @@ const theme: RadioTheme = {
     },
 
     circle: ({ props }) => {
-      let c = 'rounded-full flex justify-center items-center shrink-0 border-2 outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline'
+      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline']
 
-      if (props.size === 'xs' || props.size === 'sm') c += ' h-4 w-4'
-      if (props.size === 'xl') c += ' h-6 w-6'
-      else c += ' h-5 w-5'
+      if (props.size === 'lg') classes.push('h-5 w-5')
+      else if (props.size === 'xl') classes.push('h-6 w-6')
+      else classes.push('h-4 w-4')
 
-      return c
+      return classes
     },
 
     circleIcon: ({ props, data }) => {
@@ -28,13 +28,13 @@ const theme: RadioTheme = {
       if (props.size === 'sm' || props.size === 'xs') c.push('h-2')
       else if (props.size === 'lg') c.push('h-2.5')
       else if (props.size === 'xl') c.push('h-3')
-      else c.push('h-[0.6rem]')
+      else c.push('h-2')
 
       return c
     },
 
     label: ({ props }) => {
-      let c = 'font-medium text-gray-800 dark:text-gray-200 pl-2'
+      let c = 'font-medium text-secondary-800 dark:text-secondary-200 pl-2'
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
@@ -112,7 +112,7 @@ const theme: RadioTheme = {
           border: props.glow ? color[300] : gray[300],
           dark: {
             bg: gray[900],
-            border: props.glow ? color[300] : gray[300],
+            border: props.glow ? color[300] : gray[400],
           },
         }))
       }

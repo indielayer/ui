@@ -5,7 +5,7 @@ const theme: FormGroupTheme = {
     wrapper: ({ props }) => {
       const classes = ['']
 
-      if (!props.vertical) classes.push('flex gap-2')
+      if (!props.vertical) classes.push('flex gap-4')
       else classes.push('grid gap-1')
 
       return classes

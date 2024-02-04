@@ -139,7 +139,7 @@ const { styles, classes, className } = useTheme('Form', {}, props)
     @submit="submit"
   >
     <slot name="header">
-      <div v-if="title || description" class="mb-10">
+      <div v-if="title || description" class="mb-6">
         <p v-if="title" :class="classes.title">{{ title }}</p>
         <p v-if="description" :class="classes.description">{{ description }}</p>
       </div>

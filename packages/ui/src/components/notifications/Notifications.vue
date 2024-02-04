@@ -308,7 +308,7 @@ defineExpose({ log, info, success, warn, warning: warn, error })
           <x-icon
             v-if="notification.removable"
             :icon="closeIcon"
-            class="text-gray-400 hover:text-gray-500 ml-3 cursor-pointer"
+            class="text-secondary-400 hover:text-secondary-500 ml-3 cursor-pointer"
             @click="() => {remove(notification)}"
           />
         </li>

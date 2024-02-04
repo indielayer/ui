@@ -40,7 +40,7 @@ function copy(text?: string) {
 
 <template>
   <div>
-    <h2 :id="title?.toLowerCase()" class="flex border-b pb-1 items-center">
+    <h2 :id="title?.toLowerCase()" class="flex border-b pb-2 items-center">
       <a class="anchor" :href="`#${title?.toLowerCase()}`">#</a>
       <div class="mr-2 cursor-pointer" @click="toggleCode">{{ title }}</div>
       <x-spacer/>
