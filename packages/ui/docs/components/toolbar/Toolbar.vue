@@ -25,7 +25,7 @@ const isDev = import.meta.env.DEV
 
 <template>
   <x-container fluid class="bg-white dark:bg-secondary-800">
-    <div class="flex justify-items-center items-center py-2">
+    <div class="flex justify-items-center items-center py-2 min-h-[54px]">
       <a href="/" class="flex items-center">
         <img src="@/assets/images/logo_mini.svg" width="26" alt="Indielayer"/>
         <x-divider vertical class="!h-[24px] mx-3"/>
@@ -40,14 +40,7 @@ const isDev = import.meta.env.DEV
       <x-spacer/>
 
       <div class="flex items-center font-semibold text-sm">
-        <x-select
-          v-if="isDev"
-          v-model="selected"
-          :options="options"
-          hide-footer
-          size="sm"
-        />
-        <x-divider v-if="isDev" vertical style="height: 10px;" class="px-2"/>
+
         <div class="tracking-wide text-xs">v{{ version }}</div>
         <x-divider vertical style="height: 10px;" class="px-2 hidden sm:block"/>
         <x-link
