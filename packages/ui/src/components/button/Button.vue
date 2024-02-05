@@ -122,7 +122,7 @@ defineExpose({ focus, blur })
       :label="loadingLabel"
       :status="loadingStatus"
     />
-    <div :class="{ 'invisible': loading }">
+    <div class="inline-flex items-center justify-center" :class="{ 'invisible': loading }">
       <x-icon
         v-if="computedIconLeft"
         :size="computedSize"
