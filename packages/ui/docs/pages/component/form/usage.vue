@@ -33,25 +33,22 @@ function onSubmit(isValid: string) {
 
 <template>
   <x-form title="Edit user information" description="Almost all fields are required" @submit="onSubmit">
-    <div class="grid grid-cols-2 gap-4">
-      <x-input
-        v-model="email"
-        :rules="[rules.isRequired, rules.isEmail]"
-        name="email"
-        label="Email"
-        placeholder="Enter your email"
-      />
-      <x-input
-        v-model="password"
-        type="password"
-        :rules="[rules.isRequired]"
-        name="password"
-        label="Password"
-        placeholder="Enter your password"
-        helper="Must be between 8 and 10 characters"
-      />
-    </div>
-
+    <x-input
+      v-model="email"
+      :rules="[rules.isRequired, rules.isEmail]"
+      name="email"
+      label="Email"
+      placeholder="Enter your email"
+    />
+    <x-input
+      v-model="password"
+      type="password"
+      :rules="[rules.isRequired]"
+      name="password"
+      label="Password"
+      placeholder="Enter your password"
+      helper="Must be between 8 and 10 characters"
+    />
     <x-textarea
       v-model="description"
       name="description"
