@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.5.1
+
+### Patch Changes
+
+- fix(modal): ignore popper popovers ([#40](https://github.com/indielayer/ui/pull/40)) ([`cb6e7fe`](https://github.com/indielayer/ui/commit/cb6e7febba67fcc50042bc6434588af60010abda))
+- fix(button): icon alignment ([#40](https://github.com/indielayer/ui/pull/40)) ([`cb6e7fe`](https://github.com/indielayer/ui/commit/cb6e7febba67fcc50042bc6434588af60010abda))
+
 ## 1.5.0
 
 ### Minor Changes
