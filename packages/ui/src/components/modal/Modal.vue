@@ -89,7 +89,9 @@ watch(value, (val) => {
 
   if (val) {
     setTimeout(() => {
-      stopClickOutside = onClickOutside(modalRef, clickOutsideCallback)
+      stopClickOutside = onClickOutside(modalRef, clickOutsideCallback, {
+        ignore: ['.v-popper__popper'],
+      })
     })
   }
 })
@@ -187,7 +189,7 @@ defineExpose({ open, close })
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-headline"
-          @submit="$emit('submit')"
+          @submit="(isValid: boolean) => $emit('submit', isValid)"
         >
           <slot name="image"></slot>
           <div v-if="hasHeader" :class="classes.header">

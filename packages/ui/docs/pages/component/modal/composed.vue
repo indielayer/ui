@@ -10,6 +10,12 @@ const email = ref('')
 const password = ref('')
 const description = ref('')
 
+const selected = ref()
+const options = [
+  { value: 'us', label: 'USA' },
+  { value: 'u', label: 'United Kingdom' },
+]
+
 const rules = {
   isEmail: (v: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
   isRequired: (v: string) => !!v  || 'Field is required',
@@ -55,6 +61,7 @@ function onSubmit(isValid: boolean) {
       placeholder="Description"
       hide-footer
     />
+    <x-select v-model="selected" :options="options" label="Country" :rules="[rules.isRequired]"/>
 
     <!-- <template #tertiary-action>
       <x-button color="gray" size="lg">Tertiary</x-button>
