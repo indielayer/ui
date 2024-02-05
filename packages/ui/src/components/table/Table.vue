@@ -66,6 +66,8 @@ import XSpinner from '../spinner/Spinner.vue'
 import XSkeleton from '../skeleton/Skeleton.vue'
 import type { SkeletonShape } from '../skeleton/Skeleton.vue'
 
+import XIcon from '../icon/Icon.vue'
+
 import { chevronDownIcon } from '../../common/icons'
 
 const props = defineProps({

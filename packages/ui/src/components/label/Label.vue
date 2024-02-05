@@ -10,6 +10,7 @@ const labelProps = {
     type: String,
     default: 'label',
   },
+  tooltip: String,
 }
 
 export type LabelProps = ExtractPublicPropTypes<typeof labelProps>
@@ -29,6 +30,7 @@ export default {
 import type { ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
+import XToggleTip from '../tooltip/ToggleTip.vue'
 
 const props = defineProps(labelProps)
 
@@ -47,7 +49,8 @@ const { styles, classes, className } = useTheme('Label', {}, props)
       :title="label"
       :class="classes.label"
     >
-      {{ label }}
+      <span>{{ label }}</span>
+      <x-toggle-tip v-if="tooltip" :content="tooltip"/>
     </component>
     <slot></slot>
   </component>

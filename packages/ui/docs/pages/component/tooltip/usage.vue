@@ -6,4 +6,7 @@
       <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus corrupti maiores aut minima iusto nulla inventore ea illo commodi et.</div>
     </template>
   </x-tooltip>
+
+  <!-- tooltip with the info icon -->
+  <x-toggle-tip content="Lets go"/>
 </template>

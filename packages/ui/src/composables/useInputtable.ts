@@ -169,4 +169,5 @@ useInputtable.props = () => ({
     type: Array,
     default: () => [],
   },
+  tooltip: String,
 } as const)

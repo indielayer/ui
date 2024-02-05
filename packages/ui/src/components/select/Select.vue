@@ -327,6 +327,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    :tooltip="tooltip"
     v-on="labelListeners"
   >
     <div class="relative">

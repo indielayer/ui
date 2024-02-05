@@ -6,6 +6,7 @@
       placeholder="Placeholder"
       :options="options"
       helper="Helper text"
+      tooltip="Tooltip here"
       native
     />
     <x-select

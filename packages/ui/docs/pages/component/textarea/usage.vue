@@ -12,6 +12,7 @@ const multiline = ref('')
       helper="Helper text"
       resizable
       placeholder="Placeholder"
+      tooltip="Tooltip here"
     />
     <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text />
   </div>
