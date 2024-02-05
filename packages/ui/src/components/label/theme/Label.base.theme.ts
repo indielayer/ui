@@ -5,7 +5,7 @@ const theme: LabelTheme = {
     wrapper: ({ props }) => {
       const classes  = ['block relative align-bottom focus:outline-none']
 
-      if (props.isInsideForm) classes.push('mb-3')
+      if (props.isInsideForm) classes.push('mb-4')
       if (props.block) classes.push('w-full')
 
       return classes
