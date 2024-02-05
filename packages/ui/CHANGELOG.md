@@ -1,5 +1,19 @@
 # @indielayer/ui
 
+## 1.5.0
+
+### Minor Changes
+
+- feat: add toggletip component ([#38](https://github.com/indielayer/ui/pull/38)) ([`27552a7`](https://github.com/indielayer/ui/commit/27552a7beb094c07913e017d34f4c8fe68018a88))
+- feat(theme): secondary color
+  feat(base): minor theme adjustments
+  feat(modal): add persistent prop
+  ([#38](https://github.com/indielayer/ui/pull/38)) ([`27552a7`](https://github.com/indielayer/ui/commit/27552a7beb094c07913e017d34f4c8fe68018a88))
+
+### Patch Changes
+
+- fix(tabs): remove spacing if default slot is empty ([#36](https://github.com/indielayer/ui/pull/36)) ([`c3be9fc`](https://github.com/indielayer/ui/commit/c3be9fc1dc4aa410c4ce0c11c372d9300856445b))
+
 ## 1.4.0
 
 ### Minor Changes
