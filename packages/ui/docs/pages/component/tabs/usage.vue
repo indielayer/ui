@@ -62,7 +62,12 @@ const linkTab = ref(null)
       content e
     </x-tab>
   </x-tab-group>
-  <x-tab-group v-model="tab" class="pb-10" variant="block" grow>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="block"
+    grow
+  >
     <x-tab value="a" label="Tab A">
       content a
     </x-tab>

@@ -193,10 +193,10 @@ const theme: ButtonTheme = {
         // filled
         vars.push(css.variables({
           text: '#fff',
-          border: !data.isButtonGroup ? 'transparent' : color[600],
+          border: color[600],
           dark: {
             text: '#fff',
-            border: !data.isButtonGroup ? 'transparent' : color[500],
+            border: color[500],
           },
         }))
         if (props.disabled) {

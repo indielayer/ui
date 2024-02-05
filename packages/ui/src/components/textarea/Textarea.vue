@@ -19,6 +19,7 @@ const textareaProps = {
   adjustToText: Boolean,
   preventEnter: Boolean,
   block: Boolean,
+  resizable: Boolean,
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
@@ -114,6 +115,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    :tooltip="tooltip"
   >
     <textarea
       :id="id"
@@ -123,7 +125,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :class="[
         classes.input,
         errorInternal
-          ? 'border-red-500 dark:border-red-400 focus:outline-red-500'
+          ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
           : 'focus:outline-[color:var(--x-textarea-border)]',
       ]"
       :disabled="disabled"

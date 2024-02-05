@@ -53,7 +53,7 @@ const { styles, classes, className } = useTheme('Progress', {}, props)
     </div>
     <div
       v-if="gradient"
-      class="absolute h-full bg-gray-100 dark:bg-gray-700 right-0 top-0"
+      class="absolute h-full bg-secondary-100 dark:bg-secondary-700 right-0 top-0"
       :class="{ 'duration-150 transition-[width]': animate }"
       :style="{
         width: `${100 - percentage}%`

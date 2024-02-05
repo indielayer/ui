@@ -16,7 +16,7 @@ const theme: TableTheme = {
       return classes
     },
 
-    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-30',
+    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-secondary-300 dark:bg-secondary-600 rounded opacity-30',
   },
 }
 

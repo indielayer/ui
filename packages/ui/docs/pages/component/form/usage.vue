@@ -59,12 +59,12 @@ function onSubmit(isValid: string) {
       placeholder="Description"
     />
 
-    <x-form-group v-model="selected" label="Group of checkboxes" helper="Helper text" :rules="[rules.isRequired]">
+    <x-form-group v-model="selected" label="Group of checkboxes" :rules="[rules.isRequired]">
       <x-checkbox value="a" label="Lorem ipsum dolor" />
       <x-checkbox value="b" label="Second option" />
     </x-form-group>
 
-    <x-form-group v-model="checked" label="Group of radio buttons" helper="Helper text" :rules="[rules.isRequired]">
+    <x-form-group v-model="checked" label="Group of radio buttons" :rules="[rules.isRequired]">
       <x-radio name="inputName" value="a" label="Option A" />
       <x-radio name="inputName" value="b" label="Option B" />
     </x-form-group>
@@ -87,7 +87,7 @@ function onSubmit(isValid: string) {
     />
 
     <template #secondary-action>
-      <x-button color="gray">Cancel</x-button>
+      <x-button ghost>Cancel</x-button>
     </template>
     <template #primary-action>
       <x-button color="primary" type="submit">Submit</x-button>

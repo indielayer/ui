@@ -2,7 +2,7 @@ import type { TableTheme } from '../Table.vue'
 
 const theme: TableTheme = {
   classes: {
-    wrapper: 'w-full h-full shadow-sm overflow-x-auto text-sm bg-white dark:bg-gray-800',
+    wrapper: 'w-full h-full shadow-sm overflow-x-auto text-sm bg-white dark:bg-secondary-800',
 
     table: ({ props }) => {
       const classes = ['w-full relative']
@@ -16,7 +16,7 @@ const theme: TableTheme = {
       return classes
     },
 
-    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-gray-300 dark:bg-gray-600 rounded opacity-30',
+    loadingWrapper: 'absolute inset-0 flex items-center justify-center z-40 bg-secondary-300 dark:bg-secondary-600 rounded opacity-30',
   },
 }
 

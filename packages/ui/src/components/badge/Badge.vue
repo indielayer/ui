@@ -101,7 +101,7 @@ const { styles, classes, className } = useTheme('Badge', {}, props)
         :class="[
           positionClasses,
           {
-            'border-2 border-gray-50 dark:border-gray-900': outlined,
+            'border-2 border-secondary-50 dark:border-secondary-900': outlined,
           }
         ]"
       >

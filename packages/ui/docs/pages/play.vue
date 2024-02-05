@@ -1,19 +1,7 @@
-<script>
+<script setup lang="ts">
 
-export default {
-  components: {
-
-  },
-  data() {
-    return {
-
-    }
-  },
-}
 </script>
 
 <template>
-  <div class="p-10">
-    hello
-  </div>
+  <div>playground</div>
 </template>

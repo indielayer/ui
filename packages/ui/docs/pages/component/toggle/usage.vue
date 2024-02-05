@@ -1,14 +1,12 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const checked = ref(true)
+</script>
+
 <template>
-  <div class="grid grid-cols-4 gap-4">
-    <x-toggle v-model="checked" color="primary" label="Primary" />
-    <x-toggle v-model="checked" color="secondary" label="Secondary" />
-    <x-toggle v-model="checked" color="success" label="Success" />
-    <x-toggle v-model="checked" color="warning" label="Warning" />
+  <div class="grid grid-cols-2 gap-4">
+    <x-toggle v-model="checked" label="Primary" />
+    <x-toggle v-model="checked" color="sky" label="Sky" />
   </div>
 </template>
-
-<script>
-export default {
-  data() { return { checked: true } },
-}
-</script>

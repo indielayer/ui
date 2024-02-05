@@ -19,14 +19,16 @@ watch(selected, (val) => {
     selectTheme.setTheme(val)
   }
 })
+
+const isDev = import.meta.env.DEV
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-800 border-b px-4">
-    <div class="flex justify-items-center items-center h-[70px]">
-      <a href="/" class="flex items-center md:ml-4">
+  <x-container fluid class="bg-white dark:bg-secondary-800">
+    <div class="flex justify-items-center items-center py-2">
+      <a href="/" class="flex items-center">
         <img src="@/assets/images/logo_mini.svg" width="26" alt="Indielayer"/>
-        <x-divider vertical class="h-[40px] mx-3"/>
+        <x-divider vertical class="!h-[24px] mx-3"/>
         <img class="logo-dark" src="@/assets/images/logo_word.svg" width="120" alt="Indielayer UI"/>
         <img class="logo-white" src="@/assets/images/logo_word_dark.svg" width="120" alt="Indielayer UI"/>
 
@@ -38,14 +40,25 @@ watch(selected, (val) => {
       <x-spacer/>
 
       <div class="flex items-center font-semibold text-sm">
-        <x-select v-model="selected" :options="options" hide-footer size="sm"/>
-        <x-divider vertical style="height: 10px;" class="px-2"/>
+        <x-select
+          v-if="isDev"
+          v-model="selected"
+          :options="options"
+          hide-footer
+          size="sm"
+        />
+        <x-divider v-if="isDev" vertical style="height: 10px;" class="px-2"/>
         <div class="tracking-wide text-xs">v{{ version }}</div>
         <x-divider vertical style="height: 10px;" class="px-2 hidden sm:block"/>
-        <x-link href="https://github.com/indielayer/ui" target="_blank" external class="hidden sm:block">Github</x-link>
+        <x-link
+          href="https://github.com/indielayer/ui"
+          target="_blank"
+          external
+          class="hidden sm:block"
+        >Github</x-link>
       </div>
     </div>
-  </div>
+  </x-container>
 </template>
 
 <style lang="postcss">

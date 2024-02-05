@@ -1,14 +1,11 @@
-<script lang="ts">
-import { getHighlighter } from 'shiki'
-
-const highlighter = getHighlighter({
-  themes: ['github-dark'],
-  langs: ['js', 'ts', 'vue-html', 'bash', 'vue'],
-})
-</script>
-
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { getHighlighter } from 'shiki'
+import indielayerTheme from './Indielayer-theme.json'
+
+const highlighter = getHighlighter({
+  langs: ['js', 'ts', 'vue-html', 'bash', 'vue'],
+})
 
 const props = defineProps({
   code: String,
@@ -25,7 +22,8 @@ const props = defineProps({
 const highlighted = ref('')
 
 onMounted(async () => {
-  highlighted.value = (await highlighter).codeToHtml(props.code, { lang: props.lang, theme: 'github-dark' })
+  await (await highlighter).loadTheme(indielayerTheme as any)
+  highlighted.value = (await highlighter).codeToHtml(props.code, { lang: props.lang, theme: 'Indielayer' })
 })
 </script>
 

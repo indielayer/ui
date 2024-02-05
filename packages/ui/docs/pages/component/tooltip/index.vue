@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { XTooltip } from '@indielayer/ui'
+import { XTooltip, XToggleTip } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Tooltip'
 const description = 'Tooltips are used to display a message when hovering over an element.'
-const components = [XTooltip]
+const components = [XTooltip, XToggleTip]
 const demos = [{
   name: 'Usage',
   description: '',

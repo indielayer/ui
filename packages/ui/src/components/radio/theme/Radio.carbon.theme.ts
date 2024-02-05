@@ -32,7 +32,7 @@ const theme: RadioTheme = {
       return c
     },
 
-    label: 'text-sm text-gray-800 dark:text-gray-200 pl-2',
+    label: 'text-sm text-secondary-800 dark:text-secondary-200 pl-2',
 
     content: 'pl-2',
   },

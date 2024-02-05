@@ -36,6 +36,7 @@ const modalProps = {
     type: [Array, Object] as PropType<[FormError[], FormError]>,
     default: () => ([]),
   },
+  persistent: Boolean,
 }
 
 export type ModalSize = typeof modalSize[number]
@@ -88,7 +89,7 @@ watch(value, (val) => {
 
   if (val) {
     setTimeout(() => {
-      stopClickOutside = onClickOutside(modalRef, close)
+      stopClickOutside = onClickOutside(modalRef, clickOutsideCallback)
     })
   }
 })
@@ -120,7 +121,11 @@ async function checkVisibiliy() {
 if (typeof window !== 'undefined') useEventListener(document, 'keydown', onKeyDown)
 
 function onKeyDown(event: KeyboardEvent) {
-  if (event.key === 'Escape' && value.value) close()
+  if (event.key === 'Escape' && value.value && !props.persistent) close()
+}
+
+function clickOutsideCallback() {
+  if (!props.persistent) close()
 }
 
 function close() {
@@ -204,7 +209,7 @@ defineExpose({ open, close })
           <x-button
             v-if="showClose"
             ghost
-            size="lg"
+            size="sm"
             tabindex="-1"
             :icon="closeIcon"
             :class="classes.closeIcon"

@@ -9,6 +9,10 @@ html.dark {
   background-color: #111827;
 }
 
+body {
+  font-size: 14px;
+}
+
 *,
 ::before,
 ::after {

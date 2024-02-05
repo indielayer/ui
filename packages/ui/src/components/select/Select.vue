@@ -1,5 +1,6 @@
 <script lang="ts">
 const selectProps = {
+  ...useColors.props('primary'),
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
@@ -33,6 +34,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref } from 'vue'
 import { useEventListener } from '@vueuse/core'
+import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
@@ -325,6 +327,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    :tooltip="tooltip"
     v-on="labelListeners"
   >
     <div class="relative">
@@ -347,7 +350,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         <template v-else>
           <div
             v-if="placeholder"
-            class="text-gray-400 dark:text-gray-500"
+            class="text-secondary-400 dark:text-secondary-500"
           >
             {{ placeholder }}
           </div>
@@ -381,7 +384,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           <template v-else>
             <div
               v-if="placeholder"
-              class="text-gray-400 dark:text-gray-500"
+              class="text-secondary-400 dark:text-secondary-500"
             >
               {{ placeholder }}
             </div>
@@ -400,12 +403,12 @@ defineExpose({ focus, blur, reset, validate, setError })
                 :size="size"
                 :disabled="item.disabled"
                 :selected="index === selectedIndex"
-                color="primary"
+                :color="color"
                 filled
                 @click="() => !multiple && popoverRef?.hide()"
               />
             </template>
-            <div v-else class="px-2 text-center text-gray-400">
+            <div v-else class="px-2 text-center text-secondary-400">
               No options
             </div>
           </x-popover-container>

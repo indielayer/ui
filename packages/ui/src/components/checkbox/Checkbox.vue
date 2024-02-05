@@ -149,7 +149,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
         ]"
       >
         <x-spinner v-if="loading" :size="size" class="absolute" />
-        <span v-else-if="indeterminate" name="check-icon" class="w-2/3 h-[2px] bg-white dark:bg-gray-900"></span>
+        <span v-else-if="indeterminate" name="check-icon" class="w-2/3 h-[2px] bg-white dark:bg-secondary-900"></span>
         <slot v-else name="icon">
           <svg
             viewBox="0 0 20 20"

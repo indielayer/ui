@@ -3,21 +3,17 @@ import type { MenuItemTheme } from '../MenuItem.vue'
 const theme: MenuItemTheme = {
   classes: {
     wrapper: ({ props, data }) => {
-      const classes: any[] = ['relative !flex items-center whitespace-nowrap px-3']
+      const classes = ['relative !flex items-center whitespace-nowrap px-3']
 
-      classes.push({
-        'font-medium': data.isActive,
-        'cursor-pointer': !props.disabled,
+      if (!props.disabled) classes.push('cursor-pointer')
+      if (data.isActive) classes.push('font-medium')
+      if (props.rounded) classes.push('rounded')
 
-        // size
-        'py-1 text-xs': props.size === 'xs',
-        'py-2 text-sm': props.size === 'sm',
-        'py-1.5': !props.size || !['xs', 'sm', 'lg', 'xl'].includes(props.size),
-        'py-3': props.size === 'lg',
-        'py-4 text-lg': props.size === 'xl',
-
-        'rounded': props.rounded,
-      })
+      if (props.size === 'xs') classes.push('py-1 text-xs')
+      else if (props.size === 'sm') classes.push('py-1.5 text-sm')
+      else if (props.size === 'lg') classes.push('py-3')
+      else if (props.size === 'xl') classes.push('py-4 text-lg')
+      else classes.push('py-1.5')
 
       return classes
     },
@@ -25,23 +21,23 @@ const theme: MenuItemTheme = {
 
   styles: ({ colors, props, css, data }) => {
     const color = colors.getPalette(props.color || 'gray')
-    const gray = colors.getPalette('gray')
+    const secondary = colors.getPalette('secondary')
 
     if (props.disabled) return css.variables({
-      text: gray[300],
+      text: secondary[300],
       dark: {
-        text: gray[600],
+        text: secondary[600],
       },
     })
 
     if (props.filled) {
       if (data.isActive) {
         return css.variables({
-          bg: props.selected ? color[100] : color[50],
-          text: color[500],
+          bg: props.selected ? color[100] : color[200],
+          text: color[800],
           hover: {
-            bg: props.selected ? color[100] : color[50],
-            text: color[500],
+            bg: props.selected ? color[200] : color[200],
+            text: color[800],
           },
           dark: {
             bg: props.selected ? color[700] : color[700],
@@ -55,18 +51,18 @@ const theme: MenuItemTheme = {
       }
 
       return css.variables({
-        bg: props.selected ? gray[50] : 'transparent',
-        text: gray[800],
+        bg: props.selected ? secondary[100] : 'transparent',
+        text: secondary[800],
         hover: {
-          bg: gray[50],
-          text: gray[900],
+          bg: secondary[100],
+          text: secondary[900],
         },
         dark: {
-          bg: props.selected ? gray[800] : 'transparent',
-          text: gray[200],
+          bg: props.selected ? secondary[800] : 'transparent',
+          text: secondary[200],
           hover: {
-            bg: gray[600],
-            text: gray[100],
+            bg: secondary[600],
+            text: secondary[100],
           },
         },
       })
@@ -90,16 +86,16 @@ const theme: MenuItemTheme = {
     }
 
     return css.variables({
-      text: gray[800],
+      text: secondary[800],
       hover: {
-        text: gray[900],
-        border: gray[300],
+        text: secondary[900],
+        border: secondary[300],
       },
       dark: {
-        text: gray[300],
+        text: secondary[300],
         hover: {
-          text: gray[200],
-          border: gray[800],
+          text: secondary[200],
+          border: secondary[800],
         },
       },
     })

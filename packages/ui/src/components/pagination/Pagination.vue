@@ -111,7 +111,7 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
         @click="prevPage"
       />
       <div class="mx-9 flex items-center">
-        <span class="text-gray-600 mr-2">Page</span>
+        <span class="text-secondary-600 mr-2">Page</span>
         <x-input
           v-model="quickInput"
           :size="size"
@@ -119,7 +119,7 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
           hide-footer
           @keydown.enter="onQuickInput"
         />
-        <span class="text-gray-600 ml-2">of {{ totalPages }}</span>
+        <span class="text-secondary-600 ml-2">of {{ totalPages }}</span>
       </div>
       <x-button
         :icon-left="nextIcon"
@@ -163,7 +163,7 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
         class="rounded-full cursor-pointer"
         :class="[
           classes.dots,
-          i === modelValue ? 'bg-[color:var(--x-pagination-bg)]': 'bg-gray-100 hover:bg-gray-200'
+          i === modelValue ? 'bg-[color:var(--x-pagination-bg)]': 'bg-secondary-100 hover:bg-secondary-200'
         ]"
         @click="$emit('update:modelValue', i)"
       ></li>

@@ -40,7 +40,7 @@ const { styles, classes, className } = useTheme('Divider', {}, props)
     ></div>
     <div
       v-if="label"
-      class="font-medium text-sm text-gray-600 dark:text-gray-300"
+      class="font-medium text-sm text-secondary-600 dark:text-secondary-300"
       :class="[
         classes.label,
         {

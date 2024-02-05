@@ -211,6 +211,6 @@ defineExpose({ focus, blur, reset, validate, setError })
       <slot name="suffix" :value="value"></slot>
     </div>
 
-    <p v-if="errorInternal" class="text-sm text-red-500 mt-1" v-text="errorInternal"></p>
+    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
   </x-label>
 </template>

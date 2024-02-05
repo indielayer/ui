@@ -29,7 +29,7 @@ const theme: CheckboxTheme = {
     },
 
     icon: ({ props }) => {
-      const classes = ['fill-current text-white dark:text-gray-900']
+      const classes = ['fill-current text-white dark:text-secondary-900']
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-2 w-2')
       else if (props.size === 'xl') classes.push('h-3.5 w-3.5')
@@ -39,7 +39,7 @@ const theme: CheckboxTheme = {
     },
 
     label: ({ props }) => {
-      const classes = ['text-gray-800 dark:text-gray-200 pl-2 text-sm']
+      const classes = ['text-secondary-800 dark:text-secondary-200 pl-2 text-sm']
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')

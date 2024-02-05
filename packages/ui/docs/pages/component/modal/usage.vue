@@ -27,7 +27,14 @@ const show3 = ref(false)
     </template>
   </x-modal>
 
-  <x-modal v-model="show1" backdrop>
+  <x-modal
+    v-model="show1"
+    backdrop
+    :has-actions="false"
+    :has-header="false"
+    show-close
+    :dissmissable="false"
+  >
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
   </x-modal>
 
@@ -39,14 +46,12 @@ const show3 = ref(false)
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
 
     <template #actions>
-      <div class="text-right space-x-4">
-        <x-button>Cancel</x-button>
-        <x-button color="success">Confirm</x-button>
-      </div>
+      <x-button>Cancel</x-button>
+      <x-button color="success">Confirm</x-button>
     </template>
   </x-modal>
 
-  <x-modal v-model="show3" show-close>
+  <x-modal v-model="show3" show-close :has-actions="false">
     <template #header>
       Modal Title
     </template>

@@ -116,7 +116,7 @@ const { styles, classes, className } = useTheme('Stepper', {}, props)
             :key="index"
             :class="[classes.step, {
               'cursor-pointer': interactive && !step.disabled,
-              'text-gray-400 dark:text-gray-600': step.disabled,
+              'text-secondary-400 dark:text-secondary-600': step.disabled,
               'flex-1': grow,
             }]"
             :disabled="step.disabled || !interactive"
@@ -125,7 +125,7 @@ const { styles, classes, className } = useTheme('Stepper', {}, props)
             <div class="overflow-hidden">
               <div
                 class="h-0.5 w-full mb-2"
-                :class="[step.status === 'complete' || step.status === 'incomplete' ? 'bg-primary-500' : 'bg-gray-200 dark:bg-gray-700']"
+                :class="[step.status === 'complete' || step.status === 'incomplete' ? 'bg-primary-500' : 'bg-secondary-200 dark:bg-secondary-700']"
               ></div>
               <div class="flex items-start pr-4">
                 <x-icon
@@ -138,7 +138,7 @@ const { styles, classes, className } = useTheme('Stepper', {}, props)
                 />
                 <div class="grid text-left">
                   <div class="text-sm truncate">{{ step.label }}</div>
-                  <div v-if="step.description" class="text-xs text-gray-500">{{ step.description }}</div>
+                  <div v-if="step.description" class="text-xs text-secondary-500">{{ step.description }}</div>
                 </div>
               </div>
             </div>

@@ -114,6 +114,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    :tooltip="tooltip"
   >
     <div class="relative">
       <slot name="prefix">
@@ -134,7 +135,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           type === 'password' ? 'pr-10' : '',
           // error
           errorInternal
-            ? 'border-red-500 dark:border-red-400 focus:outline-red-500'
+            ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
             : 'focus:outline-[color:var(--x-input-border)]',
           {
             '!pl-10': iconLeft,

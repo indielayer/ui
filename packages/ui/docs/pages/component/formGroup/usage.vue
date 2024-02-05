@@ -27,6 +27,7 @@ function onSubmit(isValid: string) {
       v-model="selected"
       label="Group of checkboxes"
       helper="Helper text"
+      tooltip="Tooltip text"
       :rules="[rules.isRequired]"
       vertical
     >

@@ -1,7 +1,7 @@
 <script lang="ts">
 const menuProps = {
   ...useCommon.props(),
-  ...useColors.props('primary'),
+  ...useColors.props('secondary'),
   items: Array as PropType<MenuArrayItem[]>,
   collapsible: {
     type: Boolean,
@@ -109,7 +109,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
           </template>
           <template #content="{ expand }">
             <x-menu
-              class="border-l ml-4 border-gray-100 dark:border-gray-700"
+              class="border-l ml-4 border-secondary-100 dark:border-secondary-700"
               :class="{ 'pl-1': filled }"
               :items="item.items"
               :color="item.color || color"
@@ -138,7 +138,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
             @click="$emit('item-click')"
           />
           <x-menu
-            class="x-menu-inner space-y-1 ml-4 border-l border-gray-100 dark:border-gray-700"
+            class="x-menu-inner space-y-1 ml-4 border-l border-secondary-100 dark:border-secondary-700"
             :class="{ 'pl-1': filled }"
             :items="item.items"
             :color="item.color || color"

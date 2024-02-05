@@ -5,7 +5,7 @@ const theme: ToggleTheme = {
     wrapper: '',
 
     label: ({ props }) => {
-      const c = 'font-medium text-gray-800 dark:text-gray-200'
+      const c = 'font-medium text-secondary-800 dark:text-secondary-200'
 
       if (props.size === 'xs') return c + ' text-xs'
       else if (props.size === 'sm') return c + ' text-sm'
