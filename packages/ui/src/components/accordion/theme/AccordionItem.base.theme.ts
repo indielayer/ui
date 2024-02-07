@@ -3,7 +3,7 @@ import type { AccordionItemTheme } from '../AccordionItem.vue'
 const theme: AccordionItemTheme = {
   classes: {
     wrapper: ({ props, slots, data }) => {
-      const classes = ['relative flex items-center w-full text-left']
+      const classes = ['relative flex items-center w-full text-left rounded']
 
       if (!data.isInsideAccordion) return classes
 
@@ -11,7 +11,7 @@ const theme: AccordionItemTheme = {
         if (props.iconAlign === 'left') classes.push('pl-8 pr-4')
         else classes.push('pr-8 pl-4')
         classes.push('py-2')
-        if (!props.disabled) classes.push('hover:bg-secondary-50 dark:hover:bg-secondary-600')
+        if (!props.disabled) classes.push('hover:bg-secondary-100 dark:hover:bg-secondary-600')
       }
 
       if (!props.disabled) classes.push('cursor-pointer')

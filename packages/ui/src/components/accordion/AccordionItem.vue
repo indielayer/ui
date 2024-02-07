@@ -144,6 +144,7 @@ defineExpose({ toggle, open, close })
     :aria-expanded="collapsed ? 'false' : 'true'"
   >
     <button
+      type="button"
       :class="classes.wrapper"
       @click="toggle"
     >
