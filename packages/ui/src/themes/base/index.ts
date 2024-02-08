@@ -1,10 +1,10 @@
 import type { UITheme } from '../../theme'
 import * as components from './components'
-import rawStyles from './styles.css?raw'
+import styles from './styles'
 
 const theme: UITheme = {
   name: 'Base',
-  styles: `${rawStyles}`,
+  styles,
   classPrefix: 'x-',
   components,
 }
