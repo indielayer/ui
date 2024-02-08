@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.1.1
+
+### Patch Changes
+
+- fix(nuxt): theme inject key ([#46](https://github.com/indielayer/ui/pull/46)) ([`46f475c`](https://github.com/indielayer/ui/commit/46f475c7fcbce774d3ed2d7746fded55e0b5bc8d))
+
 ## 1.1.0
 
 ### Minor Changes

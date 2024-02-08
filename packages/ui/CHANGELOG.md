@@ -1,5 +1,13 @@
 # @indielayer/ui
 
+## 1.5.2
+
+### Patch Changes
+
+- fix: default button types ([#44](https://github.com/indielayer/ui/pull/44)) ([`d54d0c5`](https://github.com/indielayer/ui/commit/d54d0c5b7cb1286afc6423deea0e7d97649e812a))
+- style(base): adjust input footer height ([#42](https://github.com/indielayer/ui/pull/42)) ([`ad996a2`](https://github.com/indielayer/ui/commit/ad996a2bead2f8ed7ebc961906d5b12cccde8e7f))
+- fix(nuxt): theme inject key ([#46](https://github.com/indielayer/ui/pull/46)) ([`46f475c`](https://github.com/indielayer/ui/commit/46f475c7fcbce774d3ed2d7746fded55e0b5bc8d))
+
 ## 1.5.1
 
 ### Patch Changes
