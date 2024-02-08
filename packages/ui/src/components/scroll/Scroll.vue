@@ -50,7 +50,7 @@ defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
 
 <template>
   <div
-    class="flex relative overflow-hidden"
+    class="flex relative overflow-hidden max-w-full max-h-full"
     :style="styles"
     :class="[
       className,

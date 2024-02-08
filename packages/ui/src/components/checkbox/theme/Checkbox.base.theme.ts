@@ -5,7 +5,7 @@ const theme: CheckboxTheme = {
     wrapper: ({ data }) => {
       const classes = ['inline-block relative cursor-pointer align-middle']
 
-      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-3')
+      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-5')
 
       return classes
     },
@@ -38,8 +38,10 @@ const theme: CheckboxTheme = {
       return classes
     },
 
-    label: ({ props }) => {
-      const classes = ['inline-block font-medium text-secondary-800 dark:text-secondary-200 pl-2']
+    label: ({ props, data }) => {
+      const classes = ['inline-block text-secondary-800 dark:text-secondary-200 pl-2']
+
+      classes.push(data.isInsideFormGroup ? 'font-normal' : 'font-medium')
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')

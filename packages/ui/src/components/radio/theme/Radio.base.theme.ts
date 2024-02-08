@@ -5,7 +5,7 @@ const theme: RadioTheme = {
     wrapper: ({ data }) => {
       const classes = ['inline-block relative cursor-pointer focus:outline-none group']
 
-      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-3')
+      if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-5')
 
       return classes
     },
@@ -33,8 +33,10 @@ const theme: RadioTheme = {
       return c
     },
 
-    label: ({ props }) => {
-      let c = 'font-medium text-secondary-800 dark:text-secondary-200 pl-2'
+    label: ({ props, data }) => {
+      let c = 'text-secondary-800 dark:text-secondary-200 pl-2'
+
+      c += data.isInsideFormGroup ? ' font-normal' : ' font-medium'
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
