@@ -292,6 +292,7 @@ defineExpose({ log, info, success, warn, warning: warn, error })
           <x-spacer/>
           <button
             v-if="notification.action"
+            type="button"
             class="
                 ml-3
                 font-medium

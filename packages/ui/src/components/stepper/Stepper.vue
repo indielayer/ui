@@ -114,6 +114,7 @@ const { styles, classes, className } = useTheme('Stepper', {}, props)
             :is="interactive ? 'button' : 'div'"
             v-for="(step, index) in steps"
             :key="index"
+            :type="interactive ? 'button' : undefined"
             :class="[classes.step, {
               'cursor-pointer': interactive && !step.disabled,
               'text-secondary-400 dark:text-secondary-600': step.disabled,

@@ -227,7 +227,7 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             @click="$emit('click-row', item)"
           >
             <x-table-cell v-if="expandable" width="48" class="!p-1">
-              <button class="p-4" @click="internalItems[index].__expanded = !internalItems[index].__expanded">
+              <button type="button" class="p-4" @click="internalItems[index].__expanded = !internalItems[index].__expanded">
                 <x-icon
                   :icon="chevronDownIcon"
                   :size="dense ? 'xs' : 'md'"

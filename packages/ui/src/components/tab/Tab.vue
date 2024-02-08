@@ -121,6 +121,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
   <component
     :is="to ? XLink : tag"
     ref="elRef"
+    :type="tag === 'button' ? 'button' : undefined"
     :data-value="computedValue"
     :to="to"
     :color="selected ? color : undefined"
