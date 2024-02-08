@@ -1,3 +1,4 @@
+export default `
 html {
   color: #111827;
   background-color: white;
@@ -80,3 +81,4 @@ html.dark {
   --error-color-900: 127, 29, 29;
   --error-color-950: 69, 10, 10;
 }
+`

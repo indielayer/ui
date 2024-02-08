@@ -33,10 +33,10 @@ const popoverProps = {
   popperShowTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
   popperHideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
   container: {
-    type: [String, Object, Element, Boolean],
+    type: [String, Object, Boolean],
     default: 'body',
   },
-  boundary: [String, Element],
+  boundary: [String, Object],
   strategy: {
     type: String as PropType<'absolute' | 'fixed'>,
     default: 'absolute',
