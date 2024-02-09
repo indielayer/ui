@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.2.0
+
+### Minor Changes
+
+- chore: update create to use basetheme ([#48](https://github.com/indielayer/ui/pull/48)) ([`05a3030`](https://github.com/indielayer/ui/commit/05a30304d968d58d0c95d13e903a5db827d8caec))
+
 ## 1.1.1
 
 ### Patch Changes
