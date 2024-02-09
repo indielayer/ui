@@ -16,7 +16,7 @@ Read the <a href="https://indielayer.com/ui/docs">Online Documentation</a>.
 
 ## Quickstart
 ```bash
-npm init @indielayer/ui
+npm init @indielayer/ui@latest
 ```
 
 ---
