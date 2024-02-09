@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import UI, { colors } from '@indielayer/ui'
+import UI, { BaseTheme } from '@indielayer/ui'
 import App from './App.vue'
 import router from './router'
 
@@ -13,16 +13,7 @@ const app = createApp(App)
 app.use(UI, {
   prefix: 'X',
   icons,
-  theme: {
-    classPrefix: 'x-',
-    colors: {
-      primary: colors.emerald,
-      secondary: colors.slate,
-      success: colors.green,
-      warning: colors.yellow,
-      error: colors.red,
-    },
-  }
+  theme: BaseTheme
 })
 app.use(router)
 

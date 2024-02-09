@@ -5,6 +5,9 @@ export default defineNuxtConfig({
     ['@indielayer/ui/nuxt'],
   ],
   css: ['~/assets/tailwind.css'],
+  build: {
+    transpile: ['@indielayer/ui'],
+  },
   postcss: {
     plugins: {
       'tailwindcss/nesting': {},

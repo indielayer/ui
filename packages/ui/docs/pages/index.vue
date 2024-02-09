@@ -77,12 +77,12 @@ module.exports = {
   <code-snippet
     lang="js"
     :code="`import { createApp } from 'vue'
-import UI from '@indielayer/ui'
+import UI, { BaseTheme } from '@indielayer/ui'
 
 const app = createApp(App)
 
 app.use(UI, {
-  prefix: 'X',
+  theme: BaseTheme,
 })`"
   />
   <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
@@ -104,22 +104,11 @@ app.use(UI, {
   />
   <code-snippet
     lang="js"
-    :code="`import { colors } from '@indielayer/ui'
-
+    :code="`
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    ['@indielayer/ui/nuxt', {
-      theme: {
-        colors: {
-          primary: colors.emerald,
-          secondary: colors.slate,
-          success: colors.green,
-          warning: colors.yellow,
-          error: colors.red,
-        },
-      },
-    }],
+    ['@indielayer/ui/nuxt'],
   ],
   css: ['~/assets/tailwind.css'],
   /**
@@ -140,12 +129,13 @@ export default defineNuxtConfig({
   <code-snippet
     lang="js"
     :code="`import { createApp } from 'vue'
-import { createUI, XButton, XAlert } from '@indielayer/ui'
+import { createUI, BaseTheme, XButton, XAlert } from '@indielayer/ui'
 
 const app = createApp(App)
 
 const UI = createUI({
   components: [XButton, XAlert],
+  theme: BaseTheme,
 })
 
 app.use(UI)`"
