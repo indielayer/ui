@@ -14,7 +14,7 @@ const buttonProps = {
   icon: String,
   iconLeft: String,
   iconRight: String,
-  to: String,
+  to: [String, Object],
   outlined: Boolean,
   rounded: Boolean,
   glow: Boolean,
