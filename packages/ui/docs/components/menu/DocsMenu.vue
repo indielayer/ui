@@ -51,6 +51,7 @@ const components = [
       { to: '/component/pagination', label: 'Pagination' },
       { to: '/component/popover', label: 'Popover' },
       { to: '/component/progress', label: 'Progress' },
+      { to: '/component/qrCode', label: 'QR Code' },
       { to: '/component/skeleton', label: 'Skeleton' },
       { to: '/component/spinner', label: 'Spinner' },
       { to: '/component/stepper', label: 'Stepper' },

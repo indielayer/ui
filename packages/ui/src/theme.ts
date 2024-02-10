@@ -33,6 +33,7 @@ import type {
   PopoverTheme,
   PopoverContainerTheme,
   ProgressTheme,
+  QrCodeTheme,
   RadioTheme,
   ScrollTheme,
   SelectTheme,
@@ -85,6 +86,7 @@ export type ComponentThemes = {
   Popover: PopoverTheme;
   PopoverContainer: PopoverContainerTheme;
   Progress: ProgressTheme;
+  QrCode: QrCodeTheme;
   Radio: RadioTheme;
   Scroll: ScrollTheme;
   Select: SelectTheme;
