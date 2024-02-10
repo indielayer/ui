@@ -64,7 +64,10 @@ function startAutoPlay() {
   }, props.delay)
 }
 
-watch(current, moveSlides)
+watch(current, () => {
+  moveSlides()
+  emit('update', current.value)
+})
 
 function moveSlides() {
   if (slidesRef.value) {
@@ -104,6 +107,8 @@ const { styles, classes, className } = useTheme('Carousel', {}, props, {
   total,
 })
 
+const emit = defineEmits(['update'])
+
 defineExpose({ to, next, prev })
 </script>
 
@@ -119,9 +124,9 @@ defineExpose({ to, next, prev })
       ref="slidesRef"
       :class="classes.slides"
     >
-      <slot v-bind="{ to, next, prev }"></slot>
+      <slot v-bind="{ to, next, prev, current, total }"></slot>
     </div>
-    <slot v-if="showDots" name="dots" v-bind="{ to, next, prev }">
+    <slot v-if="showDots" name="dots" v-bind="{ to, next, prev, current, total }">
       <div :class="[classes.dots, classDots]">
         <span
           v-for="i in total"
