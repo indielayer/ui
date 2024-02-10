@@ -33,6 +33,7 @@ declare module 'vue' {
     XPopover: typeof import('@indielayer/ui')['XPopover']
     XPopoverContainer: typeof import('@indielayer/ui')['XPopoverContainer']
     XProgress: typeof import('@indielayer/ui')['XProgress']
+    XQrCode: typeof import('@indielayer/ui')['XQrCode']
     XRadio: typeof import('@indielayer/ui')['XRadio']
     XScroll: typeof import('@indielayer/ui')['XScroll']
     XSelect: typeof import('@indielayer/ui')['XSelect']

@@ -31,6 +31,7 @@ export { default as PaginationItem } from '../../components/pagination/theme/Pag
 export { default as Popover } from '../../components/popover/theme/Popover.carbon.theme'
 export { default as PopoverContainer } from '../../components/popover/theme/PopoverContainer.carbon.theme'
 export { default as Progress } from '../../components/progress/theme/Progress.carbon.theme'
+export { default as QrCode } from '../../components/qrCode/theme/QrCode.carbon.theme'
 export { default as Radio } from '../../components/radio/theme/Radio.carbon.theme'
 export { default as Scroll } from '../../components/scroll/theme/Scroll.carbon.theme'
 export { default as Select } from '../../components/select/theme/Select.carbon.theme'
