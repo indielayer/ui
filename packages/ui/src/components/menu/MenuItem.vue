@@ -31,6 +31,7 @@ const menuItemProps = {
   },
   selected: Boolean,
   disabled: Boolean,
+  minimal: Boolean,
 }
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
@@ -150,7 +151,7 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     </span>
     <x-icon v-else-if="computedProps.icon" :size="computedProps.size" :icon="computedProps.icon" class="mr-2"/>
 
-    <span class="flex-1 truncate">
+    <span v-if="!minimal" class="flex-1 truncate">
       <slot>{{ computedProps.label }}</slot>
     </span>
 
