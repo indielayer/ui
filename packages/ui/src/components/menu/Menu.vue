@@ -18,6 +18,7 @@ const menuProps = {
     type: Boolean,
     default: true,
   },
+  minimal: Boolean,
 }
 
 export type MenuArrayItem = {
@@ -104,6 +105,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
               :filled="item.filled || filled"
               :size="item.size || size"
               :disabled="disabled || item.disabled"
+              :minimal="minimal"
               class="font-medium"
             />
           </template>
@@ -120,6 +122,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
               :disabled="disabled || item.disabled"
               :rounded="rounded"
               :filled="filled"
+              :minimal="minimal"
               @expand="expand(false)"
               @item-click="$emit('item-click')"
             />
@@ -133,6 +136,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
             :filled="item.filled || filled"
             :size="item.size || size"
             :disabled="disabled || item.disabled"
+            :minimal="minimal"
             class="font-medium"
             inactive
             @click="$emit('item-click')"
@@ -147,6 +151,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
             :collapse-icon="item.collapseIcon || collapseIcon"
             :expanded="item.expanded || expanded"
             :disabled="disabled || item.disabled"
+            :minimal="minimal"
             :rounded="rounded"
             :filled="filled"
             @expand="$emit('expand')"
@@ -163,6 +168,7 @@ const { styles, classes, className } = useTheme('Menu', {}, props)
           :filled="item.filled || filled"
           :size="item.size || size"
           :disabled="disabled || item.disabled"
+          :minimal="minimal"
           :class="{ 'my-2': item.divider }"
           @click="$emit('item-click')"
           @active="$emit('expand')"

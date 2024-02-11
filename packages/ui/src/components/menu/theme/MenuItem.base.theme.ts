@@ -3,7 +3,7 @@ import type { MenuItemTheme } from '../MenuItem.vue'
 const theme: MenuItemTheme = {
   classes: {
     wrapper: ({ props, data }) => {
-      const classes = ['relative !flex items-center whitespace-nowrap px-3']
+      const classes = ['relative !flex items-center whitespace-nowrap px-3 min-h-[2rem]']
 
       if (!props.disabled) classes.push('cursor-pointer')
       if (data.isActive) classes.push('font-medium')

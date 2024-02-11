@@ -1,4 +1,6 @@
-<script setup>
+<script setup lang="ts">
+import type { MenuArrayItem } from '@indielayer/ui'
+
 const menu1 = [{
   label: 'Open',
   active: false,
@@ -15,10 +17,11 @@ const menu1 = [{
   active: false,
   value: 'c',
 }]
-const menu2 = [{
+const menu2: MenuArrayItem[] = [{
   label: 'Menu item 1',
   value: '',
   target: '_blank',
+  icon: 'smile',
   href: 'https://indielayer.com',
 }, {
   to: 'menu',
@@ -30,6 +33,7 @@ const menu2 = [{
   label: 'Menu item 3',
   value: '',
   exact: true,
+  icon: 'smile',
   items: [{
     label: 'derp',
   }],
@@ -56,7 +60,7 @@ const menu2 = [{
   label: 'Last menu item',
   value: '',
   icon: 'heart',
-  exact: '',
+  exact: true,
   onClick: () => {},
   disabled: false,
 }]

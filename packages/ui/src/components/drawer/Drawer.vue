@@ -12,7 +12,7 @@ const drawerProps = {
   },
   width: {
     type: [String, Number],
-    default: 320,
+    default: 220,
   },
   height: {
     type: [String, Number],
