@@ -90,6 +90,10 @@ const listeners = {
   },
 }
 
+function manualValidate() {
+  if (props.validateOnInput && !isFirstValidation.value) validate(props.modelValue)
+}
+
 const { styles, classes, className } = useTheme('FormGroup', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
@@ -108,6 +112,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     ]"
     :tooltip="tooltip"
     v-on="listeners"
+    @keyup.space="manualValidate"
   >
     <div :class="classes.wrapper">
       <slot></slot>
