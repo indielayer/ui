@@ -21,7 +21,7 @@ const theme: CheckboxTheme = {
     },
 
     content: ({ props }) => {
-      const classes = ['flex items-baseline']
+      const classes = ['flex items-center']
 
       if (props.disabled) classes.push('cursor-not-allowed')
 
