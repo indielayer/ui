@@ -2,18 +2,23 @@ import type { SliderTheme } from '../Slider.vue'
 
 const theme: SliderTheme = {
   classes: {
-    wrapper: '',
+    wrapper: ({ props }) => {
+      const classes = []
 
-    drag: 'w-[20px] h-[20px] -mt-[13px] -ml-[10px] rounded-full bg-white border shadow-sm',
+      if (props.disabled) classes.push('cursor-not-allowed')
+
+      return classes
+    },
+    input: 'w-[calc(100%+0.5rem)] -ml-1 disabled:cursor-not-allowed',
+    track: 'h-1.5 bg-secondary-200 dark:bg-secondary-700 rounded-md overflow-hidden',
+    progress: 'h-full bg-[color:var(--x-slider-bg)]',
   },
 
   styles: ({ props, colors, css }) => {
-    const primary = colors.getPalette('primary')
     const color = colors.getPalette(props.color)
 
     return css.variables({
-      bg: color[500],
-      border: primary[500],
+      bg: color[400],
     })
   },
 }
