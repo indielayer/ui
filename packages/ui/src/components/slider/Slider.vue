@@ -1,21 +1,25 @@
 <script lang="ts">
 const sliderProps = {
-  ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  min: Number,
-  max: Number,
+  min: {
+    type: [Number, String],
+    default: 0,
+  },
+  max: {
+    type: [Number, String],
+    default: 100,
+  },
   step: {
-    type: Number,
+    type: [Number, String],
     default: 1,
   },
-  gradient: Boolean,
 }
 
 export type SliderProps = ExtractPublicPropTypes<typeof sliderProps>
 
-type InternalClasses = 'wrapper' | 'drag'
+type InternalClasses = 'wrapper' | 'input' | 'track' | 'progress'
 export interface SliderTheme extends ThemeComponent<SliderProps, InternalClasses> {}
 
 export default {
@@ -27,8 +31,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type ExtractPublicPropTypes } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import { ref, watch, type ExtractPublicPropTypes, computed } from 'vue'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
@@ -36,15 +39,13 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XLabel from '../label/Label.vue'
-import XProgress from '../progress/Progress.vue'
+import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(sliderProps)
 
-const emit = defineEmits(useInputtable.emits(false))
+const emit = defineEmits(useInputtable.emits())
 
 const elRef = ref<HTMLElement | null>(null)
-const dragRef = ref<HTMLElement | null>(null)
-const progressRef = ref<HTMLElement | null>(null)
 const value = ref<number>(Number(props.modelValue ?? 0))
 
 const { focus, blur } = useInteractive(elRef)
@@ -57,110 +58,19 @@ watch(value, (val) => {
   emit('update:modelValue', val)
 })
 
-const initial = ref()
-const isDragging = computed(() => !!initial.value)
-
-function startProgressDrag(e: PointerEvent) {
-  e.stopPropagation()
-  if (!dragRef.value || !progressRef.value) return
-
-  focus()
-
-  const maxWidth = progressRef.value.offsetWidth
-  let percent = Math.floor(e.offsetX * 100 / maxWidth)
-
-  if (percent < 0) percent = 0
-  if (percent > 100) percent = 100
-
-  value.value = percent
-
-  setTimeout(() => {
-    initial.value = {
-      x: e.x,
-      y: e.y,
-      maxWidth,
-      offsetX: dragRef.value?.offsetLeft,
-    }
-  })
-  e.preventDefault()
-  e.stopPropagation()
-}
-
-function startDrag(e: PointerEvent) {
-  if (!dragRef.value || !progressRef.value) return
-
-  focus()
-
-  initial.value = {
-    x: e.x,
-    y: e.y,
-    maxWidth: progressRef.value.offsetWidth,
-    offsetX: dragRef.value.offsetLeft,
-  }
-
-  e.preventDefault()
-  e.stopPropagation()
-}
-
-function moveDrag(e: PointerEvent) {
-  if (!initial.value || !dragRef.value) return
-
-  const { x, maxWidth, offsetX } = initial.value
-  const movedX = e.x - x
-
-  if (movedX === 0) return
-
-  const newMoveX = offsetX + movedX
-  let percent = Math.floor(newMoveX * 100 / maxWidth)
-
-  if (percent < 0) percent = 0
-  if (percent > 100) percent = 100
-
-  value.value = percent
-
-  e.preventDefault()
-  e.stopPropagation()
-}
-
-function endDrag(e: PointerEvent) {
-  if (!initial.value) return
-  initial.value = undefined
-  e.preventDefault()
-  e.stopPropagation()
-}
-
-if (typeof window !== 'undefined') {
-  useEventListener(progressRef, 'pointerdown', startProgressDrag, false)
-  useEventListener(dragRef, 'pointerdown', startDrag, false)
-  useEventListener(window, 'pointermove', moveDrag, true)
-  useEventListener(window, 'pointerup', endDrag, true)
-}
-
-useEventListener(elRef, 'keydown', handleKeydown)
-
-function handleKeydown(e: KeyboardEvent) {
-  if (e.code === 'ArrowLeft') {
-    const nextValue = value.value - 1
-
-    if (nextValue >= 0) value.value = nextValue
-
-    e.preventDefault()
-  } else if (e.code === 'ArrowRight') {
-    const nextValue = value.value + 1
-
-    if (nextValue <= 100) value.value = nextValue
-
-    e.preventDefault()
-  }
-}
+const progress = computed(() => {
+  return ((value.value - Number(props.min)) / (Number(props.max) - Number(props.min))) * 100
+})
 
 const {
   errorInternal,
+  hideFooterInternal,
+  isInsideForm,
+  inputListeners,
   reset,
   validate,
   setError,
-  isInsideForm,
-} = useInputtable(props, { focus, emit, withListeners: false })
+} = useInputtable(props, { focus, emit })
 
 const { styles, classes, className } = useTheme('Slider', {}, props)
 
@@ -169,9 +79,6 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <x-label
-    ref="elRef"
-    tabindex="0"
-    class="group"
     :style="styles"
     :disabled="disabled"
     :required="required"
@@ -181,36 +88,55 @@ defineExpose({ focus, blur, reset, validate, setError })
       className,
       classes.wrapper,
     ]"
+    :tooltip="tooltip"
   >
-    <div class="flex items-center relative w-full">
+    <div class="flex items-center relative w-full gap-2 min-h-[1.25rem]">
       <slot name="prefix" :value="value"></slot>
-      <div
-        ref="progressRef"
-        :class="[isDragging ? 'cursor-grabbing' : 'cursor-grab']"
-        class="relative w-full py-2 mx-2"
-      >
-        <div class="-mx-2">
-          <x-progress
-            :percentage="value"
-            :animate="false"
-            thick
-            class="w-full"
-            :gradient="gradient"
-          />
+      <div class="relative flex items-center flex-1">
+        <input
+          :id="id"
+          ref="elRef"
+          type="range"
+          :class="[classes.input, 'absolute w-full z-10 appearance-none bg-transparent focus:outline-none focus-visible:outline-none']"
+          :disabled="disabled"
+          :name="name"
+          :max="max"
+          :min="min"
+          :step="step"
+          :readonly="readonly"
+          :value="value"
+          v-on="inputListeners"
+        />
+        <div :class="['absolute w-full', classes.track]">
+          <div
+            :class="classes.progress"
+            :style="{ width: progress + '%' }"
+          ></div>
         </div>
-        <div
-          ref="dragRef"
-          class="absolute group-focus:border-[color:var(--x-slider-border)]"
-          :class="[
-            classes.drag,
-            isDragging ? 'cursor-grabbing' : 'cursor-grab'
-          ]"
-          :style="`left: ${value}%;`"
-        ></div>
       </div>
       <slot name="suffix" :value="value"></slot>
     </div>
 
-    <p v-if="errorInternal" class="text-sm text-error-500 mt-1" v-text="errorInternal"></p>
+    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>
+
+<style lang="postcss" scoped>
+[type="range"]::-webkit-slider-thumb {
+  @apply cursor-pointer h-5 w-5 border-solid border rounded-full
+    bg-white appearance-none border-[color:var(--x-slider-bg)];
+}
+
+[type="range"]:focus::-webkit-slider-thumb {
+  @apply ring ring-offset-1;
+}
+
+[type="range"]::-moz-range-thumb {
+  @apply cursor-pointer h-5 w-5 border-solid border rounded-full
+    bg-white border-[color:var(--x-slider-bg)];
+}
+
+[type="range"]:focus::-moz-range-thumb {
+  @apply ring ring-offset-1;
+}
+</style>
