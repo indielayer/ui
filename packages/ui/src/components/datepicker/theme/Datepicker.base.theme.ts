@@ -10,8 +10,7 @@ const theme: DatepickerTheme = {
     const secondary = colors.getPalette('secondary')
     const vars: Array<Record<string, string> | string> = [`
     /*General*/
-    --dp-font-family: Inter, -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
-    "Helvetica Neue", sans-serif;
+    --dp-font-family: var(--font-family-sans);
     --dp-border-radius: 8px; /*Configurable border-radius*/
     --dp-cell-border-radius: 8px; /*Specific border radius for the calendar cell*/
     --dp-common-transition: all 0.1s ease-in; /*Generic transition applied on buttons and calendar cells*/
