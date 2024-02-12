@@ -86,6 +86,9 @@ importers:
       '@types/node':
         specifier: ^18
         version: 18.18.8
+      '@vuepic/vue-datepicker':
+        specifier: ^8.0.0
+        version: 8.1.0(vue@3.4.16)
       '@vueuse/core':
         specifier: ^10.2.0
         version: 10.2.0(vue@3.4.16)
@@ -183,6 +186,9 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.4.0
         version: 0.4.0
+      '@vuepic/vue-datepicker':
+        specifier: ^8.0.0
+        version: 8.0.0(vue@3.3.9)
       '@vueuse/core':
         specifier: ^10.2.0
         version: 10.2.0(vue@3.3.9)
@@ -4493,6 +4499,26 @@ packages:
       - typescript
     dev: true
 
+  /@vuepic/vue-datepicker@8.0.0(vue@3.3.9):
+    resolution: {integrity: sha512-0HsxG2GGTWzeitPVhIEFPHLyLwTU+VT0vk15JreqNi0cB6D5Mpf5vqHppJE0ech+ZTQx36Ip99oSfnQdA0SNrA==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      date-fns: 3.3.1
+      vue: 3.3.9(typescript@5.2.2)
+    dev: true
+
+  /@vuepic/vue-datepicker@8.1.0(vue@3.4.16):
+    resolution: {integrity: sha512-WdAe9L31mOzGwxaJXQqdIuU3b+UW4B27nBksUkBgJLLuzNyGpMvaejaKACQjBakJ9xJAuhsIca4kaJmDV4rpuw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      date-fns: 3.3.1
+      vue: 3.4.16(typescript@5.2.2)
+    dev: true
+
   /@vueuse/core@10.2.0(vue@3.3.9):
     resolution: {integrity: sha512-aHBnoCteIS3hFu7ZZkVB93SanVDY6t4TIb7XDLxJT/HQdAZz+2RdIEJ8rj5LUoEJr7Damb5+sJmtpCwGez5ozQ==}
     dependencies:
@@ -5694,6 +5720,10 @@ packages:
 
   /dataloader@1.4.0:
     resolution: {integrity: sha512-68s5jYdlvasItOJnCuI2Q9s4q98g0pCyL3HrcKJu8KNugUl8ahgmZYg38ysLTgQjjXX3H8CJLkAvWrclWfcalw==}
+    dev: true
+
+  /date-fns@3.3.1:
+    resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
     dev: true
 
   /date-time@3.1.0:

@@ -11,6 +11,7 @@ export { default as Carousel } from '../../components/carousel/theme/Carousel.ca
 export { default as CarouselSlide } from '../../components/carousel/theme/CarouselSlide.carbon.theme'
 export { default as Checkbox } from '../../components/checkbox/theme/Checkbox.carbon.theme'
 export { default as Container } from '../../components/container/theme/Container.carbon.theme'
+export { default as Datepicker } from '../../components/datepicker/theme/Datepicker.carbon.theme'
 export { default as Divider } from '../../components/divider/theme/Divider.carbon.theme'
 export { default as Drawer } from '../../components/drawer/theme/Drawer.carbon.theme'
 export { default as Form } from '../../components/form/theme/Form.carbon.theme'

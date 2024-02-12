@@ -24,6 +24,7 @@ const rules = {
     return !!v  || 'Field is required'
   },
 }
+const range = ref([])
 
 function onSubmit(isValid: string) {
   if (isValid) notifications?.success('Valid! Sumitted.')
@@ -73,6 +74,18 @@ function onSubmit(isValid: string) {
       name="country"
       placeholder="Select another country"
       label="Country"
+    />
+
+    <x-datepicker
+      v-model="range"
+      :rules="[rules.isRequired]"
+      label="Select a date"
+      helper="Pick a date"
+      tooltip="Use it to pick a date"
+      range
+      multi-calendars
+      disable-year-select
+      :enable-time-picker="false"
     />
 
     <x-checkbox

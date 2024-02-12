@@ -73,6 +73,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.1",
     "@vue/test-utils": "^2.4.0",
     "@vue/tsconfig": "^0.4.0",
+    "@vuepic/vue-datepicker": "^8.0.0",
     "@vueuse/core": "^10.2.0",
     "autoprefixer": "^10.4.0",
     "c8": "^7.12.0",

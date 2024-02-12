@@ -15,6 +15,7 @@ const components = [
     items: [
       { to: '/component/button', label: 'Button' },
       { to: '/component/checkbox', label: 'Checkbox' },
+      { to: '/component/datepicker', label: 'Datepicker' },
       { to: '/component/form', label: 'Form' },
       { to: '/component/formGroup', label: 'Form Group' },
       { to: '/component/input', label: 'Input' },

@@ -104,36 +104,6 @@ const componentsProperties = computed(() => {
 
 const anchors = ref([])
 const currentAnchor = ref(null)
-const anchorObserver = ref(null)
-
-onMounted(() => {
-  // setAnchorObserver()
-  // setAnchors()
-})
-
-onUnmounted(() => {
-  // anchorObserver.value.disconnect()
-})
-
-// function setAnchors() {
-//   document.querySelectorAll('h2').forEach((element) => {
-//     anchors.value.push({
-//       id: element.id,
-//       name: element?.textContent?.trim().replace('#', '') || '',
-//     })
-//     anchorObserver.value.observe(element)
-//   })
-// }
-// function setAnchorObserver() {
-//   anchorObserver = new IntersectionObserver((entries) => {
-//     entries.forEach((entry) => {
-//       if (entry.isIntersecting) currentAnchor.value = entry.target.id
-//     })
-//   }, {
-//     root: null,
-//     threshold: 1,
-//   })
-// }
 </script>
 
 <template>

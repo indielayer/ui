@@ -13,6 +13,7 @@ import type {
   CarouselSlideTheme,
   CheckboxTheme,
   ContainerTheme,
+  DatepickerTheme,
   DividerTheme,
   DrawerTheme,
   FormTheme,
@@ -66,6 +67,7 @@ export type ComponentThemes = {
   CarouselSlide: CarouselSlideTheme;
   Checkbox: CheckboxTheme;
   Container: ContainerTheme;
+  Datepicker: DatepickerTheme;
   Divider: DividerTheme;
   Drawer: DrawerTheme;
   Form: FormTheme;
