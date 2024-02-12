@@ -91,15 +91,15 @@ app.use(UI, {
     :snippets="[{
       label: 'npm',
       lang: 'bash',
-      code: 'npm install @indielayer/ui @vueuse/core floating-vue -D'
+      code: 'npm install @indielayer/ui @vueuse/core floating-vue @vuepic/vue-datepicker -D'
     }, {
       label: 'yarn',
       lang: 'bash',
-      code: 'yarn add @indielayer/ui @vueuse/core floating-vue -D'
+      code: 'yarn add @indielayer/ui @vueuse/core floating-vue @vuepic/vue-datepicker -D'
     }, {
       label: 'pnpm',
       lang: 'bash',
-      code: 'pnpm add @indielayer/ui @vueuse/core floating-vue -D'
+      code: 'pnpm add @indielayer/ui @vueuse/core floating-vue @vuepic/vue-datepicker -D'
     }]"
   />
   <code-snippet

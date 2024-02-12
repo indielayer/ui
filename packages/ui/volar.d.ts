@@ -13,6 +13,7 @@ declare module 'vue' {
     XCarouselSlide: typeof import('@indielayer/ui')['XCarouselSlide']
     XCheckbox: typeof import('@indielayer/ui')['XCheckbox']
     XContainer: typeof import('@indielayer/ui')['XContainer']
+    XDatepicker: typeof import('@indielayer/ui')['XDatepicker']
     XDivider: typeof import('@indielayer/ui')['XDivider']
     XDrawer: typeof import('@indielayer/ui')['XDrawer']
     XForm: typeof import('@indielayer/ui')['XForm']
