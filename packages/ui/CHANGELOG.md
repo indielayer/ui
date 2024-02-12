@@ -1,5 +1,20 @@
 # @indielayer/ui
 
+## 1.6.0
+
+### Minor Changes
+
+- feat: add qr code component ([#52](https://github.com/indielayer/ui/pull/52)) ([`a4bf36c`](https://github.com/indielayer/ui/commit/a4bf36c6c173427d9d03021f0b4a672d8d23ed48))
+- feat: add datepicker component ([#57](https://github.com/indielayer/ui/pull/57)) ([`2823946`](https://github.com/indielayer/ui/commit/28239462fa59e701328e666705cb414bc24a7b6f))
+
+### Patch Changes
+
+- fix(formgroup): keyup space validate ([#56](https://github.com/indielayer/ui/pull/56)) ([`8c52a57`](https://github.com/indielayer/ui/commit/8c52a57338ca90d60217e10d634c038e5478e035))
+- feat(menu): add minimal version ([#55](https://github.com/indielayer/ui/pull/55)) ([`812df36`](https://github.com/indielayer/ui/commit/812df362425f9953175499c97c77511cb5b13207))
+- fix(carousel): bind total and current to slots ([#53](https://github.com/indielayer/ui/pull/53)) ([`76e3856`](https://github.com/indielayer/ui/commit/76e38567b1e9f893382cc685b604a91961c3e0b1))
+- fix(button): ts link to as object ([#50](https://github.com/indielayer/ui/pull/50)) ([`12e90b7`](https://github.com/indielayer/ui/commit/12e90b76fbaa48e25c233995a3bdfd09b22d494e))
+- feat(slider): input range refactor ([#54](https://github.com/indielayer/ui/pull/54)) ([`23dda94`](https://github.com/indielayer/ui/commit/23dda9414fe834723c035cac3cc0fc318480f75c))
+
 ## 1.5.2
 
 ### Patch Changes

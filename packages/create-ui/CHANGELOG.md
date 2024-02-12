@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.3.0
+
+### Minor Changes
+
+- feat: add datepicker component ([#57](https://github.com/indielayer/ui/pull/57)) ([`2823946`](https://github.com/indielayer/ui/commit/28239462fa59e701328e666705cb414bc24a7b6f))
+
 ## 1.2.0
 
 ### Minor Changes
