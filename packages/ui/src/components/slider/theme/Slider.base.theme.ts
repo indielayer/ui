@@ -9,7 +9,7 @@ const theme: SliderTheme = {
 
       return classes
     },
-    input: 'w-[calc(100%+0.5rem)] -ml-1 disabled:cursor-not-allowed',
+    input: 'w-[calc(100%+0.65rem)] -ml-1 disabled:cursor-not-allowed',
     track: 'h-1.5 bg-secondary-200 dark:bg-secondary-700 rounded-md overflow-hidden',
     progress: 'h-full bg-[color:var(--x-slider-bg)]',
   },

@@ -97,7 +97,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           :id="id"
           ref="elRef"
           type="range"
-          :class="[classes.input, 'absolute w-full z-10 appearance-none bg-transparent focus:outline-none focus-visible:outline-none']"
+          :class="[classes.input, 'absolute z-10 appearance-none bg-transparent focus:outline-none focus-visible:outline-none']"
           :disabled="disabled"
           :name="name"
           :max="max"

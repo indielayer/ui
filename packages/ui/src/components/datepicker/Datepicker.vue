@@ -355,60 +355,60 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
 }
 
 .dp__theme_dark {
-  --dp-background-color: var(--x-datepicker-dark-bg, #212121);
-  --dp-text-color: var(--x-datepicker-dark-text, #fff);
-  --dp-hover-color: var(--x-datepicker-dark-range, #484848);
+  --dp-background-color: var(--x-datepicker-dark-bg, #212121) !important;
+  --dp-text-color: var(--x-datepicker-dark-text, #fff) !important;
+  --dp-hover-color: var(--x-datepicker-dark-range, #484848) !important;
   --dp-hover-text-color: #fff;
-  --dp-hover-icon-color: var(--x-datepicker-dark-icon, #959595);
-  --dp-primary-color: var(--x-datepicker-dark-primary, #1976d2);
+  --dp-hover-icon-color: var(--x-datepicker-dark-icon, #959595) !important;
+  --dp-primary-color: var(--x-datepicker-dark-primary, #1976d2) !important;
   --dp-primary-disabled-color: #61a8ea;
   --dp-primary-text-color: #fff;
-  --dp-secondary-color: var(--x-datepicker-dark-disabled, #a9a9a9);
-  --dp-border-color: var(--x-datepicker-dark-border, #2d2d2d);
-  --dp-menu-border-color: var(--x-datepicker-dark-border, #2d2d2d);
+  --dp-secondary-color: var(--x-datepicker-dark-disabled, #a9a9a9) !important;
+  --dp-border-color: var(--x-datepicker-dark-border, #2d2d2d) !important;
+  --dp-menu-border-color: var(--x-datepicker-dark-border, #2d2d2d) !important;
   --dp-border-color-hover: #aaaeb7;
   --dp-disabled-color: #737373;
-  --dp-disabled-color-text: var(--x-datepicker-dark-disabled, #d0d0d0);
+  --dp-disabled-color-text: var(--x-datepicker-dark-disabled, #d0d0d0) !important;
   --dp-scroll-bar-background: #212121;
-  --dp-scroll-bar-color: var(--x-datepicker-dark-range, #484848);
+  --dp-scroll-bar-color: var(--x-datepicker-dark-range, #484848) !important;
   --dp-success-color: #00701a;
   --dp-success-color-disabled: #428f59;
-  --dp-icon-color: var(--x-datepicker-dark-icon, #959595);
+  --dp-icon-color: var(--x-datepicker-dark-icon, #959595) !important;
   --dp-danger-color: #e53935;
   --dp-marker-color: #e53935;
   --dp-tooltip-color: #3e3e3e;
   --dp-highlight-color: rgb(0 92 178 / 20%);
-  --dp-range-between-dates-background-color: var(--x-datepicker-dark-range, #484848);
-  --dp-range-between-dates-text-color: var(--x-datepicker-dark-text, #fff);
-  --dp-range-between-border-color: var(--x-datepicker-dark-text, #fff);
+  --dp-range-between-dates-background-color: var(--x-datepicker-dark-range, #484848) !important;
+  --dp-range-between-dates-text-color: var(--x-datepicker-dark-text, #fff) !important;
+  --dp-range-between-border-color: var(--x-datepicker-dark-text, #fff) !important;
 }
 
 .dp__theme_light {
-  --dp-background-color: var(--x-datepicker-bg, #fff);
-  --dp-text-color: var(--x-datepicker-text, #212121);
-  --dp-hover-color: var(--x-datepicker-range, #f3f3f3);
+  --dp-background-color: var(--x-datepicker-bg, #fff) !important;
+  --dp-text-color: var(--x-datepicker-text, #212121) !important;
+  --dp-hover-color: var(--x-datepicker-range, #f3f3f3) !important;
   --dp-hover-text-color: #212121;
-  --dp-hover-icon-color: var(--x-datepicker-icon, #959595);
-  --dp-primary-color: var(--x-datepicker-primary, #1976d2);
+  --dp-hover-icon-color: var(--x-datepicker-icon, #959595) !important;
+  --dp-primary-color: var(--x-datepicker-primary, #1976d2) !important;
   --dp-primary-disabled-color: #6bacea;
   --dp-primary-text-color: #f8f5f5;
-  --dp-secondary-color: var(--x-datepicker-disabled, #c0c4cc);
-  --dp-border-color: var(--x-datepicker-border, #ddd);
-  --dp-menu-border-color: var(--x-datepicker-border, #ddd);
+  --dp-secondary-color: var(--x-datepicker-disabled, #c0c4cc) !important;
+  --dp-border-color: var(--x-datepicker-border, #ddd) !important;
+  --dp-menu-border-color: var(--x-datepicker-border, #ddd) !important;
   --dp-border-color-hover: #aaaeb7;
   --dp-disabled-color: #f6f6f6;
-  --dp-scroll-bar-background: var(--x-datepicker-range, #f3f3f3);
-  --dp-scroll-bar-color: var(--x-datepicker-icon, #959595);
+  --dp-scroll-bar-background: var(--x-datepicker-range, #f3f3f3) !important;
+  --dp-scroll-bar-color: var(--x-datepicker-icon, #959595) !important;
   --dp-success-color: #76d275;
   --dp-success-color-disabled: #a3d9b1;
-  --dp-icon-color: var(--x-datepicker-icon, #959595);
+  --dp-icon-color: var(--x-datepicker-icon, #959595) !important;
   --dp-danger-color: #ff6f60;
   --dp-marker-color: #ff6f60;
   --dp-tooltip-color: #fafafa;
-  --dp-disabled-color-text: var(--x-datepicker-disabled, #8e8e8e);
+  --dp-disabled-color-text: var(--x-datepicker-disabled, #8e8e8e) !important;
   --dp-highlight-color: rgb(25 118 210 / 10%);
-  --dp-range-between-dates-background-color: var(--x-datepicker-range, #f3f3f3);
-  --dp-range-between-dates-text-color: var(--x-datepicker-text, #212121);
-  --dp-range-between-border-color: var(--x-datepicker-range, #f3f3f3);
+  --dp-range-between-dates-background-color: var(--x-datepicker-range, #f3f3f3) !important;
+  --dp-range-between-dates-text-color: var(--x-datepicker-text, #212121) !important;
+  --dp-range-between-border-color: var(--x-datepicker-range, #f3f3f3) !important;
 }
 </style>
