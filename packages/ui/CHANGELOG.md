@@ -1,5 +1,13 @@
 # @indielayer/ui
 
+## 1.6.1
+
+### Patch Changes
+
+- fix(datepicker): theme styles
+  fix(slider): input width
+  ([#58](https://github.com/indielayer/ui/pull/58)) ([`1d9e761`](https://github.com/indielayer/ui/commit/1d9e7614a7704ae84dbd7e6f12f256bf8287cf5a))
+
 ## 1.6.0
 
 ### Minor Changes
