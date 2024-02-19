@@ -13,6 +13,16 @@ const theme: ModalTheme = {
       return classes
     },
 
+    modalWrapper: ({ props }) => {
+      const classes = ['flex justify-center p-4 sm:p-8 md:py-20 h-screen']
+
+      if (props.position === 'top') classes.push('items-start')
+      else if (props.position === 'bottom') classes.push('items-end')
+      else classes.push('sm:items-end items-center')
+
+      return classes
+    },
+
     modal: ({ props, data }) => {
       const classes = ['relative flex flex-col z-10 bg-white dark:bg-secondary-900 rounded-md shadow-lg transform transition-all overflow-hidden max-h-full w-full']
 

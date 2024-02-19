@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { inject, ref, unref, watch } from 'vue'
 import { version, type UITheme } from '@indielayer/ui'
+import ToolbarSearch from './ToolbarSearch.vue'
 
 const selectTheme = inject('selectTheme', {
   theme: {} as UITheme,
@@ -40,9 +41,10 @@ const isDev = import.meta.env.DEV
       <x-spacer/>
 
       <div class="flex items-center font-semibold text-sm">
-
+        <toolbar-search />
+        <x-divider vertical class="!h-2 px-2"/>
         <div class="tracking-wide text-xs">v{{ version }}</div>
-        <x-divider vertical style="height: 10px;" class="px-2 hidden sm:block"/>
+        <x-divider vertical class="!h-2 px-2 hidden sm:flex"/>
         <x-link
           href="https://github.com/indielayer/ui"
           target="_blank"

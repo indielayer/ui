@@ -1,13 +1,21 @@
 <script lang="ts">
 const modalSize = ['xs', 'sm', 'md', 'lg', 'xl', 'full'] as const
+const modalPosition = ['top', 'center', 'bottom'] as const
 const modalProps = {
   size: {
     type: String as PropType<ModalSize>,
     default: 'xl',
   },
+  position: {
+    type: String as PropType<ModalPosition>,
+    default: 'center',
+  },
   modelValue: Boolean,
   showClose: Boolean,
-  backdrop: Boolean,
+  backdrop: {
+    type: Boolean,
+    default: true,
+  },
   hasActions: {
     type: Boolean,
     default: true,
@@ -40,9 +48,10 @@ const modalProps = {
 }
 
 export type ModalSize = typeof modalSize[number]
+export type ModalPosition = typeof modalPosition[number]
 export type ModalProps = ExtractPublicPropTypes<typeof modalProps>
 
-type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'closeIcon' | 'header' | 'content' | 'actions' | 'title' | 'description' | 'label'
+type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'modalWrapper' | 'closeIcon' | 'header' | 'content' | 'actions' | 'title' | 'description' | 'label'
 type InternaData = {
   visible: boolean;
 }
@@ -52,6 +61,7 @@ export default {
   name: 'XModal',
   validators: {
     size: modalSize,
+    position: modalPosition,
   },
 }
 </script>
@@ -174,7 +184,7 @@ defineExpose({ open, close })
         :class="classes.backdrop"
       ></div>
 
-      <div class="flex items-end sm:items-center justify-center p-4 sm:p-6 h-screen">
+      <div :class="classes.modalWrapper">
         <component
           :is="isForm ? XForm : 'div'"
           ref="modalRef"
@@ -192,12 +202,14 @@ defineExpose({ open, close })
           @submit="(isValid: boolean) => $emit('submit', isValid)"
         >
           <slot name="image"></slot>
-          <div v-if="hasHeader" :class="classes.header">
-            <slot name="header">
-              <div v-if="label" :class="classes.label">{{ label }}</div>
-              <div v-if="title" :class="classes.title">{{ title }}</div>
-            </slot>
-          </div>
+          <slot name="header">
+            <div v-if="hasHeader" :class="classes.header">
+              <slot name="header-content">
+                <div v-if="label" :class="classes.label">{{ label }}</div>
+                <div v-if="title" :class="classes.title">{{ title }}</div>
+              </slot>
+            </div>
+          </slot>
           <x-scroll
             v-if="$slots.default"
             :scrollbar="false"
@@ -217,15 +229,17 @@ defineExpose({ open, close })
             :class="classes.closeIcon"
             @click="close"
           />
-          <div v-if="hasActions" :class="classes.actions">
-            <slot name="actions">
-              <slot name="cancel-action"></slot>
-              <div v-if="hasPlaceholder"></div>
-              <slot name="tertiary-action"></slot>
-              <slot name="secondary-action"></slot>
-              <slot name="primary-action"></slot>
-            </slot>
-          </div>
+          <slot name="footer">
+            <div v-if="hasActions" :class="classes.actions">
+              <slot name="actions">
+                <slot name="cancel-action"></slot>
+                <div v-if="hasPlaceholder"></div>
+                <slot name="tertiary-action"></slot>
+                <slot name="secondary-action"></slot>
+                <slot name="primary-action"></slot>
+              </slot>
+            </div>
+          </slot>
         </component>
       </div>
     </div>

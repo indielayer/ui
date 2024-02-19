@@ -103,6 +103,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
       input: (event: Event) => {
         if (props.validateOnInput && !isFirstValidation.value) validate((event.target as HTMLInputElement).value)
         emit('update:modelValue', (event.target as HTMLInputElement).value)
+        emit('input', event)
       },
       change: (event: Event) => emit('change', event),
     }
