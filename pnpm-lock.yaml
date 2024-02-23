@@ -207,6 +207,9 @@ importers:
       floating-vue:
         specifier: ^5.2.2
         version: 5.2.2(vue@3.3.9)
+      fuse.js:
+        specifier: ^7.0.0
+        version: 7.0.0
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
@@ -215,7 +218,7 @@ importers:
         version: 8.4.24
       rollup-plugin-visualizer:
         specifier: ^5.9.2
-        version: 5.9.2(rollup@3.29.4)
+        version: 5.9.2
       shiki:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1
@@ -7258,6 +7261,11 @@ packages:
     resolution: {integrity: sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==}
     dev: true
 
+  /fuse.js@7.0.0:
+    resolution: {integrity: sha512-14F4hBIxqKvD4Zz/XjDc3y94mNZN6pRv3U13Udo0lNLCWRBUsrMv2xwcF/y/Z5sV6+FQW+/ow68cHpm4sunt8Q==}
+    engines: {node: '>=10'}
+    dev: true
+
   /gauge@3.0.2:
     resolution: {integrity: sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==}
     engines: {node: '>=10'}
@@ -10982,6 +10990,22 @@ packages:
       open: 8.4.2
       picomatch: 2.3.1
       rollup: 4.9.6
+      source-map: 0.7.4
+      yargs: 17.7.2
+    dev: true
+
+  /rollup-plugin-visualizer@5.9.2:
+    resolution: {integrity: sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==}
+    engines: {node: '>=14'}
+    hasBin: true
+    peerDependencies:
+      rollup: 2.x || 3.x
+    peerDependenciesMeta:
+      rollup:
+        optional: true
+    dependencies:
+      open: 8.4.2
+      picomatch: 2.3.1
       source-map: 0.7.4
       yargs: 17.7.2
     dev: true

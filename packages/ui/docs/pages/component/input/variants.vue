@@ -1,11 +1,11 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 const password = ref('secret')
 const other = ref('I have an icon')
 </script>
 
 <template>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <x-input
       v-model="password"
       label="Password input"

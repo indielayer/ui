@@ -119,9 +119,9 @@ defineExpose({ focus, blur, reset, validate, setError })
     <div class="relative">
       <slot name="prefix">
         <x-icon
-          v-if="iconLeft"
+          v-if="iconLeft || icon"
           :size="size"
-          :icon="iconLeft"
+          :icon="iconLeft || icon"
           class="ml-2 left-1"
           :class="classes.icon"
         />
@@ -152,8 +152,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :placeholder="placeholder"
         :readonly="readonly"
         :type="currentType"
-        :value="modelValue || ''"
-        v-bind="$attrs"
+        :value="typeof modelValue !== 'undefined' ? modelValue : ''"
         v-on="inputListeners"
         @change="onChange"
       />

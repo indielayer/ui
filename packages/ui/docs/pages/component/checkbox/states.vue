@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-4 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     <x-checkbox disabled label="Disabled" />
     <x-checkbox helper="Helper text">Helper</x-checkbox>
     <x-checkbox loading>Loading</x-checkbox>

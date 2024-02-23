@@ -10,7 +10,7 @@ const theme: InputTheme = {
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
 
       if (props.size === 'xs') classes.push('px-2 py-1 text-xs')
-      else if (props.size === 'sm') classes.push('px-2 py-2 text-sm')
+      else if (props.size === 'sm') classes.push('px-2 py-1.5 text-sm')
       else if (props.size === 'lg') classes.push('px-4 py-3 text-lg')
       else if (props.size === 'xl') classes.push('px-5 py-4 text-xl')
       else classes.push('px-3 py-2')
