@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 1.6.2
+
+### Patch Changes
+
+- fix(input): bind attrs
+  feat(modal): position and slots
+  docs: add search
+  fix(inputable): default modelValue
+  ([#60](https://github.com/indielayer/ui/pull/60)) ([`84b2320`](https://github.com/indielayer/ui/commit/84b2320e81e31d44e5d50dcff2e1af913e35c800))
+
 ## 1.6.1
 
 ### Patch Changes
