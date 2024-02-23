@@ -3,7 +3,7 @@ import type { TableHeaderTheme } from '../TableHeader.vue'
 const theme: TableHeaderTheme = {
   classes: {
     th: ({ props }) => {
-      const classes = ['relative py-2 font-semibold tracking-widest uppercase text-xs px-3']
+      const classes = ['relative py-3 font-semibold text-xs px-3']
 
       if (props.sortable) classes.push('cursor-pointer hover:text-secondary-800 dark:hover:text-secondary-300 transition-colors duration-150 ease-in-out')
 
@@ -18,7 +18,7 @@ const theme: TableHeaderTheme = {
     },
 
     sortIcon: ({ props }) => {
-      const classes = ['absolute stroke-2 w-3 h-3 top-2.5 right-0.5']
+      const classes = ['absolute stroke-2 w-3 h-3 top-3.5 right-0.5']
 
       return classes
     },

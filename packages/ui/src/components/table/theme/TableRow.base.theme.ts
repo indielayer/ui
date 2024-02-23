@@ -6,7 +6,7 @@ const theme: TableRowTheme = {
       const classes = []
 
       if (props.striped) {
-        classes.push('odd:bg-secondary-50 dark:odd:bg-secondary-800')
+        classes.push('even:bg-secondary-50 dark:even:bg-secondary-700')
       } else {
         classes.push('border-b border-secondary-200 dark:border-secondary-700')
       }

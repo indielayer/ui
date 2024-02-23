@@ -225,7 +225,7 @@ if (document) {
               :key="result.item.url"
               data-name="list-item"
               role="option"
-              class="aria-selected:bg-secondary-100 rounded p-2 mb-2"
+              class="aria-selected:bg-secondary-100 dark:aria-selected:bg-secondary-800 rounded p-2 mb-2"
               @mouseenter="hoverResult"
             >
               <x-link

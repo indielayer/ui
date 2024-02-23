@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-4 grid-cols-4">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
     <x-button>Default</x-button>
     <x-button color="primary" icon-right="star">Submit</x-button>
     <x-button color="primary" light>Light</x-button>

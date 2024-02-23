@@ -63,45 +63,40 @@ const itemsSorted = computed<Book[]>(() => {
 </script>
 
 <template>
-  <x-table
-    v-model:sort="sort"
-    expandable
-    :headers="headers"
-    :items="itemsSorted"
-  >
-    <template #expanded-row="{ item }">
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-      {{ item }}
-    </template>
+  <div class="grid gap-4">
+    <x-card>
+      <x-table
+        v-model:sort="sort"
+        expandable
+        :headers="headers"
+        :items="itemsSorted"
+      >
+        <template #expanded-row="{ item }">
+          {{ item }}
+        </template>
 
-    <template #item-published="{ item }">
-      {{ formatDate(item.published) }}
-    </template>
-    <template #item-status="{ item }">
-      <x-tag size="sm" color="primary" rounded>{{ item.status }}</x-tag>
-    </template>
-  </x-table>
-  <x-table
-    v-model:sort="sort"
-    class="my-10"
-    dense
-    striped
-    :headers="headers"
-    :items="itemsSorted"
-    @click-row="notifications?.log('open')"
-  >
-    <template #item-published="{ item }">
-      {{ formatDate(item.published) }}
-    </template>
-    <template #item-status="{ item }">
-      <x-tag size="sm" color="pink" rounded>{{ item.status }}</x-tag>
-    </template>
-  </x-table>
+        <template #item-published="{ item }">
+          {{ formatDate(item.published) }}
+        </template>
+        <template #item-status="{ item }">
+          <x-tag size="xs" color="primary" rounded>{{ item.status }}</x-tag>
+        </template>
+      </x-table>
+    </x-card>
+
+    <x-card>
+      <x-table
+        v-model:sort="sort"
+        dense
+        striped
+        :headers="headers"
+        :items="itemsSorted"
+        @click-row="notifications?.log('open')"
+      >
+        <template #item-published="{ item }">
+          {{ formatDate(item.published) }}
+        </template>
+      </x-table>
+    </x-card>
+  </div>
 </template>

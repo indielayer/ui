@@ -152,7 +152,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :placeholder="placeholder"
         :readonly="readonly"
         :type="currentType"
-        :value="modelValue || ''"
+        :value="typeof modelValue !== 'undefined' ? modelValue : ''"
         v-on="inputListeners"
         @change="onChange"
       />

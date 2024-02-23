@@ -3,7 +3,7 @@ import type { TableCellTheme } from '../TableCell.vue'
 const theme: TableCellTheme = {
   classes: {
     wrapper: ({ props }) => {
-      const c = ['last:pr-0 px-3']
+      const c = ['px-3']
 
       c.push(props.dense ? 'py-2' : 'py-4')
 
