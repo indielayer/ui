@@ -18,7 +18,7 @@ const theme: ModalTheme = {
 
       if (props.position === 'top') classes.push('items-start')
       else if (props.position === 'bottom') classes.push('items-end')
-      else classes.push('sm:items-end items-center')
+      else classes.push('items-end sm:items-center')
 
       return classes
     },

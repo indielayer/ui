@@ -145,7 +145,7 @@ const { styles, classes, className } = useTheme('Form', {}, props)
       </div>
     </slot>
 
-    <fieldset :disabled="disabled" :class="classes.content">
+    <fieldset :disabled="disabled" :class="classes.content" class="contents">
       <slot></slot>
     </fieldset>
 

@@ -188,6 +188,7 @@ defineExpose({ open, close })
         <component
           :is="isForm ? XForm : 'div'"
           ref="modalRef"
+          class="max-h-full"
           :disabled="formDisabled"
           :auto-validate="formAutoValidate"
           :title="formTitle"
