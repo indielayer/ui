@@ -64,29 +64,6 @@ export function useFocusTrap() {
         lastEl?.focus()
       }
 
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
-      event.preventDefault()
-      const currentEl = document.activeElement as HTMLElement
-      const index = focusable.indexOf(currentEl)
-      const previousEl = focusable[index - 1]
-
-      if (previousEl) {
-        previousEl.focus()
-      } else if (lastFocusableEl) {
-        lastFocusableEl.focus()
-      }
-
-    } else if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
-      event.preventDefault()
-      const currentEl = document.activeElement as HTMLElement
-      const index = focusable.indexOf(currentEl)
-      const nextElement = focusable[index + 1]
-
-      if (nextElement) {
-        nextElement.focus()
-      } else if (firstFocusableEl) {
-        firstFocusableEl.focus()
-      }
     }
   }
 
