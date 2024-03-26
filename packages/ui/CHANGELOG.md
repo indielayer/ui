@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.6.3
+
+### Patch Changes
+
+- fix(modal): center align and arrow navigation ([#63](https://github.com/indielayer/ui/pull/63)) ([`1fc6956`](https://github.com/indielayer/ui/commit/1fc695685c331dbce5b37e8522658ec8f5f7e5f2))
+
 ## 1.6.2
 
 ### Patch Changes
