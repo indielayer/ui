@@ -314,6 +314,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :config="config"
       :quarter-picker="quarterPicker"
       :year-first="yearFirst"
+      :is-24="is24"
       @update:model-value="onSelect"
     >
       <template #dp-input="{ value, onEnter, onTab }">
@@ -352,6 +353,10 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
 
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.dp__clear_icon {
+  top: 2.75rem !important;
 }
 
 .dp__theme_dark {
