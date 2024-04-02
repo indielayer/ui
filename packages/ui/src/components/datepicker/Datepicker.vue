@@ -92,7 +92,7 @@ const vueDatepickerProps = {
   maxTime: { type: Object as PropType<Partial<TimeModel>>, default: null },
   placeholder: { type: String as PropType<string>, default: '' },
   hideInputIcon: { type: Boolean as PropType<boolean>, default: false },
-  clearable: { type: Boolean as PropType<boolean>, default: true },
+  clearable: { type: Boolean as PropType<boolean>, default: false },
   state: { type: Boolean as PropType<VueDatePickerProps['state']>, default: null },
   required: { type: Boolean as PropType<boolean>, default: false },
   autocomplete: { type: String as PropType<string>, default: 'off' },
