@@ -45,7 +45,7 @@ import { injectAccordionKey } from '../../composables/keys'
 
 const props = defineProps(accordionItemProps)
 
-const emit = defineEmits(['expand'])
+const emit = defineEmits(['expand', 'change'])
 
 const accordionProps = inject(injectAccordionKey, {
   isInsideAccordion: false,
@@ -61,6 +61,10 @@ const animated = ref(true)
 
 watch(() => props.expanded, () => {
   collapsed.value = !props.expanded
+})
+
+watch(collapsed, (newValue, oldValue) => {
+  emit('change', !newValue)
 })
 
 function onBeforeEnter(el: Element) {
@@ -122,7 +126,7 @@ function toggle() {
   if (!props.disabled) collapsed.value = !collapsed.value
 }
 
-function onExpand(anim = true) {
+function expandFn(anim = true) {
   open(anim)
   emit('expand')
 }
@@ -149,7 +153,7 @@ defineExpose({ toggle, open, close })
       @click="toggle"
     >
       <div class="flex-1 overflow-hidden">
-        <slot :collapsed="collapsed"></slot>
+        <slot :expand="expandFn" :collapsed="collapsed"></slot>
       </div>
 
       <div v-if="showIcon" :class="classes.icon">
@@ -168,7 +172,7 @@ defineExpose({ toggle, open, close })
     </button>
 
     <template v-if="$slots.summary">
-      <slot name="summary"></slot>
+      <slot name="summary" :expand="expandFn" :collapsed="collapsed"></slot>
     </template>
 
     <transition
@@ -180,7 +184,7 @@ defineExpose({ toggle, open, close })
       @after-leave="onAfterLeave"
     >
       <div v-show="!collapsed" :class="classes.content">
-        <slot name="content" :expand="onExpand" :collapsed="collapsed"></slot>
+        <slot name="content" :expand="expandFn" :collapsed="collapsed"></slot>
       </div>
     </transition>
   </component>

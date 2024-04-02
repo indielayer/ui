@@ -187,8 +187,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       '@vuepic/vue-datepicker':
-        specifier: ^8.0.0
-        version: 8.0.0(vue@3.3.9)
+        specifier: ^8.3.2
+        version: 8.3.2(vue@3.3.9)
       '@vueuse/core':
         specifier: ^10.2.0
         version: 10.2.0(vue@3.3.9)
@@ -218,7 +218,7 @@ importers:
         version: 8.4.24
       rollup-plugin-visualizer:
         specifier: ^5.9.2
-        version: 5.9.2
+        version: 5.9.2(rollup@3.29.4)
       shiki:
         specifier: 1.0.0-beta.1
         version: 1.0.0-beta.1
@@ -4502,16 +4502,6 @@ packages:
       - typescript
     dev: true
 
-  /@vuepic/vue-datepicker@8.0.0(vue@3.3.9):
-    resolution: {integrity: sha512-0HsxG2GGTWzeitPVhIEFPHLyLwTU+VT0vk15JreqNi0cB6D5Mpf5vqHppJE0ech+ZTQx36Ip99oSfnQdA0SNrA==}
-    engines: {node: '>=18.12.0'}
-    peerDependencies:
-      vue: '>=3.2.0'
-    dependencies:
-      date-fns: 3.3.1
-      vue: 3.3.9(typescript@5.2.2)
-    dev: true
-
   /@vuepic/vue-datepicker@8.1.0(vue@3.4.16):
     resolution: {integrity: sha512-WdAe9L31mOzGwxaJXQqdIuU3b+UW4B27nBksUkBgJLLuzNyGpMvaejaKACQjBakJ9xJAuhsIca4kaJmDV4rpuw==}
     engines: {node: '>=18.12.0'}
@@ -4520,6 +4510,16 @@ packages:
     dependencies:
       date-fns: 3.3.1
       vue: 3.4.16(typescript@5.2.2)
+    dev: true
+
+  /@vuepic/vue-datepicker@8.3.2(vue@3.3.9):
+    resolution: {integrity: sha512-kOAUl6EVGU7BgNByjUuLRBUWvTBiYJHUj9jll7fTQSz/vNNkhYoo8vEH75zPMXyVmn1gRmeoom4cMl77GtNraw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      date-fns: 3.6.0
+      vue: 3.3.9(typescript@5.2.2)
     dev: true
 
   /@vueuse/core@10.2.0(vue@3.3.9):
@@ -5727,6 +5727,10 @@ packages:
 
   /date-fns@3.3.1:
     resolution: {integrity: sha512-y8e109LYGgoQDveiEBD3DYXKba1jWf5BA8YU1FL5Tvm0BTdEfy54WLCwnuYWZNnzzvALy/QQ4Hov+Q9RVRv+Zw==}
+    dev: true
+
+  /date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
     dev: true
 
   /date-time@3.1.0:
@@ -10990,22 +10994,6 @@ packages:
       open: 8.4.2
       picomatch: 2.3.1
       rollup: 4.9.6
-      source-map: 0.7.4
-      yargs: 17.7.2
-    dev: true
-
-  /rollup-plugin-visualizer@5.9.2:
-    resolution: {integrity: sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==}
-    engines: {node: '>=14'}
-    hasBin: true
-    peerDependencies:
-      rollup: 2.x || 3.x
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-    dependencies:
-      open: 8.4.2
-      picomatch: 2.3.1
       source-map: 0.7.4
       yargs: 17.7.2
     dev: true

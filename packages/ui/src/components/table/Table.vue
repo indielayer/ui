@@ -208,14 +208,14 @@ const { styles, classes, className } = useTheme('Table', {}, props)
         </template>
         <template v-else-if="error">
           <tr>
-            <td :colspan="headers.length">
+            <td colspan="999">
               <slot name="error"></slot>
             </td>
           </tr>
         </template>
         <template v-else-if="!items || items.length === 0">
           <tr>
-            <td :colspan="headers.length">
+            <td colspan="999">
               <slot name="empty"></slot>
             </td>
           </tr>
@@ -227,7 +227,12 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             @click="$emit('click-row', item)"
           >
             <x-table-cell v-if="expandable" width="48" class="!p-1">
-              <button type="button" class="p-4" @click="internalItems[index].__expanded = !internalItems[index].__expanded">
+              <button
+                type="button"
+                class="px-3 p-2"
+                :class="[dense ? 'p-0.5' : 'px-3 py-2']"
+                @click="internalItems[index].__expanded = !internalItems[index].__expanded"
+              >
                 <x-icon
                   :icon="chevronDownIcon"
                   :size="dense ? 'xs' : 'md'"

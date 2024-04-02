@@ -11,12 +11,9 @@ date.value = [startDate, endDate]
 <template>
   <x-datepicker
     v-model="date"
-    label="Select a date"
-    helper="Pick a date"
+    label="Date"
     tooltip="Use it to pick a date"
-    range
     multi-calendars
-    disable-year-select
-    :enable-time-picker="false"
+    range
   />
 </template>
