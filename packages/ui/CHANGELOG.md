@@ -1,5 +1,17 @@
 # @indielayer/ui
 
+## 1.7.0
+
+### Minor Changes
+
+- feat(accordion): add change event
+  feat(datepicker): update datepicker lib
+  ([#65](https://github.com/indielayer/ui/pull/65)) ([`d11da23`](https://github.com/indielayer/ui/commit/d11da23436ce3127e4e898c8780ff6d5e6230b33))
+
+### Patch Changes
+
+- fix(table): empty view colspan ([#65](https://github.com/indielayer/ui/pull/65)) ([`d11da23`](https://github.com/indielayer/ui/commit/d11da23436ce3127e4e898c8780ff6d5e6230b33))
+
 ## 1.6.3
 
 ### Patch Changes
