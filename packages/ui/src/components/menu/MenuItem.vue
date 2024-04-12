@@ -127,9 +127,11 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
   <component
     :is="htmlTag"
     ref="elRef"
-    v-bind="computedProps.attrs"
+    v-bind="{
+      ...(computedProps.href ? { href: computedProps.href } : {}),
+      ...computedProps.attrs,
+    }"
     :to="computedProps.to"
-    :href="computedProps.href || computedProps.to || ''"
     :target="computedProps.target"
     :color="computedProps.color"
     :style="styles"
