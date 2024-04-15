@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.7.1
+
+### Patch Changes
+
+- fix(MenuItem): router link to computed href ([#67](https://github.com/indielayer/ui/pull/67)) ([`50c7cf9`](https://github.com/indielayer/ui/commit/50c7cf9e30576b58d38ee56665f3f225b61d7ec8))
+
 ## 1.7.0
 
 ### Minor Changes
