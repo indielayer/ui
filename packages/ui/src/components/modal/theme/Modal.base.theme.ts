@@ -33,6 +33,7 @@ const theme: ModalTheme = {
       else if (props.size === 'sm') classes.push('sm:max-w-sm')
       else if (props.size === 'lg') classes.push('sm:max-w-xl')
       else if (props.size === 'xl') classes.push('sm:max-w-3xl')
+      else if (props.size === 'full') classes.push('sm:max-w-6xl')
       else classes.push('sm:max-w-lg')
 
       return classes
