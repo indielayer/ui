@@ -4,7 +4,7 @@ const modalPosition = ['top', 'center', 'bottom'] as const
 const modalProps = {
   size: {
     type: String as PropType<ModalSize>,
-    default: 'xl',
+    default: 'lg',
   },
   position: {
     type: String as PropType<ModalPosition>,
@@ -214,6 +214,9 @@ defineExpose({ open, close })
           <x-scroll
             v-if="$slots.default"
             :scrollbar="false"
+            :class="{
+              'h-full': size === 'full',
+            }"
             vertical
           >
             <div :class="classes.content">

@@ -33,6 +33,7 @@ function onSubmit(isValid: boolean) {
     show-close
     backdrop
     is-form
+    size="full"
     title="Modal title"
     label="Modal label"
     description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, fugit."
