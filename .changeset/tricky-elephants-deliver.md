@@ -2,4 +2,4 @@
 "@indielayer/ui": patch
 ---
 
-Fix: Modal handing 'full' size option.
+fix: modal handling 'full' size option.
