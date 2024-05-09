@@ -14,7 +14,7 @@ const theme: ModalTheme = {
     },
 
     modalWrapper: ({ props }) => {
-      const classes = ['flex justify-center p-4 sm:p-8 md:py-20 h-screen']
+      const classes = ['flex justify-center p-4 sm:p-8 h-screen']
 
       if (props.position === 'top') classes.push('items-start')
       else if (props.position === 'bottom') classes.push('items-end')
@@ -34,6 +34,7 @@ const theme: ModalTheme = {
       else if (props.size === 'md') classes.push('sm:max-w-lg')
       else if (props.size === 'lg') classes.push('sm:max-w-3xl')
       else if (props.size === 'xl') classes.push('sm:max-w-6xl')
+      else if (props.size === 'full') classes.push('h-full')
 
       return classes
     },
