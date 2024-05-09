@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.7.2
+
+### Patch Changes
+
+- fix: modal handling 'full' size option. ([#70](https://github.com/indielayer/ui/pull/70)) ([`66bfe07`](https://github.com/indielayer/ui/commit/66bfe07e7366463f2937d07376cdb36ec963f23c))
+
 ## 1.7.1
 
 ### Patch Changes
