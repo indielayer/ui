@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.7.3
+
+### Patch Changes
+
+- chore(modal): update examples and default size ([#72](https://github.com/indielayer/ui/pull/72)) ([`1ad8f6e`](https://github.com/indielayer/ui/commit/1ad8f6e6d14391cdabf4bd991080ee185cfe16cd))
+
 ## 1.7.2
 
 ### Patch Changes
