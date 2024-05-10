@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.7.4
+
+### Patch Changes
+
+- fix(select): clear listeners on unmount ([#74](https://github.com/indielayer/ui/pull/74)) ([`5a37256`](https://github.com/indielayer/ui/commit/5a37256cc0f5c3f2a93ca5e6c9fd394f72970bc3))
+
 ## 1.7.3
 
 ### Patch Changes
