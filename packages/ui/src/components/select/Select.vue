@@ -32,7 +32,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref } from 'vue'
+import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref, onUnmounted } from 'vue'
 import { useEventListener } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
@@ -190,8 +190,7 @@ function handleOptionClick(value: string | number) {
 
   if (!props.native) {
     nextTick(() => {
-      elRef.value?.dispatchEvent(new Event('input'))
-      elRef.value?.dispatchEvent(new Event('change'))
+      validate()
       labelRef.value?.$el.focus()
     })
   }
@@ -261,6 +260,10 @@ watch([isFocused, isOpen], ([isFocusedValue, isOpenValue]) => {
   }
 }, {
   immediate: true,
+})
+
+onUnmounted(() => {
+  if (keyNavigationListener) keyNavigationListener()
 })
 
 function handleKeyNavigation(e: KeyboardEvent) {
