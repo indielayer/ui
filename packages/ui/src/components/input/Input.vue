@@ -42,7 +42,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, type PropType, type ExtractPublicPropTypes, watch } from 'vue'
+import { ref, type PropType, type ExtractPublicPropTypes, watch, useAttrs, computed } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
@@ -57,6 +57,15 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(inputProps)
 
 const emit = defineEmits(useInputtable.emits())
+
+const attrs = useAttrs()
+const dataAttrs = computed(() => {
+  return Object.keys(attrs).reduce((acc, key) => {
+    if (key.startsWith('data-')) acc[key] = attrs[key]
+
+    return acc
+  }, {} as Record<string, any>)
+})
 
 const elRef = ref<HTMLInputElement | null>(null)
 const currentType = ref(props.type)
@@ -153,6 +162,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :readonly="readonly"
         :type="currentType"
         :value="typeof modelValue !== 'undefined' ? modelValue : ''"
+        v-bind="dataAttrs"
         v-on="inputListeners"
         @change="onChange"
       />

@@ -38,7 +38,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { ref, watch, type ExtractPublicPropTypes, type Ref, useAttrs, computed } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -53,6 +53,15 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(textareaProps)
 
 const emit = defineEmits(useInputtable.emits())
+
+const attrs = useAttrs()
+const dataAttrs = computed(() => {
+  return Object.keys(attrs).reduce((acc, key) => {
+    if (key.startsWith('data-')) acc[key] = attrs[key]
+
+    return acc
+  }, {} as Record<string, any>)
+})
 
 const elRef = ref<HTMLTextAreaElement | null>(null)
 
@@ -139,6 +148,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :placeholder="placeholder"
       :readonly="readonly"
       :value="typeof modelValue !== 'undefined' ? String(modelValue) : ''"
+      v-bind="dataAttrs"
       v-on="inputListeners"
       @keydown.enter="onEnter"
       @input="onInput"
