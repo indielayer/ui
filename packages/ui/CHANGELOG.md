@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.7.5
+
+### Patch Changes
+
+- chore(input): allow data attrs ([#76](https://github.com/indielayer/ui/pull/76)) ([`8899c98`](https://github.com/indielayer/ui/commit/8899c98e6a43321440dce5d3c84ed64dcc0c3d3a))
+
 ## 1.7.4
 
 ### Patch Changes
