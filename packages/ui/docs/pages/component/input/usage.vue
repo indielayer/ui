@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const name = ref(0)
+const name = ref('John')
 </script>
 
 <template>
   <x-input
     v-model="name"
-    label="Label here"
+    label="Name"
+    name="name"
     placeholder="Placeholder"
     helper="Helper text here"
     tooltip="Tooltip here"
