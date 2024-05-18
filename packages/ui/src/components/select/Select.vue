@@ -10,6 +10,10 @@ const selectProps = {
   flat: Boolean,
   native: Boolean,
   filterable: Boolean,
+  filterPlaceholder: {
+    type: String,
+    default: 'Filter by...',
+  },
 }
 
 export type SelectOption = {
@@ -428,7 +432,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           <x-popover-container :class="classes.content">
             <slot name="content-header">
               <div v-if="filterable" :class="classes.search">
-                <x-input ref="filterRef" v-model="filter" placeholder="Filter by" :size="'sm'"/>
+                <x-input ref="filterRef" v-model="filter" :placeholder="filterPlaceholder" size="sm"/>
               </div>
             </slot>
             <div v-if="internalOptions.length > 0" :class="classes.contentBody">

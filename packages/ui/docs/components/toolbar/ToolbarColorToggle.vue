@@ -8,10 +8,10 @@ try {
 
   if (storedMode) {
     colorMode.value = storedMode
-  } else {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      colorMode.value = 'dark'
-    }
+  // } else {
+    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    //   colorMode.value = 'dark'
+    // }
   }
 } catch (e) {
   colorMode.value = 'light'

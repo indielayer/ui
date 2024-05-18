@@ -193,7 +193,7 @@ if (document) {
     @click="openSearch"
   >
     Search
-    <span class="text-secondary-400 ml-2">
+    <span class="text-secondary-400 ml-2 hidden md:inline">
       {{ metaKey }}K
     </span>
   </x-button>

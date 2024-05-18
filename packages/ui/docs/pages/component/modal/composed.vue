@@ -75,5 +75,5 @@ function onSubmit(isValid: boolean) {
     </template>
   </x-modal>
 
-  <x-button class="mr-2" @click="show = true">Open modal</x-button>
+  <x-button class="mr-2" @click="show = true">Modal as a XForm</x-button>
 </template>
