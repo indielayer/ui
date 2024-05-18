@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useColors, useNotifications, colors as TailwindColors } from '@indielayer/ui'
 
-const notifications = useNotifications('notifica')
+const notifications = useNotifications()
 const { getPalette } = useColors()
 
 const color500 = ref('#10B981')

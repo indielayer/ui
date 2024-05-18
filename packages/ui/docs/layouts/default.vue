@@ -22,7 +22,7 @@ const drawer = ref(false)
     <x-drawer v-model="drawer" breakpoint="lg" width="220" class="border-r flex">
       <docs-menu class="flex-1" @close="drawer = false" />
     </x-drawer>
-    <x-notifications inject-key="notifica">
+    <x-notifications>
       <div class="flex-1 overflow-y-scroll bg-secondary-50 dark:bg-gray-900">
         <x-container class="py-4 lg:py-8" tag="section">
           <router-view />

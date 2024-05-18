@@ -27,7 +27,6 @@ npm init @indielayer/ui@latest
 - Ensure you have the latest LTS version of Node.js installed
 - Install dependencies with `pnpm install`
 - Run `pnpm dev` to enter dev mode watch
-- Develop docs with `pnpm run docs`
 
 ### Documentation
 

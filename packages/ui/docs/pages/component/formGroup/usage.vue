@@ -2,7 +2,7 @@
 import { useNotifications } from '@indielayer/ui'
 import { ref } from 'vue'
 
-const notifications = useNotifications('notifica')
+const notifications = useNotifications()
 
 const selected = ref(['a'])
 const checked = ref()

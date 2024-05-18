@@ -2,7 +2,7 @@
 import { useNotifications, type SelectOption } from '@indielayer/ui'
 import { ref } from 'vue'
 
-const notifications = useNotifications('notifica')
+const notifications = useNotifications()
 
 const email = ref('')
 const password = ref('')

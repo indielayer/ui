@@ -6,7 +6,7 @@ const props = defineProps({
   text: String,
 })
 
-const notifications = useNotifications('notifica')
+const notifications = useNotifications()
 
 const icon = ref('copy')
 const animation = ref('')

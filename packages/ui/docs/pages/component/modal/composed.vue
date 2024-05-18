@@ -4,7 +4,7 @@ import { useNotifications } from '@indielayer/ui'
 
 const show = ref(false)
 
-const notifications = useNotifications('notifica')
+const notifications = useNotifications()
 
 const email = ref('')
 const password = ref('')

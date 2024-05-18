@@ -17,7 +17,7 @@ import { useNotifications } from '@indielayer/ui'
 
 export default {
   setup() {
-    const notifications = useNotifications('notifica')
+    const notifications = useNotifications()
 
     return {
       notifications,

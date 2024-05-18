@@ -16,7 +16,7 @@ Hi! I'm really excited that you are interested in contributing. Before submittin
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 18+** and [pnpm](https://pnpm.io/).
+You will need [Node.js](http://nodejs.org) **version 18+** and [pnpm](https://pnpm.io/) **>=9**.
 
 After cloning the repo, run:
 
@@ -33,9 +33,6 @@ Commit messages should follow the [commit message convention](./COMMIT_CONVENTIO
 ``` bash
 # watch and auto re-build ui
 $ pnpm dev
-
-# watch and auto re-run docs
-$ pnpm run docs
 
 # build all dist files
 $ pnpm build
