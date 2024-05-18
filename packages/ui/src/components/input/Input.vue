@@ -147,7 +147,7 @@ defineExpose({ focus, blur, reset, validate, setError })
             ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
             : 'focus:outline-[color:var(--x-input-border)]',
           {
-            '!pl-10': iconLeft,
+            '!pl-10': iconLeft || icon,
             '!pr-10': iconRight,
           },
         ]"
