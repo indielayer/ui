@@ -1,5 +1,20 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref<undefined | string>()
+const selectedMultiple = ref<string[]>(['A', 'B'])
+const options = ref([
+  { value: 'A', label: 'Option A' },
+  { value: 'B', label: 'Option B' },
+])
+
+for (let i = 0; i < 20; i++) {
+  options.value.push({ value: i.toString(), label: 'Option ' + i })
+}
+</script>
+
 <template>
-  <div class="grid grid-cols-3 gap-4">
+  <div class="grid md:grid-cols-3 gap-4">
     <x-select
       v-model="selected"
       label="Simple native select"
@@ -13,34 +28,16 @@
       v-model="selected"
       label="Dropdown select"
       placeholder="Placeholder"
+      filterable
       :options="options"
     />
     <x-select
       v-model="selectedMultiple"
       label="Multi select"
-      placeholder="Let's go baby"
+      placeholder="Multiple"
+      filterable
       :options="options"
       multiple
     />
   </div>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      selected: null,
-      selectedMultiple: ['A', 'B'],
-      options: [
-        { value: 'A', label: 'Option Ao qoiw oqi jdoqiwd oqid joqiw jdoijoi' },
-        { value: 'B', label: 'Option B' },
-      ],
-    }
-  },
-  created() {
-    for (let i = 0; i < 20; i++) {
-      this.options.push({ value: i, label: 'Option ' + i })
-    }
-  },
-}
-</script>

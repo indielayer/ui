@@ -9,6 +9,7 @@ const selectProps = {
   multiple: Boolean,
   flat: Boolean,
   native: Boolean,
+  filterable: Boolean,
 }
 
 export type SelectOption = {
@@ -19,7 +20,7 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
-type InternalClasses = 'wrapper' | 'box' | 'content' | 'iconWrapper' | 'icon'
+type InternalClasses = 'wrapper' | 'box' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'icon'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
@@ -49,6 +50,7 @@ import XSpinner from '../spinner/Spinner.vue'
 import XPopover from '../popover/Popover.vue'
 import XPopoverContainer from '../popover/PopoverContainer.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
+import type { XInput } from '../input'
 
 const  props = defineProps(selectProps)
 
@@ -59,6 +61,9 @@ const labelRef = ref<InstanceType<typeof XLabel> | null>(null)
 const itemsRef = ref<InstanceType<typeof XMenuItem>[] | null>(null)
 const popoverRef = ref<InstanceType<typeof XPopover> | null>(null)
 const selectedIndex = ref<number | undefined>()
+
+const filter = ref('')
+const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
 const selected = computed<any | any[]>({
   get() {
@@ -78,40 +83,57 @@ const selected = computed<any | any[]>({
 const internalOptions = computed(() => {
   if (!props.options || props.options.length === 0) return []
 
-  return props.options.map((option) => {
-    let isActive = false
+  return props.options
+    .filter((option) => filter.value === '' || option.label.toLowerCase().includes(filter.value.toLowerCase()))
+    .map((option) => {
+      let isActive = false
 
-    if (props.multiple && Array.isArray(selected.value)) {
-      isActive = selected.value.includes(option.value)
-    } else {
-      isActive = option.value === selected.value
-    }
+      if (props.multiple && Array.isArray(selected.value)) {
+        isActive = selected.value.includes(option.value)
+      } else {
+        isActive = option.value === selected.value
+      }
 
-    return {
-      value: option.value,
-      label: option.label,
-      active: isActive,
-      disabled: option.disabled,
-      iconRight: isActive ? checkIcon : undefined,
-      onClick: () => handleOptionClick(option.value),
-    }
-  })
+      return {
+        value: option.value,
+        label: option.label,
+        active: isActive,
+        disabled: option.disabled,
+        iconRight: isActive ? checkIcon : undefined,
+        onClick: () => handleOptionClick(option.value),
+      }
+    })
 })
 
-const availableOptions = computed(() => props.options?.filter((option) => !option.disabled))
+const availableOptions = computed(() => internalOptions.value.filter((option) => !option.disabled))
 
 const isOpen = computed(() => popoverRef.value?.isOpen)
+
+watch(filter, (val) => {
+  if (val) {
+    selectedIndex.value = undefined
+    findSelectableIndex(-1)
+  }
+})
 
 watch(isOpen, (isOpenValue) => {
   if (isOpenValue) {
     findSelectedIndex()
-    setTimeout(() => {
-      scrollToIndex(selectedIndex.value || 0)
-    }, 50)
 
     if (props.multiple || typeof selectedIndex.value === 'undefined') {
       findSelectableIndex(-1)
     }
+
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        scrollToIndex(selectedIndex.value || 0)
+
+        if (props.filterable) filterRef.value?.focus()
+      })
+    }, 50)
+
+  } else {
+    if (props.filterable) filter.value = ''
   }
 })
 
@@ -184,6 +206,11 @@ function handleOptionClick(value: string | number) {
     } else {
       selected.value = [value]
     }
+
+    if (props.filterable)
+      setTimeout(() => {
+        filterRef.value?.focus()
+      })
   } else {
     selected.value = value
   }
@@ -285,7 +312,9 @@ function handleKeyNavigation(e: KeyboardEvent) {
       return
     }
     findSelectableIndex(selectedIndex.value, 'up')
-  } else if (e.code === 'Enter' || e.code === 'Space') {
+  } else if (e.code === 'Enter' || (e.code === 'Space')) {
+    if (e.code === 'Space' && props.filterable) return
+
     e.preventDefault()
     e.stopPropagation()
     if (!isOpen.value) {
@@ -293,7 +322,7 @@ function handleKeyNavigation(e: KeyboardEvent) {
 
       return
     }
-    if (typeof selectedIndex.value !== 'undefined') {
+    if (typeof selectedIndex.value !== 'undefined' && internalOptions.value[selectedIndex.value]) {
       handleOptionClick(internalOptions.value[selectedIndex.value].value)
       if (!props.multiple) popoverRef.value?.hide()
     }
@@ -397,7 +426,12 @@ defineExpose({ focus, blur, reset, validate, setError })
 
         <template #content>
           <x-popover-container :class="classes.content">
-            <template v-if="internalOptions.length > 0">
+            <slot name="content-header">
+              <div v-if="filterable" :class="classes.search">
+                <x-input ref="filterRef" v-model="filter" placeholder="Filter by" :size="'sm'"/>
+              </div>
+            </slot>
+            <div v-if="internalOptions.length > 0" :class="classes.contentBody">
               <x-menu-item
                 v-for="(item, index) in internalOptions"
                 :key="index"
@@ -410,10 +444,11 @@ defineExpose({ focus, blur, reset, validate, setError })
                 filled
                 @click="() => !multiple && popoverRef?.hide()"
               />
-            </template>
+            </div>
             <div v-else class="px-2 text-center text-secondary-400">
               No options
             </div>
+            <slot name="content-footer"></slot>
           </x-popover-container>
         </template>
       </x-popover>
