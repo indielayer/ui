@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('a')
+</script>
+
 <template>
   <div class="grid grid-cols-4 gap-4">
     <x-radio
@@ -31,9 +37,3 @@
     >Glow</x-radio>
   </div>
 </template>
-
-<script>
-export default {
-  data() { return { selected: 'a' } },
-}
-</script>

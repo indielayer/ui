@@ -1,11 +1,4 @@
-<template>
-  <div class="grid grid-cols-3 gap-4">
-    <x-progress :percentage="percentage" gradient color="sky" />
-    <x-progress :percentage="percentage" color="rose" />
-  </div>
-</template>
-
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 const percentage = ref(0)
 
@@ -16,3 +9,10 @@ onMounted(() => {
   }, 100)
 })
 </script>
+
+<template>
+  <div class="grid grid-cols-3 gap-4">
+    <x-progress :percentage="percentage" gradient color="sky" />
+    <x-progress :percentage="percentage" color="rose" />
+  </div>
+</template>

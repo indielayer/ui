@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const checked = ref(true)
+</script>
+
 <template>
   <div class="grid grid-cols-4 gap-4">
     <x-toggle disabled label="Disabled" />
@@ -5,9 +11,3 @@
     <x-toggle error="Invalid input" label="Error"/>
   </div>
 </template>
-
-<script>
-export default {
-  data() { return { checked: true } },
-}
-</script>

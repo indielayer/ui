@@ -1,5 +1,5 @@
 <template>
-  <div class="space-x-4">
+  <div class="grid md:grid-cols-4 gap-4">
     <x-button-group>
       <x-button >Cancel</x-button>
       <x-button color="primary">Save</x-button>

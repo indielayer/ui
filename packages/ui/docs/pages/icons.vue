@@ -1,3 +1,39 @@
+<script setup lang="ts">
+const iconExample = `// icons.js
+export default {
+  check: '<polyline points="20 6 9 17 4 12"></polyline>'
+}`
+
+const installExample = `// main.js
+import { createApp } from 'vue'
+import UI from '@indielayer/ui'
+import icons from './icons'
+
+const app = createApp(App)
+
+app.use(UI, {
+  icons,
+})`
+
+const iconExample1 = `// icons.js
+export default {
+  check: '<polyline points="20 6 9 17 4 12"></polyline>',
+  // or
+  check2: {
+    icon: '<polyline points="20 6 9 17 4 12"></polyline>',
+    viewBox: '0 0 24 24', // default
+    filled: false, // default
+  },
+  // or
+  check3: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+}`
+
+const iconExample2 = `<template>
+  <x-icon icon="check" />
+</template>
+`
+</script>
+
 <template>
   <h2 class="text-4xl font-semibold">Icons</h2>
   <h1 class="text-lg my-2 text-gray-500 dark:text-gray-400">Building your own SVG icon library from multiple open source libraries</h1>
@@ -60,42 +96,3 @@
   </div>
   <code-snippet lang="js" :code="iconExample2"/>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      iconExample: `// icons.js
-export default {
-  check: '<polyline points="20 6 9 17 4 12"></polyline>'
-}`,
-      installExample: `// main.js
-import { createApp } from 'vue'
-import UI from '@indielayer/ui'
-import icons from './icons'
-
-const app = createApp(App)
-
-app.use(UI, {
-  icons,
-})`,
-      iconExample1: `// icons.js
-export default {
-  check: '<polyline points="20 6 9 17 4 12"></polyline>',
-  // or
-  check2: {
-    icon: '<polyline points="20 6 9 17 4 12"></polyline>',
-    viewBox: '0 0 24 24', // default
-    filled: false, // default
-  },
-  // or
-  check3: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg>'
-}`,
-      iconExample2: `<template>
-  <x-icon icon="check" />
-</template>
-`,
-    }
-  },
-}
-</script>

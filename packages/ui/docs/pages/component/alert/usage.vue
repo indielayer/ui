@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-4">
+  <div class="grid gap-4">
     <x-alert>Default</x-alert>
     <x-alert color="primary" outlined>Outlined</x-alert>
     <x-alert color="sky" type="info" light removable>Hello</x-alert>

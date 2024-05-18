@@ -2,8 +2,8 @@
 import { XSelect } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
-import VariantsDemoCode from './variants.vue?raw'
-import VariantsDemo from './variants.vue'
+import SizeDemoCode from './size.vue?raw'
+import SizeDemo from './size.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
@@ -16,10 +16,10 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
-  name: 'Variants',
+  name: 'Size',
   description: '',
-  code: VariantsDemoCode,
-  component: VariantsDemo,
+  code: SizeDemoCode,
+  component: SizeDemo,
 }, {
   name: 'States',
   description: '',

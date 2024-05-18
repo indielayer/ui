@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const simple = [
   { to: '#', label: 'Breadcrumb item 1' },
   { to: '#', label: 'Breadcrumb item 2' },
