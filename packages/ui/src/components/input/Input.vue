@@ -24,6 +24,7 @@ const inputProps = {
     type: String,
     default: 'text',
   },
+  step: [Number, String],
   block: Boolean,
 }
 
@@ -156,6 +157,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :max="max"
         :minlength="minlength"
         :maxlength="maxlength"
+        :step="step"
         :dir="dir"
         :name="name"
         :placeholder="placeholder"
