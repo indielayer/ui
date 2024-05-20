@@ -1,5 +1,16 @@
 # @indielayer/ui
 
+## 1.8.0
+
+### Minor Changes
+
+- feat(select): add filter action ([#78](https://github.com/indielayer/ui/pull/78)) ([`dfce93f`](https://github.com/indielayer/ui/commit/dfce93f01ebb4dcb06458ceddc745d1e7b64536a))
+
+### Patch Changes
+
+- fix(input): icon on top of text" ([`b27cc4d`](https://github.com/indielayer/ui/commit/b27cc4d92f9821ce03ca96d52fcabe847fb75559))
+- fix(input): add step for type number ([`305f436`](https://github.com/indielayer/ui/commit/305f4365d95219c495d3eb3857d57e9c6046528d))
+
 ## 1.7.5
 
 ### Patch Changes
