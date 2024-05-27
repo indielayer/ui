@@ -432,7 +432,13 @@ defineExpose({ focus, blur, reset, validate, setError })
           <x-popover-container :class="classes.content">
             <slot name="content-header">
               <div v-if="filterable" :class="classes.search">
-                <x-input ref="filterRef" v-model="filter" :placeholder="filterPlaceholder" size="sm"/>
+                <x-input
+                  ref="filterRef"
+                  v-model="filter"
+                  :placeholder="filterPlaceholder"
+                  skip-form-registry
+                  size="sm"
+                />
               </div>
             </slot>
             <div v-if="internalOptions.length > 0" :class="classes.contentBody">

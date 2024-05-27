@@ -118,7 +118,8 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     if (formGroup.isInsideFormGroup) {
       formGroup.registerInputGroup(nameInternal.value, focus)
     } else {
-      form.registerInput(nameInternal.value, focus, validate, setError)
+      if (!props.skipFormRegistry)
+        form.registerInput(nameInternal.value, focus, validate, setError)
     }
   })
 
@@ -126,7 +127,8 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     if (formGroup.isInsideFormGroup) {
       formGroup.unregisterInputGroup(nameInternal.value)
     } else {
-      form.unregisterInput(nameInternal.value)
+      if (!props.skipFormRegistry)
+        form.unregisterInput(nameInternal.value)
     }
 
   })
@@ -136,7 +138,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     errorInternal,
     hideFooterInternal,
     isFocused,
-    isInsideForm: form.isInsideForm,
+    isInsideForm: props.skipFormRegistry ? false : form.isInsideForm,
     isInsideFormGroup: formGroup.isInsideFormGroup,
     inputListeners,
     formGroup,
@@ -174,4 +176,5 @@ useInputtable.props = () => ({
     default: () => [],
   },
   tooltip: String,
+  skipFormRegistry: Boolean,
 } as const)

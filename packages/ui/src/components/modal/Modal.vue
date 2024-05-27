@@ -67,7 +67,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type PropType, type ExtractPublicPropTypes, computed, nextTick, onMounted } from 'vue'
+import { ref, watch, type PropType, type ExtractPublicPropTypes, computed, nextTick } from 'vue'
 import { onClickOutside, useEventListener } from '@vueuse/core'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useFocusTrap } from '../../composables/useFocusTrap'
@@ -132,8 +132,17 @@ async function checkVisibiliy() {
 
 if (typeof window !== 'undefined') useEventListener(document, 'keydown', onKeyDown)
 
+const shouldIgnoreEvent = (event: KeyboardEvent) => {
+  return ['.v-popper__popper', '.x-datepicker'].some((target) => {
+    if (typeof target === 'string') {
+      return Array.from(window.document.querySelectorAll(target))
+        .some((el) => el === event.target || event.composedPath().includes(el))
+    }
+  })
+}
+
 function onKeyDown(event: KeyboardEvent) {
-  if (event.key === 'Escape' && value.value && !props.persistent) close()
+  if (event.key === 'Escape' && !shouldIgnoreEvent(event) && value.value && !props.persistent) close()
 }
 
 function clickOutsideCallback() {

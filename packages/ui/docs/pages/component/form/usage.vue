@@ -71,6 +71,7 @@ function onSubmit(isValid: string) {
       v-model="country"
       :rules="[rules.isRequired]"
       :options="countries"
+      filterable
       name="country"
       placeholder="Select another country"
       label="Country"

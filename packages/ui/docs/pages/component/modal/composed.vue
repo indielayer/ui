@@ -9,6 +9,7 @@ const notifications = useNotifications()
 const email = ref('')
 const password = ref('')
 const description = ref('')
+const datetime = ref('')
 
 const selected = ref()
 const options = [
@@ -62,7 +63,15 @@ function onSubmit(isValid: boolean) {
       placeholder="Description"
       hide-footer
     />
-    <x-select v-model="selected" :options="options" label="Country" :rules="[rules.isRequired]"/>
+    <x-select
+      v-model="selected"
+      filterable
+      :options="options"
+      label="Country"
+      :rules="[rules.isRequired]"
+    />
+
+    <x-datepicker v-model="datetime" label="Start date" :rules="[rules.isRequired]"/>
 
     <!-- <template #tertiary-action>
       <x-button color="gray" size="lg">Tertiary</x-button>
