@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.8.1
+
+### Patch Changes
+
+- fix(inputtable): allow inputs to opt out of form registry ([`586bb72`](https://github.com/indielayer/ui/commit/586bb7281fa77a1aca442012fda040f2faab1887))
+
 ## 1.8.0
 
 ### Minor Changes
