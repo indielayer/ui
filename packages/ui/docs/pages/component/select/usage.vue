@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const selected = ref<undefined | string>()
 const selectedMultiple = ref<string[]>(['A', 'B'])
 const options = ref([
-  { value: 'A', label: 'Option A' },
+  { value: 'A', label: 'Option A', disabled: true },
   { value: 'B', label: 'Option B' },
 ])
 
@@ -35,8 +35,8 @@ for (let i = 0; i < 20; i++) {
       v-model="selectedMultiple"
       label="Multi select"
       placeholder="Multiple"
-      filterable
       :options="options"
+      filterable
       multiple
     />
   </div>

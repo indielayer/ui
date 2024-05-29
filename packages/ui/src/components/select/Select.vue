@@ -69,6 +69,8 @@ const selectedIndex = ref<number | undefined>()
 const filter = ref('')
 const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
+const isDisabled = computed(() => props.disabled || props.loading || props.readonly)
+
 const selected = computed<any | any[]>({
   get() {
     if (props.multiple) {
@@ -239,6 +241,8 @@ function isEmpty(value: string | number | []) {
 function handleRemove(e: Event, value: string) {
   e.stopPropagation()
 
+  if (isDisabled.value) return
+
   // find value in selected and remove it
   const index = selected.value.indexOf(value)
 
@@ -355,7 +359,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     tabindex="0"
     class="group"
     :style="styles"
-    :disabled="disabled"
+    :disabled="isDisabled"
     :required="required"
     :is-inside-form="isInsideForm"
     :label="label"
@@ -368,26 +372,11 @@ defineExpose({ focus, blur, reset, validate, setError })
   >
     <div class="relative">
       <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">
-        <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-          <div class="flex gap-1 flex-wrap">
-            <x-tag
-              v-for="value in selected"
-              :key="value"
-              size="xs"
-              outlined
-              removable
-              @remove="(e: Event) => { handleRemove(e, value) }"
-            >{{ getLabel(value) }}</x-tag>
-          </div>
-        </template>
-        <template v-else-if="!multiple && !isEmpty(selected)">
+        <template v-if="!isEmpty(selected)">
           {{ getLabel(selected) }}
         </template>
         <template v-else>
-          <div
-            v-if="placeholder"
-            class="text-secondary-400 dark:text-secondary-500"
-          >
+          <div v-if="placeholder" class="text-secondary-400 dark:text-secondary-500">
             {{ placeholder }}
           </div>
           <div v-else>&nbsp;</div>
@@ -396,7 +385,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       <x-popover
         v-else
         ref="popoverRef"
-        :disabled="disabled || loading || readonly"
+        :disabled="isDisabled"
       >
         <div
           :class="[classes.box]"
@@ -407,8 +396,9 @@ defineExpose({ focus, blur, reset, validate, setError })
                 v-for="value in selected"
                 :key="value"
                 size="xs"
-                outlined
                 removable
+                :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
+                :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                 @remove="(e: Event) => { handleRemove(e, value) }"
               >{{ getLabel(value) }}</x-tag>
             </div>

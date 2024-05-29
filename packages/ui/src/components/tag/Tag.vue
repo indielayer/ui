@@ -1,7 +1,7 @@
 <script lang="ts">
 const tagProps = {
   ...useCommon.props(),
-  ...useColors.props('gray'),
+  ...useColors.props('slate'),
   tag: {
     type: String,
     default: 'span',
@@ -9,6 +9,7 @@ const tagProps = {
   rounded: Boolean,
   removable: Boolean,
   outlined: Boolean,
+  disabled: Boolean,
 }
 
 export type TagProps = ExtractPublicPropTypes<typeof tagProps>
@@ -52,13 +53,15 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
 <template>
   <component
     :is="tag"
-    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]"
+    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border"
     :style="styles"
     :class="
       [
         className,
         classes.wrapper,
-        outlined ? 'border' : 'bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
+        outlined ?
+          'border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]' :
+          'border-transparent bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
         rounded ? 'rounded-full' : 'rounded'
       ]"
   >
@@ -70,8 +73,9 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
       <x-icon
         :size="closeIconSize"
         :icon="closeIcon"
-        class="ml-1.5 cursor-pointer hover:text-secondary-700 transition-colors duration-150"
-        @click="(e: Event) => $emit('remove', e)"
+        class="ml-1.5 -mt-0.5 cursor-pointer transition-colors duration-150"
+        :class="[disabled ? 'text-secondary-400' : 'hover:text-secondary-500']"
+        @click="(e: Event) => !disabled && $emit('remove', e)"
       />
     </span>
 
