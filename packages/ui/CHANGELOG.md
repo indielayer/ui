@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.8.2
+
+### Patch Changes
+
+- fix(select): tag remove when input disabled ([`9b9159e`](https://github.com/indielayer/ui/commit/9b9159e4b948abea4500b49041c02281c366c065))
+
 ## 1.8.1
 
 ### Patch Changes
