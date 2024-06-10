@@ -50,6 +50,7 @@ const { styles, classes, className } = useTheme('Label', {}, props)
       :class="classes.label"
     >
       <span>{{ label }}</span>
+      <sup v-if="required" class="text-error-500">*</sup>
       <x-toggle-tip v-if="tooltip" :content="tooltip"/>
     </component>
     <slot></slot>
