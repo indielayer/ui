@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.8.3
+
+### Patch Changes
+
+- fix(datepicker): template slots ([#86](https://github.com/indielayer/ui/pull/86)) ([`74f3a5d`](https://github.com/indielayer/ui/commit/74f3a5db9cb7dfcacaed4b3d99815abe7db5be6d))
+
 ## 1.8.2
 
 ### Patch Changes
