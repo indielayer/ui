@@ -336,11 +336,11 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
           :hide-footer="hideFooter"
           @keydown.prevent.enter="onEnter"
           @keydown.tab="onTab"
-        >
-          <template v-for="(_, name) in $slots" #[name]="slotProps = {}">
-            <slot v-bind="slotProps" :name="name"></slot>
-          </template>
-        </x-input>
+        />
+      </template>
+
+      <template v-for="(_, name) in $slots" #[name]="slotProps = {}">
+        <slot v-bind="slotProps" :name="name"></slot>
       </template>
     </vue-datepicker>
   </div>
