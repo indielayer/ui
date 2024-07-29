@@ -51,18 +51,18 @@ const theme: MenuItemTheme = {
       }
 
       return css.variables({
-        bg: props.selected ? secondary[100] : 'transparent',
-        text: secondary[800],
+        bg: props.selected ? color[100] : 'transparent',
+        text: color[700],
         hover: {
-          bg: secondary[100],
-          text: secondary[900],
+          bg: color[100],
+          text: color[900],
         },
         dark: {
-          bg: props.selected ? secondary[800] : 'transparent',
-          text: secondary[200],
+          bg: props.selected ? color[800] : 'transparent',
+          text: color[200],
           hover: {
-            bg: secondary[600],
-            text: secondary[100],
+            bg: color[600],
+            text: color[100],
           },
         },
       })

@@ -13,7 +13,7 @@ const menuItemProps = {
   },
   onClick: Function,
   value: [Number, String],
-  to: String,
+  to: [String, Object],
   exact: Boolean,
   href: String,
   target: String,
