@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.8.4
+
+### Patch Changes
+
+- fix(menuitem): link object ([#88](https://github.com/indielayer/ui/pull/88)) ([`b806d00`](https://github.com/indielayer/ui/commit/b806d006561869f72f04558d325b97b935e67b9c))
+
 ## 1.8.3
 
 ### Patch Changes
