@@ -14,6 +14,7 @@ const menu1 = [{
   divider: true,
 }, {
   label: 'Sign out',
+  color: 'error',
   active: false,
   value: 'c',
 }]
