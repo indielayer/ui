@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.9.0
+
+### Minor Changes
+
+- feat: add virtual list option to table and select ([#91](https://github.com/indielayer/ui/pull/91)) ([`4d0f63c`](https://github.com/indielayer/ui/commit/4d0f63c0ff9068146f3f15393378d069a8b9e169))
+
 ## 1.8.4
 
 ### Patch Changes
