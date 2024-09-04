@@ -7,8 +7,6 @@ const theme: TableHeaderTheme = {
 
       if (props.sortable) classes.push('cursor-pointer hover:text-secondary-800 dark:hover:text-secondary-300 transition-colors duration-150 ease-in-out')
 
-      if (props.stickyHeader) classes.push('sticky top-0')
-
       if (props.textAlign === 'left') classes.push('text-left')
       if (props.textAlign === 'right') classes.push('text-right')
       if (props.textAlign === 'center') classes.push('text-center')

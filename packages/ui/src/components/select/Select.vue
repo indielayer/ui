@@ -14,6 +14,17 @@ const selectProps = {
     type: String,
     default: 'Filter by...',
   },
+  virtualList: Boolean,
+  virtualListOffsetTop: Number,
+  virtualListOffsetBottom: Number,
+  virtualListItemHeight: {
+    type: Number,
+    default: 33,
+  },
+  virtualListOverscan: {
+    type: Number,
+    default: 5,
+  },
 }
 
 export type SelectOption = {
@@ -44,6 +55,7 @@ import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useVirtualList } from '../../composables/useVirtualList'
 import { checkIcon, selectIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
@@ -113,6 +125,17 @@ const internalOptions = computed(() => {
 
 const availableOptions = computed(() => internalOptions.value.filter((option) => !option.disabled))
 
+const { list, scrollTo: scrollToVirtualList, containerProps, wrapperProps } = useVirtualList(
+  internalOptions,
+  {
+    disabled: !props.virtualList,
+    itemHeight: props.virtualListItemHeight,
+    topOffset: props.virtualListOffsetTop || 0,
+    bottomOffset: props.virtualListOffsetBottom || 0,
+    overscan: props.virtualListOverscan,
+  },
+)
+
 const isOpen = computed(() => popoverRef.value?.isOpen)
 
 watch(filter, (val) => {
@@ -158,7 +181,8 @@ function findSelectedIndex() {
 }
 
 function scrollToIndex(index: number) {
-  if (itemsRef.value) itemsRef.value[index]?.$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+  if (props.virtualList) scrollToVirtualList(index)
+  else if (itemsRef.value) itemsRef.value[index]?.$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
 }
 
 watch(selectedIndex, (index) => {
@@ -419,7 +443,9 @@ defineExpose({ focus, blur, reset, validate, setError })
         </div>
 
         <template #content>
-          <x-popover-container :class="classes.content">
+          <x-popover-container
+            :class="classes.content"
+          >
             <slot name="content-header">
               <div v-if="filterable" :class="classes.search">
                 <x-input
@@ -431,22 +457,24 @@ defineExpose({ focus, blur, reset, validate, setError })
                 />
               </div>
             </slot>
-            <div v-if="internalOptions.length > 0" :class="classes.contentBody">
-              <x-menu-item
-                v-for="(item, index) in internalOptions"
-                :key="index"
-                ref="itemsRef"
-                :item="item"
-                :size="size"
-                :disabled="item.disabled"
-                :selected="index === selectedIndex"
-                :color="color"
-                filled
-                @click="() => !multiple && popoverRef?.hide()"
-              />
-            </div>
-            <div v-else class="px-2 text-center text-secondary-400">
-              No options
+            <div v-bind="containerProps" :class="classes.contentBody">
+              <div v-bind="wrapperProps">
+                <x-menu-item
+                  v-for="item in list"
+                  :key="item.index"
+                  ref="itemsRef"
+                  :item="item.data"
+                  :size="size"
+                  :disabled="item.data.disabled"
+                  :selected="item.index === selectedIndex"
+                  :color="color"
+                  filled
+                  @click="() => !multiple && popoverRef?.hide()"
+                />
+              </div>
+              <div v-if="list.length === 0" class="p-2 text-center text-secondary-400">
+                No options
+              </div>
             </div>
             <slot name="content-footer"></slot>
           </x-popover-container>
@@ -465,14 +493,16 @@ defineExpose({ focus, blur, reset, validate, setError })
         :readonly="readonly"
         v-on="inputListeners"
       >
-        <option
-          v-for="(option, index) in options"
-          :key="index"
-          :value="option.value"
-          :disabled="option.disabled"
-        >
-          {{ option.label }}
-        </option>
+        <template v-if="native">
+          <option
+            v-for="(option, index) in options"
+            :key="index"
+            :value="option.value"
+            :disabled="option.disabled"
+          >
+            {{ option.label }}
+          </option>
+        </template>
       </select>
 
       <div :class="classes.iconWrapper">

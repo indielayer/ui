@@ -1,5 +1,7 @@
 <script lang="ts">
-const tableHeadProps = {}
+const tableHeadProps = {
+  stickyHeader: Boolean,
+}
 
 export type TableHeadProps = ExtractPublicPropTypes<typeof tableHeadProps>
 
@@ -13,7 +15,9 @@ export default { name: 'XTableHead' }
 import type { ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
-const { styles, classes, className } = useTheme('TableHead', {}, {})
+const props = defineProps(tableHeadProps)
+
+const { styles, classes, className } = useTheme('TableHead', {}, props)
 </script>
 
 <template>

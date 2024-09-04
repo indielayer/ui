@@ -32,6 +32,17 @@ const tableProps = {
     default: true,
   },
   expandable: Boolean,
+  virtualList: Boolean,
+  virtualListOffsetTop: Number,
+  virtualListOffsetBottom: Number,
+  virtualListItemHeight: {
+    type: Number,
+    default: 54,
+  },
+  virtualListOverscan: {
+    type: Number,
+    default: 5,
+  },
 }
 
 export type TableHeader = {
@@ -54,8 +65,9 @@ export default { name: 'XTable' }
 </script>
 
 <script setup lang="ts" generic="T">
-import { ref, type ExtractPublicPropTypes, type PropType, watch } from 'vue'
+import { ref, type ExtractPublicPropTypes, type PropType, watch, computed } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useVirtualList } from '../../composables/useVirtualList'
 
 import XTableHead from './TableHead.vue'
 import XTableHeader, { type TableHeaderSort, type TableHeaderAlign } from './TableHeader.vue'
@@ -90,9 +102,22 @@ function clone<T>(source: T[]): T[] {
   }
 }
 
+const items = computed(() => props.items)
+
+const { list, containerProps, wrapperProps } = useVirtualList(
+  items,
+  {
+    disabled: !props.virtualList,
+    itemHeight: props.virtualListItemHeight || 54,
+    topOffset: props.virtualListOffsetTop || 0,
+    bottomOffset: props.virtualListOffsetBottom || 0,
+    overscan: props.virtualListOverscan,
+  },
+)
+
 const internalItems = ref<internalT[]>([])
 
-watch(() => props.items, (newValue) => {
+watch(items, (newValue) => {
   if (props.expandable) internalItems.value = clone(newValue as any)
 }, { immediate: true })
 
@@ -153,125 +178,139 @@ const { styles, classes, className } = useTheme('Table', {}, props)
 </script>
 
 <template>
-  <div :class="[className, classes.wrapper]">
+  <div
+    :class="[className, classes.wrapper]"
+    v-bind="containerProps"
+  >
     <slot name="title"></slot>
     <slot name="actions"></slot>
 
-    <table
-      :style="styles"
-      :class="classes.table"
+    <div
+      v-bind="wrapperProps"
+      :class="{
+        '!h-auto': props.loading
+      }"
     >
-      <x-table-head>
-        <x-table-header v-if="expandable" width="48" class="!p-0" :sticky-header="stickyHeader"/>
-        <x-table-header
-          v-for="(header, index) in headers"
-          :key="index"
-          :sticky-header="stickyHeader"
-          :text-align="header.align"
-          :sort="getSort(header.value, sort)"
-          :sortable="header.sortable"
-          :width="header.width"
-          @click="header.sortable ? sortHeader(header) : null"
-        >
-          <slot :name="`header-${header.value}`" :header="header">
-            {{ header.text }}
-          </slot>
-        </x-table-header>
-      </x-table-head>
-      <x-table-body>
-        <template v-if="loading">
-          <x-table-row
-            v-for="(item, index) in Number(loadingLines)"
-            :key="index"
-            :striped="striped"
-          >
-            <x-table-cell
-              v-for="(header, index2) in headers"
-              :key="index2"
-              :text-align="header.align"
-              :width="header.width"
-              :dense="dense"
-              :fixed="fixed"
-            >
-              <slot :name="`loading-${header.value}`" :item="item">
-                <x-skeleton
-                  class="max-w-[60%]"
-                  :shape="header.skeletonShape || 'line'"
-                  :class="{
-                    'mx-auto': header.align === 'center',
-                    'ml-auto': header.align === 'right',
-                  }"
-                />
-              </slot>
-            </x-table-cell>
-          </x-table-row>
-        </template>
-        <template v-else-if="error">
-          <tr>
-            <td colspan="999">
-              <slot name="error"></slot>
-            </td>
-          </tr>
-        </template>
-        <template v-else-if="!items || items.length === 0">
-          <tr>
-            <td colspan="999">
-              <slot name="empty"></slot>
-            </td>
-          </tr>
-        </template>
-        <template v-for="(item, index) in items" v-else :key="index">
-          <x-table-row
-            :pointer="pointer"
-            :striped="striped"
-            @click="$emit('click-row', item)"
-          >
-            <x-table-cell v-if="expandable" width="48" class="!p-1">
-              <button
-                type="button"
-                class="px-3 p-2"
-                :class="[dense ? 'p-0.5' : 'px-3 py-2']"
-                @click="internalItems[index].__expanded = !internalItems[index].__expanded"
-              >
-                <x-icon
-                  :icon="chevronDownIcon"
-                  :size="dense ? 'xs' : 'md'"
-                  class="transition-transform"
-                  :class="{
-                    'rotate-180': internalItems[index]?.__expanded,
-                  }"
-                />
-              </button>
-            </x-table-cell>
-            <x-table-cell
-              v-for="(header, index2) in headers"
-              :key="index2"
-              :text-align="header.align"
-              :truncate="header.truncate"
-              :width="header.width"
-              :dense="dense"
-              :fixed="fixed"
-            >
-              <slot :name="`item-${header.value}`" :item="item">
-                {{ getValue(item, header.value) }}
-              </slot>
-            </x-table-cell>
-          </x-table-row>
-          <tr v-if="expandable" :class="{ 'hidden': !internalItems[index]?.__expanded }">
-            <td colspan="999">
-              <div class="overflow-hidden transition-opacity" :class="[internalItems[index]?.__expanded ? '' : 'opacity-0 max-h-0']">
-                <slot name="expanded-row" :item="item"></slot>
-              </div>
-            </td>
-          </tr>
-        </template>
-      </x-table-body>
-      <div
-        v-if="loading"
-        :class="classes.loadingWrapper"
+      <table
+        :style="styles"
+        :class="classes.table"
       >
-        <x-spinner size="lg"/>
-      </div>
-    </table>
+        <x-table-head :sticky-header="stickyHeader">
+          <x-table-header v-if="expandable" width="48" class="!p-0"/>
+          <x-table-header
+            v-for="(header, index) in headers"
+            :key="index"
+            :text-align="header.align"
+            :sort="getSort(header.value, sort)"
+            :sortable="header.sortable"
+            :width="header.width"
+            @click="header.sortable ? sortHeader(header) : null"
+          >
+            <slot :name="`header-${header.value}`" :header="header">
+              {{ header.text }}
+            </slot>
+          </x-table-header>
+        </x-table-head>
+        <x-table-body>
+          <template v-if="loading">
+            <x-table-row
+              v-for="(item, index) in Number(loadingLines)"
+              :key="index"
+              :striped="striped"
+            >
+              <x-table-cell
+                v-for="(header, index2) in headers"
+                :key="index2"
+                :text-align="header.align"
+                :width="header.width"
+                :dense="dense"
+                :fixed="fixed"
+              >
+                <slot :name="`loading-${header.value}`" :item="item">
+                  <x-skeleton
+                    class="max-w-[60%]"
+                    :shape="header.skeletonShape || 'line'"
+                    :class="{
+                      'mx-auto': header.align === 'center',
+                      'ml-auto': header.align === 'right',
+                    }"
+                  />
+                </slot>
+              </x-table-cell>
+            </x-table-row>
+          </template>
+          <template v-else-if="error">
+            <tr>
+              <td colspan="999">
+                <slot name="error"></slot>
+              </td>
+            </tr>
+          </template>
+          <template v-else-if="!items || items.length === 0">
+            <tr>
+              <td colspan="999">
+                <slot name="empty"></slot>
+              </td>
+            </tr>
+          </template>
+          <template v-for="(item, index) in list" v-else :key="index">
+            <x-table-row
+              :pointer="pointer"
+              :striped="striped"
+              @click="$emit('click-row', item.data)"
+            >
+              <x-table-cell v-if="expandable" width="48" class="!p-1">
+                <button
+                  type="button"
+                  class="px-3 p-2"
+                  :class="[dense ? 'p-0.5' : 'px-3 py-2']"
+                  @click="internalItems[item.index].__expanded = !internalItems[item.index].__expanded"
+                >
+                  <x-icon
+                    :icon="chevronDownIcon"
+                    :size="dense ? 'xs' : 'md'"
+                    class="transition-transform"
+                    :class="{
+                      'rotate-180': internalItems[item.index]?.__expanded,
+                    }"
+                  />
+                </button>
+              </x-table-cell>
+              <x-table-cell
+                v-for="(header, index2) in headers"
+                :key="index2"
+                :text-align="header.align"
+                :truncate="header.truncate"
+                :width="header.width"
+                :dense="dense"
+                :style="[props.virtualListItemHeight ? {
+                  height: `${props.virtualListItemHeight}px`,
+                  maxHeight: `${props.virtualListItemHeight}px`,
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                } : {}]"
+              >
+                <slot :name="`item-${header.value}`" :item="item.data">
+                  {{ getValue(item.data, header.value) }}
+                </slot>
+              </x-table-cell>
+            </x-table-row>
+            <tr v-if="expandable" :class="{ 'hidden': !internalItems[item.index]?.__expanded }">
+              <td colspan="999">
+                <div class="overflow-hidden transition-opacity" :class="[internalItems[item.index]?.__expanded ? '' : 'opacity-0 max-h-0']">
+                  <slot name="expanded-row" :item="item.data"></slot>
+                </div>
+              </td>
+            </tr>
+          </template>
+        </x-table-body>
+        <div
+          v-if="loading"
+          :class="classes.loadingWrapper"
+        >
+          <x-spinner size="lg"/>
+        </div>
+      </table>
+    </div>
   </div>
 </template>

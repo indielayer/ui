@@ -2,6 +2,8 @@
 import { XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import VirtualDemoCode from './virtual.vue?raw'
+import VirtualDemo from './virtual.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
@@ -13,6 +15,11 @@ const demos = [{
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Virtual List',
+  description: '',
+  code: VirtualDemoCode,
+  component: VirtualDemo,
 }, {
   name: 'States',
   description: '',

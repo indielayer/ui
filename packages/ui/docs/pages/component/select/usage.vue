@@ -2,15 +2,25 @@
 import { ref } from 'vue'
 
 const selected = ref<undefined | string>()
+const selected2 = ref<undefined | string>()
 const selectedMultiple = ref<string[]>(['A', 'B'])
 const options = ref([
   { value: 'A', label: 'Option A', disabled: true },
   { value: 'B', label: 'Option B' },
 ])
 
-for (let i = 0; i < 20; i++) {
-  options.value.push({ value: i.toString(), label: 'Option ' + i })
+// function to generate
+function genOptions(x: number) {
+  const options = []
+
+  for (let i = 0; i < x; i++) {
+    options.push({ value: i.toString(), label: 'Option ' + i })
+  }
+
+  return options
 }
+
+const options2 = ref(genOptions(1000))
 </script>
 
 <template>
@@ -25,11 +35,13 @@ for (let i = 0; i < 20; i++) {
       native
     />
     <x-select
-      v-model="selected"
-      label="Dropdown select"
+      v-model="selected2"
+      label="Filterable - virtual list"
       placeholder="Placeholder"
       filterable
-      :options="options"
+      virtual-list
+      :virtual-list-item-height="33"
+      :options="options2"
     />
     <x-select
       v-model="selectedMultiple"

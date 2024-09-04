@@ -31,7 +31,7 @@ const theme: SelectTheme = {
 
     search: 'p-1 mb-0.5',
 
-    contentBody: 'overflow-y-auto max-h-64',
+    contentBody: 'overflow-y-auto max-h-64 min-w-[280px]',
 
     iconWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2',
 
