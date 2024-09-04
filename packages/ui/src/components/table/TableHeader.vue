@@ -15,7 +15,6 @@ const tableHeaderProps = {
     default: 'left',
     validator: (value: string) => validators.textAlign.includes(value as any),
   },
-  stickyHeader: Boolean,
 }
 
 export type TableHeaderSort = typeof validators.sort[number]

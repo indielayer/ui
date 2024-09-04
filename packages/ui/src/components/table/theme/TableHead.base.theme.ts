@@ -2,7 +2,13 @@ import type { TableHeadTheme } from '../TableHead.vue'
 
 const theme: TableHeadTheme = {
   classes: {
-    thead: 'align-bottom bg-secondary-50 dark:bg-secondary-700',
+    thead: ({ props }) => {
+      const classes = ['align-bottom bg-secondary-50 dark:bg-secondary-700']
+
+      if (props.stickyHeader) classes.push('sticky top-0 z-10')
+
+      return classes
+    },
     row: 'text-sm text-secondary-600 dark:text-secondary-200 border-b',
   },
 }
