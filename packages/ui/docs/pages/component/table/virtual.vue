@@ -43,7 +43,7 @@ const items = ref(generateItems(1000))
   <x-card>
     <x-table
       v-model:sort="sort"
-      class="h-80"
+      class="!h-80"
       :headers="headers"
       :items="itemsSorted"
       virtual-list
