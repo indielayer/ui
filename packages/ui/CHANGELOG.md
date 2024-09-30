@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.9.3
+
+### Patch Changes
+
+- fix(Table): key prop id type ([#97](https://github.com/indielayer/ui/pull/97)) ([`1f0c7e9`](https://github.com/indielayer/ui/commit/1f0c7e987d642da04595b58f9ba3239fbc990db7))
+
 ## 1.9.2
 
 ### Patch Changes
