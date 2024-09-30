@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.9.1
+
+### Patch Changes
+
+- chore: update vue version to use defineModel ([#93](https://github.com/indielayer/ui/pull/93)) ([`a8c9c2a`](https://github.com/indielayer/ui/commit/a8c9c2a0bfabf5e7f6fda44ff41fb59561ccc19b))
+
 ## 1.9.0
 
 ### Minor Changes
