@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.9.2
+
+### Patch Changes
+
+- fix(table): selected use prop key ([#95](https://github.com/indielayer/ui/pull/95)) ([`ad3758d`](https://github.com/indielayer/ui/commit/ad3758dcb606c91d262b95b79700245838867f01))
+
 ## 1.9.1
 
 ### Patch Changes
