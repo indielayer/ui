@@ -6,6 +6,7 @@ const validators = {
 const tableRowProps = {
   pointer: Boolean,
   striped: Boolean,
+  selected: Boolean,
   verticalAlign: {
     type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
     default: 'top',

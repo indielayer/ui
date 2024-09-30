@@ -5,7 +5,7 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "vue": "^3.3.4"
+    "vue": "^3.5.10"
   },
   "devDependencies": {
     "@indielayer/ui": "^1.0.9",

@@ -3,6 +3,7 @@
   "private": true,
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "scripts": {
+    "i9": "npx pnpm@9 install",
     "prepare": "is-ci || simple-git-hooks",
     "dev": "cd packages/ui && pnpm dev",
     "build": "cd packages/ui && pnpm build:prod",

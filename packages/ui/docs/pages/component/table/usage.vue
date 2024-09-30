@@ -60,6 +60,8 @@ const itemsSorted = computed<Book[]>(() => {
     return 0
   })
 })
+
+const selectedIndex = ref<number>(0)
 </script>
 
 <template>
@@ -87,11 +89,13 @@ const itemsSorted = computed<Book[]>(() => {
     <x-card>
       <x-table
         v-model:sort="sort"
+        v-model:selected="selectedIndex"
         dense
+        pointer
         striped
         :headers="headers"
         :items="itemsSorted"
-        @click-row="notifications?.log('open')"
+        @click-row="(event, index) => { notifications?.log(event); selectedIndex = index }"
       >
         <template #item-published="{ item }">
           {{ formatDate(item.published) }}
