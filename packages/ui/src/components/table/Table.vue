@@ -65,7 +65,7 @@ export default { name: 'XTable' }
 </script>
 
 <script setup lang="ts" generic="T">
-import { ref, type ExtractPublicPropTypes, type PropType, watch, computed } from 'vue'
+import { ref, type ExtractPublicPropTypes, type PropType, watch, computed, type MaybeRef } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
 
@@ -89,6 +89,10 @@ const props = defineProps({
     default: () => [],
   },
 })
+
+const selectedIndex = defineModel<number | number[]>('selected')
+
+const hasSelectedIndex = computed(() => typeof selectedIndex.value === 'number')
 
 type internalT = T & {
   __expanded?: boolean;
@@ -118,7 +122,7 @@ const { list, containerProps, wrapperProps } = useVirtualList(
 const internalItems = ref<internalT[]>([])
 
 watch(items, (newValue) => {
-  if (props.expandable) internalItems.value = clone(newValue as any)
+  if (props.expandable) internalItems.value = clone(newValue as any) as internalT[]
 }, { immediate: true })
 
 const emit = defineEmits(['update:sort', 'click-row'])
@@ -257,7 +261,8 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             <x-table-row
               :pointer="pointer"
               :striped="striped"
-              @click="$emit('click-row', item.data)"
+              :selected="hasSelectedIndex ? selectedIndex === item.index : undefined"
+              @click="$emit('click-row', item.data, item.index)"
             >
               <x-table-cell v-if="expandable" width="48" class="!p-1">
                 <button
@@ -283,7 +288,7 @@ const { styles, classes, className } = useTheme('Table', {}, props)
                 :truncate="header.truncate"
                 :width="header.width"
                 :dense="dense"
-                :style="[props.virtualListItemHeight ? {
+                :style="[props.virtualList ? {
                   height: `${props.virtualListItemHeight}px`,
                   maxHeight: `${props.virtualListItemHeight}px`,
                   overflow: 'hidden',

@@ -5,6 +5,10 @@ const theme: TableRowTheme = {
     row: ({ props }) => {
       const classes = []
 
+      if (props.selected) {
+        classes.push('shadow-[inset_3px_0] shadow-primary-500')
+      }
+
       if (props.striped) {
         classes.push('even:bg-secondary-50 dark:even:bg-secondary-700')
       } else {

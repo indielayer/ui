@@ -70,18 +70,20 @@ const textClasses = {
 
   <div class="mt-10">
     <table class="text-left w-full">
-      <tr>
-        <th class="py-2">Class</th>
-        <th>Size</th>
-        <th>Line Height</th>
-        <th>Preview</th>
-      </tr>
-      <tr v-for="(c, key) in textClasses" :key="key" class="border-t">
-        <td class="py-2">{{ key }}</td>
-        <td class="text-secondary-500 font-light">{{ c.size }}</td>
-        <td class="text-secondary-500 font-light">{{ c.line }}</td>
-        <td :class="key" class="max-w-lg truncate">Preview text</td>
-      </tr>
+      <tbody>
+        <tr>
+          <th class="py-2">Class</th>
+          <th>Size</th>
+          <th>Line Height</th>
+          <th>Preview</th>
+        </tr>
+        <tr v-for="(c, key) in textClasses" :key="key" class="border-t">
+          <td class="py-2">{{ key }}</td>
+          <td class="text-secondary-500 font-light">{{ c.size }}</td>
+          <td class="text-secondary-500 font-light">{{ c.line }}</td>
+          <td :class="key" class="max-w-lg truncate">Preview text</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
