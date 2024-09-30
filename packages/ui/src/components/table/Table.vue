@@ -43,6 +43,7 @@ const tableProps = {
     type: Number,
     default: 5,
   },
+  keyProp: String,
 }
 
 export type TableHeader = {
@@ -65,7 +66,7 @@ export default { name: 'XTable' }
 </script>
 
 <script setup lang="ts" generic="T">
-import { ref, type ExtractPublicPropTypes, type PropType, watch, computed, type MaybeRef } from 'vue'
+import { ref, type ExtractPublicPropTypes, type PropType, watch, computed } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
 
@@ -90,9 +91,9 @@ const props = defineProps({
   },
 })
 
-const selectedIndex = defineModel<number | number[]>('selected')
+const selected = defineModel<number | number[]>('selected')
 
-const hasSelectedIndex = computed(() => typeof selectedIndex.value === 'number')
+const hasSelected = computed(() => typeof selected.value === 'number')
 
 type internalT = T & {
   __expanded?: boolean;
@@ -257,11 +258,11 @@ const { styles, classes, className } = useTheme('Table', {}, props)
               </td>
             </tr>
           </template>
-          <template v-for="(item, index) in list" v-else :key="index">
+          <template v-for="(item, index) in list" v-else :key="keyProp ?? index">
             <x-table-row
               :pointer="pointer"
               :striped="striped"
-              :selected="hasSelectedIndex ? selectedIndex === item.index : undefined"
+              :selected="hasSelected ? selected === (keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index) : undefined"
               @click="$emit('click-row', item.data, item.index)"
             >
               <x-table-cell v-if="expandable" width="48" class="!p-1">
