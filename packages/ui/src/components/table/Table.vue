@@ -91,9 +91,8 @@ const props = defineProps({
   },
 })
 
-const selected = defineModel<number | number[]>('selected')
-
-const hasSelected = computed(() => typeof selected.value === 'number')
+const selected = defineModel<number | string>('selected')
+const hasSelected = computed(() => typeof selected.value !== 'undefined')
 
 type internalT = T & {
   __expanded?: boolean;
