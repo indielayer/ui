@@ -41,7 +41,7 @@ const modalProps = {
     default: true,
   },
   formErrors: {
-    type: [Array, Object] as PropType<[FormError[], FormError]>,
+    type: [Array, Object] as PropType<FormError[] | FormError>,
     default: () => ([]),
   },
   persistent: Boolean,

@@ -10,7 +10,7 @@ const formProps = {
   },
   disabled: Boolean,
   errors: {
-    type: [Array, Object] as PropType<[FormError[], FormError]>,
+    type: [Array, Object] as PropType<FormError[] | FormError>,
     default: () => ([]),
   },
   title: String,
@@ -86,16 +86,22 @@ onMounted(async () => {
 
 watch(() => props.errors, (errors) => {
   if (errors) nextTick(() => {
-    if (Array.isArray(errors)) errors.forEach((error: any) => {
+    if (Array.isArray(errors)) errors.forEach((error: FormError, index) => {
       const input = inputs.find((i) => i.name === error.field)
 
-      if (input) input.setError(error.msg)
+      if (input) {
+        input.setError(error.msg)
+        if (index === 0 && input.focus) input.focus()
+      }
     })
 
     else {
       const input = inputs.find((i) => i.name === (errors as FormError).field)
 
-      if (input) input.setError((errors as FormError).msg)
+      if (input) {
+        input.setError((errors as FormError).msg)
+        if (input.focus) input.focus()
+      }
     }
   })
 })
