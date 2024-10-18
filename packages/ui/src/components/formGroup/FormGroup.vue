@@ -73,6 +73,8 @@ function focus() {
   inputs[0]?.focus()
 }
 
+function blur() {}
+
 const emit = defineEmits(useInputtable.emits())
 
 const {
