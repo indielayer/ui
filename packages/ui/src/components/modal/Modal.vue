@@ -112,6 +112,8 @@ async function checkVisibiliy() {
   const val = props.modelValue
 
   if (val) {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+
     value.value = val
 
     await nextTick()
@@ -121,11 +123,14 @@ async function checkVisibiliy() {
     await nextTick()
 
     initFocusTrap(modalRef)
+
+    document.body.style.paddingRight = `${scrollbarWidth}px`
     document.body.style.overflow = 'hidden'
   } else {
     visible.value = val
     value.value = val
     clearFocusTrap()
+    document.body.style.paddingRight = ''
     document.body.style.overflow = 'auto'
   }
 }
