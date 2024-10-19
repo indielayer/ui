@@ -19,6 +19,10 @@ const notificationsProps = {
     type: Boolean,
     default: true,
   },
+  pauseOnHover: {
+    type: Boolean,
+    default: true,
+  },
   injectKey: {
     type: [Symbol, String],
     default: injectNotificationKey,
@@ -47,6 +51,8 @@ export type NotificationEvent = {
   title?: string;
   style?: string;
   message?: string;
+  timer?: ReturnType<typeof setTimeout>;
+  timerStart?: number;
   timeout?: number;
   removable?: boolean;
   align?: NotificationsAlign;
@@ -209,11 +215,18 @@ function add(notification: NotificationEvent) {
 
   merged.style = Object.keys(cssVariables).map((key) => `${key}: ${cssVariables[key]}`).join(';')
 
+  if (merged.timeout) {
+    const timer = setTimer(merged, merged.timeout)
+
+    merged.timer = timer
+    merged.timerStart = Date.now()
+  }
+
   notifications.value.push(merged)
 
-  listRef.value?.scrollTo({ top: 0, behavior: 'smooth' })
-
-  if (merged.timeout) setTimer(merged, merged.timeout)
+  setTimeout(() => {
+    listRef.value?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, 0)
 }
 
 function remove(event: NotificationEvent) {
@@ -221,9 +234,24 @@ function remove(event: NotificationEvent) {
 }
 
 function setTimer(notification: NotificationEvent, timeout: number) {
-  setTimeout(() => {
+  return setTimeout(() => {
     remove(notification)
   }, timeout)
+}
+
+function pause(notification: NotificationEvent) {
+  if (props.pauseOnHover && notification.timer) {
+    clearTimeout(notification.timer)
+    notification.timer = undefined
+  }
+}
+
+function resume(notification: NotificationEvent) {
+  if (props.pauseOnHover && notification.timeout && notification.timerStart) {
+    const remaining = Math.max(notification.timeout - (Date.now() - notification.timerStart), 1000)
+
+    notification.timer = setTimer(notification, remaining)
+  }
 }
 
 const { styles, classes, className } = useTheme('Notifications', {}, props)
@@ -273,6 +301,8 @@ defineExpose({ log, info, success, warn, warning: warn, error })
               'mt-2': internalPosition === 'top',
             }]"
           :style="notification.style"
+          @mouseenter="pause(notification)"
+          @mouseleave="resume(notification)"
         >
           <x-icon
             v-if="notification.icon"
