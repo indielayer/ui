@@ -39,7 +39,9 @@ function onSubmit(isValid: string) {
       :rules="[rules.isRequired, rules.isEmail]"
       name="email"
       label="Email"
+      required
       placeholder="Enter your email"
+      tooltip="We will never share your email with anyone"
     />
     <x-input
       v-model="password"
