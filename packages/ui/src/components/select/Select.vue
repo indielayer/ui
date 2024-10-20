@@ -36,7 +36,7 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
-type InternalClasses = 'wrapper' | 'box' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'icon'
+type InternalClasses = 'wrapper' | 'box' | 'truncateCounter' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'icon'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
@@ -489,7 +489,7 @@ defineExpose({ focus, blur, reset, validate, setError })
 
                 <div
                   v-if="showCountTag"
-                  class="cursor-pointer hover:bg-secondary-200 absolute right-0 bg-secondary-100 text-secondary-800 rounded px-1 py-0.5 text-xs"
+                  :class="classes.truncateCounter"
                   @click.stop="multipleHiddenRef?.toggle()"
                 >+{{ hiddenTags }}</div>
               </div>
@@ -548,7 +548,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           </template>
         </x-popover>
         <x-popover
-          v-if="multiple && truncate"
+          v-if="multiple && truncate && showCountTag"
           ref="multipleHiddenRef"
           :popper-show-triggers="[]"
           :popper-hide-triggers="[]"
@@ -558,7 +558,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           <template #content>
             <x-popover-container class="p-2 flex gap-2 flex-wrap">
               <x-tag
-                v-for="value in selected"
+                v-for="value in selected?.slice(selected.length - hiddenTags)"
                 :key="value"
                 size="xs"
                 removable

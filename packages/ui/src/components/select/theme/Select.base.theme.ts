@@ -27,6 +27,8 @@ const theme: SelectTheme = {
       return classes
     },
 
+    truncateCounter: 'absolute right-0 cursor-pointer hover:bg-secondary-200 bg-secondary-100 text-secondary-800 rounded px-1 py-0.5 text-xs',
+
     content: 'p-1',
 
     search: 'p-1 mb-0.5',
