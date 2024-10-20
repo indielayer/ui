@@ -53,7 +53,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
 <template>
   <component
     :is="tag"
-    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border"
+    class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border relative"
     :style="styles"
     :class="
       [
@@ -67,16 +67,18 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
   >
     <span
       v-if="removable"
-      class="max-w-full truncate"
+      class="max-w-full truncate pr-4"
     >
       <slot></slot>
-      <x-icon
-        :size="closeIconSize"
-        :icon="closeIcon"
-        class="ml-1.5 -mt-0.5 cursor-pointer transition-colors duration-150"
-        :class="[disabled ? 'text-secondary-400' : 'hover:text-secondary-500']"
-        @click="(e: Event) => !disabled && $emit('remove', e)"
-      />
+      <div class="absolute right-1.5 top-0 h-full flex items-center">
+        <x-icon
+          :size="closeIconSize"
+          :icon="closeIcon"
+          class="cursor-pointer transition-colors duration-150"
+          :class="[disabled ? 'text-secondary-400' : 'hover:text-secondary-500']"
+          @click="(e: Event) => !disabled && $emit('remove', e)"
+        />
+      </div>
     </span>
 
     <slot v-else></slot>

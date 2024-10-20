@@ -7,6 +7,7 @@ const selectProps = {
   placeholder: String,
   options: Array as PropType<SelectOption[]>,
   multiple: Boolean,
+  truncate: Boolean,
   flat: Boolean,
   native: Boolean,
   filterable: Boolean,
@@ -49,7 +50,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref, onUnmounted } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import { useEventListener, useResizeObserver, useThrottleFn } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -372,6 +373,59 @@ function handleKeyNavigation(e: KeyboardEvent) {
   }
 }
 
+const tagsRef = ref<HTMLElement | null>(null)
+const multipleHiddenRef = ref<InstanceType<typeof XPopover> | null>(null)
+const showCountTag = ref(false)
+const hiddenTags = ref(0)
+
+const handleTruncate = useThrottleFn(() => {
+  if (props.multiple && props.truncate) {
+    nextTick(() => {
+      const maxTags = calcMaxTags()
+
+      if (maxTags < selected.value.length) {
+        showCountTag.value = true
+        hiddenTags.value = selected.value.length - maxTags
+      } else {
+        showCountTag.value = false
+        hiddenTags.value = 0
+      }
+    })
+  }
+}, 100, true)
+
+useResizeObserver(tagsRef, () => { handleTruncate() })
+
+// Calculate max tags that can be displayed, and display: none the rest
+function calcMaxTags() {
+  if (!tagsRef.value) return 0
+
+  const tags = tagsRef.value.querySelectorAll('.x-tag')
+  const tagsArray = Array.from(tags)
+
+  let totalWidth = 0
+  let tagsCount = 0
+
+  const maxWidth = tagsRef.value.offsetWidth - 30
+
+  for (let i = 0; i < tagsArray.length; i++) {
+    const tag = tagsArray[i] as HTMLElement
+
+    tag.style.display = 'flex'
+
+    totalWidth += tag.offsetWidth
+
+    if (totalWidth < maxWidth) tagsCount++
+    else tag.style.display = 'none'
+  }
+
+  return tagsCount
+}
+
+watch(selected, (val) => {
+  handleTruncate()
+}, { immediate: true, deep: true })
+
 const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
@@ -406,16 +460,103 @@ defineExpose({ focus, blur, reset, validate, setError })
           <div v-else>&nbsp;</div>
         </template>
       </div>
-      <x-popover
-        v-else
-        ref="popoverRef"
-        :disabled="isDisabled"
-      >
-        <div
-          :class="[classes.box]"
+      <template v-else>
+        <x-popover
+          ref="popoverRef"
+          :disabled="isDisabled"
         >
-          <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-            <div class="flex gap-1 flex-wrap">
+          <div
+            :class="[classes.box]"
+          >
+            <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+              <div
+                ref="tagsRef"
+                class="flex gap-1 relative"
+                :class="{
+                  'flex-wrap': !truncate,
+                  'overflow-hidden': truncate,
+                }"
+              >
+                <x-tag
+                  v-for="value in selected"
+                  :key="value"
+                  size="xs"
+                  removable
+                  :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
+                  :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
+                  @remove="(e: Event) => { handleRemove(e, value) }"
+                >{{ getLabel(value) }}</x-tag>
+
+                <div
+                  v-if="showCountTag"
+                  class="cursor-pointer hover:bg-secondary-200 absolute right-0 bg-secondary-100 text-secondary-800 rounded px-1 py-0.5 text-xs"
+                  @click.stop="multipleHiddenRef?.toggle()"
+                >+{{ hiddenTags }}</div>
+              </div>
+            </template>
+            <template v-else-if="!multiple && !isEmpty(selected)">
+              {{ getLabel(selected) }}
+            </template>
+
+            <template v-else>
+              <div
+                v-if="placeholder"
+                class="text-secondary-400 dark:text-secondary-500"
+              >
+                {{ placeholder }}
+              </div>
+              <div v-else>&nbsp;</div>
+            </template>
+          </div>
+
+          <template #content>
+            <x-popover-container
+              :class="classes.content"
+            >
+              <slot name="content-header">
+                <div v-if="filterable" :class="classes.search">
+                  <x-input
+                    ref="filterRef"
+                    v-model="filter"
+                    :placeholder="filterPlaceholder"
+                    skip-form-registry
+                    size="sm"
+                  />
+                </div>
+              </slot>
+              <div v-bind="containerProps" :class="classes.contentBody">
+                <div v-bind="wrapperProps">
+                  <x-menu-item
+                    v-for="item in list"
+                    :key="item.index"
+                    ref="itemsRef"
+                    :item="item.data"
+                    :size="size"
+                    :disabled="item.data.disabled"
+                    :selected="item.index === selectedIndex"
+                    :color="color"
+                    filled
+                    @click="() => !multiple && popoverRef?.hide()"
+                  />
+                </div>
+                <div v-if="list.length === 0" class="p-2 text-center text-secondary-400">
+                  No options
+                </div>
+              </div>
+              <slot name="content-footer"></slot>
+            </x-popover-container>
+          </template>
+        </x-popover>
+        <x-popover
+          v-if="multiple && truncate"
+          ref="multipleHiddenRef"
+          :popper-show-triggers="[]"
+          :popper-hide-triggers="[]"
+          class="inline-block !absolute right-0"
+          placement="auto-start"
+        >
+          <template #content>
+            <x-popover-container class="p-2 flex gap-2 flex-wrap">
               <x-tag
                 v-for="value in selected"
                 :key="value"
@@ -425,61 +566,10 @@ defineExpose({ focus, blur, reset, validate, setError })
                 :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                 @remove="(e: Event) => { handleRemove(e, value) }"
               >{{ getLabel(value) }}</x-tag>
-            </div>
+            </x-popover-container>
           </template>
-          <template v-else-if="!multiple && !isEmpty(selected)">
-            {{ getLabel(selected) }}
-          </template>
-
-          <template v-else>
-            <div
-              v-if="placeholder"
-              class="text-secondary-400 dark:text-secondary-500"
-            >
-              {{ placeholder }}
-            </div>
-            <div v-else>&nbsp;</div>
-          </template>
-        </div>
-
-        <template #content>
-          <x-popover-container
-            :class="classes.content"
-          >
-            <slot name="content-header">
-              <div v-if="filterable" :class="classes.search">
-                <x-input
-                  ref="filterRef"
-                  v-model="filter"
-                  :placeholder="filterPlaceholder"
-                  skip-form-registry
-                  size="sm"
-                />
-              </div>
-            </slot>
-            <div v-bind="containerProps" :class="classes.contentBody">
-              <div v-bind="wrapperProps">
-                <x-menu-item
-                  v-for="item in list"
-                  :key="item.index"
-                  ref="itemsRef"
-                  :item="item.data"
-                  :size="size"
-                  :disabled="item.data.disabled"
-                  :selected="item.index === selectedIndex"
-                  :color="color"
-                  filled
-                  @click="() => !multiple && popoverRef?.hide()"
-                />
-              </div>
-              <div v-if="list.length === 0" class="p-2 text-center text-secondary-400">
-                No options
-              </div>
-            </div>
-            <slot name="content-footer"></slot>
-          </x-popover-container>
-        </template>
-      </x-popover>
+        </x-popover>
+      </template>
 
       <select
         :id="id"

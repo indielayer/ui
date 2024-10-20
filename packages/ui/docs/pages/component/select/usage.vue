@@ -3,10 +3,10 @@ import { ref } from 'vue'
 
 const selected = ref<undefined | string>()
 const selected2 = ref<undefined | string>()
-const selectedMultiple = ref<string[]>(['A', 'B'])
 const options = ref([
-  { value: 'A', label: 'Option A', disabled: true },
+  { value: 'A', label: 'Option A' },
   { value: 'B', label: 'Option B' },
+  { value: 'C', label: 'Option C' },
 ])
 
 // function to generate
@@ -42,14 +42,6 @@ const options2 = ref(genOptions(1000))
       virtual-list
       :virtual-list-item-height="33"
       :options="options2"
-    />
-    <x-select
-      v-model="selectedMultiple"
-      label="Multi select"
-      placeholder="Multiple"
-      :options="options"
-      filterable
-      multiple
     />
   </div>
 </template>

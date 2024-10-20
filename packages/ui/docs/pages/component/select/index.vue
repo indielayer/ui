@@ -2,6 +2,8 @@
 import { XSelect } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import MultipleDemoCode from './multiple.vue?raw'
+import MultipleDemo from './multiple.vue'
 import SizeDemoCode from './size.vue?raw'
 import SizeDemo from './size.vue'
 import StatesDemoCode from './states.vue?raw'
@@ -15,6 +17,11 @@ const demos = [{
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Multiple',
+  description: '',
+  code: MultipleDemoCode,
+  component: MultipleDemo,
 }, {
   name: 'Size',
   description: '',

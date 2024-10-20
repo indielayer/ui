@@ -44,7 +44,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "dev": "vite dev --mode docs",
+    "dev": "vite dev --mode docs --open",
     "build": "pnpm generate && vite build",
     "build:docs": "pnpm build --mode docs",
     "build:prod": "pnpm build && pnpm gen:types",
