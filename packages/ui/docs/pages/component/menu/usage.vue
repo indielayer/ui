@@ -24,6 +24,8 @@ const menu2: MenuArrayItem[] = [{
   target: '_blank',
   icon: 'smile',
   href: 'https://indielayer.com',
+  prefix: '👉',
+  suffix: '👈',
 }, {
   to: 'menu',
   label: 'Menu item 2',

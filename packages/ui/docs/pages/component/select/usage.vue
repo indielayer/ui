@@ -14,7 +14,7 @@ function genOptions(x: number) {
   const options = []
 
   for (let i = 0; i < x; i++) {
-    options.push({ value: i.toString(), label: 'Option ' + i })
+    options.push({ value: i.toString(), label: 'Option ' + i, suffix: i })
   }
 
   return options
@@ -42,6 +42,10 @@ const options2 = ref(genOptions(1000))
       virtual-list
       :virtual-list-item-height="33"
       :options="options2"
-    />
+    >
+      <template #suffix="{ item }">
+        <span class="text-secondary-400 text-xs font-mono w-2">#{{ item.suffix }}</span>
+      </template>
+    </x-select>
   </div>
 </template>

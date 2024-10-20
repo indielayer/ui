@@ -1,7 +1,7 @@
 <script lang="ts">
 const menuItemProps = {
   ...useCommon.props(),
-  ...useColors.props('primary'),
+  ...useColors.props('secondary'),
   item: {
     type: Object as PropType<MenuArrayItem>,
     default: () => {},
@@ -32,6 +32,8 @@ const menuItemProps = {
   selected: Boolean,
   disabled: Boolean,
   minimal: Boolean,
+  prefix: String,
+  suffix: String,
 }
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
@@ -148,20 +150,20 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     :alt="computedProps.label"
     @click="onItemClick"
   >
-    <span v-if="$slots.prefix" class="mr-2 shrink-0">
-      <slot name="prefix"></slot>
+    <span v-if="$slots.prefix || computedProps.prefix" class="mr-2 shrink-0">
+      <slot name="prefix" :item="computedProps">{{ computedProps.prefix }}</slot>
     </span>
     <x-icon v-else-if="computedProps.icon" :size="computedProps.size" :icon="computedProps.icon" class="mr-2"/>
 
     <span v-if="!minimal" class="flex-1 truncate">
-      <slot>{{ computedProps.label }}</slot>
+      <slot :item="computedProps">{{ computedProps.label }}</slot>
     </span>
 
     <span class="ml-1 shrink-0">
       <x-spinner v-if="computedProps.loading" :size="computedProps.size" />
       <template v-else>
-        <span v-if="$slots.suffix">
-          <slot name="suffix"></slot>
+        <span v-if="$slots.suffix || computedProps.suffix">
+          <slot name="suffix" :item="computedProps">{{ computedProps.suffix }}</slot>
         </span>
         <x-icon v-else-if="computedProps.iconRight" :size="computedProps.size" :icon="computedProps.iconRight"/>
       </template>

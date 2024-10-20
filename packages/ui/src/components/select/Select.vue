@@ -31,6 +31,8 @@ const selectProps = {
 export type SelectOption = {
   value: number | string;
   label: string;
+  prefix?: string;
+  suffix?: string;
   disabled?: boolean;
 }
 
@@ -117,6 +119,8 @@ const internalOptions = computed(() => {
         value: option.value,
         label: option.label,
         active: isActive,
+        prefix: option.prefix,
+        suffix: option.suffix,
         disabled: option.disabled,
         iconRight: isActive ? checkIcon : undefined,
         onClick: () => handleOptionClick(option.value),
@@ -537,7 +541,11 @@ defineExpose({ focus, blur, reset, validate, setError })
                     :color="color"
                     filled
                     @click="() => !multiple && popoverRef?.hide()"
-                  />
+                  >
+                    <template #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
+                    <slot name="label" :item="item.data"></slot>
+                    <template #suffix><slot name="suffix" :item="item.data">{{ item.data.suffix }}</slot></template>
+                  </x-menu-item>
                 </div>
                 <div v-if="list.length === 0" class="p-2 text-center text-secondary-400">
                   No options

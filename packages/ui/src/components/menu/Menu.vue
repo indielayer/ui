@@ -43,6 +43,8 @@ export type MenuArrayItem = {
   disabled?: boolean;
   active?: boolean;
   attrs?: Record<string, unknown>;
+  prefix?: string;
+  suffix?: string;
   onClick?: (e: MouseEvent) => void;
 }
 
