@@ -51,6 +51,7 @@ import type {
   TagTheme,
   TextareaTheme,
   ToggleTheme,
+  UploadTheme,
 } from './components'
 
 export type ComponentThemes = {
@@ -105,6 +106,7 @@ export type ComponentThemes = {
   Tag: TagTheme;
   Textarea: TextareaTheme;
   Toggle: ToggleTheme;
+  Upload: UploadTheme;
 }
 
 export type UITheme = {

@@ -57,6 +57,7 @@ declare module 'vue' {
     XToggle: typeof import('@indielayer/ui')['XToggle']
     XToggleTip: typeof import('@indielayer/ui')['XToggleTip']
     XTooltip: typeof import('@indielayer/ui')['XTooltip']
+    XUpload: typeof import('@indielayer/ui')['XUpload']
   }
 }
 

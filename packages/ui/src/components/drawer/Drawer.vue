@@ -87,22 +87,6 @@ function onKeyDown(event: KeyboardEvent) {
 }
 
 const { lengthX, lengthY } = useSwipe(drawerRef, {
-  // passive: false,
-  // onSwipe(e: TouchEvent) {
-  //   if (lengthX.value < 0) {
-  //     const length = Math.abs(lengthX.value)
-  //     left.value = `${length}px`
-  //   } else {
-  //     left.value = '0'
-  //   }
-  // },
-  // onSwipeEnd(e: TouchEvent, direction: UseSwipeDirection) {
-  //   if (lengthX.value < 0 && props.width && (Math.abs(lengthX.value) / props.width) >= 0.5) {
-  //     left.value = '100%'
-  //   } else {
-  //     left.value = '0'
-  //   }
-  // },
   onSwipeEnd(e: TouchEvent, direction: UseSwipeDirection) {
     if (detached.value) {
       if (

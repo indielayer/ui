@@ -24,6 +24,7 @@ const components = [
       { to: '/component/slider', label: 'Slider' },
       { to: '/component/textarea', label: 'Textarea' },
       { to: '/component/toggle', label: 'Toggle' },
+      { to: '/component/upload', label: 'Upload' },
     ],
   },
   {
