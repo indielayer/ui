@@ -196,6 +196,7 @@ function createCalculateRange<T>(type: 'horizontal' | 'vertical', overscan: numb
 
 function createGetDistance<T>(itemSize: UseVirtualListItemSize, source: UseVirtualListResources<T>['source']) {
   return (index: number) => {
+
     if (typeof itemSize === 'number') {
       const size = index * itemSize
 
@@ -210,10 +211,9 @@ function createGetDistance<T>(itemSize: UseVirtualListItemSize, source: UseVirtu
   }
 }
 
-function useWatchForSizes<T>(size: UseVirtualElementSizes, list: MaybeRef<T[]>, containerRef: Ref<HTMLElement | null>, calculateRange: () => void, scrollTo: (index: number) => void) {
+function useWatchForSizes<T>(size: UseVirtualElementSizes, list: MaybeRef<T[]>, containerRef: Ref<HTMLElement | null>, calculateRange: () => void) {
   watch([size.width, size.height, list, containerRef], () => {
     calculateRange()
-    scrollTo(0)
   })
 }
 
@@ -263,14 +263,17 @@ function useVerticalVirtualList<T>(options: UseVirtualListOptions, list: MaybeRe
 
   const scrollTo = createScrollTo('vertical', calculateRange, getDistanceTop, containerRef)
 
-  useWatchForSizes(size, list, containerRef, calculateRange, scrollTo)
+  useWatchForSizes(size, source, containerRef, calculateRange)
 
   const wrapperProps = computed(() => {
+    const total = totalHeight.value + topOffset + bottomOffset
+    const offTop = offsetTop.value > total ? total : offsetTop.value
+
     return {
       style: {
         width: '100%',
-        height: `${totalHeight.value - offsetTop.value + topOffset + bottomOffset}px`,
-        marginTop: `${offsetTop.value}px`,
+        height: `${totalHeight.value - offTop + topOffset + bottomOffset}px`,
+        marginTop: `${offTop}px`,
       },
     }
   })

@@ -3,11 +3,12 @@ import { type TableHeader } from '@indielayer/ui'
 import { computed, ref } from 'vue'
 
 const headers: TableHeader[] = [
-  { text: '#', value: 'id', sortable: true, align: 'center' },
-  { text: 'Title', value: 'title' },
-  { text: 'Description', value: 'description' },
-  { text: 'Published', value: 'published' },
+  { text: '#', value: 'id', sortable: true, align: 'center', width: 50 },
+  { text: 'Title', value: 'title', width: 120, truncate: true },
+  { text: 'Description', value: 'description', width: 240, truncate: true },
+  { text: 'Published', value: 'published', width: 140, truncate: true },
   { text: 'Status', value: 'status' },
+  { value: 'action', align: 'right' },
 ]
 
 const sort = ref([])
@@ -43,11 +44,23 @@ const items = ref(generateItems(1000))
   <x-card>
     <x-table
       v-model:sort="sort"
-      class="!h-80"
       :headers="headers"
       :items="itemsSorted"
+      class="!h-80"
+      fixed
       virtual-list
       :virtual-list-item-height="54"
-    />
+    >
+      <template #item-action="{ item }">
+        <x-button
+          icon="x"
+          light
+          outlined
+          color="error"
+          size="xs"
+          @click="items = items.filter((i) => i.id !== item.id)"
+        />
+      </template>
+    </x-table>
   </x-card>
 </template>
