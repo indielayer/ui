@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.4.0
+
+### Minor Changes
+
+- feat: add upload component ([#100](https://github.com/indielayer/ui/pull/100)) ([`30fdb2b`](https://github.com/indielayer/ui/commit/30fdb2b77c84ecc783fc6788fafcc716b692043e))
+
 ## 1.3.0
 
 ### Minor Changes
