@@ -49,3 +49,4 @@ export { default as TableRow } from '../../components/table/theme/TableRow.carbo
 export { default as Tag } from '../../components/tag/theme/Tag.carbon.theme'
 export { default as Textarea } from '../../components/textarea/theme/Textarea.carbon.theme'
 export { default as Toggle } from '../../components/toggle/theme/Toggle.carbon.theme'
+export { default as Upload } from '../../components/upload/theme/Upload.carbon.theme'

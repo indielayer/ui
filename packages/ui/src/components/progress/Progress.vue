@@ -2,7 +2,7 @@
 const progressProps = {
   ...useColors.props('primary'),
   percentage: {
-    type: Number,
+    type: [Number, String],
     default: 0,
     validator: (value: number) => value >= 0 && value <= 100,
   },
@@ -56,7 +56,7 @@ const { styles, classes, className } = useTheme('Progress', {}, props)
       class="absolute h-full bg-secondary-100 dark:bg-secondary-700 right-0 top-0"
       :class="{ 'duration-150 transition-[width]': animate }"
       :style="{
-        width: `${100 - percentage}%`
+        width: `${100 - Number(percentage)}%`
       }"
     ></div>
   </div>

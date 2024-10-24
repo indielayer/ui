@@ -11,7 +11,7 @@
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
     "@vuepic/vue-datepicker": "^8.0.0",
-    "@vueuse/core": "^10.2.0",
+    "@vueuse/core": "^11.1.0",
     "autoprefixer": "^10.4.0",
     "floating-vue": "^5.2.2",
     "nuxt": "^3.10.1",

@@ -24,15 +24,15 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes, type Ref, unref, nextTick } from 'vue'
-import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { useCommon } from '../../composables/useCommon'
+import { ref, unref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useColors } from '../../composables/useColors'
-import { useInteractive } from '../../composables/useInteractive'
+import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
+import { useInteractive } from '../../composables/useInteractive'
+import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
-import XSpinner from '../spinner/Spinner.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
+import XSpinner from '../spinner/Spinner.vue'
 
 const props = defineProps(checkboxProps)
 

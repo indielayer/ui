@@ -69,7 +69,7 @@ import XSpinner from '../spinner/Spinner.vue'
 import XPopover from '../popover/Popover.vue'
 import XPopoverContainer from '../popover/PopoverContainer.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
-import type { XInput } from '../input'
+import XInput from '../input/Input.vue'
 
 const  props = defineProps(selectProps)
 

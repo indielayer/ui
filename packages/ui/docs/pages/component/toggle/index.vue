@@ -27,7 +27,7 @@ const demos = [{
   component: StatesDemo,
 }]
 const back = 'textarea'
-const next = 'accordion'
+const next = 'upload'
 </script>
 
 <template>

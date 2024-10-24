@@ -1,5 +1,5 @@
 import type { MaybeRef, PropType } from 'vue'
-import { ref, computed, inject, watch, onMounted, onUnmounted } from 'vue'
+import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
 import { injectFormGroupKey, injectFormKey } from './keys'
 
 export interface XFormInputMethods {
