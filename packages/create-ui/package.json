@@ -1,6 +1,6 @@
 {
   "name": "@indielayer/create-ui",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "An easy way to start a Indielayer UI project",
   "type": "module",
   "main": "outfile.cjs",

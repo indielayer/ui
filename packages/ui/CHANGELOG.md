@@ -1,5 +1,23 @@
 # @indielayer/ui
 
+## 1.10.0
+
+### Minor Changes
+
+- feat(select): allow to pass prefix and suffix for menuitem ([`52928a4`](https://github.com/indielayer/ui/commit/52928a4061caaa8c058067763785ae29c2533291))
+- feat: add upload component ([#100](https://github.com/indielayer/ui/pull/100)) ([`30fdb2b`](https://github.com/indielayer/ui/commit/30fdb2b77c84ecc783fc6788fafcc716b692043e))
+- feat(notifications): add pause-on-hover ([`b840ba7`](https://github.com/indielayer/ui/commit/b840ba7fabe277935bfed71191ebf967bce48fa7))
+- feat(select): add truncate on multiple selection ([`b594848`](https://github.com/indielayer/ui/commit/b594848408e2d4f0d63187909ded170f7bb0c969))
+
+### Patch Changes
+
+- style(label): add asterisk on theme for required inputs ([`c17ac2d`](https://github.com/indielayer/ui/commit/c17ac2d96e4bca0f1215b80b3badd73fdec04edc))
+- fix(modal): content width resize on open ([`2e95f8d`](https://github.com/indielayer/ui/commit/2e95f8da039748fb28686e34868e0b6f0c789e12))
+- fix(form): errors type ([`6d95905`](https://github.com/indielayer/ui/commit/6d95905459d2155b2aacb1ff9b11a5288e5b85fb))
+- fix(formgroup): missing blur fn ([`c299e05`](https://github.com/indielayer/ui/commit/c299e0594ed9b3f983572998f6e5efe2cda91202))
+- fix(table): keep position after list updates ([`0fa8fb6`](https://github.com/indielayer/ui/commit/0fa8fb6250e364b8720d50d3de1468187f8833f9))
+- style(select): move truncated counter to theme ([`c178e7e`](https://github.com/indielayer/ui/commit/c178e7e18a57e3439f81c3a343c2e1874d53bc8d))
+
 ## 1.9.3
 
 ### Patch Changes
