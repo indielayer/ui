@@ -1,7 +1,7 @@
 <script lang="ts">
 const tagProps = {
   ...useCommon.props(),
-  ...useColors.props('slate'),
+  ...useColors.props('secondary'),
   tag: {
     type: String,
     default: 'span',

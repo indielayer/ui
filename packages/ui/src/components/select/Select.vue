@@ -1,6 +1,6 @@
 <script lang="ts">
 const selectProps = {
-  ...useColors.props('primary'),
+  ...useColors.props('secondary'),
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
