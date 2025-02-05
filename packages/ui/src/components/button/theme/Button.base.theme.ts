@@ -201,10 +201,13 @@ const theme: ButtonTheme = {
         }))
         if (props.disabled) {
           vars.push(css.variables({
-            bg: color[100],
+            bg: gray[100],
+            border: gray[300],
+            text: gray[400],
             dark: {
-              text: color[700],
-              bg: color[900],
+              text: gray[700],
+              border: gray[700],
+              bg: gray[800],
             },
           }))
         } else {
