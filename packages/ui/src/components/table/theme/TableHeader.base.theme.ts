@@ -3,7 +3,7 @@ import type { TableHeaderTheme } from '../TableHeader.vue'
 const theme: TableHeaderTheme = {
   classes: {
     th: ({ props }) => {
-      const classes = ['relative py-3 font-semibold text-xs px-3']
+      const classes = ['relative p-2.5 font-medium']
 
       if (props.sortable) classes.push('cursor-pointer hover:text-secondary-800 dark:hover:text-secondary-300 transition-colors duration-150 ease-in-out')
 

@@ -9,7 +9,7 @@ const theme: TableHeadTheme = {
 
       return classes
     },
-    row: 'text-sm text-secondary-600 dark:text-secondary-200 border-b',
+    row: 'text-sm text-secondary-700 dark:text-secondary-200 border-b',
   },
 }
 
