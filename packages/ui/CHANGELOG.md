@@ -1,5 +1,13 @@
 # @indielayer/ui
 
+## 1.10.1
+
+### Patch Changes
+
+- style(table): increase table header contrast ([`428a185`](https://github.com/indielayer/ui/commit/428a185e8c9b27d20a9f5f7d64faa2ca246c48aa))
+- style(select): secondary as default color ([`38ea2f3`](https://github.com/indielayer/ui/commit/38ea2f3ee6c84d7a2ef87ee596bdb860b1addb9a))
+- style(button): switch filled disabled contrast ([`88615a9`](https://github.com/indielayer/ui/commit/88615a9fa5463eec11132bed586b8ab576d4f842))
+
 ## 1.10.0
 
 ### Minor Changes
