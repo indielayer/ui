@@ -542,9 +542,9 @@ defineExpose({ focus, blur, reset, validate, setError })
                     filled
                     @click="() => !multiple && popoverRef?.hide()"
                   >
-                    <template #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
+                    <template v-if="$slots.prefix || item.data.prefix" #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
                     <slot name="label" :item="item.data"></slot>
-                    <template #suffix><slot name="suffix" :item="item.data">{{ item.data.suffix }}</slot></template>
+                    <template v-if="$slots.suffix || item.data.suffix" #suffix><slot name="suffix" :item="item.data">{{ item.data.suffix }}</slot></template>
                   </x-menu-item>
                 </div>
                 <div v-if="list.length === 0" class="p-2 text-center text-secondary-400">
