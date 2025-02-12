@@ -469,49 +469,55 @@ defineExpose({ focus, blur, reset, validate, setError })
           ref="popoverRef"
           :disabled="isDisabled"
         >
-          <div
-            :class="[classes.box]"
+          <slot
+            name="input"
+            :popover="popoverRef"
+            :selected="selected"
+            :disabled="isDisabled"
+            :label="getLabel(selected)"
           >
-            <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
-              <div
-                ref="tagsRef"
-                class="flex gap-1 relative"
-                :class="{
-                  'flex-wrap': !truncate,
-                  'overflow-hidden': truncate,
-                }"
-              >
-                <x-tag
-                  v-for="value in selected"
-                  :key="value"
-                  size="xs"
-                  removable
-                  :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
-                  :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
-                  @remove="(e: Event) => { handleRemove(e, value) }"
-                >{{ getLabel(value) }}</x-tag>
-
+            <div :class="[classes.box]">
+              <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
                 <div
-                  v-if="showCountTag"
-                  :class="classes.truncateCounter"
-                  @click.stop="multipleHiddenRef?.toggle()"
-                >+{{ hiddenTags }}</div>
-              </div>
-            </template>
-            <template v-else-if="!multiple && !isEmpty(selected)">
-              {{ getLabel(selected) }}
-            </template>
+                  ref="tagsRef"
+                  class="flex gap-1 relative"
+                  :class="{
+                    'flex-wrap': !truncate,
+                    'overflow-hidden': truncate,
+                  }"
+                >
+                  <x-tag
+                    v-for="value in selected"
+                    :key="value"
+                    size="xs"
+                    removable
+                    :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
+                    :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
+                    @remove="(e: Event) => { handleRemove(e, value) }"
+                  >{{ getLabel(value) }}</x-tag>
 
-            <template v-else>
-              <div
-                v-if="placeholder"
-                class="text-secondary-400 dark:text-secondary-500"
-              >
-                {{ placeholder }}
-              </div>
-              <div v-else>&nbsp;</div>
-            </template>
-          </div>
+                  <div
+                    v-if="showCountTag"
+                    :class="classes.truncateCounter"
+                    @click.stop="multipleHiddenRef?.toggle()"
+                  >+{{ hiddenTags }}</div>
+                </div>
+              </template>
+              <template v-else-if="!multiple && !isEmpty(selected)">
+                {{ getLabel(selected) }}
+              </template>
+
+              <template v-else>
+                <div
+                  v-if="placeholder"
+                  class="text-secondary-400 dark:text-secondary-500"
+                >
+                  {{ placeholder }}
+                </div>
+                <div v-else>&nbsp;</div>
+              </template>
+            </div>
+          </slot>
 
           <template #content>
             <x-popover-container

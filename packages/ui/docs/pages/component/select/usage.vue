@@ -47,5 +47,20 @@ const options2 = ref(genOptions(1000))
         <span class="text-secondary-400 text-xs font-mono w-2">#{{ item.suffix }}</span>
       </template>
     </x-select>
+    <x-select
+      v-model="selected"
+      label="Custom input"
+      :options="options"
+      helper="Helper text"
+      tooltip="Tooltip here"
+    >
+      <template #input="{ popover, label, disabled }">
+        <button
+          class="w-full text-left border rounded-md px-3 py-2"
+          :disabled="disabled"
+          @click="popover?.show()"
+        >{{ label || 'Select an option' }}</button>
+      </template>
+    </x-select>
   </div>
 </template>
