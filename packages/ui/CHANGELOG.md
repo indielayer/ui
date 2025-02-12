@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.10.2
+
+### Patch Changes
+
+- style(select): hide suffix and prefix if empty ([`cf2b5d8`](https://github.com/indielayer/ui/commit/cf2b5d8bb91bc6210eb7ccca94d936a1ddacf977))
+- style(select): add slot for input override ([`ec88d6e`](https://github.com/indielayer/ui/commit/ec88d6e9ad9b0a4166ab81d17b81da3762f2192a))
+
 ## 1.10.1
 
 ### Patch Changes
