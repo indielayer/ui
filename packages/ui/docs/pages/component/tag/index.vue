@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Tag'
-const description = 'Tags are used to display a label.'
+const description = 'Tags are used to display a small amount of information. They can be used to display a category, a status, or a label.'
 const components = [XTag]
 const demos = [{
   name: 'Usage',

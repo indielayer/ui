@@ -535,7 +535,7 @@ defineExpose({ focus, blur, reset, validate, setError })
                 </div>
               </slot>
               <div v-bind="containerProps" :class="classes.contentBody">
-                <div v-bind="wrapperProps">
+                <div v-bind="wrapperProps" class="space-y-0.5">
                   <x-menu-item
                     v-for="item in list"
                     :key="item.index"

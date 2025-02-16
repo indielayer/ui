@@ -9,6 +9,7 @@ const tagProps = {
   rounded: Boolean,
   removable: Boolean,
   outlined: Boolean,
+  filled: Boolean,
   disabled: Boolean,
 }
 
@@ -61,7 +62,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
         classes.wrapper,
         outlined ?
           'border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]' :
-          'border-transparent bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
+          '!border-transparent bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
         rounded ? 'rounded-full' : 'rounded'
       ]"
   >

@@ -5,8 +5,17 @@ const notifications = useNotifications()
 </script>
 
 <template>
-  <div class="space-x-2">
+  <div class="space-x-2 space-y-2">
     <x-tag color="primary">Hello</x-tag>
+    <x-tag color="purple">Hello</x-tag>
+    <x-tag
+      color="green"
+      size="sm"
+      filled
+      rounded
+      outlined
+    >Hello</x-tag>
+    <x-tag color="red">Hello</x-tag>
     <x-tag color="amber">Amber</x-tag>
     <x-tag outlined>I'm a tag</x-tag>
     <x-tag rounded outlined color="pink">I'm a tag</x-tag>
