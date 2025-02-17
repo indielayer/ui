@@ -1,5 +1,11 @@
 # @indielayer/create-ui
 
+## 1.4.1
+
+### Patch Changes
+
+- chore(datepicker): update version and props ([`23300bd`](https://github.com/indielayer/ui/commit/23300bd68e3bd5443f2f8641dac55aa5dce203b9))
+
 ## 1.4.0
 
 ### Minor Changes

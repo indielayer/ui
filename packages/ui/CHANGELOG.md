@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 1.10.2
+
+### Patch Changes
+
+- style(select): hide suffix and prefix if empty ([`cf2b5d8`](https://github.com/indielayer/ui/commit/cf2b5d8bb91bc6210eb7ccca94d936a1ddacf977))
+- chore(datepicker): update version and props ([`23300bd`](https://github.com/indielayer/ui/commit/23300bd68e3bd5443f2f8641dac55aa5dce203b9))
+- style(select): add slot for input override ([`ec88d6e`](https://github.com/indielayer/ui/commit/ec88d6e9ad9b0a4166ab81d17b81da3762f2192a))
+- chore: export useFocusTrap ([`91646b7`](https://github.com/indielayer/ui/commit/91646b768e3ce9b5b3e01d291d27759161b5e3ff))
+- style(tag): adapt to support outlined with filled bg ([`96c78cd`](https://github.com/indielayer/ui/commit/96c78cd796d92abf105eb82d069e78c2ff6522a7))
+
 ## 1.10.1
 
 ### Patch Changes
