@@ -13,7 +13,9 @@ date.value = [startDate, endDate]
     v-model="date"
     label="Date"
     tooltip="Use it to pick a date"
+    text-input
     multi-calendars
+    time-picker-inline
     range
   />
 </template>

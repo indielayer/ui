@@ -11,8 +11,6 @@ const theme: DatepickerTheme = {
     const vars: Array<Record<string, string> | string> = [`
     /*General*/
     --dp-font-family: var(--font-family-sans);
-    --dp-border-radius: 8px; /*Configurable border-radius*/
-    --dp-cell-border-radius: 8px; /*Specific border radius for the calendar cell*/
     --dp-common-transition: all 0.1s ease-in; /*Generic transition applied on buttons and calendar cells*/
 
     /*Sizing*/
@@ -36,7 +34,7 @@ const theme: DatepickerTheme = {
 
     /*Font sizes*/
     --dp-font-size: 0.875rem; /*Default font-size*/
-    --dp-preview-font-size: 0.8rem; /*Font size of the date preview in the action row*/
+    --dp-preview-font-size: 0.875rem; /*Font size of the date preview in the action row*/
     --dp-time-font-size: 0.8rem; /*Font size in the time picker*/
 
     /*Transitions*/
@@ -48,19 +46,19 @@ const theme: DatepickerTheme = {
     vars.push(css.variables({
       bg: '#fff',
       text: secondary[800],
-      disabled: secondary[800],
-      range: secondary[200],
+      disabled: secondary[300],
+      range: primary[100],
       icon: secondary[500],
       primary: primary[500],
       border: secondary[100],
       dark: {
         bg: secondary[800],
         text: secondary[100],
-        disabled: secondary[700],
-        range: secondary[600],
+        disabled: secondary[600],
+        range: primary[900],
         icon: secondary[200],
         primary: primary[500],
-        border: secondary[700],
+        border: secondary[800],
       },
     }))
 

@@ -18,14 +18,11 @@ const vueDatepickerProps = {
   offset: { type: [Number, String] as PropType<number | string>, default: 10 },
   hideNavigation: { type: Array as PropType<VueDatePickerProps['hideNavigation']>, default: () => [] },
   timezone: { type: [String, Object] as PropType<VueDatePickerProps['timezone']>, default: null },
-  emitTimezone: { type: String as PropType<string>, default: null },
   vertical: { type: Boolean as PropType<boolean>, default: false },
   disableMonthYearSelect: { type: Boolean as PropType<boolean>, default: false },
   disableYearSelect: { type: Boolean as PropType<boolean>, default: false },
-  menuClassName: { type: String as PropType<string>, default: null },
   dayClass: { type: Function as PropType<(date: Date) => string>, default: null },
   yearRange: { type: Array as PropType<number[]>, default: () => [1900, 2100] },
-  calendarCellClassName: { type: String as PropType<string>, default: null },
   enableTimePicker: { type: Boolean as PropType<boolean>, default: true },
   autoApply: { type: Boolean as PropType<boolean>, default: false },
   disabledDates: { type: [Array, Function] as PropType<VueDatePickerProps['disabledDates']>, default: () => [] },
@@ -33,7 +30,6 @@ const vueDatepickerProps = {
   startDate: { type: [Date, String] as PropType<string | Date>, default: null },
   startTime: { type: [Object, Array] as PropType<VueDatePickerProps['startTime']>, default: null },
   hideOffsetDates: { type: Boolean as PropType<boolean>, default: false },
-  autoRange: { type: [Number, String] as PropType<number | string>, default: null },
   noToday: { type: Boolean as PropType<boolean>, default: false },
   disabledWeekDays: { type: Array as PropType<string[] | number[]>, default: () => [] },
   allowedDates: { type: Array as PropType<string[] | Date[]>, default: null },
@@ -46,14 +42,10 @@ const vueDatepickerProps = {
   flow: { type: Array as PropType<VueDatePickerProps['flow']>, default: () => [] },
   partialFlow: { type: Boolean as PropType<boolean>, default: false },
   preventMinMaxNavigation: { type: Boolean as PropType<boolean>, default: false },
-  minRange: { type: [Number, String] as PropType<number | string>, default: null },
-  maxRange: { type: [Number, String] as PropType<number | string>, default: null },
-  multiDatesLimit: { type: [Number, String] as PropType<number | string>, default: null },
   reverseYears: { type: Boolean as PropType<boolean>, default: false },
   weekPicker: { type: Boolean as PropType<boolean>, default: false },
   filters: { type: Object as PropType<Partial<VueDatePickerProps['filters']>>, default: () => ({}) },
   arrowNavigation: { type: Boolean as PropType<boolean>, default: false },
-  disableTimeRangeValidation: { type: Boolean as PropType<boolean>, default: false },
   highlight: {
     type: [Function, Object] as PropType<VueDatePickerProps['highlight']>,
     default: null,
@@ -67,7 +59,6 @@ const vueDatepickerProps = {
     type: [String, Function, Object] as PropType<VueDatePickerProps['weekNumbers']>,
     default: null,
   },
-  calendarClassName: { type: String as PropType<string>, default: null },
   monthChangeOnScroll: { type: [Boolean, String] as PropType<boolean | 'inverse'>, default: true },
   dayNames: {
     type: [Function, Array] as PropType<((lang: string, weekStart: number) => string[]) | string[]>,
@@ -84,7 +75,6 @@ const vueDatepickerProps = {
     default: () => '',
   },
   multiDates: { type: Boolean as PropType<boolean>, default: false },
-  partialRange: { type: Boolean as PropType<boolean>, default: true },
   ignoreTimeValidation: { type: Boolean as PropType<boolean>, default: false },
   minDate: { type: [Date, String] as PropType<Date | string>, default: null },
   maxDate: { type: [Date, String] as PropType<Date | string>, default: null },
@@ -93,13 +83,10 @@ const vueDatepickerProps = {
   placeholder: { type: String as PropType<string>, default: '' },
   hideInputIcon: { type: Boolean as PropType<boolean>, default: false },
   clearable: { type: Boolean as PropType<boolean>, default: false },
+  alwaysClearable: { type: Boolean as PropType<boolean>, default: false },
   state: { type: Boolean as PropType<VueDatePickerProps['state']>, default: null },
   required: { type: Boolean as PropType<boolean>, default: false },
   autocomplete: { type: String as PropType<string>, default: 'off' },
-  inputClassName: { type: String as PropType<string>, default: null },
-  fixedStart: { type: Boolean as PropType<boolean>, default: false },
-  fixedEnd: { type: Boolean as PropType<boolean>, default: false },
-  timePicker: { type: Boolean as PropType<boolean>, default: false },
   enableSeconds: { type: Boolean as PropType<boolean>, default: false },
   is24: { type: Boolean as PropType<boolean>, default: true },
   noHoursOverlay: { type: Boolean as PropType<boolean>, default: false },
@@ -126,6 +113,9 @@ const vueDatepickerProps = {
   config: { type: Object as PropType<Partial<VueDatePickerProps['config']>>, default: undefined },
   quarterPicker: { type: Boolean as PropType<boolean>, default: false },
   yearFirst: { type: Boolean as PropType<boolean>, default: false },
+  onInternalModelChange: { type: [Function, Object] as PropType<(...args: any[]) => void>, default: null },
+  enableMinutes: { type: Boolean as PropType<boolean>, default: true },
+  ui: { type: Object as PropType<Partial<VueDatePickerProps['ui']>>, default: () => ({}) },
 }
 
 const datepickerProps = {
@@ -206,6 +196,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
     ]"
   >
     <vue-datepicker
+      :ui="ui"
       :model-value="modelValue"
       :multi-calendars="multiCalendars"
       :model-type="modelType"
@@ -221,14 +212,11 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :offset="offset"
       :hide-navigation="hideNavigation"
       :timezone="timezone"
-      :emit-timezone="emitTimezone"
       :vertical="vertical"
       :disable-month-year-select="disableMonthYearSelect"
       :disable-year-select="disableYearSelect"
-      :menu-class-name="menuClassName"
       :day-class="dayClass"
       :year-range="yearRange"
-      :calendar-cell-class-name="calendarCellClassName"
       :enable-time-picker="enableTimePicker"
       :auto-apply="autoApply"
       :disabled-dates="disabledDates"
@@ -236,7 +224,6 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :start-date="startDate"
       :start-time="startTime"
       :hide-offset-dates="hideOffsetDates"
-      :auto-range="autoRange"
       :no-today="noToday"
       :disabled-week-days="disabledWeekDays"
       :allowed-dates="allowedDates"
@@ -249,14 +236,10 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :flow="flow"
       :partial-flow="partialFlow"
       :prevent-min-max-navigation="preventMinMaxNavigation"
-      :min-range="minRange"
-      :max-range="maxRange"
-      :multi-dates-limit="multiDatesLimit"
       :reverse-years="reverseYears"
       :week-picker="weekPicker"
       :filters="filters"
       :arrow-navigation="arrowNavigation"
-      :disable-time-range-validation="disableTimeRangeValidation"
       :highlight="highlight"
       :teleport="teleport"
       :teleport-center="teleportCenter"
@@ -264,7 +247,6 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :week-num-name="weekNumName"
       :week-start="weekStart"
       :week-numbers="weekNumbers"
-      :calendar-class-name="calendarClassName"
       :month-change-on-scroll="monthChangeOnScroll"
       :day-names="dayNames"
       :month-picker="monthPicker"
@@ -275,7 +257,6 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :cancel-text="cancelText"
       :preview-format="previewFormat"
       :multi-dates="multiDates"
-      :partial-range="partialRange"
       :ignore-time-validation="ignoreTimeValidation"
       :min-date="minDate"
       :max-date="maxDate"
@@ -285,10 +266,6 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :state="state"
       :required="required"
       :autocomplete="autocomplete"
-      :input-class-name="inputClassName"
-      :fixed-start="fixedStart"
-      :fixed-end="fixedEnd"
-      :time-picker="timePicker"
       :enable-seconds="enableSeconds"
       :no-hours-overlay="noHoursOverlay"
       :no-minutes-overlay="noMinutesOverlay"
@@ -320,7 +297,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       <template #dp-input="{ value, onEnter, onTab }">
         <x-input
           ref="inputRef"
-          readonly
+          :readonly="textInput === false || readonly"
           :model-value="value"
           :label="label"
           :size="size"
@@ -328,6 +305,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
           :helper="helper"
           icon-right="calendar"
           :loading="loading"
+          data-1p-ignore
           :name="name"
           :rules="rules"
           :tooltip="tooltip"
@@ -415,5 +393,21 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
   --dp-range-between-dates-background-color: var(--x-datepicker-range, #f3f3f3) !important;
   --dp-range-between-dates-text-color: var(--x-datepicker-text, #212121) !important;
   --dp-range-between-border-color: var(--x-datepicker-range, #f3f3f3) !important;
+}
+
+.dark .dp__cell_inner {
+  border: 0 !important;
+}
+
+.dp__selection_preview {
+  padding: 4px;
+  font-weight: 500;
+  word-spacing: 4px;
+  letter-spacing: 0.5px;
+}
+
+.dp__action_row {
+  border-top: 1px solid #eee;
+  margin-top: 10px;
 }
 </style>
