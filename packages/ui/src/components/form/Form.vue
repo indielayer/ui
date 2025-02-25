@@ -132,6 +132,8 @@ const submit = (e: Event) => {
   emit('submit', isFormValid)
 }
 
+defineExpose({ validate, submit })
+
 const { styles, classes, className } = useTheme('Form', {}, props)
 </script>
 
