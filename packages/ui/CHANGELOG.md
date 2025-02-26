@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.10.3
+
+### Patch Changes
+
+- style(button): adjust icon padding size md and xl ([`5d0f254`](https://github.com/indielayer/ui/commit/5d0f254f4a08f0ebd3670db7a405c9b4eec40139))
+- chore(form): expose validate and submit methods ([`512afe3`](https://github.com/indielayer/ui/commit/512afe35b86bbcfeecd6bf25ec339ca78a2a1c80))
+
 ## 1.10.2
 
 ### Patch Changes
