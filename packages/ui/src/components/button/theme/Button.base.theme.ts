@@ -3,7 +3,7 @@ import type { ButtonTheme } from '../Button.vue'
 const theme: ButtonTheme = {
   classes: {
     wrapper({ props, slots, data }) {
-      const classes = ['relative transition duration-150 focus:outline-none inline-flex items-center justify-center font-medium whitespace-nowrap overflow-hidden align-middle active:!shadow-none border appearance-none']
+      const classes = ['relative transition duration-150 focus:outline-none inline-flex items-center justify-center font-medium whitespace-nowrap overflow-hidden align-middle active:!shadow-none border appearance-none shrink-0']
 
       // radius
       if (!data.isButtonGroup) classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
@@ -15,8 +15,8 @@ const theme: ButtonTheme = {
       if (props.size === 'xs') classes.push(slots.default ? `py-1 text-xs ${props.icon ? 'px-2' : 'px-2'}` : 'leading-none p-1')
       else if (props.size === 'sm') classes.push(slots.default ? `py-1.5 text-sm ${props.icon ? 'px-3' : 'px-3'}` : 'leading-none p-1.5')
       else if (props.size === 'lg') classes.push(slots.default ? `py-3 text-lg ${props.icon ? 'px-4' : 'px-6'}` : 'leading-none p-3')
-      else if (props.size === 'xl') classes.push(slots.default ? `py-4 text-xl ${props.icon ? 'px-6' : 'px-6'}` : 'leading-none p-4')
-      else classes.push(slots.default ? `py-2 ${props.icon ? 'px-4' : 'px-5'}` : 'leading-none p-2')
+      else if (props.size === 'xl') classes.push(slots.default ? `py-4 text-xl ${props.icon ? 'px-6' : 'px-6'}` : 'leading-none p-3.5')
+      else classes.push(slots.default ? `py-2 ${props.icon ? 'px-4' : 'px-5'}` : 'leading-none p-[0.532rem]')
 
       // cursor
       if (props.disabled) classes.push('cursor-not-allowed')
