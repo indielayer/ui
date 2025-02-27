@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.10.4
+
+### Patch Changes
+
+- fix(datepicker): add missing time-picker prop ([#107](https://github.com/indielayer/ui/pull/107)) ([`1648bba`](https://github.com/indielayer/ui/commit/1648bba25514bd72e836bded56956d2bb4ac5dda))
+
 ## 1.10.3
 
 ### Patch Changes
