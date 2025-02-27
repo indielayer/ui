@@ -87,6 +87,7 @@ const vueDatepickerProps = {
   state: { type: Boolean as PropType<VueDatePickerProps['state']>, default: null },
   required: { type: Boolean as PropType<boolean>, default: false },
   autocomplete: { type: String as PropType<string>, default: 'off' },
+  timePicker: { type: Boolean as PropType<boolean>, default: false },
   enableSeconds: { type: Boolean as PropType<boolean>, default: false },
   is24: { type: Boolean as PropType<boolean>, default: true },
   noHoursOverlay: { type: Boolean as PropType<boolean>, default: false },
@@ -266,6 +267,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
       :state="state"
       :required="required"
       :autocomplete="autocomplete"
+      :time-picker="timePicker"
       :enable-seconds="enableSeconds"
       :no-hours-overlay="noHoursOverlay"
       :no-minutes-overlay="noMinutesOverlay"
