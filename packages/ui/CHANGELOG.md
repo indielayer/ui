@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.10.5
+
+### Patch Changes
+
+- style(button): adjust icon padding ([`504bb1d`](https://github.com/indielayer/ui/commit/504bb1da199abce72622960485be8ea1d097427f))
+
 ## 1.10.4
 
 ### Patch Changes
