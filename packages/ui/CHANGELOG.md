@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.10.5
+
+### Patch Changes
+
+- style(table): adjust table cell height ([`ecdf90f`](https://github.com/indielayer/ui/commit/ecdf90f8298ea203d11c0a9374bedb7816b36ac9))
+- style(button): adjust icon padding ([`504bb1d`](https://github.com/indielayer/ui/commit/504bb1da199abce72622960485be8ea1d097427f))
+
 ## 1.10.4
 
 ### Patch Changes
