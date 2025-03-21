@@ -5,7 +5,7 @@ const theme: TableCellTheme = {
     wrapper: ({ props }) => {
       const c = ['px-3']
 
-      c.push(props.dense ? 'py-2' : 'py-4')
+      c.push(props.dense ? 'h-9 py-0.5' : 'h-11 py-1')
 
       if (props.textAlign === 'left') c.push('text-left')
       else if (props.textAlign === 'center') c.push('text-center')

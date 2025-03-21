@@ -1,5 +1,6 @@
 <script lang="ts">
 const tooltipProps = {
+  tooltip: String,
   placement: {
     type: String as PropType<PopoverPlacement>,
     default: 'bottom',
@@ -28,7 +29,7 @@ const props = defineProps(tooltipProps)
     <template #content>
       <div class="dark">
         <x-popover-container class="p-2 text-white text-xs w-max max-w-xs">
-          <slot name="tooltip"></slot>
+          <slot name="tooltip">{{ tooltip }}</slot>
         </x-popover-container>
       </div>
     </template>
