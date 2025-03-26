@@ -38,5 +38,13 @@ const options = ref([
       multiple
       truncate
     />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select - checkbox"
+      placeholder="Multiple"
+      :options="options"
+      multiple-checkbox
+      filterable
+    />
   </div>
 </template>

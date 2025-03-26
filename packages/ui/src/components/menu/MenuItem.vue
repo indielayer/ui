@@ -34,6 +34,7 @@ const menuItemProps = {
   minimal: Boolean,
   prefix: String,
   suffix: String,
+  checkbox: Boolean,
 }
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
@@ -64,7 +65,7 @@ import type { MenuArrayItem } from './Menu.vue'
 
 const props = defineProps(menuItemProps)
 
-const emit = defineEmits(['active', 'click'])
+const emit = defineEmits(['active', 'click', 'checkbox-click'])
 
 const elRef = ref()
 const isActive = ref(false)
@@ -92,7 +93,7 @@ onMounted(() => {
   })
 })
 
-function onItemClick(e: Event) {
+function onItemClick(e: Event, eventName: 'click' | 'checkbox-click') {
   if (computedProps.value.disabled) {
     e.stopPropagation()
     e.preventDefault()
@@ -101,7 +102,7 @@ function onItemClick(e: Event) {
   }
 
   computedProps.value.onClick && computedProps.value.onClick(e)
-  emit('click', e)
+  emit(eventName, e)
 }
 
 function check() {
@@ -140,7 +141,7 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     :class="[
       className,
       $style['menu-item'],
-      [isActive ? $style['menu-item--active'] : ''],
+      [isActive && !checkbox ? $style['menu-item--active'] : ''],
       classes.wrapper,
       {
         'flex items-center': $slots.prefix || $slots.suffix
@@ -148,8 +149,16 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     ]"
     :title="computedProps.label"
     :alt="computedProps.label"
-    @click="onItemClick"
+    @click="onItemClick($event, 'click')"
   >
+    <x-checkbox
+      v-if="checkbox"
+      :model-value="computedProps.active"
+      hide-footer
+      skip-form-registry
+      @click.stop.prevent="onItemClick($event, 'checkbox-click')"
+    />
+
     <span v-if="$slots.prefix || computedProps.prefix" class="mr-2 shrink-0">
       <slot name="prefix" :item="computedProps">{{ computedProps.prefix }}</slot>
     </span>

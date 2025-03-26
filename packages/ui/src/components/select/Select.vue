@@ -7,6 +7,7 @@ const selectProps = {
   placeholder: String,
   options: Array as PropType<SelectOption[]>,
   multiple: Boolean,
+  multipleCheckbox: Boolean,
   truncate: Boolean,
   flat: Boolean,
   native: Boolean,
@@ -15,6 +16,7 @@ const selectProps = {
     type: String,
     default: 'Filter by...',
   },
+  filterInputProps: Object,
   virtualList: Boolean,
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
@@ -26,6 +28,7 @@ const selectProps = {
     type: Number,
     default: 5,
   },
+  placement: String as PropType<PopoverPlacement>,
 }
 
 export type SelectOption = {
@@ -34,6 +37,8 @@ export type SelectOption = {
   prefix?: string;
   suffix?: string;
   disabled?: boolean;
+  keepOpenOnClick?: boolean;
+  onClick?: () => void | undefined;
 }
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
@@ -66,14 +71,16 @@ import XTag from '../tag/Tag.vue'
 import XIcon from '../icon/Icon.vue'
 import XMenuItem from '../menu/MenuItem.vue'
 import XSpinner from '../spinner/Spinner.vue'
-import XPopover from '../popover/Popover.vue'
+import XPopover, { type PopoverPlacement } from '../popover/Popover.vue'
 import XPopoverContainer from '../popover/PopoverContainer.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 import XInput from '../input/Input.vue'
 
-const  props = defineProps(selectProps)
+const props = defineProps(selectProps)
 
-const emit = defineEmits(useInputtable.emits())
+const emit = defineEmits([...useInputtable.emits(), 'close'])
+
+const internalMultiple = computed(() => props.multiple || props.multipleCheckbox)
 
 const elRef = ref<HTMLElement | null>(null)
 const labelRef = ref<InstanceType<typeof XLabel> | null>(null)
@@ -81,14 +88,14 @@ const itemsRef = ref<InstanceType<typeof XMenuItem>[] | null>(null)
 const popoverRef = ref<InstanceType<typeof XPopover> | null>(null)
 const selectedIndex = ref<number | undefined>()
 
-const filter = ref('')
+const filter = defineModel('filter', { default : '' })
 const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
 const isDisabled = computed(() => props.disabled || props.loading || props.readonly)
 
 const selected = computed<any | any[]>({
   get() {
-    if (props.multiple) {
+    if (internalMultiple.value) {
       if (!props.modelValue) return []
       if (Array.isArray(props.modelValue)) return props.modelValue
       else return [props.modelValue]
@@ -109,7 +116,7 @@ const internalOptions = computed(() => {
     .map((option) => {
       let isActive = false
 
-      if (props.multiple && Array.isArray(selected.value)) {
+      if (internalMultiple.value && Array.isArray(selected.value)) {
         isActive = selected.value.includes(option.value)
       } else {
         isActive = option.value === selected.value
@@ -122,7 +129,8 @@ const internalOptions = computed(() => {
         prefix: option.prefix,
         suffix: option.suffix,
         disabled: option.disabled,
-        iconRight: isActive ? checkIcon : undefined,
+        iconRight: !props.multipleCheckbox && isActive ? checkIcon : undefined,
+        keepOpenOnClick: option.keepOpenOnClick,
         onClick: () => handleOptionClick(option.value),
       }
     })
@@ -154,7 +162,7 @@ watch(isOpen, (isOpenValue) => {
   if (isOpenValue) {
     findSelectedIndex()
 
-    if (props.multiple || typeof selectedIndex.value === 'undefined') {
+    if (internalMultiple.value || typeof selectedIndex.value === 'undefined') {
       findSelectableIndex(-1)
     }
 
@@ -168,11 +176,12 @@ watch(isOpen, (isOpenValue) => {
 
   } else {
     if (props.filterable) filter.value = ''
+    emit('close')
   }
 })
 
 function findSelectedIndex() {
-  if (props.multiple) {
+  if (internalMultiple.value) {
     if (Array.isArray(selected.value) && selected.value.length > 0) {
       const index = internalOptions.value.findIndex((option) => option.value === selected.value[0])
 
@@ -229,32 +238,36 @@ function handleOptionClick(value: string | number) {
 
   if (!option || option.disabled) return
 
-  if (props.multiple) {
-    if (Array.isArray(selected.value)) {
-      const index = selected.value.indexOf(value)
+  if (option.onClick) {
+    option.onClick()
+  } else {
+    if (internalMultiple.value) {
+      if (Array.isArray(selected.value)) {
+        const index = selected.value.indexOf(value)
 
-      if (index !== -1) selected.value.splice(index, 1)
-      else {
-        selected.value.push(value)
-        emit('update:modelValue', selected.value)
+        if (index !== -1) selected.value.splice(index, 1)
+        else {
+          selected.value.push(value)
+          emit('update:modelValue', selected.value)
+        }
+      } else {
+        selected.value = [value]
       }
+
+      if (props.filterable)
+        setTimeout(() => {
+          filterRef.value?.focus()
+        })
     } else {
-      selected.value = [value]
+      selected.value = value
     }
 
-    if (props.filterable)
-      setTimeout(() => {
-        filterRef.value?.focus()
+    if (!props.native) {
+      nextTick(() => {
+        validate()
+        labelRef.value?.$el.focus()
       })
-  } else {
-    selected.value = value
-  }
-
-  if (!props.native) {
-    nextTick(() => {
-      validate()
-      labelRef.value?.$el.focus()
-    })
+    }
   }
 }
 
@@ -360,8 +373,11 @@ function handleKeyNavigation(e: KeyboardEvent) {
       return
     }
     if (typeof selectedIndex.value !== 'undefined' && internalOptions.value[selectedIndex.value]) {
-      handleOptionClick(internalOptions.value[selectedIndex.value].value)
-      if (!props.multiple) popoverRef.value?.hide()
+      const selectedItemInternalOptions = internalOptions.value[selectedIndex.value]
+
+      handleOptionClick(selectedItemInternalOptions.value)
+
+      if (!selectedItemInternalOptions.keepOpenOnClick && (!internalMultiple.value || props.multipleCheckbox)) popoverRef.value?.hide()
     }
   } else if (e.code === 'Tab') {
     if (isOpen.value) {
@@ -383,7 +399,7 @@ const showCountTag = ref(false)
 const hiddenTags = ref(0)
 
 const handleTruncate = useThrottleFn(() => {
-  if (props.multiple && props.truncate) {
+  if (internalMultiple.value && props.truncate) {
     nextTick(() => {
       const maxTags = calcMaxTags()
 
@@ -432,7 +448,7 @@ watch(selected, (val) => {
 
 const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
 
-defineExpose({ focus, blur, reset, validate, setError })
+defineExpose({ focus, blur, reset, validate, setError, filterRef })
 </script>
 
 <template>
@@ -453,7 +469,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     v-on="labelListeners"
   >
     <div class="relative">
-      <div v-if="native && !multiple" :class="classes.box" @click="elRef?.click()">
+      <div v-if="native && !internalMultiple" :class="classes.box" @click="elRef?.click()">
         <template v-if="!isEmpty(selected)">
           {{ getLabel(selected) }}
         </template>
@@ -468,6 +484,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         <x-popover
           ref="popoverRef"
           :disabled="isDisabled"
+          :placement="placement"
         >
           <slot
             name="input"
@@ -477,7 +494,7 @@ defineExpose({ focus, blur, reset, validate, setError })
             :label="getLabel(selected)"
           >
             <div :class="[classes.box]">
-              <template v-if="multiple && Array.isArray(selected) && selected.length > 0">
+              <template v-if="internalMultiple && Array.isArray(selected) && selected.length > 0">
                 <div
                   ref="tagsRef"
                   class="flex gap-1 relative"
@@ -503,7 +520,7 @@ defineExpose({ focus, blur, reset, validate, setError })
                   >+{{ hiddenTags }}</div>
                 </div>
               </template>
-              <template v-else-if="!multiple && !isEmpty(selected)">
+              <template v-else-if="!internalMultiple && !isEmpty(selected)">
                 {{ getLabel(selected) }}
               </template>
 
@@ -530,7 +547,9 @@ defineExpose({ focus, blur, reset, validate, setError })
                     v-model="filter"
                     :placeholder="filterPlaceholder"
                     skip-form-registry
+                    data-1p-ignore
                     size="sm"
+                    v-bind="filterInputProps"
                   />
                 </div>
               </slot>
@@ -544,9 +563,10 @@ defineExpose({ focus, blur, reset, validate, setError })
                     :size="size"
                     :disabled="item.data.disabled"
                     :selected="item.index === selectedIndex"
+                    :checkbox="multipleCheckbox && !item.data.keepOpenOnClick"
                     :color="color"
                     filled
-                    @click="() => !multiple && popoverRef?.hide()"
+                    @click="() => !item.data.keepOpenOnClick && (!internalMultiple || multipleCheckbox) && popoverRef?.hide()"
                   >
                     <template v-if="$slots.prefix || item.data.prefix" #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
                     <slot name="label" :item="item.data"></slot>
@@ -562,7 +582,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           </template>
         </x-popover>
         <x-popover
-          v-if="multiple && truncate && showCountTag"
+          v-if="internalMultiple && truncate && showCountTag"
           ref="multipleHiddenRef"
           :popper-show-triggers="[]"
           :popper-hide-triggers="[]"
@@ -590,10 +610,10 @@ defineExpose({ focus, blur, reset, validate, setError })
         ref="elRef"
         v-model="selected"
         tabindex="-1"
-        :class="native && !multiple ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
+        :class="native && !internalMultiple ? 'absolute inset-0 w-full h-full cursor-pointer opacity-0' : 'hidden'"
         :name="name"
         :disabled="disabled || loading"
-        :multiple="multiple"
+        :multiple="internalMultiple"
         :readonly="readonly"
         v-on="inputListeners"
       >
@@ -609,7 +629,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         </template>
       </select>
 
-      <div :class="classes.iconWrapper">
+      <div v-if="!$slots.input" :class="classes.iconWrapper">
         <x-spinner v-if="loading" :size="size" />
         <slot v-else name="icon">
           <x-icon
@@ -617,7 +637,6 @@ defineExpose({ focus, blur, reset, validate, setError })
             :class="[classes.icon]"
           />
         </slot>
-
       </div>
     </div>
 
