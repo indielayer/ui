@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.11.0
+
+### Minor Changes
+
+- feat(select): multi selection with checkboxes ([#110](https://github.com/indielayer/ui/pull/110)) ([`9a59d63`](https://github.com/indielayer/ui/commit/9a59d631767ce24a9ddc2733de7789415eb6f786))
+
 ## 1.10.5
 
 ### Patch Changes
