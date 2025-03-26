@@ -33,7 +33,7 @@ const theme: MenuItemTheme = {
     if (props.filled) {
       if (data.isActive) {
         return css.variables({
-          bg: props.selected ? color[100] : color[200],
+          bg: props.selected ? color[100] : props.checkbox ? 'transparent' : color[200],
           text: color[800],
           hover: {
             bg: props.selected ? color[200] : color[200],
