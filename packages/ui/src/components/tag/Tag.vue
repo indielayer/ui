@@ -67,11 +67,18 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
       ]"
   >
     <span
-      v-if="removable"
-      class="max-w-full truncate pr-4"
+      class="max-w-full"
+      :class="{'pr-4': removable }"
     >
-      <slot></slot>
-      <div class="absolute right-1.5 top-0 h-full flex items-center">
+      <div class="flex items-center gap-2">
+        <slot name="prefix"></slot>
+
+        <div class="truncate">
+          <slot></slot>
+        </div>
+      </div>
+
+      <div v-if="removable" class="absolute right-1.5 top-0 h-full flex items-center">
         <x-icon
           :size="closeIconSize"
           :icon="closeIcon"
@@ -81,7 +88,5 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
         />
       </div>
     </span>
-
-    <slot v-else></slot>
   </component>
 </template>
