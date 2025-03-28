@@ -16,7 +16,6 @@ const selectProps = {
     type: String,
     default: 'Filter by...',
   },
-  filterInputProps: Object,
   virtualList: Boolean,
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
@@ -248,11 +247,12 @@ function handleOptionClick(value: string | number) {
         if (index !== -1) selected.value.splice(index, 1)
         else {
           selected.value.push(value)
-          emit('update:modelValue', selected.value)
         }
       } else {
         selected.value = [value]
       }
+
+      emit('update:modelValue', selected.value)
 
       if (props.filterable)
         setTimeout(() => {
@@ -511,7 +511,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
                     :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                     @remove="(e: Event) => { handleRemove(e, value) }"
-                  >{{ getLabel(value) }}</x-tag>
+                  >
+                    <template #prefix>
+                      <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                    </template>
+                    {{ getLabel(value) }}
+                  </x-tag>
 
                   <div
                     v-if="showCountTag"
@@ -549,7 +554,6 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     skip-form-registry
                     data-1p-ignore
                     size="sm"
-                    v-bind="filterInputProps"
                   />
                 </div>
               </slot>
@@ -599,7 +603,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
                 :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                 @remove="(e: Event) => { handleRemove(e, value) }"
-              >{{ getLabel(value) }}</x-tag>
+              >
+                <template #prefix>
+                  <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                </template>
+                {{ getLabel(value) }}
+              </x-tag>
             </x-popover-container>
           </template>
         </x-popover>
