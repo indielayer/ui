@@ -25,5 +25,31 @@ const notifications = useNotifications()
     <x-tag removable disabled @remove="notifications?.log('remove me')">I'm a md tag</x-tag>
     <x-tag removable size="lg" @remove="notifications?.log('remove me')">I'm a lg tag</x-tag>
     <x-tag removable size="xl" @remove="notifications?.log('remove me')">I'm a xl tag</x-tag>
+
+    <div class="flex flex-col max-w-xs gap-y-1">
+      <div>
+        <x-tag outlined>
+          I'm a veeeeeeeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+
+      <div>
+        <x-tag outlined>
+          <template #prefix>
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          </template>
+          I'm a veeeeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+
+      <div>
+        <x-tag removable outlined>
+          <template #prefix>
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          </template>
+          I'm a veeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+    </div>
   </div>
 </template>

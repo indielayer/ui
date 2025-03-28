@@ -16,7 +16,6 @@ const selectProps = {
     type: String,
     default: 'Filter by...',
   },
-  filterInputProps: Object,
   virtualList: Boolean,
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
@@ -511,7 +510,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
                     :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                     @remove="(e: Event) => { handleRemove(e, value) }"
-                  >{{ getLabel(value) }}</x-tag>
+                  >
+                    <template #prefix>
+                      <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                    </template>
+                    {{ getLabel(value) }}
+                  </x-tag>
 
                   <div
                     v-if="showCountTag"
@@ -549,7 +553,6 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     skip-form-registry
                     data-1p-ignore
                     size="sm"
-                    v-bind="filterInputProps"
                   />
                 </div>
               </slot>
@@ -599,7 +602,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
                 :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
                 @remove="(e: Event) => { handleRemove(e, value) }"
-              >{{ getLabel(value) }}</x-tag>
+              >
+                <template #prefix>
+                  <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                </template>
+                {{ getLabel(value) }}
+              </x-tag>
             </x-popover-container>
           </template>
         </x-popover>
