@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.12.0
+
+### Minor Changes
+
+- feat(tag): add prefix and prefix-tag slots to the tag and select components respectively ([#112](https://github.com/indielayer/ui/pull/112)) ([`7ba09c4`](https://github.com/indielayer/ui/commit/7ba09c4e89e249673d543f73aafe332bcc81376c))
+
 ## 1.11.0
 
 ### Minor Changes
