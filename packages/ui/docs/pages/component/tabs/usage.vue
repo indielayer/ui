@@ -111,6 +111,7 @@ const linkTab = ref(null)
     v-model="tab"
     class="pb-10"
     variant="block"
+    :full-width="false"
     ghost
   >
     <x-tab value="a" label="Tab A">

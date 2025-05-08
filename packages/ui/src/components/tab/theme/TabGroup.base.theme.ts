@@ -8,7 +8,7 @@ const theme: TabGroupTheme = {
       const c = ['']
 
       if (!props.fullWidth) c.push('!w-fit')
-      if (props.variant === 'block') c.push('rounded-md')
+      if (props.variant === 'block') c.push('rounded-lg')
       if (props.variant === 'block' && !props.ghost) c.push('bg-secondary-100 dark:bg-secondary-800 p-1')
 
       return c
