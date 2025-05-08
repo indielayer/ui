@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useNotifications, type UploadFile } from '@indielayer/ui'
+import { useNotifications, XUpload, type UploadFile } from '@indielayer/ui'
 
 const notifications = useNotifications()
 
@@ -72,29 +72,38 @@ function onSubmit(isValid: boolean) {
   notifications?.success('Valid! Submitted.')
 }
 
+const uploadRef = ref<InstanceType<typeof XUpload>>()
+
+function reset() {
+  uploadRef.value?.reset()
+  previewImg.value = undefined
+}
+
 const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
 </script>
 
 <template>
   <div >
     <x-form @submit="onSubmit">
-      <div class="grid md:grid-cols-2 gap-2">
-        <x-upload
-          v-model="imageFiles"
-
-          :action="action"
-          method="POST"
-          :with-credentials="false"
-          :rules="[rules.isValidUpload]"
-
-          placeholder="Upload game title cover image"
-          max-file-size="2000000"
-          label="Cover Image"
-          tooltip="Title cover image should be 16:9 aspect ratio and max 2MB"
-          helper="Title cover image should be 16:9 aspect ratio and max 2MB"
-          @upload="onUploadComplete"
-          @change="onChangeImage"
-        />
+      <div class="grid md:grid-cols-2 gap-2 mb-4">
+        <div>
+          <x-upload
+            ref="uploadRef"
+            v-model="imageFiles"
+            :action="action"
+            method="POST"
+            :with-credentials="false"
+            :rules="[rules.isValidUpload]"
+            placeholder="Upload game title cover image"
+            max-file-size="2000000"
+            label="Cover Image"
+            tooltip="Title cover image should be 16:9 aspect ratio and max 2MB"
+            helper="Title cover image should be 16:9 aspect ratio and max 2MB"
+            @upload="onUploadComplete"
+            @change="onChangeImage"
+          />
+          <x-button size="sm" outlined ghost @click="reset">Reset input</x-button>
+        </div>
         <x-upload
           v-model="jsonFile"
           placeholder="Upload your json file"
@@ -105,6 +114,7 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
           @change="onChangeJSON"
         />
       </div>
+      <x-divider class="my-4"/>
       <x-button type="submit">Submit</x-button>
     </x-form>
     <div v-if="previewImg">

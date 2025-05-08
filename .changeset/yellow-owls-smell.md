@@ -1,5 +1,5 @@
 ---
-"@indielayer/ui": minor
+"@indielayer/ui": patch
 ---
 
-feat(upload): add resetUpload method to clear uploaded files and reset validation state
+fix(upload): correct reset method to clear file input

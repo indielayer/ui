@@ -25,6 +25,10 @@ const uploadProps = {
     default: 'POST',
   },
   withCredentials: Boolean,
+  fileFormDataName: {
+    type: String,
+    default: 'file',
+  },
 }
 
 export type UploadFile = {
@@ -65,7 +69,7 @@ const props = defineProps(uploadProps)
 
 const emit = defineEmits([...useInputtable.emits(), 'upload', 'remove'])
 
-const elRef = ref<HTMLElement | null>(null)
+const elRef = ref<HTMLInputElement | null>(null)
 
 const isUploadMode = computed(() => !!props.action)
 
@@ -202,7 +206,7 @@ async function uploadFileRequest(uploadFile: UploadFile) {
       const xhr = new XMLHttpRequest()
       const formData = new FormData()
 
-      formData.append('file', uploadFile.file)
+      formData.append(props.fileFormDataName, uploadFile.file)
 
       xhr.open(props.method, props.action, true)
 
@@ -219,14 +223,12 @@ async function uploadFileRequest(uploadFile: UploadFile) {
           const percentComplete = (event.loaded / event.total) * 100
 
           uploadFile.progress = percentComplete
-
-          console.log(`Upload progress: ${percentComplete}%`)
         }
       })
 
       // Event listener when upload is complete
       xhr.addEventListener('load', () => {
-        if (xhr.status === 200) {
+        if (xhr.status >= 200 && xhr.status < 300) {
           uploadFile.completed = true
           try {
             uploadFile.response = JSON.parse(xhr.responseText)
@@ -267,14 +269,12 @@ async function upload() {
   validate(modelValue.value)
 }
 
-function resetUpload() {
-  modelValue.value = []
+function reset() {
   errorInternal.value = ''
-  isFirstValidation.value = false
+  isFirstValidation.value = true
+  modelValue.value = []
 
-  if (elRef.value && 'value' in elRef.value) {
-    (elRef.value as HTMLInputElement).value = ''
-  }
+  if (elRef.value) elRef.value.value = ''
 }
 
 const {
@@ -283,14 +283,13 @@ const {
   isInsideForm,
   inputListeners,
   isFirstValidation,
-  reset,
   validate,
   setError,
 } = useInputtable(props, { focus, emit })
 
 const { styles, classes, className } = useTheme('Upload', {}, props)
 
-defineExpose({ focus, blur, reset, validate, setError, resetUpload })
+defineExpose({ focus, blur, reset, validate, setError })
 </script>
 
 <template>
