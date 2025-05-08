@@ -267,6 +267,16 @@ async function upload() {
   validate(modelValue.value)
 }
 
+function resetUpload() {
+  modelValue.value = []
+  errorInternal.value = ''
+  isFirstValidation.value = false
+
+  if (elRef.value && 'value' in elRef.value) {
+    (elRef.value as HTMLInputElement).value = ''
+  }
+}
+
 const {
   errorInternal,
   hideFooterInternal,
@@ -280,7 +290,7 @@ const {
 
 const { styles, classes, className } = useTheme('Upload', {}, props)
 
-defineExpose({ focus, blur, reset, validate, setError })
+defineExpose({ focus, blur, reset, validate, setError, resetUpload })
 </script>
 
 <template>
