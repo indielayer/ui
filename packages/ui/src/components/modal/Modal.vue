@@ -143,6 +143,8 @@ const shouldIgnoreEvent = (event: KeyboardEvent) => {
       return Array.from(window.document.querySelectorAll(target))
         .some((el) => el === event.target || event.composedPath().includes(el))
     }
+
+    return false
   })
 }
 
