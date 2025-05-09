@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.12.1
+
+### Patch Changes
+
+- style(tab): adjust block tab padding ([`615e088`](https://github.com/indielayer/ui/commit/615e088419bcf9dfa5340ac4db09d7c41bbf69d9))
+- fix(upload): correct reset method to clear file input ([#114](https://github.com/indielayer/ui/pull/114)) ([`3237884`](https://github.com/indielayer/ui/commit/323788470d03bf2a9145fd6223e209833b747973))
+
 ## 1.12.0
 
 ### Minor Changes
