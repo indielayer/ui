@@ -5,7 +5,7 @@ const theme: SelectTheme = {
     wrapper: '',
 
     box: ({ props, data }) => {
-      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 pr-8 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm']
+      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm']
 
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
 
@@ -24,6 +24,16 @@ const theme: SelectTheme = {
         classes.push('group-focus:outline-[color:var(--x-select-border)]')
       }
 
+      if (!props.multiple && !props.multipleCheckbox) {
+        classes.push('truncate')
+      }
+
+      if (props.clearable) {
+        classes.push('pr-14')
+      } else {
+        classes.push('pr-8')
+      }
+
       return classes
     },
 
@@ -35,7 +45,7 @@ const theme: SelectTheme = {
 
     contentBody: 'overflow-y-auto max-h-64 min-w-[280px]',
 
-    iconWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2',
+    iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2',
 
     icon: ({ props }) => {
       const classes = ['']

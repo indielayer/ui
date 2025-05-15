@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'])
 
 const options = ref([
-  { value: 'A', label: 'Option lorem ipsum', color: 'bg-red-500' },
+  { value: 'A', label: 'Option lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum', color: 'bg-red-500' },
   { value: 'B', label: 'Option B ipsum', color: 'bg-orange-500' },
   { value: 'C', label: 'Option C lorem ipsum', color: 'bg-amber-500' },
   { value: 'D', label: 'D', color: 'bg-yellow-500' },
@@ -44,6 +44,7 @@ const optionsWithColors = options.value.map((option) => {
       :options="options"
       multiple
       truncate
+      clearable
     />
     <x-select
       v-model="selectedMultiple"
@@ -60,12 +61,13 @@ const optionsWithColors = options.value.map((option) => {
       :options="optionsWithColors"
       multiple-checkbox
       filterable
+      clearable
     >
       <template #prefix="{ item }">
         <div class="w-2 h-2 rounded-full" :class="item.prefix"></div>
       </template>
       <template #tag-prefix="{ item }">
-        <div class="w-2 h-2 rounded-full" :class="item.prefix"></div>
+        <div class="w-2 h-2 shrink-0 rounded-full" :class="item.prefix"></div>
       </template>
     </x-select>
   </div>

@@ -12,6 +12,7 @@ const selectProps = {
   flat: Boolean,
   native: Boolean,
   filterable: Boolean,
+  clearable: Boolean,
   filterPlaceholder: {
     type: String,
     default: 'Filter by...',
@@ -63,7 +64,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
-import { checkIcon, selectIcon } from '../../common/icons'
+import { checkIcon, selectIcon, closeIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
 import XTag from '../tag/Tag.vue'
@@ -85,12 +86,14 @@ const elRef = ref<HTMLElement | null>(null)
 const labelRef = ref<InstanceType<typeof XLabel> | null>(null)
 const itemsRef = ref<InstanceType<typeof XMenuItem>[] | null>(null)
 const popoverRef = ref<InstanceType<typeof XPopover> | null>(null)
+const hiddenTagsCounterRef = ref<HTMLElement | null>(null)
 const selectedIndex = ref<number | undefined>()
 
 const filter = defineModel('filter', { default : '' })
 const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
 const isDisabled = computed(() => props.disabled || props.loading || props.readonly)
+const isClearIconVisible = computed(() => !props.readonly && !props.disabled && props.clearable && !isEmpty(selected.value))
 
 const selected = computed<any | any[]>({
   get() {
@@ -435,8 +438,10 @@ function calcMaxTags() {
 
     totalWidth += tag.offsetWidth
 
-    if (totalWidth < maxWidth) tagsCount++
-    else tag.style.display = 'none'
+    if (i > 0) {
+      if (totalWidth < maxWidth) tagsCount++
+      else tag.style.display = 'none'
+    }
   }
 
   return tagsCount
@@ -504,12 +509,13 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                   }"
                 >
                   <x-tag
-                    v-for="value in selected"
+                    v-for="(value, valueIndex) in selected"
                     :key="value"
                     size="xs"
                     removable
                     :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
                     :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
+                    :style="{ 'max-width': valueIndex === 0 && hiddenTagsCounterRef ? `calc(100% - ${hiddenTagsCounterRef.offsetWidth + 6 + 'px'})` : undefined }"
                     @remove="(e: Event) => { handleRemove(e, value) }"
                   >
                     <template #prefix>
@@ -520,6 +526,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
 
                   <div
                     v-if="showCountTag"
+                    ref="hiddenTagsCounterRef"
                     :class="classes.truncateCounter"
                     @click.stop="multipleHiddenRef?.toggle()"
                   >+{{ hiddenTags }}</div>
@@ -639,16 +646,23 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
       </select>
 
       <div v-if="!$slots.input" :class="classes.iconWrapper">
-        <x-spinner v-if="loading" :size="size" />
-        <slot v-else name="icon">
+        <x-spinner v-if="loading" :size="size" class="pointer-events-none"/>
+        <template v-else>
           <x-icon
-            :icon="selectIcon"
-            :class="[classes.icon]"
+            v-if="isClearIconVisible"
+            :icon="closeIcon"
+            :class="[classes.icon, 'cursor-pointer']"
+            @click="reset"
           />
-        </slot>
+          <slot name="icon">
+            <x-icon
+              :icon="selectIcon"
+              :class="[classes.icon, 'pointer-events-none']"
+            />
+          </slot>
+        </template>
       </div>
     </div>
-
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>
