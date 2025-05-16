@@ -39,6 +39,7 @@ const options2 = ref(genOptions(1000))
       label="Filterable - virtual list"
       placeholder="Placeholder"
       filterable
+      clearable
       virtual-list
       :virtual-list-item-height="33"
       :options="options2"
