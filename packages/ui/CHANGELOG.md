@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.13.1
+
+### Patch Changes
+
+- fix(select): hidden tags count ([#119](https://github.com/indielayer/ui/pull/119)) ([`752b7f6`](https://github.com/indielayer/ui/commit/752b7f606b5602b236b2d074f21b1a79b3bcb048))
+
 ## 1.13.0
 
 ### Minor Changes
