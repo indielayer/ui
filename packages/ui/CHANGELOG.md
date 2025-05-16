@@ -1,5 +1,16 @@
 # @indielayer/ui
 
+## 1.13.0
+
+### Minor Changes
+
+- feat(table): add tooltip for header ([#118](https://github.com/indielayer/ui/pull/118)) ([`6925a35`](https://github.com/indielayer/ui/commit/6925a35b64fedab5be59d0d559bf51eead37ac28))
+- feat(select): add clearable option, improve truncate ([#116](https://github.com/indielayer/ui/pull/116)) ([`03d72cb`](https://github.com/indielayer/ui/commit/03d72cb2ec3485f6d10d75788d1dcd2c68d410a2))
+
+### Patch Changes
+
+- chore(datepicker): update version ([`43fc9c3`](https://github.com/indielayer/ui/commit/43fc9c3f2441bdcf64868329e173abf862b13f33))
+
 ## 1.12.1
 
 ### Patch Changes
