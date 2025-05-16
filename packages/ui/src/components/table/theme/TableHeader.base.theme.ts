@@ -16,7 +16,7 @@ const theme: TableHeaderTheme = {
     },
 
     sortIcon: ({ props }) => {
-      const classes = ['absolute stroke-2 w-3 h-3 top-3.5 right-0.5']
+      const classes = ['stroke-2 w-3 h-3']
 
       return classes
     },

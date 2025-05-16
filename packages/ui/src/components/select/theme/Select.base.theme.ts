@@ -45,15 +45,16 @@ const theme: SelectTheme = {
 
     contentBody: 'overflow-y-auto max-h-64 min-w-[280px]',
 
-    iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2',
+    iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none',
+
+    clearButton: 'absolute top-1/2 -translate-y-1/2 right-5 flex items-center p-2',
 
     icon: ({ props }) => {
-      const classes = ['']
+      const classes = []
 
       if (props.size === 'sm' || props.size === 'xs') classes.push('h-3 w-3')
-      else if (props.size === 'lg') classes.push('h-6 w-6')
-      else if (props.size === 'xl') classes.push('h-7 w-7')
-      else classes.push('h-5 w-5')
+      else if (props.size === 'lg' || props.size === 'xl') classes.push('h-5 w-5')
+      else classes.push('h-4 w-4')
 
       if (props.disabled) classes.push('text-secondary-300 dark:text-secondary-500')
       else classes.push('text-secondary-500 dark:text-secondary-400')
