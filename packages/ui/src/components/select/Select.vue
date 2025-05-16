@@ -43,7 +43,7 @@ export type SelectOption = {
 
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
-type InternalClasses = 'wrapper' | 'box' | 'truncateCounter' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'icon'
+type InternalClasses = 'wrapper' | 'box' | 'truncateCounter' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'clearButton' | 'icon'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
@@ -93,7 +93,7 @@ const filter = defineModel('filter', { default : '' })
 const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
 const isDisabled = computed(() => props.disabled || props.loading || props.readonly)
-const isClearIconVisible = computed(() => !props.readonly && !props.disabled && props.clearable && !isEmpty(selected.value))
+const isClearIconVisible = computed(() => !props.loading && !props.readonly && !props.disabled && props.clearable && !isEmpty(selected.value))
 
 const selected = computed<any | any[]>({
   get() {
@@ -645,22 +645,27 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
         </template>
       </select>
 
+      <button
+        v-if="isClearIconVisible"
+        type="button"
+        aria-label="Clean value"
+        :class="classes.clearButton"
+        @click="reset"
+      >
+        <x-icon
+          :icon="closeIcon"
+          :class="[classes.icon, 'cursor-pointer']"
+        />
+      </button>
+
       <div v-if="!$slots.input" :class="classes.iconWrapper">
-        <x-spinner v-if="loading" :size="size" class="pointer-events-none"/>
-        <template v-else>
+        <x-spinner v-if="loading" :size="size" />
+        <slot v-else name="icon">
           <x-icon
-            v-if="isClearIconVisible"
-            :icon="closeIcon"
-            :class="[classes.icon, 'cursor-pointer']"
-            @click="reset"
+            :icon="selectIcon"
+            :class="classes.icon"
           />
-          <slot name="icon">
-            <x-icon
-              :icon="selectIcon"
-              :class="[classes.icon, 'pointer-events-none']"
-            />
-          </slot>
-        </template>
+        </slot>
       </div>
     </div>
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>

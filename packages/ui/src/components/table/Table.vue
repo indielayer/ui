@@ -55,6 +55,7 @@ export type TableHeader = {
   width?: string | number;
   truncate?: boolean;
   skeletonShape?: SkeletonShape;
+  tooltip?: string;
 }
 
 export type TableProps = ExtractPublicPropTypes<typeof tableProps>
@@ -208,6 +209,7 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             :sort="getSort(header.value, sort)"
             :sortable="header.sortable"
             :width="header.width"
+            :tooltip="header.tooltip"
             @click="header.sortable ? sortHeader(header) : null"
           >
             <slot :name="`header-${header.value}`" :header="header">

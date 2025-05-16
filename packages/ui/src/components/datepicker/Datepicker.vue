@@ -335,7 +335,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.dp__clear_icon {
+.dp--clear-btn {
   top: 2.75rem !important;
 }
 

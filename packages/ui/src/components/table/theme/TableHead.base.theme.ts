@@ -3,7 +3,7 @@ import type { TableHeadTheme } from '../TableHead.vue'
 const theme: TableHeadTheme = {
   classes: {
     thead: ({ props }) => {
-      const classes = ['align-bottom bg-secondary-50 dark:bg-secondary-700']
+      const classes = ['align-bottom bg-secondary-100 dark:bg-secondary-700']
 
       if (props.stickyHeader) classes.push('sticky top-0 z-10')
 
