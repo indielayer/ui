@@ -427,7 +427,7 @@ function calcMaxTags() {
   const tagsArray = Array.from(tags)
 
   let totalWidth = 0
-  let tagsCount = 0
+  let tagsCount = 1
 
   const maxWidth = tagsRef.value.offsetWidth - 30
 
