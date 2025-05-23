@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.13.2
+
+### Patch Changes
+
+- fix(table): align table header ([`7ac3440`](https://github.com/indielayer/ui/commit/7ac34400fed48d7d841b78d816137153c3178cc7))
+
 ## 1.13.1
 
 ### Patch Changes
