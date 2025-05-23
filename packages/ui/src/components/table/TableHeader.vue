@@ -22,7 +22,7 @@ export type TableHeaderSort = typeof validators.sort[number]
 export type TableHeaderAlign = typeof validators.textAlign[number]
 export type TableHeaderProps = ExtractPublicPropTypes<typeof tableHeaderProps>
 
-type InternalClasses = 'th' | 'sortIcon'
+type InternalClasses = 'th' | 'sortIcon' | 'header'
 export interface TableHeaderTheme extends ThemeComponent<TableHeaderProps, InternalClasses> {}
 
 export default { name: 'XTableHeader', validators }
@@ -40,7 +40,7 @@ const { styles, classes, className } = useTheme('TableHeader', {}, props)
 
 <template>
   <th :style="styles" :class="[className, classes.th, 'group/th']">
-    <div class="flex items-center gap-1 select-none">
+    <div :class="classes.header">
       <slot></slot>
 
       <x-toggle-tip v-if="tooltip" :content="tooltip"/>

@@ -7,10 +7,16 @@ const theme: TableHeaderTheme = {
 
       if (props.sortable) classes.push('cursor-pointer hover:text-secondary-800 dark:hover:text-secondary-300 transition-colors duration-150 ease-in-out')
 
-      if (props.textAlign === 'left') classes.push('text-left')
-      if (props.textAlign === 'right') classes.push('text-right')
-      if (props.textAlign === 'center') classes.push('text-center')
-      if (props.textAlign === 'justify') classes.push('text-justify')
+      return classes
+    },
+
+    header: ({ props }) => {
+      const classes = ['flex items-center gap-1 select-none']
+
+      if (props.textAlign === 'left') classes.push('justify-start')
+      if (props.textAlign === 'right') classes.push('justify-end')
+      if (props.textAlign === 'center') classes.push('justify-center')
+      if (props.textAlign === 'justify') classes.push('justify-center')
 
       return classes
     },

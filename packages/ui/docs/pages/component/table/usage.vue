@@ -8,7 +8,7 @@ const headers: TableHeader[] = [
   { text: '#', value: 'id', sortable: true, align: 'center' },
   { text: 'Title', value: 'title' },
   { text: 'Description', value: 'description', truncate: true, width: 400 },
-  { text: 'Published', value: 'published', sortable: true, tooltip: 'Published date' },
+  { text: 'Published', value: 'published', sortable: true, tooltip: 'Published date', align: 'center' },
   { text: 'Status', value: 'status' },
 ]
 
