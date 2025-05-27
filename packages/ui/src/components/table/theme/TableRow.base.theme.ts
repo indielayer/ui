@@ -5,8 +5,8 @@ const theme: TableRowTheme = {
     row: ({ props }) => {
       const classes = []
 
-      if (props.selected) {
-        classes.push('shadow-[inset_2px_0] shadow-primary-500')
+      if (props.selected && props.singleSelect) {
+        classes.push('shadow-[inset_2px_0] shadow-primary-500 !bg-secondary-50 dark:!bg-secondary-600')
       }
 
       if (props.striped) {

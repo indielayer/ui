@@ -44,6 +44,12 @@ const tableProps = {
     default: 5,
   },
   keyProp: String,
+  selectable: Boolean,
+  singleSelect: Boolean,
+  autoClearSelected: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export type TableHeader = {
@@ -92,8 +98,7 @@ const props = defineProps({
   },
 })
 
-const selected = defineModel<number | string>('selected')
-const hasSelected = computed(() => typeof selected.value !== 'undefined')
+const selected = defineModel<(number | string) | (number | string)[]>('selected')
 
 type internalT = T & {
   __expanded?: boolean;
@@ -121,10 +126,6 @@ const { list, containerProps, wrapperProps } = useVirtualList(
 )
 
 const internalItems = ref<internalT[]>([])
-
-watch(items, (newValue) => {
-  if (props.expandable) internalItems.value = clone(newValue as any) as internalT[]
-}, { immediate: true })
 
 const emit = defineEmits(['update:sort', 'click-row'])
 
@@ -179,6 +180,81 @@ function getValue(item: any, path: string | string[] | undefined) {
   return result ?? ''
 }
 
+const allKeys = computed<(number | string)[]>(() => {
+  if (!props.selectable) return []
+
+  return items.value.map((item, index) => props.keyProp ? (item as Record<string, unknown>)[props.keyProp] : index) as (number | string)[]
+})
+
+const allRowsSelected = computed(() => {
+  if (!props.selectable || props.singleSelect) return false
+
+  return Array.isArray(selected.value) && selected.value.length > 0 && allKeys.value.length > 0 && selected.value.length === allKeys.value.length
+})
+
+const someRowsSelected = computed(() => {
+  if (!props.selectable || props.singleSelect) return false
+
+  return Array.isArray(selected.value) && selected.value.length > 0 && allKeys.value.length > 0 && selected.value.length !== allKeys.value.length
+})
+
+function isRowSelected(rowKey: any) {
+  if (!props.selectable) return false
+  if (props.singleSelect) {
+    return selected.value === rowKey
+  } else {
+    return Array.isArray(selected.value) && selected.value.includes(rowKey)
+  }
+}
+
+function toggleRowSelection(rowKey: any) {
+  if (!props.selectable) return
+  if (props.singleSelect) {
+    selected.value = selected.value === rowKey ? undefined : rowKey
+  } else {
+    if (!Array.isArray(selected.value)) selected.value = []
+    if (selected.value.includes(rowKey)) {
+      selected.value = selected.value.filter((k: any) => k !== rowKey)
+    } else {
+      selected.value = [...selected.value, rowKey]
+    }
+  }
+}
+
+function toggleSelectAll() {
+  if (!props.selectable || props.singleSelect) return
+
+  if (allRowsSelected.value || someRowsSelected.value) {
+    selected.value = []
+  } else {
+    selected.value = allKeys.value
+  }
+}
+
+function onTableRowClick(item: any, index: number) {
+  if (props.selectable && props.singleSelect) {
+    toggleRowSelection(props.keyProp ? (item as Record<string, unknown>)[props.keyProp] : index)
+  }
+
+  emit('click-row', item, index)
+}
+
+watch(items, (newValue) => {
+  if (props.expandable) internalItems.value = clone(newValue as any) as internalT[]
+
+  if (props.selectable && props.autoClearSelected) {
+    if (props.singleSelect) {
+      if (!allKeys.value.includes(selected.value as any)) {
+        selected.value = undefined
+      }
+    } else {
+      if (Array.isArray(selected.value)) {
+        selected.value = selected.value.filter((k: any) => allKeys.value.includes(k))
+      }
+    }
+  }
+}, { immediate: true })
+
 const { styles, classes, className } = useTheme('Table', {}, props)
 </script>
 
@@ -192,6 +268,7 @@ const { styles, classes, className } = useTheme('Table', {}, props)
 
     <div
       v-bind="wrapperProps"
+      class="relative"
       :class="{
         '!h-auto': props.loading
       }"
@@ -201,6 +278,16 @@ const { styles, classes, className } = useTheme('Table', {}, props)
         :class="classes.table"
       >
         <x-table-head :sticky-header="stickyHeader">
+          <x-table-header v-if="props.selectable && !props.singleSelect" width="48" class="!px-3 !py-2.5">
+            <x-checkbox
+              :model-value="allRowsSelected || someRowsSelected"
+              :indeterminate="someRowsSelected"
+              hide-footer
+              aria-label="Select all rows"
+              skip-form-registry
+              @click.prevent="toggleSelectAll"
+            />
+          </x-table-header>
           <x-table-header v-if="expandable" width="48" class="!p-0"/>
           <x-table-header
             v-for="(header, index) in headers"
@@ -259,13 +346,23 @@ const { styles, classes, className } = useTheme('Table', {}, props)
               </td>
             </tr>
           </template>
-          <template v-for="(item, index) in list" v-else :key="keyProp ?? index">
+          <template v-for="(item, index) in list" v-else :key="keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index">
             <x-table-row
               :pointer="pointer"
               :striped="striped"
-              :selected="hasSelected ? selected === (keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index) : undefined"
-              @click="$emit('click-row', item.data, item.index)"
+              :selected="isRowSelected(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+              :single-select="singleSelect"
+              @click="onTableRowClick(item.data, item.index)"
             >
+              <x-table-cell v-if="props.selectable && !singleSelect" width="48">
+                <x-checkbox
+                  :model-value="isRowSelected(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+                  hide-footer
+                  :aria-label="`Select row ${index + 1}`"
+                  skip-form-registry
+                  @click.prevent="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+                />
+              </x-table-cell>
               <x-table-cell v-if="expandable" width="48" class="!p-1">
                 <button
                   type="button"
@@ -311,13 +408,13 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             </tr>
           </template>
         </x-table-body>
-        <div
-          v-if="loading"
-          :class="classes.loadingWrapper"
-        >
-          <x-spinner size="lg"/>
-        </div>
       </table>
+      <div
+        v-if="loading"
+        :class="classes.loadingWrapper"
+      >
+        <x-spinner size="lg"/>
+      </div>
     </div>
   </div>
 </template>

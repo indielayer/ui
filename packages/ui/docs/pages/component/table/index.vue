@@ -6,6 +6,8 @@ import VirtualDemoCode from './virtual.vue?raw'
 import VirtualDemo from './virtual.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
+import SelectableDemoCode from './selectable.vue?raw'
+import SelectableDemo from './selectable.vue'
 
 const title = 'Table'
 const description = 'Tables are used to display data in a tabular format.'
@@ -15,6 +17,11 @@ const demos = [{
   description: '',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Selectable',
+  description: '',
+  code: SelectableDemoCode,
+  component: SelectableDemo,
 }, {
   name: 'Virtual List',
   description: '',

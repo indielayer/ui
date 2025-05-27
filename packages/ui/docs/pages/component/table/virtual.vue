@@ -38,18 +38,21 @@ function generateItems(x: number) {
 }
 
 const items = ref(generateItems(1000))
+const selected = ref<number[]>([])
 </script>
 
 <template>
   <x-card>
     <x-table
       v-model:sort="sort"
+      v-model:selected="selected"
       :headers="headers"
       :items="itemsSorted"
       class="!h-80"
       fixed
       virtual-list
       :virtual-list-item-height="54"
+      selectable
     >
       <template #item-action="{ item }">
         <x-button

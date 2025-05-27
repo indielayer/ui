@@ -51,7 +51,7 @@ const { styles, classes, className } = useTheme('TableHeader', {}, props)
         :class="[
           classes.sortIcon,
           [sort && [1, -1].includes(sort) ? '' : 'invisible group-hover/th:visible'],
-          [sort !== -1 && sort !== 1 ? 'text-secondary-400' : 'text-primary-700']
+          [sort !== -1 && sort !== 1 ? 'text-secondary-400 dark:text-secondary-500' : 'text-primary-700 dark:text-primary-400']
         ]"
         width="24"
         height="24"

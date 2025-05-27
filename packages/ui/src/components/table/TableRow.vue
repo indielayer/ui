@@ -7,6 +7,7 @@ const tableRowProps = {
   pointer: Boolean,
   striped: Boolean,
   selected: Boolean,
+  singleSelect: Boolean,
   verticalAlign: {
     type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
     default: 'top',
