@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Upload'
-const description = 'The upload component is used to upload files.'
+const description = 'Upload is a component that allows you to upload files.'
 const components = [XUpload]
 const demos = [{
   name: 'Usage',

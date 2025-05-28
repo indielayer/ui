@@ -8,7 +8,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Toggle'
-const description = 'Toggles are used to switch between two states.'
+const description = 'Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.'
 const components = [XToggle]
 const demos = [{
   name: 'Usage',

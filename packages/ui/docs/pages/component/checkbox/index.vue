@@ -10,7 +10,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Checkbox'
-const description = 'Checkboxes allow the user to select one or more items from a set. Checkboxes can be used to turn an option on or off.'
+const description = 'Checkboxes enable users to select one or multiple options from a list. They are ideal for toggling settings or making selections where more than one choice is allowed. Each checkbox can be checked or unchecked independently.'
 const components = [XCheckbox]
 const demos = [{
   name: 'Usage',

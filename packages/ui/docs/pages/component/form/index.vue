@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Form'
-const description = 'Forms are used to collect user input.'
+const description = 'Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.'
 const components = [XForm]
 const demos = [{
   name: 'Usage',

@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Spacer'
-const description = 'Spacer is used to add space between elements inside a display flex wrapper.'
+const description = 'Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.'
 const components = [XSpacer]
 const demos = [{
   name: 'Usage',

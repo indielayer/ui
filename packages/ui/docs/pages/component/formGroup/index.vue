@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'FormGroup'
-const description = 'A form group is a wrapper for form elements.'
+const description = 'Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.'
 const components = [XFormGroup]
 const demos = [{
   name: 'Usage',

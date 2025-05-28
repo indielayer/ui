@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Drawer'
-const description = 'Drawers are used to display content in a side panel.'
+const description = 'Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.'
 const components = [XDrawer]
 const demos = [{
   name: 'Usage',

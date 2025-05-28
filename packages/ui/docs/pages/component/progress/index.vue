@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Progress'
-const description = 'Progress is used to show the progress of an operation.'
+const description = 'Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.'
 const components = [XProgress]
 const demos = [{
   name: 'Usage',

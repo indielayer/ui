@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Icon'
-const description = 'Icons are used to represent an action or an object.'
+const description = 'Icons visually represent actions, objects, or concepts, enhancing usability and recognition in interfaces. They can be used alone or alongside text for buttons, menus, and indicators.'
 const components = [XIcon]
 const demos = [{
   name: 'Usage',

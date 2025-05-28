@@ -14,7 +14,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Button'
-const description = 'Used to trigger an action, such as submitting a form, opening a menu, or performing a command.'
+const description = 'Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.'
 const components = [XButton, XButtonGroup]
 const demos = [{
   name: 'Usage',

@@ -6,7 +6,7 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Spinner'
-const description = 'Spinners are used to indicate that an operation is in progress.'
+const description = 'Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.'
 const components = [XSpinner]
 const demos = [{
   name: 'Usage',

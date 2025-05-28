@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Skeleton'
-const description = 'Skeletons are used to display a loading state.'
+const description = 'Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.'
 const components = [XSkeleton]
 const demos = [{
   name: 'Usage',

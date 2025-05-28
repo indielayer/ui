@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Pagination'
-const description = 'Pagination is used to navigate through a list of items.'
+const description = 'Pagination divides large sets of content into manageable pages, allowing users to navigate through items efficiently. It is commonly used in tables, lists, and search results to improve usability and performance.'
 const components = [XPagination]
 const demos = [{
   name: 'Usage',

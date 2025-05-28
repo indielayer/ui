@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Popover'
-const description = 'Popover is used to display content in a small overlay.'
+const description = 'Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.'
 const components = [XPopover, XPopoverContainer]
 const demos = [{
   name: 'Usage',

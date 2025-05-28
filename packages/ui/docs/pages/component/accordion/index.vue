@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Accordion'
-const description = 'Accordion'
+const description = 'Accordion is a component that allows you to collapse and expand content.'
 const components = [XAccordion, XAccordionItem]
 const demos = [{
   name: 'Usage',

@@ -4,7 +4,7 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Container'
-const description = 'Containers are used to wrap content in an organized manner.'
+const description = 'Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.'
 const components = [XContainer]
 const demos = [{
   name: 'Usage',
