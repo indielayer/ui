@@ -11,7 +11,7 @@ const theme: RadioTheme = {
     },
 
     circle: ({ props }) => {
-      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline']
+      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus-visible:outline-1 group-focus-visible:outline']
 
       if (props.size === 'lg') classes.push('h-5 w-5')
       else if (props.size === 'xl') classes.push('h-6 w-6')
