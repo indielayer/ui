@@ -1,83 +1,114 @@
-import type { ComponentPublicInstance } from 'vue'
-import { onUnmounted, type MaybeRef, unref, nextTick } from 'vue'
+import { onUnmounted, unref, nextTick, watch, ref, type Ref, type ComponentPublicInstance } from 'vue'
 
 const focusableQuery = 'button:not([tabindex="-1"]), [href], input, select, textarea, li, a, [tabindex]:not([tabindex="-1"])'
 
 export function useFocusTrap() {
-  let focusable: HTMLElement[] = []
+  const focusable = ref<HTMLElement[]>([])
   let observer: MutationObserver | null = null
 
   let firstFocusableEl: HTMLElement | null = null
   let lastFocusableEl: HTMLElement | null = null
+  let prevActiveElement: HTMLElement | null = null
+  let currentTarget: HTMLElement | ComponentPublicInstance | null = null
 
-  async function initFocusTrap(targetRef: MaybeRef<HTMLElement | ComponentPublicInstance | null>) {
-    targetRef = unref(targetRef)
+  function getEl(target: HTMLElement | ComponentPublicInstance | null): HTMLElement | null {
+    if (!target) return null
 
-    if (!targetRef) return
-
-    await nextTick()
-
-    getFocusableElements(targetRef)
-
-    if (firstFocusableEl) firstFocusableEl.focus()
-
-    document.addEventListener('keydown', handleKeydown)
-    observer = new MutationObserver(() => getFocusableElements(targetRef))
-
-    if ((targetRef as ComponentPublicInstance).$el) observer.observe((targetRef as ComponentPublicInstance).$el as Node, { childList: true, subtree: true })
-    else observer.observe(targetRef as Node, { childList: true, subtree: true })
+    return (target as ComponentPublicInstance).$el
+      ? (target as ComponentPublicInstance).$el as HTMLElement
+      : target as HTMLElement
   }
 
-  function getFocusableElements(targetRef: MaybeRef<HTMLElement | ComponentPublicInstance | null>) {
-    if (targetRef === null) return
+  function getFocusableElements(target: HTMLElement | ComponentPublicInstance | null) {
+    const el = getEl(target)
 
-    let elements
+    if (!el) return
+    const elements = el.querySelectorAll(focusableQuery)
 
-    if ((targetRef as ComponentPublicInstance).$el) elements = (targetRef as ComponentPublicInstance)?.$el.querySelectorAll(focusableQuery)
-    else (targetRef as HTMLElement).querySelectorAll(focusableQuery)
-
-    focusable = Array.from(elements || []) as HTMLElement[]
-    firstFocusableEl = focusable[0] || null
-    lastFocusableEl = focusable[focusable.length - 1] || null
+    focusable.value = Array.from(elements) as HTMLElement[]
+    firstFocusableEl = focusable.value[0] || null
+    lastFocusableEl = focusable.value[focusable.value.length - 1] || null
   }
 
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      const isShiftPressed = event.shiftKey
-      const currentEl = document.activeElement as HTMLElement | null
+    if (event.key !== 'Tab' || focusable.value.length === 0) return
 
-      if (!currentEl) {
-        event.preventDefault()
-        focusable[0]?.focus()
+    const isShiftPressed = event.shiftKey
+    const currentEl = document.activeElement as HTMLElement | null
 
-        return
-      }
+    const firstEl = firstFocusableEl
+    const lastEl = lastFocusableEl
 
-      const firstEl = focusable[0]
-      const lastEl = focusable[focusable.length - 1]
+    if (!currentEl) {
+      event.preventDefault()
+      firstEl?.focus()
 
-      if (!isShiftPressed && currentEl === lastEl) {
-        event.preventDefault()
-        firstEl?.focus()
-      } else if (isShiftPressed && currentEl === firstEl) {
-        event.preventDefault()
-        lastEl?.focus()
-      }
+      return
+    }
 
+    if (!isShiftPressed && currentEl === lastEl) {
+      event.preventDefault()
+      firstEl?.focus()
+    } else if (isShiftPressed && currentEl === firstEl) {
+      event.preventDefault()
+      lastEl?.focus()
     }
   }
 
-  const clearFocusTrap = () => {
+  async function initFocusTrap(
+    targetRef: Ref<HTMLElement | ComponentPublicInstance | null> | HTMLElement | ComponentPublicInstance | null,
+    options?: { initialFocusIndex?: number; returnFocusOnClear?: boolean; },
+  ) {
+    if (typeof window === 'undefined') return
+
+    // Clean up previous trap if any
+    clearFocusTrap()
+
+    prevActiveElement = document.activeElement as HTMLElement
+
+    currentTarget = unref(targetRef)
+    if (!currentTarget) return
+
+    await nextTick()
+    getFocusableElements(currentTarget)
+
+    // Focus initial element
+    const idx = options?.initialFocusIndex ?? 0
+
+    focusable.value[idx]?.focus()
+
+    document.addEventListener('keydown', handleKeydown)
+    observer = new MutationObserver(() => getFocusableElements(currentTarget))
+    const el = getEl(currentTarget)
+
+    if (el) observer.observe(el, { childList: true, subtree: true })
+
+    // If targetRef is a Ref, watch for changes
+    if (typeof targetRef === 'object' && targetRef !== null && 'value' in targetRef) {
+      watch(targetRef, (newVal) => {
+        clearFocusTrap()
+        if (newVal !== null) initFocusTrap(targetRef, options)
+      })
+    }
+  }
+
+  function clearFocusTrap(options?: { returnFocus?: boolean; }) {
     document.removeEventListener('keydown', handleKeydown)
     observer?.disconnect()
+    observer = null
+    if (options?.returnFocus && prevActiveElement) {
+      prevActiveElement.focus()
+    }
+    currentTarget = null
   }
 
   onUnmounted(() => {
-    clearFocusTrap()
+    clearFocusTrap({ returnFocus: true })
   })
 
   return {
     initFocusTrap,
     clearFocusTrap,
+    focusable, // expose for advanced use
   }
 }
