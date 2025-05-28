@@ -216,20 +216,35 @@ function findSelectableIndex(start: number | undefined, direction = 'down') {
     start = direction === 'down' ? -1 : 1
   }
 
+  const totalOptions = internalOptions.value.length
+  let checked = 0
+
   if (direction === 'down') {
     let next = start + 1
 
-    if (next > internalOptions.value.length - 1) next = 0
+    if (next > totalOptions - 1) next = 0
     while (internalOptions.value[next].disabled) {
-      if (++next > internalOptions.value.length - 1) next = 0
+      if (++next > totalOptions - 1) next = 0
+      if (++checked >= totalOptions) {
+        // All options are disabled, break to avoid infinite loop
+        selectedIndex.value = undefined
+
+        return
+      }
     }
     selectedIndex.value = next
   } else {
     let next = start - 1
 
-    if (next < 0) next = internalOptions.value.length - 1
+    if (next < 0) next = totalOptions - 1
     while (internalOptions.value[next].disabled) {
-      if (--next < 0) next = internalOptions.value.length - 1
+      if (--next < 0) next = totalOptions - 1
+      if (++checked >= totalOptions) {
+        // All options are disabled, break to avoid infinite loop
+        selectedIndex.value = undefined
+
+        return
+      }
     }
     selectedIndex.value = next
   }
@@ -286,7 +301,7 @@ function isEmpty(value: string | number | []) {
 function handleRemove(e: Event, value: string) {
   e.stopPropagation()
 
-  if (isDisabled.value) return
+  if (isDisabled.value || !Array.isArray(selected.value)) return
 
   // find value in selected and remove it
   const index = selected.value.indexOf(value)
