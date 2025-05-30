@@ -60,6 +60,7 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XIcon from '../../components/icon/Icon.vue'
 import XSpinner from '../../components/spinner/Spinner.vue'
+import XCheckbox from '../../components/checkbox/Checkbox.vue'
 
 import type { MenuArrayItem } from './Menu.vue'
 

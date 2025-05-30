@@ -87,6 +87,7 @@ import XSkeleton from '../skeleton/Skeleton.vue'
 import type { SkeletonShape } from '../skeleton/Skeleton.vue'
 
 import XIcon from '../icon/Icon.vue'
+import XCheckbox from '../checkbox/Checkbox.vue'
 
 import { chevronDownIcon } from '../../common/icons'
 
@@ -278,14 +279,14 @@ const { styles, classes, className } = useTheme('Table', {}, props)
         :class="classes.table"
       >
         <x-table-head :sticky-header="stickyHeader">
-          <x-table-header v-if="props.selectable && !props.singleSelect" width="48" class="!px-3 !py-2.5">
+          <x-table-header v-if="props.selectable && !props.singleSelect" width="40" class="!pl-3.5 !pr-0.5 !py-2.5 cursor-pointer" @click="toggleSelectAll">
             <x-checkbox
               :model-value="allRowsSelected || someRowsSelected"
               :indeterminate="someRowsSelected"
               hide-footer
               aria-label="Select all rows"
               skip-form-registry
-              @click.prevent="toggleSelectAll"
+              @click.prevent.stop="toggleSelectAll"
             />
           </x-table-header>
           <x-table-header v-if="expandable" width="48" class="!p-0"/>
@@ -354,13 +355,13 @@ const { styles, classes, className } = useTheme('Table', {}, props)
               :single-select="singleSelect"
               @click="onTableRowClick(item.data, item.index)"
             >
-              <x-table-cell v-if="props.selectable && !singleSelect" width="48">
+              <x-table-cell v-if="props.selectable && !singleSelect" width="40" class="!pl-3.5 !pr-0.5 cursor-pointer" @click.stop="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)">
                 <x-checkbox
                   :model-value="isRowSelected(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
                   hide-footer
                   :aria-label="`Select row ${index + 1}`"
                   skip-form-registry
-                  @click.prevent="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+                  @click.prevent.stop="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
                 />
               </x-table-cell>
               <x-table-cell v-if="expandable" width="48" class="!p-1">

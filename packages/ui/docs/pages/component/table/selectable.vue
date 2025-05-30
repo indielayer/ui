@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { type TableHeader } from '@indielayer/ui'
 
 const headers: TableHeader[] = [
-  { text: '#', value: 'id', align: 'center' },
+  { text: '#', value: 'id' },
   { text: 'Title', value: 'title' },
   { text: 'Description', value: 'description', truncate: true, width: 400 },
   { text: 'Published', value: 'published', align: 'center' },
@@ -50,6 +50,7 @@ const singleSelected = ref<number>(2)
         selectable
         :headers="headers"
         :items="items"
+        @click-row="(item) => console.log('Row clicked:', item)"
       />
     </x-card>
     <x-card>
