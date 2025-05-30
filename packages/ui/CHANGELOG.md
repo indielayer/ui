@@ -1,5 +1,17 @@
 # @indielayer/ui
 
+## 1.14.0
+
+### Minor Changes
+
+- feat(table): add selectable rows ([`07814c2`](https://github.com/indielayer/ui/commit/07814c215f915f2ca4fd1b3c96bc974c9eb11ea7))
+
+### Patch Changes
+
+- style(button): add focus visible outline ([`9a2c470`](https://github.com/indielayer/ui/commit/9a2c47013c149bb1a527e30c4a4ffa2506bb99d1))
+- refactor: improve usevirtuallist structure ([`cc6b86c`](https://github.com/indielayer/ui/commit/cc6b86cc32af03fcb90916cb032cd5599569ccc4))
+- fix(select): break if all options are disabled ([`03e078a`](https://github.com/indielayer/ui/commit/03e078aba3b65769cafbe88246172603d19cfeb0))
+
 ## 1.13.2
 
 ### Patch Changes
