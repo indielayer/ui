@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.14.1
+
+### Patch Changes
+
+- fix(table): stop selectable propagation ([`5cd111e`](https://github.com/indielayer/ui/commit/5cd111e4acb2208bb7d328559c68c69aa2a0079c))
+- style(table): align sort on table header ([`b9b51b7`](https://github.com/indielayer/ui/commit/b9b51b7de86dfaa5faf27bd7fe1a4bee90715599))
+
 ## 1.14.0
 
 ### Minor Changes
