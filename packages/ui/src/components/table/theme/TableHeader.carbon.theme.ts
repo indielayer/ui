@@ -10,7 +10,6 @@ const theme: TableHeaderTheme = {
       if (props.textAlign === 'left') classes.push('text-left')
       if (props.textAlign === 'right') classes.push('text-right')
       if (props.textAlign === 'center') classes.push('text-center')
-      if (props.textAlign === 'justify') classes.push('text-justify')
 
       return classes
     },

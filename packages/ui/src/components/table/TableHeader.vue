@@ -1,7 +1,7 @@
 <script lang="ts">
 const validators = {
   sort: [1, -1, undefined] as const,
-  textAlign: ['left', 'center', 'right', 'justify'] as const,
+  textAlign: ['left', 'center', 'right'] as const,
 }
 
 const tableHeaderProps = {
@@ -41,15 +41,17 @@ const { styles, classes, className } = useTheme('TableHeader', {}, props)
 <template>
   <th :style="styles" :class="[className, classes.th, 'group/th']">
     <div :class="classes.header">
-      <slot></slot>
-
-      <x-toggle-tip v-if="tooltip" :content="tooltip"/>
+      <div class="flex items-center gap-1">
+        <slot></slot>
+        <x-toggle-tip v-if="tooltip" :content="tooltip"/>
+      </div>
 
       <svg
         v-if="sortable"
         class="shrink-0"
         :class="[
           classes.sortIcon,
+          textAlign === 'right' ? '-mr-4 -translate-x-4' : '-ml-4 translate-x-4',
           [sort && [1, -1].includes(sort) ? '' : 'invisible group-hover/th:visible'],
           [sort !== -1 && sort !== 1 ? 'text-secondary-400 dark:text-secondary-500' : 'text-primary-700 dark:text-primary-400']
         ]"

@@ -14,9 +14,10 @@ const theme: TableHeaderTheme = {
       const classes = ['flex items-center gap-1 select-none']
 
       if (props.textAlign === 'left') classes.push('justify-start')
-      if (props.textAlign === 'right') classes.push('justify-end')
-      if (props.textAlign === 'center') classes.push('justify-center')
-      if (props.textAlign === 'justify') classes.push('justify-center')
+      else if (props.textAlign === 'right') {
+        if (props.sortable) classes.push('flex-row-reverse')
+        else classes.push('justify-end')
+      } else if (props.textAlign === 'center') classes.push('justify-center')
 
       return classes
     },
