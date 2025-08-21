@@ -1,4 +1,4 @@
-import { onUnmounted, unref, nextTick, watch, ref, type Ref, type ComponentPublicInstance } from 'vue'
+import { onUnmounted, unref, nextTick, ref, type Ref, type ComponentPublicInstance } from 'vue'
 
 const focusableQuery = 'button:not([tabindex="-1"]), [href], input, select, textarea, li, a, [tabindex]:not([tabindex="-1"])'
 
@@ -77,18 +77,16 @@ export function useFocusTrap() {
 
     focusable.value[idx]?.focus()
 
+    document.removeEventListener('keydown', handleKeydown)
+    observer?.disconnect()
+
     document.addEventListener('keydown', handleKeydown)
-    observer = new MutationObserver(() => getFocusableElements(currentTarget))
+
     const el = getEl(currentTarget)
 
-    if (el) observer.observe(el, { childList: true, subtree: true })
-
-    // If targetRef is a Ref, watch for changes
-    if (typeof targetRef === 'object' && targetRef !== null && 'value' in targetRef) {
-      watch(targetRef, (newVal) => {
-        clearFocusTrap()
-        if (newVal !== null) initFocusTrap(targetRef, options)
-      })
+    if (el) {
+      observer = new MutationObserver(() => getFocusableElements(currentTarget))
+      observer.observe(el, { childList: true, subtree: true })
     }
   }
 
@@ -100,6 +98,10 @@ export function useFocusTrap() {
       prevActiveElement.focus()
     }
     currentTarget = null
+    focusable.value = []
+    firstFocusableEl = null
+    lastFocusableEl = null
+    prevActiveElement = null
   }
 
   onUnmounted(() => {

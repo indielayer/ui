@@ -31,11 +31,11 @@ const theme: TagTheme = {
 
     return css.variables({
       bg: color[100],
-      text: color[600],
-      border: color[600],
+      text: color[800],
+      border: color[700],
       dark: {
         bg: color[600],
-        border: color[400],
+        border: color[500],
         text: color[100],
       },
     })

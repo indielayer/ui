@@ -20,7 +20,7 @@ import XPopover from '../../components/popover/Popover.vue'
 import XPopoverContainer from '../../components/popover/PopoverContainer.vue'
 import { type Placement } from 'floating-vue'
 
-const props = defineProps(tooltipProps)
+defineProps(tooltipProps)
 </script>
 
 <template>
