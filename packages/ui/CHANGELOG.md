@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.14.2
+
+### Patch Changes
+
+- fix(useFocusTrap): remove ref watcher ([`1e10495`](https://github.com/indielayer/ui/commit/1e104959d775dad1761f4cc97b88d0cdede3741b))
+
 ## 1.14.1
 
 ### Patch Changes
