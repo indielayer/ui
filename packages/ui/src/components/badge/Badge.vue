@@ -96,7 +96,7 @@ const { styles, classes, className } = useTheme('Badge', {}, props)
       <slot></slot>
       <div
         v-if="show"
-        class="absolute rounded-full z-10 bg-[color:var(--x-badge-bg)]"
+        class="absolute rounded-full z-10 bg-[color:var(--x-badge-bg)] pointer-events-none"
         :style="offsetStyle"
         :class="[
           positionClasses,
