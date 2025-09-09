@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.14.3
+
+### Patch Changes
+
+- fix(notifications): position offset ([`2539875`](https://github.com/indielayer/ui/commit/2539875760fe5e9f165fc870a6823376d5950270))
+- fix(badge): pointer events none ([`e3b2c68`](https://github.com/indielayer/ui/commit/e3b2c6813d68f02d04deda551c3189cdf7bd9fec))
+
 ## 1.14.2
 
 ### Patch Changes
