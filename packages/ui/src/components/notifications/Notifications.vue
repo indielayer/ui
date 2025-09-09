@@ -27,6 +27,10 @@ const notificationsProps = {
     type: [Symbol, String],
     default: injectNotificationKey,
   },
+  offset: {
+    type: [String, Number],
+    default: 0,
+  },
 }
 
 const validators = {
@@ -78,7 +82,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, provide, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
+import { ref, provide, watch, type PropType, type ExtractPublicPropTypes, computed } from 'vue'
 import { injectNotificationKey } from '../../composables/keys'
 import { useColors } from '../../composables/useColors'
 import { useCSS } from '../../composables/useCSS'
@@ -254,6 +258,8 @@ function resume(notification: NotificationEvent) {
   }
 }
 
+const offsetStyle = computed(() => `${props.offset}px`)
+
 const { styles, classes, className } = useTheme('Notifications', {}, props)
 
 defineExpose({ log, info, success, warn, warning: warn, error })
@@ -279,6 +285,9 @@ defineExpose({ log, info, success, warn, warning: warn, error })
     >
       <transition-group
         tag="ul"
+        :style="[
+          internalPosition === 'bottom' ? `padding-bottom: ${offsetStyle};` : `padding-top: ${offsetStyle};`
+        ]"
         :class="[
           classes.list,
           { 'flex-col-reverse': internalPosition }
