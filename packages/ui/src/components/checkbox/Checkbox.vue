@@ -42,6 +42,7 @@ const elRef = ref<HTMLElement | null>(null)
 const checked = ref(false)
 
 function toggle() {
+  if (props.disabled || props.loading || props.readonly) return
   checked.value = !checked.value
 }
 
@@ -138,7 +139,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
         :aria-disabled="disabled ? 'true' : undefined"
         type="checkbox"
         class="invisible absolute"
-        :disabled="disabled || loading"
+        :disabled="disabled || loading || readonly"
         :required="required"
         v-on="listeners"
       />
