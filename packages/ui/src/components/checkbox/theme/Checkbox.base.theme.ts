@@ -29,7 +29,10 @@ const theme: CheckboxTheme = {
     },
 
     icon: ({ props }) => {
-      const classes = ['fill-current text-white']
+      const classes = ['fill-current']
+
+      if (props.disabled) classes.push('text-secondary-400 dark:text-secondary-500')
+      else classes.push('text-white')
 
       if (props.size === 'lg') classes.push('h-3 w-3')
       else if (props.size === 'xl') classes.push('h-4 w-4')
