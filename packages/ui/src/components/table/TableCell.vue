@@ -16,6 +16,9 @@ const tableCellProps = {
     default: 'middle',
     validator: (value: string) => validators.verticalAlign.includes(value as any),
   },
+  to: [String, Object],
+  href: String,
+  target: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
 }
 
 export type TableCellTextAlign = typeof validators.textAlign[number]
@@ -44,6 +47,26 @@ const { styles, classes, className } = useTheme('TableCell', {}, props)
 
 <template>
   <td
+    v-if="to || href"
+    class="relative"
+    :class="className"
+    :style="[{ width: computedWidth, minWidth: computedWidth, maxWidth: computedWidth }]"
+  >
+    <component
+      :is="to ? 'router-link' : 'a'"
+      v-bind="href ? { href } : {}"
+      :target="target"
+      :to="to"
+      :style="styles"
+      :class="classes.wrapper"
+    >
+      <div :class="[truncate ? 'truncate' : '']">
+        <slot></slot>
+      </div>
+    </component>
+  </td>
+  <td
+    v-else
     :style="[styles, { width: computedWidth, minWidth: computedWidth, maxWidth: computedWidth }]"
     :class="[
       'relative',
