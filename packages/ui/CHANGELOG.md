@@ -1,5 +1,14 @@
 # @indielayer/ui
 
+## 1.14.3
+
+### Patch Changes
+
+- style(checkbox): disabled icon color ([`355c544`](https://github.com/indielayer/ui/commit/355c544fd18fd5a159f8e153d53f66a20f33b0e4))
+- fix(notifications): position offset ([`2539875`](https://github.com/indielayer/ui/commit/2539875760fe5e9f165fc870a6823376d5950270))
+- fix(checkbox): disabled and readonly ([`d77de31`](https://github.com/indielayer/ui/commit/d77de31e5d58cfcca36231a665f472c323949cc2))
+- fix(badge): pointer events none ([`e3b2c68`](https://github.com/indielayer/ui/commit/e3b2c6813d68f02d04deda551c3189cdf7bd9fec))
+
 ## 1.14.2
 
 ### Patch Changes
