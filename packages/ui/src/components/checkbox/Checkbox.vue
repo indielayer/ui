@@ -165,7 +165,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
           </svg>
         </slot>
       </div>
-      <div :class="classes.label">
+      <div v-if="label || $slots.default" :class="classes.label">
         <span v-if="label" v-text="label"></span>
         <slot v-else></slot>
       </div>
