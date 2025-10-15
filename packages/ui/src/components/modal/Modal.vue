@@ -106,9 +106,11 @@ watch(value, (val) => {
   }
 })
 
-watch(() => props.modelValue, checkVisibiliy, { immediate: true })
+let initTrapTimeout: ReturnType<typeof setTimeout>
 
-async function checkVisibiliy() {
+watch(() => props.modelValue, checkVisibility, { immediate: true })
+
+async function checkVisibility() {
   const val = props.modelValue
 
   if (val) {
@@ -120,15 +122,16 @@ async function checkVisibiliy() {
 
     visible.value = val
 
-    await nextTick()
-
-    initFocusTrap(modalRef)
+    initTrapTimeout = setTimeout(() => {
+      initFocusTrap(modalRef)
+    }, 100)
 
     document.body.style.paddingRight = `${scrollbarWidth}px`
     document.body.style.overflow = 'hidden'
   } else {
     visible.value = val
     value.value = val
+    clearTimeout(initTrapTimeout)
     clearFocusTrap()
     document.body.style.paddingRight = ''
     document.body.style.overflow = 'auto'

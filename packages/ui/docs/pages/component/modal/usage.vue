@@ -24,7 +24,7 @@ const show3 = ref(false)
 
     <template #actions>
       <div class="text-right space-x-4">
-        <x-button @click="show = false">Cancel</x-button>
+        <x-button tabindex="-1" @click="show = false">Cancel</x-button>
         <x-button color="success">Confirm</x-button>
       </div>
     </template>

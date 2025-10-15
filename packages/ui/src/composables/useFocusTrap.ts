@@ -31,7 +31,13 @@ export function useFocusTrap() {
   }
 
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key !== 'Tab' || focusable.value.length === 0) return
+    if (event.key === 'Tab' && focusable.value.length === 0) {
+      event.preventDefault()
+
+      return
+    }
+
+    if (event.key !== 'Tab') return
 
     const isShiftPressed = event.shiftKey
     const currentEl = document.activeElement as HTMLElement | null
