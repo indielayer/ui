@@ -6,7 +6,7 @@ const theme: TabTheme = {
       const c = ['transition-colors duration-150 ease-in-out whitespace-nowrap text-center']
 
       if (data.variant === 'line') c.push('py-2')
-      if (data.variant === 'block') c.push('py-1.5 px-8')
+      if (data.variant === 'block') c.push('py-1 px-8')
 
       if (props.size === 'xs') c.push('text-xs')
       else if (props.size === 'sm') c.push('text-sm')
