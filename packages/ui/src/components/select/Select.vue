@@ -547,7 +547,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                   >+{{ hiddenTags }}</div>
                 </div>
               </template>
-              <template v-else-if="!internalMultiple && !isEmpty(selected)">
+              <template v-else-if="!internalMultiple && !isEmpty(selected) && getLabel(selected) !== ''">
                 {{ getLabel(selected) }}
               </template>
 
