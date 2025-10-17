@@ -1,5 +1,14 @@
 # @indielayer/ui
 
+## 1.14.4
+
+### Patch Changes
+
+- fix(modal): focus trap ([`c718cc9`](https://github.com/indielayer/ui/commit/c718cc91d3a347eb5992573b05094d5018a1be15))
+- fix(select): empty when wrong model ([`bd3ab90`](https://github.com/indielayer/ui/commit/bd3ab9015b8226bc5ae906fcdada5de24f323e9e))
+- style(tab): vertical block padding ([`c65b857`](https://github.com/indielayer/ui/commit/c65b857329b0c837b7097439207165e5e3ae4b66))
+- fix(checkbox): hide label if empty ([`227dc5b`](https://github.com/indielayer/ui/commit/227dc5be8bd87b64628e10f884cf6080401068e5))
+
 ## 1.14.3
 
 ### Patch Changes
