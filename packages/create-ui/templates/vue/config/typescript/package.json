@@ -4,7 +4,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^18.16.18",
+    "@types/node": "^24.9.1",
     "typescript": "^5.2.2",
     "vue-tsc": "^1.8.2"
   }

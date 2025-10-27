@@ -3,7 +3,7 @@ import type { LabelTheme } from '../Label.vue'
 const theme: LabelTheme = {
   classes: {
     wrapper: ({ props }) => {
-      const classes  = ['block relative align-bottom focus:outline-none']
+      const classes  = ['block relative align-bottom focus:outline-hidden']
 
       if (props.isInsideForm) classes.push('mb-5')
       if (props.block) classes.push('w-full')

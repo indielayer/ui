@@ -97,7 +97,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           :id="id"
           ref="elRef"
           type="range"
-          :class="[classes.input, 'absolute z-10 appearance-none bg-transparent focus:outline-none focus-visible:outline-none']"
+          :class="[classes.input, 'absolute z-10 appearance-none bg-transparent focus:outline-hidden focus-visible:outline-hidden']"
           :disabled="disabled"
           :name="name"
           :max="max"
@@ -122,13 +122,15 @@ defineExpose({ focus, blur, reset, validate, setError })
 </template>
 
 <style lang="postcss" scoped>
+@reference "tailwindcss";
+
 [type="range"]::-webkit-slider-thumb {
   @apply cursor-pointer h-5 w-5 border-solid border rounded-full
     bg-white appearance-none border-[color:var(--x-slider-bg)];
 }
 
 [type="range"]:focus::-webkit-slider-thumb {
-  @apply ring ring-offset-1;
+  @apply ring-3 ring-offset-1;
 }
 
 [type="range"]::-moz-range-thumb {
@@ -137,6 +139,6 @@ defineExpose({ focus, blur, reset, validate, setError })
 }
 
 [type="range"]:focus::-moz-range-thumb {
-  @apply ring ring-offset-1;
+  @apply ring-3 ring-offset-1;
 }
 </style>

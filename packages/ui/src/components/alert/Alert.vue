@@ -71,7 +71,7 @@ const { styles, classes, className } = useTheme('Alert', {}, props)
       <slot></slot>
     </div>
     <template v-if="removable">
-      <div class="flex-grow"></div>
+      <div class="grow"></div>
       <button type="button" class="shrink-0" :aria-label="closeLabel" @click="(e: Event) => $emit('remove', e)">
         <slot name="removeIcon">
           <x-icon :icon="closeIcon"/>

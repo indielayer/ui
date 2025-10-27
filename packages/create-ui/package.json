@@ -30,8 +30,8 @@
   },
   "homepage": "https://indielayer.com/ui",
   "devDependencies": {
-    "@tsconfig/node18": "^2.0.1",
-    "@types/node": "^18.16.18",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/node": "^22.18.6",
     "@types/prompts": "^2.0.14",
     "@vue/tsconfig": "^0.4.0",
     "esbuild": "^0.14.36",

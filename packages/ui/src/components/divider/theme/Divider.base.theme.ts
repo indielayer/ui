@@ -6,7 +6,7 @@ const theme: DividerTheme = {
 
     label: 'font-medium text-sm text-secondary-600 dark:text-secondary-300',
 
-    line: 'bg-secondary-200 dark:bg-secondary-700 flex-grow',
+    line: 'bg-secondary-200 dark:bg-secondary-700 grow',
   },
 }
 

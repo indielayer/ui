@@ -11,7 +11,7 @@
     "@indielayer/eslint-config-vue": "^3.3.1",
     "@indielayer/ui": "^1.5.1",
     "@nuxt/devtools": "latest",
-    "@types/node": "^18",
+    "@types/node": "^24",
     "@vuepic/vue-datepicker": "^11.0.1",
     "@vueuse/core": "^11.1.0",
     "autoprefixer": "^10.4.0",
@@ -19,6 +19,6 @@
     "floating-vue": "^5.2.2",
     "nuxt": "^3.10.1",
     "postcss": "^8.4.24",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^4.1.14"
   }
 }

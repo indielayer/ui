@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig, loadEnv, type PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import tailwindcss from '@tailwindcss/vite'
 import { visualizer } from 'rollup-plugin-visualizer'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -17,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
 
   if (mode === 'docs') {
     return {
-      plugins: [vue(), vueJsx()],
+      plugins: [vue(), vueJsx(), tailwindcss()],
       resolve: {
         alias: {
           '@': fileURLToPath(new URL('./docs', import.meta.url)),
@@ -30,7 +31,8 @@ export default defineConfig(({ command, mode }) => {
   const plugins: PluginOption = [
     vue(),
     vueJsx(),
-    injectCss(),
+    // injectCss(),
+    tailwindcss(),
   ]
 
   if (isBuild) {

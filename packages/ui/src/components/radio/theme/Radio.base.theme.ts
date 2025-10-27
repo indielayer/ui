@@ -3,7 +3,7 @@ import type { RadioTheme } from '../Radio.vue'
 const theme: RadioTheme = {
   classes: {
     wrapper: ({ data }) => {
-      const classes = ['inline-block relative cursor-pointer focus:outline-none group']
+      const classes = ['inline-block relative cursor-pointer focus:outline-hidden group']
 
       if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-5')
 

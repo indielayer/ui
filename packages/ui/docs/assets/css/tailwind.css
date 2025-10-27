@@ -7,35 +7,30 @@ body {
   height: 100%;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  .text-2xs {
-    font-size: 0.625rem;
-    line-height: 1rem;
-  }
+@reference "tailwindcss";
 
-  .text-h1 {
-    @apply text-5xl font-black;
-  }
+.text-h1 {
+  @apply text-5xl font-black;
+}
 
-  .text-h2 {
-    @apply text-4xl font-black;
-  }
+.text-h2 {
+  @apply text-4xl font-black;
+}
 
-  .text-h3 {
-    @apply text-2xl font-black;
-  }
+.text-h3 {
+  @apply text-2xl font-black;
+}
 
-  .text-h4 {
-    @apply text-xl font-black;
-  }
+.text-h4 {
+  @apply text-xl font-black;
+}
 
-  .text-overline {
-    @apply tracking-widest uppercase text-2xs;
-  }
+.text-overline {
+  @apply tracking-widest uppercase;
+  font-size: 0.625rem;
+  line-height: 1rem;
 }
 
 .inset-center {

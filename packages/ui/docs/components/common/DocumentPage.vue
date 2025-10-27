@@ -225,6 +225,8 @@ const currentAnchor = ref(null)
 </template>
 
 <style lang="postcss">
+@reference "tailwindcss";
+
 .document-page {
   h1,
   h2,

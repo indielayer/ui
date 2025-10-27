@@ -35,6 +35,8 @@ onMounted(async () => {
 </template>
 
 <style lang="postcss">
+@reference "tailwindcss";
+
 .shiki {
   @apply rounded-md overflow-x-auto p-4 text-sm;
 

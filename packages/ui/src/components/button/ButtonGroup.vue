@@ -66,6 +66,8 @@ const { className, classes, styles } = useTheme('ButtonGroup', {}, props)
 </template>
 
 <style lang="postcss" module>
+@reference "tailwindcss";
+
 .button-group {
   &:not(&--rounded) {
     > :first-child {
