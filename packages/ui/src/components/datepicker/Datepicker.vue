@@ -190,7 +190,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
 
 <template>
   <div
-    :style="styles"
+    :style="[styles, { '--dp-clear-btn-top': !!label ? '2.70rem' : '1.2rem' }]"
     :class="[
       className,
       classes.wrapper,
@@ -336,7 +336,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
 }
 
 .dp--clear-btn {
-  top: 2.75rem !important;
+  top: var(--dp-clear-btn-top, 2.75rem) !important;
 }
 
 .dp__theme_dark {
