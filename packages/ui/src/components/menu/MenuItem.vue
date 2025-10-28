@@ -156,6 +156,7 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
       v-if="checkbox"
       :model-value="computedProps.active"
       hide-footer
+      class="mr-1.5"
       skip-form-registry
       @click.stop.prevent="onItemClick($event, 'checkbox-click')"
     />
