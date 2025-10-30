@@ -1,5 +1,12 @@
 # @indielayer/ui
 
+## 1.14.5
+
+### Patch Changes
+
+- style(select): checkbox margin ([`11b8fab`](https://github.com/indielayer/ui/commit/11b8faba9598943afa81be360dc348561b341113))
+- style(datepicker): clearable button top margin ([`708af9d`](https://github.com/indielayer/ui/commit/708af9d8f819d09082b9b2a6f8eed424e0f064b7))
+
 ## 1.14.4
 
 ### Patch Changes
