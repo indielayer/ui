@@ -126,33 +126,38 @@ defineExpose({ focus, blur, reset, validate, setError })
     ]"
     :tooltip="tooltip"
   >
-    <textarea
-      :id="id"
-      ref="elRef"
-      class=""
-      :style="style"
-      :class="[
-        classes.input,
-        errorInternal
-          ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
-          : 'focus:outline-[color:var(--x-textarea-border)]',
-      ]"
-      :disabled="disabled"
-      :max="max"
-      :maxlength="maxlength"
-      :min="min"
-      :dir="dir"
-      :rows="rows"
-      :minlength="minlength"
-      :name="name"
-      :placeholder="placeholder"
-      :readonly="readonly"
-      :value="typeof modelValue !== 'undefined' ? String(modelValue) : ''"
-      v-bind="dataAttrs"
-      v-on="inputListeners"
-      @keydown.enter="onEnter"
-      @input="onInput"
-    ></textarea>
+    <div class="relative">
+      <slot name="prefix"></slot>
+      <textarea
+        :id="id"
+        ref="elRef"
+        class=""
+        :style="style"
+        :class="[
+          classes.input,
+          errorInternal
+            ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
+            : 'focus:outline-[color:var(--x-textarea-border)]',
+        ]"
+        :disabled="disabled"
+        :max="max"
+        :maxlength="maxlength"
+        :min="min"
+        :dir="dir"
+        :rows="rows"
+        :minlength="minlength"
+        :name="name"
+        :placeholder="placeholder"
+        :readonly="readonly"
+        :value="typeof modelValue !== 'undefined' ? String(modelValue) : ''"
+        v-bind="dataAttrs"
+        v-on="inputListeners"
+        @keydown.enter="onEnter"
+        @input="onInput"
+      ></textarea>
+
+      <slot name="suffix"></slot>
+    </div>
 
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
