@@ -20,6 +20,7 @@ const textareaProps = {
   preventEnter: Boolean,
   block: Boolean,
   resizable: Boolean,
+  showCounter: Boolean,
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
@@ -107,6 +108,12 @@ const {
   setError,
 } = useInputtable(props, { focus, emit })
 
+const currentLength = computed(() => {
+  const value = props.modelValue
+
+  return value ? String(value).length : 0
+})
+
 const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
@@ -159,6 +166,13 @@ defineExpose({ focus, blur, reset, validate, setError })
       <slot name="suffix"></slot>
     </div>
 
-    <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
+    <x-input-footer
+      v-if="!hideFooterInternal"
+      :error="errorInternal"
+      :helper="helper"
+      :character-count="currentLength"
+      :max-characters="maxlength"
+      :show-counter="showCounter"
+    />
   </x-label>
 </template>
