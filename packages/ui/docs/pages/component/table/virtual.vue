@@ -51,7 +51,8 @@ const selected = ref<number[]>([])
       class="!h-80"
       fixed
       virtual-list
-      :virtual-list-item-height="54"
+      :to-fn="(item: any) => `/books/${item.id}`"
+      :virtual-list-item-height="44"
       selectable
     >
       <template #item-action="{ item }">

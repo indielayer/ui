@@ -50,6 +50,9 @@ const tableProps = {
     type: Boolean,
     default: true,
   },
+  toFn: Function as PropType<(item: unknown) => string | Record<string, unknown> | undefined>,
+  hrefFn: Function as PropType<(item: unknown) => string>,
+  hrefTarget: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
 }
 
 export type TableHeader = {
@@ -97,21 +100,15 @@ const props = defineProps({
     type: Array as PropType<T[]>,
     default: () => [],
   },
+  toFn: Function as PropType<(item: T) => string | Record<string, unknown> | undefined>,
+  hrefFn: Function as PropType<(item: T) => string>,
+  hrefTarget: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
 })
 
 const selected = defineModel<(number | string) | (number | string)[]>('selected')
 
-type internalT = T & {
-  __expanded?: boolean;
-}
-
-function clone<T>(source: T[]): T[] {
-  try {
-    return JSON.parse(JSON.stringify(source))
-  } catch (e) {
-    return []
-  }
-}
+// Use Map for expandable state to handle virtual list correctly
+const expandedState = ref(new Map<number | string, boolean>())
 
 const items = computed(() => props.items)
 
@@ -126,9 +123,40 @@ const { list, containerProps, wrapperProps } = useVirtualList(
   },
 )
 
-const internalItems = ref<internalT[]>([])
+// Helper function to get item key with validation
+function getItemKey(item: T, index: number): number | string {
+  if (!props.keyProp || !item || typeof item !== 'object' || item === null) {
+    return index
+  }
 
-const emit = defineEmits(['update:sort', 'click-row'])
+  const keyValue = (item as Record<string, unknown>)[props.keyProp]
+
+  // Validate that the key exists and is a valid type
+  if (keyValue === undefined || keyValue === null) {
+    console.warn(`[XTable] keyProp "${props.keyProp}" is undefined/null for item at index ${index}. Falling back to index.`)
+
+    return index
+  }
+
+  if (typeof keyValue !== 'string' && typeof keyValue !== 'number') {
+    console.warn(`[XTable] keyProp "${props.keyProp}" must be a string or number, got ${typeof keyValue}. Falling back to index.`)
+
+    return index
+  }
+
+  return keyValue as number | string
+}
+
+// Helper function to get original index from virtual list item
+// Note: useVirtualList always preserves the original index in item.index
+function getOriginalIndex(virtualItem: { data: T; index: number; }): number {
+  return virtualItem.index
+}
+
+const emit = defineEmits<{
+  (e: 'update:sort', sortValues: string[]): void;
+  (e: 'click-row', item: T, index: number): void;
+}>()
 
 function getSort(headerValue: string | undefined, sort: string[]): TableHeaderSort {
   if (!headerValue) return undefined
@@ -173,10 +201,20 @@ function sortHeader(header: TableHeader) {
   emit('update:sort', sort)
 }
 
-function getValue(item: any, path: string | string[] | undefined) {
+function getValue(item: T, path: string | string[] | undefined): unknown {
   if (!path) return ''
+  if (!item) return ''
+
   const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g)
-  const result = pathArray?.reduce((prevObj: any, key: string) => prevObj && prevObj[key], item)
+
+  if (!pathArray || pathArray.length === 0) return ''
+
+  const result = pathArray.reduce((prevObj: unknown, key: string) => {
+    if (prevObj === null || prevObj === undefined) return null
+    if (typeof prevObj !== 'object') return null
+
+    return (prevObj as Record<string, unknown>)[key]
+  }, item)
 
   return result ?? ''
 }
@@ -184,7 +222,7 @@ function getValue(item: any, path: string | string[] | undefined) {
 const allKeys = computed<(number | string)[]>(() => {
   if (!props.selectable) return []
 
-  return items.value.map((item, index) => props.keyProp ? (item as Record<string, unknown>)[props.keyProp] : index) as (number | string)[]
+  return items.value.map((item, index) => getItemKey(item, index))
 })
 
 const allRowsSelected = computed(() => {
@@ -199,7 +237,7 @@ const someRowsSelected = computed(() => {
   return Array.isArray(selected.value) && selected.value.length > 0 && allKeys.value.length > 0 && selected.value.length !== allKeys.value.length
 })
 
-function isRowSelected(rowKey: any) {
+function isRowSelected(rowKey: number | string): boolean {
   if (!props.selectable) return false
   if (props.singleSelect) {
     return selected.value === rowKey
@@ -208,14 +246,14 @@ function isRowSelected(rowKey: any) {
   }
 }
 
-function toggleRowSelection(rowKey: any) {
+function toggleRowSelection(rowKey: number | string) {
   if (!props.selectable) return
   if (props.singleSelect) {
     selected.value = selected.value === rowKey ? undefined : rowKey
   } else {
     if (!Array.isArray(selected.value)) selected.value = []
     if (selected.value.includes(rowKey)) {
-      selected.value = selected.value.filter((k: any) => k !== rowKey)
+      selected.value = selected.value.filter((k: number | string) => k !== rowKey)
     } else {
       selected.value = [...selected.value, rowKey]
     }
@@ -232,25 +270,68 @@ function toggleSelectAll() {
   }
 }
 
-function onTableRowClick(item: any, index: number) {
-  if (props.selectable && props.singleSelect) {
-    toggleRowSelection(props.keyProp ? (item as Record<string, unknown>)[props.keyProp] : index)
-  }
+function toggleExpanded(virtualItem: { data: T; index: number; }) {
+  if (!props.expandable) return
+  const itemKey = getItemKey(virtualItem.data, getOriginalIndex(virtualItem))
 
-  emit('click-row', item, index)
+  expandedState.value.set(itemKey, !expandedState.value.get(itemKey))
 }
 
-watch(items, (newValue) => {
-  if (props.expandable) internalItems.value = clone(newValue as any) as internalT[]
+function isExpanded(virtualItem: { data: T; index: number; }): boolean {
+  if (!props.expandable) return false
+  const itemKey = getItemKey(virtualItem.data, getOriginalIndex(virtualItem))
+
+  return expandedState.value.get(itemKey) ?? false
+}
+
+function onTableRowClick(item: T, virtualItem: { data: T; index: number; }) {
+  // Get the original index from the items array
+  const originalIndex = getOriginalIndex(virtualItem)
+
+  if (props.selectable && props.singleSelect) {
+    const itemKey = getItemKey(item, originalIndex)
+
+    toggleRowSelection(itemKey)
+  }
+
+  emit('click-row', item, originalIndex)
+}
+
+// Compute column count for colspan
+const columnCount = computed(() => {
+  let count = props.headers.length
+
+  if (props.selectable && !props.singleSelect) count++
+  if (props.expandable) count++
+
+  return count
+})
+
+watch(items, (newValue: T[]) => {
+  // Clear expanded state for items that no longer exist
+  if (props.expandable) {
+    const currentKeys = new Set<number | string>()
+
+    newValue.forEach((item, index) => {
+      currentKeys.add(getItemKey(item, index))
+    })
+
+    // Remove expanded state for items that no longer exist
+    expandedState.value.forEach((_, key) => {
+      if (!currentKeys.has(key)) {
+        expandedState.value.delete(key)
+      }
+    })
+  }
 
   if (props.selectable && props.autoClearSelected) {
     if (props.singleSelect) {
-      if (!allKeys.value.includes(selected.value as any)) {
+      if (!allKeys.value.includes(selected.value as number | string)) {
         selected.value = undefined
       }
     } else {
       if (Array.isArray(selected.value)) {
-        selected.value = selected.value.filter((k: any) => allKeys.value.includes(k))
+        selected.value = selected.value.filter((k: number | string) => allKeys.value.includes(k))
       }
     }
   }
@@ -335,33 +416,33 @@ const { styles, classes, className } = useTheme('Table', {}, props)
           </template>
           <template v-else-if="error">
             <tr>
-              <td colspan="999">
+              <td :colspan="columnCount">
                 <slot name="error"></slot>
               </td>
             </tr>
           </template>
           <template v-else-if="!items || items.length === 0">
             <tr>
-              <td colspan="999">
+              <td :colspan="columnCount">
                 <slot name="empty"></slot>
               </td>
             </tr>
           </template>
-          <template v-for="(item, index) in list" v-else :key="keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index">
+          <template v-for="item in list" v-else :key="getItemKey(item.data, item.index)">
             <x-table-row
-              :pointer="pointer"
+              :pointer="pointer || (!!toFn || !!hrefFn)"
               :striped="striped"
-              :selected="isRowSelected(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+              :selected="isRowSelected(getItemKey(item.data, item.index))"
               :single-select="singleSelect"
-              @click="onTableRowClick(item.data, item.index)"
+              @click="onTableRowClick(item.data, item)"
             >
-              <x-table-cell v-if="props.selectable && !singleSelect" width="40" class="!pl-3.5 !pr-0.5 cursor-pointer" @click.stop="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)">
+              <x-table-cell v-if="props.selectable && !singleSelect" width="40" class="!pl-3.5 !pr-0.5 cursor-pointer" @click.stop="toggleRowSelection(getItemKey(item.data, item.index))">
                 <x-checkbox
-                  :model-value="isRowSelected(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+                  :model-value="isRowSelected(getItemKey(item.data, item.index))"
                   hide-footer
-                  :aria-label="`Select row ${index + 1}`"
+                  :aria-label="`Select row ${getOriginalIndex(item) + 1}`"
                   skip-form-registry
-                  @click.prevent.stop="toggleRowSelection(keyProp ? (item.data as Record<string, unknown>)[keyProp] : item.index)"
+                  @click.prevent.stop="toggleRowSelection(getItemKey(item.data, item.index))"
                 />
               </x-table-cell>
               <x-table-cell v-if="expandable" width="48" class="!p-1">
@@ -369,14 +450,14 @@ const { styles, classes, className } = useTheme('Table', {}, props)
                   type="button"
                   class="px-3 p-2"
                   :class="[dense ? 'p-0.5' : 'px-3 py-2']"
-                  @click="internalItems[item.index].__expanded = !internalItems[item.index].__expanded"
+                  @click.stop="toggleExpanded(item)"
                 >
                   <x-icon
                     :icon="chevronDownIcon"
                     :size="dense ? 'xs' : 'md'"
                     class="transition-transform"
                     :class="{
-                      'rotate-180': internalItems[item.index]?.__expanded,
+                      'rotate-180': isExpanded(item),
                     }"
                   />
                 </button>
@@ -394,15 +475,18 @@ const { styles, classes, className } = useTheme('Table', {}, props)
                   overflow: 'hidden',
                   whiteSpace: 'nowrap',
                 } : {}]"
+                :href="hrefFn ? hrefFn(item.data) : undefined"
+                :to="toFn ? toFn(item.data) : undefined"
+                :target="hrefFn ? hrefTarget : undefined"
               >
                 <slot :name="`item-${header.value}`" :item="item.data">
                   {{ getValue(item.data, header.value) }}
                 </slot>
               </x-table-cell>
             </x-table-row>
-            <tr v-if="expandable" :class="{ 'hidden': !internalItems[item.index]?.__expanded }">
-              <td colspan="999">
-                <div class="overflow-hidden transition-opacity" :class="[internalItems[item.index]?.__expanded ? '' : 'opacity-0 max-h-0']">
+            <tr v-if="expandable" :class="{ 'hidden': !isExpanded(item) }">
+              <td :colspan="columnCount">
+                <div class="overflow-hidden transition-opacity" :class="[isExpanded(item) ? '' : 'opacity-0 max-h-0']">
                   <slot name="expanded-row" :item="item.data"></slot>
                 </div>
               </td>
