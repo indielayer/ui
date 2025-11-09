@@ -52,7 +52,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { computed, onBeforeUnmount, ref, watch, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useDropZone } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
@@ -187,9 +187,19 @@ function isImage(file: File) {
   return file.type.startsWith('image') || imageExtensions.some((ext) => file.name.endsWith(ext))
 }
 
+const blobUrls: string[] = []
+
 function getImagePreview(file: File) {
-  return URL.createObjectURL(file)
+  const url = URL.createObjectURL(file)
+
+  blobUrls.push(url)
+
+  return url
 }
+
+onBeforeUnmount(() => {
+  blobUrls.forEach((url) => URL.revokeObjectURL(url))
+})
 
 function calculateFileSize(size: number) {
   if (size < 1024) return `${size} B`

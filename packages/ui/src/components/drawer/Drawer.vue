@@ -137,7 +137,13 @@ function onEnter(el: Element, done: () => void) {
 
     return
   }
-  el.addEventListener('transitionend', done)
+
+  const handler = () => {
+    el.removeEventListener('transitionend', handler)
+    done()
+  }
+
+  el.addEventListener('transitionend', handler)
   setTimeout(() => {
     if (props.backdrop) el.classList.add('bg-slate-500/30')
     if (props.position === 'top') (el as HTMLElement).style.top = '0'
@@ -150,7 +156,12 @@ function onEnter(el: Element, done: () => void) {
 function onBeforeLeave(el: Element) {}
 
 function onLeave(el: Element, done: () => void) {
-  el.addEventListener('transitionend', done)
+  const handler = () => {
+    el.removeEventListener('transitionend', handler)
+    done()
+  }
+
+  el.addEventListener('transitionend', handler)
   setTimeout(() => {
     if (props.backdrop) el.classList.remove('bg-slate-500/30')
     if (props.position === 'top') (el as HTMLElement).style.top = `-${props.height}px`
