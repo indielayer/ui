@@ -201,11 +201,28 @@ function sortHeader(header: TableHeader) {
   emit('update:sort', sort)
 }
 
+const pathCache = new Map<string, string[]>()
+
 function getValue(item: T, path: string | string[] | undefined): unknown {
   if (!path) return ''
   if (!item) return ''
 
-  const pathArray = Array.isArray(path) ? path : path.match(/([^[.\]])+/g)
+  let pathArray: string[] | null
+
+  if (Array.isArray(path)) {
+    pathArray = path
+  } else {
+    // Check cache first
+    if (pathCache.has(path)) {
+      pathArray = pathCache.get(path)!
+    } else {
+      // Parse and cache the result
+      pathArray = path.match(/([^[.\]])+/g)
+      if (pathArray) {
+        pathCache.set(path, pathArray)
+      }
+    }
+  }
 
   if (!pathArray || pathArray.length === 0) return ''
 
@@ -225,34 +242,55 @@ const allKeys = computed<(number | string)[]>(() => {
   return items.value.map((item, index) => getItemKey(item, index))
 })
 
+const selectedSet = computed(() => {
+  if (!props.selectable || props.singleSelect) return new Set<number | string>()
+  if (!Array.isArray(selected.value)) return new Set<number | string>()
+
+  return new Set(selected.value)
+})
+
 const allRowsSelected = computed(() => {
   if (!props.selectable || props.singleSelect) return false
+  if (!Array.isArray(selected.value) || selected.value.length === 0) return false
 
-  return Array.isArray(selected.value) && selected.value.length > 0 && allKeys.value.length > 0 && selected.value.length === allKeys.value.length
+  const keysLength = allKeys.value.length
+
+  if (keysLength === 0) return false
+
+  return selected.value.length === keysLength
 })
 
 const someRowsSelected = computed(() => {
   if (!props.selectable || props.singleSelect) return false
+  if (!Array.isArray(selected.value) || selected.value.length === 0) return false
 
-  return Array.isArray(selected.value) && selected.value.length > 0 && allKeys.value.length > 0 && selected.value.length !== allKeys.value.length
+  const keysLength = allKeys.value.length
+
+  if (keysLength === 0) return false
+
+  return selected.value.length > 0 && selected.value.length !== keysLength
 })
 
 function isRowSelected(rowKey: number | string): boolean {
   if (!props.selectable) return false
+
   if (props.singleSelect) {
     return selected.value === rowKey
-  } else {
-    return Array.isArray(selected.value) && selected.value.includes(rowKey)
   }
+
+  return selectedSet.value.has(rowKey)
 }
 
 function toggleRowSelection(rowKey: number | string) {
   if (!props.selectable) return
+
   if (props.singleSelect) {
     selected.value = selected.value === rowKey ? undefined : rowKey
   } else {
     if (!Array.isArray(selected.value)) selected.value = []
-    if (selected.value.includes(rowKey)) {
+
+    // Use Set for O(1) lookup instead of includes O(n)
+    if (selectedSet.value.has(rowKey)) {
       selected.value = selected.value.filter((k: number | string) => k !== rowKey)
     } else {
       selected.value = [...selected.value, rowKey]
@@ -308,15 +346,14 @@ const columnCount = computed(() => {
 })
 
 watch(items, (newValue: T[]) => {
+  const currentKeys = new Set<number | string>()
+
+  newValue.forEach((item, index) => {
+    currentKeys.add(getItemKey(item, index))
+  })
+
   // Clear expanded state for items that no longer exist
   if (props.expandable) {
-    const currentKeys = new Set<number | string>()
-
-    newValue.forEach((item, index) => {
-      currentKeys.add(getItemKey(item, index))
-    })
-
-    // Remove expanded state for items that no longer exist
     expandedState.value.forEach((_, key) => {
       if (!currentKeys.has(key)) {
         expandedState.value.delete(key)
@@ -324,14 +361,15 @@ watch(items, (newValue: T[]) => {
     })
   }
 
+  // Clear selected items that no longer exist
   if (props.selectable && props.autoClearSelected) {
     if (props.singleSelect) {
-      if (!allKeys.value.includes(selected.value as number | string)) {
+      if (!currentKeys.has(selected.value as number | string)) {
         selected.value = undefined
       }
     } else {
-      if (Array.isArray(selected.value)) {
-        selected.value = selected.value.filter((k: number | string) => allKeys.value.includes(k))
+      if (Array.isArray(selected.value) && selected.value.length > 0) {
+        selected.value = selected.value.filter((k: number | string) => currentKeys.has(k))
       }
     }
   }
