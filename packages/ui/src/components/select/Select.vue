@@ -110,19 +110,32 @@ const selected = computed<any | any[]>({
   },
 })
 
+const labelCache = computed(() => {
+  if (!props.options) return new Map<SelectOption, string>()
+
+  return new Map(props.options.map((option) => [option, option.label.toLowerCase()]))
+})
+
 const internalOptions = computed(() => {
   if (!props.options || props.options.length === 0) return []
 
-  return props.options
-    .filter((option) => filter.value === '' || option.label.toLowerCase().includes(filter.value.toLowerCase()))
-    .map((option) => {
-      let isActive = false
+  const filterLower = filter.value.toLowerCase()
+  const hasFilter = filter.value !== ''
 
-      if (internalMultiple.value && Array.isArray(selected.value)) {
-        isActive = selected.value.includes(option.value)
-      } else {
-        isActive = option.value === selected.value
-      }
+  const selectedSet = new Set(
+    internalMultiple.value && Array.isArray(selected.value)
+      ? selected.value
+      : [],
+  )
+  const singleSelectedValue = !internalMultiple.value ? selected.value : null
+  const cache = labelCache.value
+
+  return props.options
+    .filter((option) => !hasFilter || cache.get(option)?.includes(filterLower))
+    .map((option) => {
+      const isActive = internalMultiple.value
+        ? selectedSet.has(option.value)
+        : option.value === singleSelectedValue
 
       return {
         value: option.value,
