@@ -1,5 +1,20 @@
 # @indielayer/ui
 
+## 1.15.0
+
+### Minor Changes
+
+- feat(table): add link prop ([#128](https://github.com/indielayer/ui/pull/128)) ([`bbae4d2`](https://github.com/indielayer/ui/commit/bbae4d29c0b84c60c6706813fcf9d6549f6e1a09))
+- feat(textarea): add prefix and suffix slots ([`d1c661b`](https://github.com/indielayer/ui/commit/d1c661bf385db10b1eece6b93c0aca4cd541e5ee))
+- feat(input): add clearable prop ([`bb603ab`](https://github.com/indielayer/ui/commit/bb603aba06cb695e78321dbcf2adc6c634bcabd9))
+- feat: add counter to input and textarea ([`ec6cb80`](https://github.com/indielayer/ui/commit/ec6cb80be245d6b6e496780b86bb7d7ac9760a54))
+
+### Patch Changes
+
+- perf: table, select and drawer checks ([#130](https://github.com/indielayer/ui/pull/130)) ([`b1a5897`](https://github.com/indielayer/ui/commit/b1a589770f8110b6264cf0422d87ed2f4387d365))
+- feat(tag): add link prop ([`62828f3`](https://github.com/indielayer/ui/commit/62828f37dd4fe738504b3d98b2353f2c4473e728))
+- style(avatar): show both name and image ([`f72d48e`](https://github.com/indielayer/ui/commit/f72d48ea92d0d44f1c432eb922874d5a8b33d284))
+
 ## 1.14.5
 
 ### Patch Changes
