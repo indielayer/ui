@@ -78,11 +78,11 @@ const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
       v-if="source"
       :alt="alt"
       :src="image"
-      class="h-full w-full"
+      class="absolute top-0 left-0 h-full w-full"
     />
 
     <span
-      v-else-if="name"
+      v-if="name"
       class="leading-none"
     >{{ initials }}</span>
 
