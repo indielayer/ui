@@ -6,7 +6,7 @@ const notifications = useNotifications()
 
 <template>
   <div class="space-x-2 space-y-2">
-    <x-tag color="primary">Hello</x-tag>
+    <x-tag color="primary" to="/">Hello</x-tag>
     <x-tag color="purple">Hello</x-tag>
     <x-tag
       color="green"

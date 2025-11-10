@@ -11,6 +11,7 @@ const tagProps = {
   outlined: Boolean,
   filled: Boolean,
   disabled: Boolean,
+  to: [String, Object],
 }
 
 export type TagProps = ExtractPublicPropTypes<typeof tagProps>
@@ -27,7 +28,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, type ExtractPublicPropTypes } from 'vue'
+import { computed, useAttrs, type ExtractPublicPropTypes } from 'vue'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -48,12 +49,16 @@ const closeIconSize = computed(() => {
   return 'sm'
 })
 
+const attrs = useAttrs()
+const htmlTag = computed(() => (attrs.href ? 'a' : props.to ? 'router-link' : props.tag))
+
 const { styles, classes, className } = useTheme('Tag', {}, props)
 </script>
 
 <template>
   <component
-    :is="tag"
+    :is="htmlTag"
+    :to="to"
     class="text-[color:var(--x-tag-text)] dark:text-[color:var(--x-tag-dark-text)] border relative"
     :style="styles"
     :class="
@@ -84,7 +89,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
           :icon="closeIcon"
           class="cursor-pointer transition-colors duration-150"
           :class="[disabled ? 'text-secondary-400' : 'hover:text-secondary-500']"
-          @click="(e: Event) => !disabled && $emit('remove', e)"
+          @click.prevent="(e: Event) => !disabled && $emit('remove', e)"
         />
       </div>
     </span>
