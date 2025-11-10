@@ -27,6 +27,7 @@ const inputProps = {
   step: [Number, String],
   block: Boolean,
   showCounter: Boolean,
+  clearable: Boolean,
 }
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
@@ -50,7 +51,7 @@ import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
-import { eyeIcon, eyeVisibleIcon } from '../../common/icons'
+import { closeIcon, eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
 import XIcon from '../icon/Icon.vue'
@@ -95,6 +96,8 @@ function onChange(e: Event) {
 function togglePasswordVisibility() {
   currentType.value = currentType.value === 'password' ? 'text' : 'password'
 }
+
+const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
 
 const { focus, blur } = useInteractive(elRef)
 
@@ -177,6 +180,14 @@ defineExpose({ focus, blur, reset, validate, setError })
       />
 
       <slot name="suffix">
+        <x-icon
+          v-if="showClearIcon"
+          :size="size"
+          :icon="closeIcon"
+          class="mr-2 right-1 cursor-pointer"
+          :class="classes.icon"
+          @click="reset()"
+        />
         <x-icon
           v-if="iconRight"
           :size="size"

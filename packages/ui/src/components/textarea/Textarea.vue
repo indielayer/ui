@@ -21,11 +21,12 @@ const textareaProps = {
   block: Boolean,
   resizable: Boolean,
   showCounter: Boolean,
+  clearable: Boolean,
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
 
-type InternalClasses = 'wrapper' | 'input'
+type InternalClasses = 'wrapper' | 'input' | 'icon'
 type InternalExtraData = { errorInternal: Ref<boolean>; }
 
 export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}
@@ -50,6 +51,8 @@ import { useInteractive } from '../../composables/useInteractive'
 
 import XLabel from '../label/Label.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
+import XIcon from '../icon/Icon.vue'
+import { closeIcon } from '../../common/icons'
 
 const props = defineProps(textareaProps)
 
@@ -114,6 +117,8 @@ const currentLength = computed(() => {
   return value ? String(value).length : 0
 })
 
+const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
+
 const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
@@ -163,7 +168,16 @@ defineExpose({ focus, blur, reset, validate, setError })
         @input="onInput"
       ></textarea>
 
-      <slot name="suffix"></slot>
+      <slot name="suffix">
+        <x-icon
+          v-if="showClearIcon"
+          :size="size"
+          :icon="closeIcon"
+          class="right-2 cursor-pointer"
+          :class="classes.icon"
+          @click="reset()"
+        />
+      </slot>
     </div>
 
     <x-input-footer

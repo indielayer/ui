@@ -15,8 +15,9 @@ const comment = ref('')
         resizable
         placeholder="Placeholder"
         tooltip="Tooltip here"
+        clearable
       />
-      <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text />
+      <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text clearable />
     </div>
 
     <x-textarea

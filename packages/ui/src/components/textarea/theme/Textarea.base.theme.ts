@@ -22,6 +22,8 @@ const theme: TextareaTheme = {
 
       return classes
     },
+
+    icon: 'text-secondary-600 dark:text-secondary-300 absolute my-auto inset-y-0',
   },
 }
 

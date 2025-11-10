@@ -13,6 +13,7 @@ const title = ref('')
       placeholder="Placeholder"
       helper="Helper text here"
       tooltip="Tooltip here"
+      clearable
     />
 
     <x-input
