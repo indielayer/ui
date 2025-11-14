@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.15.1
+
+### Patch Changes
+
+- fix(textarea): modelvalue null value ([`262f54a`](https://github.com/indielayer/ui/commit/262f54afce4474c4905c04ba282f6ff23e83465b))
+
 ## 1.15.0
 
 ### Minor Changes
