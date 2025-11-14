@@ -119,6 +119,12 @@ const currentLength = computed(() => {
 
 const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
 
+function isEmpty(value: typeof props.modelValue) {
+  if (typeof value === 'undefined' || value === null) return true
+
+  return false
+}
+
 const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
@@ -161,7 +167,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :name="name"
         :placeholder="placeholder"
         :readonly="readonly"
-        :value="typeof modelValue !== 'undefined' ? String(modelValue) : ''"
+        :value="isEmpty(modelValue) ? '' : String(modelValue)"
         v-bind="dataAttrs"
         v-on="inputListeners"
         @keydown.enter="onEnter"
