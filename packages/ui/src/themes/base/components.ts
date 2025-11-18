@@ -49,4 +49,5 @@ export { default as TableRow } from '../../components/table/theme/TableRow.base.
 export { default as Tag } from '../../components/tag/theme/Tag.base.theme'
 export { default as Textarea } from '../../components/textarea/theme/Textarea.base.theme'
 export { default as Toggle } from '../../components/toggle/theme/Toggle.base.theme'
+export { default as Tooltip } from '../../components/tooltip/theme/Tooltip.base.theme'
 export { default as Upload } from '../../components/upload/theme/Upload.base.theme'

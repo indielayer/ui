@@ -22,7 +22,7 @@ const computedIcon = computed(() => props.icon || infoIcon)
 </script>
 
 <template>
-  <x-tooltip placement="auto">
+  <x-tooltip position="right">
     <x-icon :icon="computedIcon" class="text-secondary-500 dark:text-secondary-300 cursor-pointer" />
     <template #tooltip>
       <div v-html="content"></div>

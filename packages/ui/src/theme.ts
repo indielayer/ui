@@ -51,6 +51,7 @@ import type {
   TagTheme,
   TextareaTheme,
   ToggleTheme,
+  TooltipTheme,
   UploadTheme,
 } from './components'
 
@@ -106,6 +107,7 @@ export type ComponentThemes = {
   Tag: TagTheme;
   Textarea: TextareaTheme;
   Toggle: ToggleTheme;
+  Tooltip: TooltipTheme;
   Upload: UploadTheme;
 }
 
