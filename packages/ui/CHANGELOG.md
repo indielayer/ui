@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.15.2
+
+### Patch Changes
+
+- fix(tooltip): replace popover with custom ([#132](https://github.com/indielayer/ui/pull/132)) ([`178b901`](https://github.com/indielayer/ui/commit/178b9014d6891efff3311142faaa84de8524be98))
+
 ## 1.15.1
 
 ### Patch Changes
