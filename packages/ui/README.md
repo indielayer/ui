@@ -39,4 +39,4 @@ The documentation is located inside [/packages/ui/docs](./packages/ui/docs)
 
 [MIT](./LICENSE)
 
-Copyright (c) 2024, Indielayer
+Copyright (c) 2024-present - Indielayer
