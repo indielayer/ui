@@ -41,6 +41,8 @@ const hasTooltip = computed(() => props.tooltip || slots.tooltip)
 const computedDisabled = computed(() => props.disabled || !hasTooltip.value)
 
 const arrowPositionClasses = computed(() => {
+  if (computedDisabled.value) return ''
+
   const placements = {
     top: '-bottom-2.5 left-1/2 -translate-x-1/2 w-3.5',
     bottom: '-top-2.5 left-1/2 -translate-x-1/2 w-3.5',
@@ -52,6 +54,8 @@ const arrowPositionClasses = computed(() => {
 })
 
 const arrowRotationClasses = computed(() => {
+  if (computedDisabled.value) return ''
+
   const placements = {
     top: '-rotate-45 origin-top-left',
     bottom: 'rotate-45 origin-bottom-left',
@@ -63,6 +67,8 @@ const arrowRotationClasses = computed(() => {
 })
 
 const animationOriginClasses = computed(() => {
+  if (computedDisabled.value) return ''
+
   const origins = {
     top: 'origin-bottom',
     bottom: 'origin-top',
@@ -176,32 +182,32 @@ const { classes, className } = useTheme('Tooltip', {}, props)
     @mouseleave="hideTooltip"
   >
     <slot></slot>
-  </component>
 
-  <teleport v-if="!computedDisabled" to="body">
-    <transition
-      enter-active-class="transition-opacity duration-150 ease-out"
-      leave-active-class="transition-opacity duration-150 ease-in"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div
-        v-if="isVisible"
-        ref="tooltipRef"
-        :style="tooltipStyle"
-        class="fixed z-[9999] pointer-events-none"
-        :class="[
-          classes.tooltip,
-          animationOriginClasses
-        ]"
+    <teleport v-if="!computedDisabled" to="body">
+      <transition
+        enter-active-class="transition-opacity duration-150 ease-out"
+        leave-active-class="transition-opacity duration-150 ease-in"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
       >
-        <slot name="tooltip">{{ tooltip }}</slot>
-        <div :class="['absolute overflow-hidden shadow-lg z-10', arrowPositionClasses]">
-          <div :class="['h-2.5 w-2.5 bg-secondary-700 transform border border-secondary-800', arrowRotationClasses]"></div>
+        <div
+          v-if="isVisible"
+          ref="tooltipRef"
+          :style="tooltipStyle"
+          class="fixed z-[10001] pointer-events-none"
+          :class="[
+            classes.tooltip,
+            animationOriginClasses
+          ]"
+        >
+          <slot name="tooltip">{{ tooltip }}</slot>
+          <div :class="['absolute overflow-hidden shadow-lg z-10', arrowPositionClasses]">
+            <div :class="['h-2.5 w-2.5 bg-secondary-700 transform border border-secondary-800', arrowRotationClasses]"></div>
+          </div>
         </div>
-      </div>
-    </transition>
-  </teleport>
+      </transition>
+    </teleport>
+  </component>
 </template>
