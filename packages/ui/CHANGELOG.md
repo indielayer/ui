@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.15.3
+
+### Patch Changes
+
+- fix(tooltip): allow passing attrs ([`e4190c0`](https://github.com/indielayer/ui/commit/e4190c028cb2188c30bef59331ba7272fd32a0cb))
+
 ## 1.15.2
 
 ### Patch Changes
