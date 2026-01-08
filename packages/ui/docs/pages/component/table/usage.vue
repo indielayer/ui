@@ -78,8 +78,21 @@ const itemsSorted = computed<Book[]>(() => {
         <template #item-published="{ item }">
           {{ formatDate(item.published) }}
         </template>
+
         <template #item-status="{ item }">
           <x-tag size="xs" color="primary" rounded>{{ item.status }}</x-tag>
+        </template>
+
+        <template #footer>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="text-center py-2">
+                <p class="text-sm text-gray-500 font-medium">
+                  Footer content
+                </p>
+              </td>
+            </tr>
+          </tfoot>
         </template>
       </x-table>
     </x-card>

@@ -76,7 +76,7 @@ export default { name: 'XTable' }
 </script>
 
 <script setup lang="ts" generic="T">
-import { ref, type ExtractPublicPropTypes, type PropType, watch, computed } from 'vue'
+import { ref, type ExtractPublicPropTypes, type PropType, watch, computed, useSlots } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
 
@@ -375,6 +375,10 @@ watch(items, (newValue: T[]) => {
   }
 }, { immediate: true })
 
+const slots = useSlots()
+
+const hasFooter = computed(() => Object.keys(slots).some((key) => key.startsWith('footer-')))
+
 const { styles, classes, className } = useTheme('Table', {}, props)
 </script>
 
@@ -531,6 +535,23 @@ const { styles, classes, className } = useTheme('Table', {}, props)
             </tr>
           </template>
         </x-table-body>
+        <slot name="footer">
+          <tfoot v-if="hasFooter && !loading">
+            <x-table-row>
+              <x-table-cell v-if="props.selectable && !props.singleSelect" width="40" class="!pl-3.5 !pr-0.5" />
+              <x-table-cell v-if="expandable" width="48" class="!p-0" />
+              <x-table-cell
+                v-for="(header, index) in headers"
+                :key="index"
+                :text-align="header.align"
+                :width="header.width"
+                :dense="dense"
+              >
+                <slot :name="`footer-${header.value}`" :header="header"></slot>
+              </x-table-cell>
+            </x-table-row>
+          </tfoot>
+        </slot>
       </table>
       <div
         v-if="loading"
