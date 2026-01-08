@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 1.16.0
+
+### Minor Changes
+
+- feat(table): add footer ([`2c4fe4b`](https://github.com/indielayer/ui/commit/2c4fe4b32098347aee9e7bc4eea98eaf641f3d48))
+
+### Patch Changes
+
+- fix(tooltip): adjust arrow position ([`7f784df`](https://github.com/indielayer/ui/commit/7f784df5abeef2deb01a7bcecf97afbae7973dca))
+
 ## 1.15.3
 
 ### Patch Changes
