@@ -44,10 +44,10 @@ const arrowPositionClasses = computed(() => {
   if (computedDisabled.value) return ''
 
   const placements = {
-    top: '-bottom-2.5 left-1/2 -translate-x-1/2 w-3.5',
-    bottom: '-top-2.5 left-1/2 -translate-x-1/2 w-3.5',
-    left: '-right-2.5 top-1/2 -translate-y-1/2 h-3.5',
-    right: '-left-2.5 top-1/2 -translate-y-1/2 h-3.5',
+    top: '-bottom-2.5 w-3.5',
+    bottom: '-top-2.5 w-3.5',
+    left: '-right-2.5 h-3.5',
+    right: '-left-2.5 h-3.5',
   }
 
   return placements[actualPosition.value]
@@ -148,10 +148,27 @@ const calculatePosition = () => {
     }
   }
 
+  // Calculate arrow offset relative to trigger element center
+  const arrowOffset: Record<string, string> = {}
+
+  if (position === 'top' || position === 'bottom') {
+    const triggerCenter = triggerRect.left + triggerRect.width / 2
+    const offsetFromTooltipLeft = triggerCenter - left
+
+    arrowOffset.left = `${offsetFromTooltipLeft}px`
+  } else if (position === 'left' || position === 'right') {
+    const triggerCenter = triggerRect.top + triggerRect.height / 2
+    const offsetFromTooltipTop = triggerCenter - top
+
+    arrowOffset.top = `${offsetFromTooltipTop}px`
+  }
+
   actualPosition.value = position
   tooltipStyle.value = {
     top: `${top}px`,
     left: `${left}px`,
+    '--arrow-offset-x': arrowOffset.left || '0px',
+    '--arrow-offset-y': arrowOffset.top || '0px',
   }
 }
 
@@ -203,7 +220,10 @@ const { classes, className } = useTheme('Tooltip', {}, props)
           ]"
         >
           <slot name="tooltip">{{ tooltip }}</slot>
-          <div :class="['absolute overflow-hidden shadow-lg z-10', arrowPositionClasses]">
+          <div
+            :class="['absolute overflow-hidden shadow-lg z-10', arrowPositionClasses]"
+            :style="actualPosition === 'top' || actualPosition === 'bottom' ? { left: 'var(--arrow-offset-x)', transform: 'translateX(-50%)' } : { top: 'var(--arrow-offset-y)', transform: 'translateY(-50%)' }"
+          >
             <div :class="['h-2.5 w-2.5 bg-secondary-700 transform border border-secondary-800', arrowRotationClasses]"></div>
           </div>
         </div>
