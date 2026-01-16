@@ -78,7 +78,7 @@ import XInput from '../input/Input.vue'
 
 const props = defineProps(selectProps)
 
-const emit = defineEmits([...useInputtable.emits(), 'close'])
+const emit = defineEmits([...useInputtable.emits(), 'close', 'open'])
 
 const internalMultiple = computed(() => props.multiple || props.multipleCheckbox)
 
@@ -189,6 +189,7 @@ watch(isOpen, (isOpenValue) => {
       })
     }, 50)
 
+    emit('open')
   } else {
     if (props.filterable) filter.value = ''
     emit('close')
