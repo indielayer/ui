@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.16.1
+
+### Patch Changes
+
+- fix(select): add missing open event ([`7d223cb`](https://github.com/indielayer/ui/commit/7d223cb20d18d008ec60e9f287a4476f2d854ae4))
+
 ## 1.16.0
 
 ### Minor Changes
