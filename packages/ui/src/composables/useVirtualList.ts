@@ -21,7 +21,7 @@ export type UseVirtualListOptions = {
   /**
    * the extra buffer items outside of the view area
    *
-   * @default 5
+   * @default 10
    */
   overscan?: number;
 }

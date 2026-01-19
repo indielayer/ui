@@ -41,7 +41,7 @@ const tableProps = {
   },
   virtualListOverscan: {
     type: Number,
-    default: 5,
+    default: 10,
   },
   keyProp: String,
   selectable: Boolean,

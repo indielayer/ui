@@ -26,7 +26,7 @@ const selectProps = {
   },
   virtualListOverscan: {
     type: Number,
-    default: 5,
+    default: 10,
   },
   placement: String as PropType<PopoverPlacement>,
 }
