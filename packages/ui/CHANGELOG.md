@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 1.17.0
+
+### Minor Changes
+
+- feat: add virtual components ([#137](https://github.com/indielayer/ui/pull/137)) ([`a189c6e`](https://github.com/indielayer/ui/commit/a189c6e52da0d152d0abdcd4f15d424bb68c63cf))
+
+### Patch Changes
+
+- fix(select): add missing open event ([`7d223cb`](https://github.com/indielayer/ui/commit/7d223cb20d18d008ec60e9f287a4476f2d854ae4))
+
 ## 1.16.0
 
 ### Minor Changes
