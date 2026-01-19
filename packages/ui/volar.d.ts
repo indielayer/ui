@@ -20,6 +20,7 @@ declare module 'vue' {
     XFormGroup: typeof import('@indielayer/ui')['XFormGroup']
     XIcon: typeof import('@indielayer/ui')['XIcon']
     XImage: typeof import('@indielayer/ui')['XImage']
+    XInfiniteLoader: typeof import('@indielayer/ui')['XInfiniteLoader']
     XInput: typeof import('@indielayer/ui')['XInput']
     XInputFooter: typeof import('@indielayer/ui')['XInputFooter']
     XLabel: typeof import('@indielayer/ui')['XLabel']
@@ -58,6 +59,8 @@ declare module 'vue' {
     XToggleTip: typeof import('@indielayer/ui')['XToggleTip']
     XTooltip: typeof import('@indielayer/ui')['XTooltip']
     XUpload: typeof import('@indielayer/ui')['XUpload']
+    XVirtualGrid: typeof import('@indielayer/ui')['XVirtualGrid']
+    XVirtualList: typeof import('@indielayer/ui')['XVirtualList']
   }
 }
 
