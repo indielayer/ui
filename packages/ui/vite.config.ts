@@ -75,6 +75,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     test: {
+      setupFiles: ['./vitest.setup.ts'],
       transformMode: {
         web: [/\.[jt]sx$/],
       },

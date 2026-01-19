@@ -3,6 +3,7 @@ export { default as version } from './version'
 export * from './components'
 export * from './composables'
 export * from './themes'
+export * from './virtual'
 export type { UITheme, ComponentThemes } from './theme'
 
 export { default as createUI, type UIOptions } from './create'

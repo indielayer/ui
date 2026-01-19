@@ -69,8 +69,11 @@ const components = [
     collapseIcon: 'chevron-down',
     expanded: true,
     items: [
+      { to: '/component/infiniteLoader', label: 'Infinite Loader' },
       { to: '/component/scroll', label: 'Scroll' },
       { to: '/component/spacer', label: 'Spacer' },
+      { to: '/component/virtualGrid', label: 'Virtual Grid' },
+      { to: '/component/virtualList', label: 'Virtual List' },
     ],
   },
 ]
