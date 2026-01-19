@@ -6,6 +6,7 @@ export type DynamicRowHeight = {
   getRowHeight(index: number): number | undefined;
   setRowHeight(index: number, size: number): void;
   observeRowElements: (elements: Element[] | NodeListOf<Element>) => () => void;
+  cleanup: () => void;
 };
 
 type ForbiddenKeys = 'ariaAttributes' | 'index' | 'style';

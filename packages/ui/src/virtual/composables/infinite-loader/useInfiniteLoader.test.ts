@@ -185,4 +185,52 @@ describe('useInfiniteLoader', () => {
     // Should still be called only once
     expect(loadMoreRows).toHaveBeenCalledTimes(1)
   })
+
+  test('should clean up pending cache when rows are loaded', () => {
+    const loadMoreRows = vi.fn(() => Promise.resolve())
+    const loadedRows = new Set<number>([0, 1, 2])
+
+    const props: InfiniteLoaderProps = {
+      isRowLoaded: (index) => loadedRows.has(index),
+      loadMoreRows,
+      rowCount: 10,
+      threshold: 0,
+      minimumBatchSize: 0,
+    }
+
+    const { onRowsRendered, pendingRowsCache } = useInfiniteLoader(props)
+
+    // First call loads rows 3-5
+    onRowsRendered({
+      startIndex: 0,
+      stopIndex: 5,
+    })
+
+    expect(pendingRowsCache.size).toBe(3) // Rows 3, 4, 5 are pending
+    expect(pendingRowsCache.has(3)).toBe(true)
+    expect(pendingRowsCache.has(4)).toBe(true)
+    expect(pendingRowsCache.has(5)).toBe(true)
+
+    // Simulate rows 3 and 4 being loaded
+    loadedRows.add(3)
+    loadedRows.add(4)
+
+    // Next call should clean up loaded rows from pending cache
+    onRowsRendered({
+      startIndex: 3,
+      stopIndex: 7,
+    })
+
+    // Rows 3 and 4 should be removed from pending cache
+    expect(pendingRowsCache.has(3)).toBe(false)
+    expect(pendingRowsCache.has(4)).toBe(false)
+    // Row 5 should still be pending
+    expect(pendingRowsCache.has(5)).toBe(true)
+    // Rows 6 and 7 should now be pending
+    expect(pendingRowsCache.has(6)).toBe(true)
+    expect(pendingRowsCache.has(7)).toBe(true)
+
+    // Total should be 3 (rows 5, 6, 7)
+    expect(pendingRowsCache.size).toBe(3)
+  })
 })

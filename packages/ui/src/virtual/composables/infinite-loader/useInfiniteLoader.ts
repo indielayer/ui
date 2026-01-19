@@ -28,6 +28,11 @@ export function useInfiniteLoader(
   // Check if a row is loaded or pending
   const isRowLoadedOrPending = (index: number): boolean => {
     if (isRowLoaded.value(index)) {
+      // Clean up: remove from pending cache if it's now loaded
+      if (pendingRowsCache.has(index)) {
+        pendingRowsCache.delete(index)
+      }
+
       return true
     }
 
@@ -36,6 +41,20 @@ export function useInfiniteLoader(
 
   // Main callback to be passed to VList's onRowsRendered
   const onRowsRendered: OnRowsRendered = ({ startIndex, stopIndex }: Indices) => {
+    // Clean up: remove loaded rows from pending cache
+    // This prevents unbounded memory growth in long-running apps
+    if (pendingRowsCache.size > 0) {
+      const loadedIndices: number[] = []
+
+      pendingRowsCache.forEach((index) => {
+        if (isRowLoaded.value(index)) {
+          loadedIndices.push(index)
+        }
+      })
+
+      loadedIndices.forEach((index) => pendingRowsCache.delete(index))
+    }
+
     const unloadedIndices = scanForUnloadedIndices({
       isRowLoaded: isRowLoadedOrPending,
       minimumBatchSize: minimumBatchSize.value,

@@ -119,13 +119,10 @@ export function useDynamicRowHeight({
 
   const resizeObserver = new ResizeObserver(resizeObserverCallback)
 
-  // Only use onBeforeUnmount if we're inside a component instance
-  const instance = getCurrentInstance()
+  onBeforeUnmount(cleanup)
 
-  if (instance) {
-    onBeforeUnmount(() => {
-      resizeObserver.disconnect()
-    })
+  function cleanup() {
+    resizeObserver.disconnect()
   }
 
   const observeRowElements = (elements: Element[] | NodeListOf<Element>) => {
@@ -145,5 +142,6 @@ export function useDynamicRowHeight({
     getRowHeight,
     setRowHeight,
     observeRowElements,
+    cleanup,
   }
 }
