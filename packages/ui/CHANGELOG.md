@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.17.1
+
+### Patch Changes
+
+- fix(input): suffix padding right ([`097106e`](https://github.com/indielayer/ui/commit/097106e3206ff5261ad8f9820c8d296172ad6117))
+
 ## 1.17.0
 
 ### Minor Changes
