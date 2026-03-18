@@ -152,14 +152,13 @@ defineExpose({ focus, blur, reset, validate, setError })
         ref="elRef"
         :class="[
           classes.input,
-          type === 'password' ? 'pr-10' : '',
           // error
           errorInternal
             ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
             : 'focus:outline-[color:var(--x-input-border)]',
           {
             '!pl-10': iconLeft || icon,
-            '!pr-10': iconRight,
+            '!pr-10': iconRight || showPasswordToggle || showClearIcon,
           },
         ]"
         :disabled="disabled"
