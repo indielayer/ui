@@ -1,6 +1,6 @@
 {
   "name": "@indielayer/ui",
-  "version": "1.17.0",
+  "version": "1.17.1",
   "description": "Indielayer UI Components with Tailwind CSS build for Vue 3",
   "author": {
     "name": "João Teixeira",
