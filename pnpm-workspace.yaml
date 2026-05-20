@@ -3,3 +3,11 @@ packages:
   - 'packages/demo-nuxt'
   - 'packages/demo-vue'
   - 'packages/create-ui'
+allowBuilds:
+  esbuild: false
+  simple-git-hooks: true
+  vue-demi: true
+publishBranch: main
+dude: true
+shamefullyHoist: true
+shellEmulator: true

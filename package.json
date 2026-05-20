@@ -45,7 +45,7 @@
     ]
   },
   "simple-git-hooks": {
-    "pre-commit": "npm exec lint-staged --concurrent false",
-    "commit-msg": "npm exec tsx .scripts/verifyCommit.ts $1"
+    "pre-commit": "pnpm exec lint-staged",
+    "commit-msg": "pnpm exec tsx .scripts/verifyCommit.ts $1"
   }
 }
