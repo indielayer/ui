@@ -1,0 +1,16 @@
+---
+description: Vue component patterns for @indielayer/ui
+globs: packages/ui/src/components/**/*
+alwaysApply: false
+---
+
+# Vue components
+
+- Export as `X<Name>` from `index.ts` (e.g. `XButton`)
+- SFC `name` matches: `XButton` in plain `<script lang="ts">`
+- Use `ExtractPublicPropTypes` for public prop types
+- Prefer existing composables: `useTheme`, `useColors`, `useCommon` — read a sibling component before adding new patterns
+- Sub-components live in the same folder with their own theme files
+- Register new components in `src/components/index.ts` and both `src/themes/base/components.ts` and `src/themes/carbon/components.ts`
+
+Reference implementation: `packages/ui/src/components/button/`

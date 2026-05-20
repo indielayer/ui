@@ -16,7 +16,7 @@ Hi! I'm really excited that you are interested in contributing. Before submittin
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) **version 18+** and [pnpm](https://pnpm.io/) **>=9**.
+You will need [Node.js](http://nodejs.org) **version 24+** and [pnpm](https://pnpm.io/) **>=11**.
 
 After cloning the repo, run:
 
@@ -37,3 +37,9 @@ $ pnpm dev
 # build all dist files
 $ pnpm build
 ```
+
+### Working with AI
+
+Contributors using Cursor or other coding agents should read [AGENTS.md](../AGENTS.md) at the repo root. Project rules live in `.cursor/rules/`; workflows for new components, themes, docs, and releases are in `.cursor/skills/`.
+
+The docs site publishes [llms.txt](https://indielayer.com/ui/docs/llms.txt) for LLM-friendly navigation; regenerate it with `cd packages/ui && pnpm gen:llms` after adding component documentation.

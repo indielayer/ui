@@ -1,0 +1,15 @@
+---
+description: Component documentation site under packages/ui/docs
+globs: packages/ui/docs/**/*
+alwaysApply: false
+---
+
+# Docs site
+
+- Only `docs/pages/component/<name>/index.vue` becomes a route (`/component/<name>`)
+- Demo SFCs (`usage.vue`, `variants.vue`, …) are imported into `index.vue`, not routed directly
+- Demos use kebab-case components: `<x-button>`, `<x-divider>`
+- Import components from `@indielayer/ui`; use `?raw` imports for code preview snippets
+- Wire `back` / `next` to adjacent component folder names (lowercase)
+- Wrap content in `<document-page>` — see `docs/pages/component/button/index.vue`
+- After adding docs: `cd packages/ui && pnpm gen:search && pnpm gen:llms`

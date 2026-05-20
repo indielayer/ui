@@ -1,0 +1,15 @@
+---
+description: Indielayer UI monorepo conventions and commands
+alwaysApply: true
+---
+
+# Indielayer UI
+
+- Primary package: `packages/ui` (`@indielayer/ui`)
+- Node.js 24 and pnpm 11 (see root `package.json` `packageManager`)
+- Use `pnpm` (not npm/yarn) from repo root
+- Before finishing UI changes: run `pnpm lint:ui` and `pnpm test` when you touched `packages/ui`
+- Do not edit `lib/` or other build output
+- Commits follow `.github/COMMIT_CONVENTION.md` (e.g. `feat(divider): adjust spacing`)
+- Publishing changes need a changeset: `pnpm changeset`
+- See `AGENTS.md` and `.cursor/skills/` for workflows

@@ -55,6 +55,7 @@
     "gen:types": "vue-tsc --declaration --emitDeclarationOnly -p tsconfig.vitest.json --composite false",
     "gen:version": "node .scripts/gen-version.cjs",
     "gen:search": "node .scripts/gen-search.cjs",
+    "gen:llms": "node .scripts/gen-llms.cjs",
     "test": "pnpm test:unit",
     "test:unit": "vitest --environment jsdom",
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
