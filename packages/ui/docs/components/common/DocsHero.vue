@@ -146,18 +146,18 @@ function scrollToInstallation() {
       </div>
 
       <div
-        class="docs-hero__panel hidden lg:block w-full min-w-0"
-        :class="{ 'docs-hero__panel--hover': isHovering }"
+        class="docs-hero-panel hidden lg:block w-full min-w-0"
+        :class="{ 'docs-hero-panel-hover': isHovering }"
       >
         <div
           ref="panelRef"
-          class="docs-hero__panel-tilt"
+          class="docs-hero-panel-tilt"
           :style="{ transform: panelTransform }"
           @pointerenter="onPanelEnter"
           @pointermove="onPanelMove"
           @pointerleave="onPanelLeave"
         >
-          <div class="docs-hero__panel-surface rounded-xl border border-gray-200 bg-white shadow-lg shadow-gray-200/60 dark:border-gray-700 dark:bg-gray-950 dark:shadow-2xl dark:shadow-primary-500/10 max-h-[640px] overflow-y-auto p-6">
+          <div class="docs-hero-panel-surface rounded-xl border border-gray-200 bg-white shadow-lg shadow-gray-200/60 dark:border-gray-700 dark:bg-gray-950 dark:shadow-2xl dark:shadow-primary-500/10 max-h-[640px] overflow-y-auto p-6">
             <example-blocks />
           </div>
         </div>
@@ -168,28 +168,28 @@ function scrollToInstallation() {
 
 <style lang="postcss" scoped>
 .docs-hero {
-  background: radial-gradient(50% 100% at 25% 100%, #f8fafc 0%, rgba(248, 250, 252, 0) 100%);
+  background: radial-gradient(50% 100% at 25% 100%, #f8fafc 0%, rgb(248 250 252 / 0%) 100%);
 }
 
 html.dark .docs-hero {
-  background: radial-gradient(50% 100% at 25% 100%, rgb(16 185 129 / 16%) 0%, rgba(248, 250, 252, 0) 100%);
+  background: radial-gradient(50% 100% at 25% 100%, rgb(16 185 129 / 16%) 0%, rgb(248 250 252 / 0%) 100%);
 }
 
-.docs-hero__panel:not(.docs-hero__panel--hover) {
+.docs-hero-panel:not(.docs-hero-panel-hover) {
   animation: docs-hero-float 6s ease-in-out infinite;
 }
 
-.docs-hero__panel--hover {
+.docs-hero-panel-hover {
   animation: none;
 }
 
-.docs-hero__panel-tilt {
+.docs-hero-panel-tilt {
   transform-style: preserve-3d;
   transition: transform 0.2s ease-out;
   will-change: transform;
 }
 
-.docs-hero__panel-surface {
+.docs-hero-panel-surface {
   transform: translateZ(0);
 }
 
@@ -205,11 +205,11 @@ html.dark .docs-hero {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .docs-hero__panel {
+  .docs-hero-panel {
     animation: none;
   }
 
-  .docs-hero__panel-tilt {
+  .docs-hero-panel-tilt {
     transition: none;
   }
 }

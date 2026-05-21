@@ -14,7 +14,7 @@ From the repo root:
 ```bash
 pnpm i
 pnpm dev                    # docs + component dev (packages/ui)
-pnpm lint:ui && pnpm test   # required before UI PRs (CI enforces this)
+pnpm lint:ui && pnpm lint:style && pnpm test   # required before UI PRs (CI enforces this)
 pnpm build:docs             # production docs build
 pnpm changeset              # user-facing library changes (before merge)
 ```
@@ -22,12 +22,12 @@ pnpm changeset              # user-facing library changes (before merge)
 ### Linting (required)
 
 - **CI**: `.github/workflows/pr_check.yml` runs `pnpm lint:ui` and `pnpm lint:style` on every PR.
-- **Pre-commit**: `lint-staged` runs `eslint --cache --fix` on staged `*.{js,ts,vue}` (via `simple-git-hooks`; enabled after `pnpm i`).
+- **Pre-commit**: `lint-staged` runs `eslint --cache --fix` on staged `*.{js,ts,vue}` and `stylelint --fix` on staged `packages/ui/**/*.{css,vue,postcss,scss,sass}` (via `simple-git-hooks`; enabled after `pnpm i`).
 - **Agents / editors**: After editing files, run ESLint on touched paths before finishing:
 
   ```bash
   pnpm eslint --cache --fix --ext .js,.ts,.vue packages/ui/docs   # docs example
-  pnpm lint:ui   # must exit 0 before merge
+  pnpm lint:ui && pnpm lint:style   # must exit 0 before merge
   ```
 
 - **VS Code**: `.vscode/settings.json` enables ESLint fix-on-save when the ESLint extension is installed.

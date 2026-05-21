@@ -60,7 +60,8 @@
     "test": "pnpm test:unit",
     "test:unit": "vitest --environment jsdom",
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "stylelint": "stylelint \"**/*.{css,vue,postcss,scss,sass}\" --ignore-path .gitignore"
+    "stylelint": "stylelint \"**/*.{css,vue,postcss,scss,sass}\" --ignore-path .gitignore",
+    "stylelint:fix": "stylelint \"**/*.{css,vue,postcss,scss,sass}\" --ignore-path .gitignore --fix"
   },
   "peerDependencies": {
     "tailwindcss": "^3.0.0",

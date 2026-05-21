@@ -12,6 +12,7 @@
     "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
     "lint:fix": "eslint --cache --fix --ext .js,.ts,.vue ./packages/ui",
     "lint:style": "cd packages/ui && pnpm run stylelint",
+    "lint:style:fix": "cd packages/ui && pnpm run stylelint:fix",
     "test": "cd packages/ui && pnpm test",
     "changeset": "changeset",
     "version:prod": "changeset version",
@@ -44,6 +45,9 @@
   "lint-staged": {
     "*.{cjs,js,jsx,ts,tsx,vue}": [
       "eslint --cache --fix"
+    ],
+    "packages/ui/**/*.{css,vue,postcss,scss,sass}": [
+      "pnpm --dir packages/ui exec stylelint --fix"
     ]
   },
   "simple-git-hooks": {
