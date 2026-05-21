@@ -5,8 +5,7 @@
   },
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.fixAll.stylelint": "always"
+    "source.fixAll.eslint": "always"
   },
   "eslint.validate": [
     "javascript",
@@ -17,13 +16,6 @@
   ],
   "eslint.workingDirectories": [
     { "directory": "packages/ui", "changeProcessCWD": true }
-  ],
-  "stylelint.validate": [
-    "css",
-    "scss",
-    "sass",
-    "postcss",
-    "vue"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
 }

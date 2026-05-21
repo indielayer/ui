@@ -10,7 +10,7 @@ import SelectableDemoCode from './selectable.vue?raw'
 import SelectableDemo from './selectable.vue'
 
 const title = 'Table'
-const description = 'Tables are used to display data in a tabular format.'
+const description = 'Tables display tabular data with single- or multi-column sorting, selection, expandable rows, and virtual lists.'
 const components = [XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow]
 const demos = [{
   name: 'Usage',

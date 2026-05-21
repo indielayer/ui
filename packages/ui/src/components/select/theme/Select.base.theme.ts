@@ -5,7 +5,7 @@ const theme: SelectTheme = {
     wrapper: '',
 
     box: ({ props, data }) => {
-      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm']
+      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-xs']
 
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
 

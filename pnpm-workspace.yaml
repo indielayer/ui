@@ -3,8 +3,13 @@ packages:
   - 'packages/demo-nuxt'
   - 'packages/demo-vue'
   - 'packages/create-ui'
+
+# Pin unhead v1 for Nuxt 3.10 compatibility (v2 breaks createServerHead)
+overrides:
+  unhead: 1.8.10
+  '@unhead/vue': 1.8.10
 allowBuilds:
-  esbuild: false
+  esbuild: true
   simple-git-hooks: true
   vue-demi: true
 publishBranch: main

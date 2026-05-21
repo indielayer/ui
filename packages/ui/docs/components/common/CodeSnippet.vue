@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { createHighlighter } from 'shiki'
-import indielayerTheme from './Indielayer-theme.json'
-
-const highlighter = createHighlighter({
-  langs: ['js', 'ts', 'vue-html', 'bash', 'vue'],
-  themes: [indielayerTheme as any],
-})
+import { ref, watch } from 'vue'
+import { docsHighlighter, INDIELAYER_THEME } from '../../utils/shikiHighlighter'
 
 const props = defineProps({
   code: String,
@@ -22,27 +16,45 @@ const props = defineProps({
 
 const highlighted = ref('')
 
-onMounted(async () => {
-  await (await highlighter).loadTheme(indielayerTheme as any)
-  highlighted.value = (await highlighter).codeToHtml(props.code || '', { lang: props.lang, theme: 'Indielayer' })
-})
+async function updateHighlight() {
+  const highlighter = await docsHighlighter
+
+  highlighted.value = highlighter.codeToHtml(props.code ?? '', {
+    lang: props.lang,
+    theme: INDIELAYER_THEME,
+  })
+}
+
+watch(
+  () => [props.code, props.lang] as const,
+  updateHighlight,
+  { immediate: true },
+)
 </script>
 
 <template>
   <div class="relative">
     <div v-html="highlighted"></div>
-    <copy-button v-if="showCopyButton" class="!absolute top-2 right-2" :text="code"/>
+    <copy-button v-if="showCopyButton" class="absolute! top-2 right-2" :text="code"/>
   </div>
 </template>
 
-<style lang="postcss">
+<style>
 .shiki {
-  @apply rounded-md overflow-x-auto p-4 text-sm;
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  overflow-x: auto;
+  padding: 1rem;
+}
 
-  code { font-family: "Fira Code", monospace; }
+.shiki code {
+  font-family: "Fira Code", monospace;
+}
 
-  @supports (font-variation-settings: normal) {
-    code { font-family: "Fira Code VF", monospace; }
+@supports (font-variation-settings: normal) {
+  .shiki code {
+    font-family: "Fira Code VF", monospace;
   }
 }
 </style>

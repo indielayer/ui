@@ -2,8 +2,7 @@
  * @file useVirtualList composable adapted from https://github.com/vueuse/vueuse/blob/main/packages/core/useVirtualList/index.ts
  */
 import { computed, ref, shallowRef, unref, watch } from 'vue'
-import type { Ref, ShallowRef, StyleValue } from 'vue'
-import type { MaybeRef } from '@vueuse/shared'
+import type { MaybeRef, Ref, ShallowRef, StyleValue } from 'vue'
 import { useElementSize } from '@vueuse/core'
 
 type UseVirtualListItemSize = number | ((index: number) => number)

@@ -147,45 +147,47 @@ defineExpose({ focus, blur })
   </component>
 </template>
 
-<style lang="postcss" scoped module>
+<style scoped module>
 .button {
   color: var(--x-button-text);
   background-color: var(--x-button-bg);
   border-color: var(--x-button-border);
+}
 
-  &--glow {
-    box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-button-glow), 0 4px 6px -4px var(--x-button-glow);
-  }
+.button--glow {
+  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-button-glow), 0 4px 6px -4px var(--x-button-glow);
+}
 
-  &:hover {
-    color: var(--x-button-text-hover, var(--x-button-text));
-    background-color: var(--x-button-bg-hover, var(--x-button-bg));
-    border-color: var(--x-button-border-hover, var(--x-button-border));
-  }
+.button:hover {
+  color: var(--x-button-text-hover, var(--x-button-text));
+  background-color: var(--x-button-bg-hover, var(--x-button-bg));
+  border-color: var(--x-button-border-hover, var(--x-button-border));
+}
 
-  &:active {
-    color: var(--x-button-text-active, var(--x-button-text));
-    background-color: var(--x-button-bg-active, var(--x-button-bg));
-    border-color: var(--x-button-border-active, var(--x-button-border));
-  }
+.button:active {
+  color: var(--x-button-text-active, var(--x-button-text));
+  background-color: var(--x-button-bg-active, var(--x-button-bg));
+  border-color: var(--x-button-border-active, var(--x-button-border));
+}
 
-  :global(.dark) &,
-  &:global(.dark) {
-    color: var(--x-button-dark-text, var(--x-button-text));
-    background-color: var(--x-button-dark-bg, var(--x-button-bg));
-    border-color: var(--x-button-dark-border, var(--x-button-border));
+:global(.dark) .button,
+.button:global(.dark) {
+  color: var(--x-button-dark-text, var(--x-button-text));
+  background-color: var(--x-button-dark-bg, var(--x-button-bg));
+  border-color: var(--x-button-dark-border, var(--x-button-border));
+}
 
-    &:hover {
-      color: var(--x-button-dark-text-hover, var(--x-button-dark-text, var(--x-button-text)));
-      background-color: var(--x-button-dark-bg-hover, var(--x-button-dark-bg, var(--x-button-bg)));
-      border-color: var(--x-button-dark-border-hover, var(--x-button-dark-border, var(--x-button-border)));
-    }
+:global(.dark) .button:hover,
+.button:global(.dark):hover {
+  color: var(--x-button-dark-text-hover, var(--x-button-dark-text, var(--x-button-text)));
+  background-color: var(--x-button-dark-bg-hover, var(--x-button-dark-bg, var(--x-button-bg)));
+  border-color: var(--x-button-dark-border-hover, var(--x-button-dark-border, var(--x-button-border)));
+}
 
-    &:active {
-      color: var(--x-button-dark-text-active, var(--x-button-dark-text));
-      background-color: var(--x-button-dark-bg-active, var(--x-button-dark-bg, var(--x-button-bg)));
-      border-color: var(--x-button-dark-border-active, var(--x-button-dark-border, var(--x-button-border)));
-    }
-  }
+:global(.dark) .button:active,
+.button:global(.dark):active {
+  color: var(--x-button-dark-text-active, var(--x-button-dark-text));
+  background-color: var(--x-button-dark-bg-active, var(--x-button-dark-bg, var(--x-button-bg)));
+  border-color: var(--x-button-dark-border-active, var(--x-button-dark-border, var(--x-button-border)));
 }
 </style>

@@ -62,7 +62,7 @@ const selected = ref<number[]>([])
           outlined
           color="error"
           size="xs"
-          @click="items = items.filter((i) => i.id !== item.id)"
+          @click.stop.prevent="items = items.filter((i) => i.id !== item.id)"
         />
       </template>
     </x-table>

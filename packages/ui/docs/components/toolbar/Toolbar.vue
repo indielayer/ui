@@ -65,7 +65,7 @@ const isDev = import.meta.env.DEV
   </x-container>
 </template>
 
-<style lang="postcss">
+<style>
 .logo-white {
   display: none;
 }

@@ -92,7 +92,7 @@ const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
   </component>
 </template>
 
-<style lang="postcss" module>
+<style module>
 .avatar {
   color: var(--x-avatar-text);
   background-color: var(--x-avatar-bg);

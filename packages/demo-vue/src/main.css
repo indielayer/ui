@@ -1,3 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@indielayer/ui/tailwind.css";
+
+@source "../index.html";
+@source "./**/*.{vue,js,ts}";
+@source "../../../node_modules/@indielayer/ui/{lib,src}/**/*";

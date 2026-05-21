@@ -146,10 +146,7 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   </v-dropdown>
 </template>
 
-<style lang="postcss">
-/* stylelint-disable no-duplicate-selectors */
-/* stylelint-disable no-descending-specificity */
-/* stylelint-disable selector-class-pattern */
+<style>
 .resize-observer {
   position: absolute;
   top: 0;
@@ -163,18 +160,18 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   display: block;
   overflow: hidden;
   opacity: 0;
+}
 
-  object {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: -1;
-  }
+.resize-observer object {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .v-popper__popper {

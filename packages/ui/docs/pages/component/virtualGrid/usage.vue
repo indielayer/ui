@@ -9,10 +9,13 @@ const gridColumnCount = 1000
     :column-count="gridColumnCount"
     :row-height="48"
     :column-width="100"
-    class="h-96 border border-gray-200 rounded-md bg-white w-full"
+    class="h-96 w-full rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
   >
     <template #cell="{ rowIndex, columnIndex, style }">
-      <div :style="style" class="h-12 flex items-center justify-center border border-gray-200">
+      <div
+        :style="style"
+        class="flex h-12 items-center justify-center border border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200"
+      >
         R{{ rowIndex }}, C{{ columnIndex }}
       </div>
     </template>

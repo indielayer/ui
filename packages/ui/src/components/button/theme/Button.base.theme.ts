@@ -9,7 +9,7 @@ const theme: ButtonTheme = {
       if (!data.isButtonGroup) classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
 
       // shadow
-      if (!props.flat && !props.light && !props.ghost && !props.disabled && !props.loading) classes.push('shadow-sm')
+      if (!props.flat && !props.light && !props.ghost && !props.disabled && !props.loading) classes.push('shadow-xs')
 
       // size
       if (props.size === 'xs') classes.push(slots.default ? `py-1 text-xs ${props.icon ? 'px-2' : 'px-2'}` : 'leading-none p-1')

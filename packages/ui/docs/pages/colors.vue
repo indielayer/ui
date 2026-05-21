@@ -27,6 +27,15 @@ function copyPalette(val: any) {
 
   notifications?.success('Copied to clipboard!')
 }
+
+const tailwindThemeSnippet = `/* src/assets/tailwind.css — after @import "@indielayer/ui/tailwind.css" */
+@theme {
+  --color-primary-500: var(--color-emerald-500);
+  --color-secondary-500: var(--color-slate-500);
+  --color-success-500: var(--color-green-500);
+  --color-warning-500: var(--color-yellow-500);
+  --color-error-500: var(--color-red-500);
+}`
 </script>
 
 <template>
@@ -90,25 +99,8 @@ app.use(UI, {
 
     <div>
       <code-snippet
-        lang="js"
-        :code="`// tailwind.config.js
-//...
-const colors = require('tailwindcss/colors')
-
-module.exports = {
-  //...
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
-      },
-    },
-  },
-}`"
+        lang="css"
+        :code="tailwindThemeSnippet"
       />
     </div>
 

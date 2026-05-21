@@ -39,7 +39,7 @@ const { styles, classes, className } = useTheme('CarouselSlide', {}, props)
   </component>
 </template>
 
-<style lang="postcss" scoped module>
+<style scoped module>
 .carousel-slide {
   :slotted(img) {
     width: 100%;

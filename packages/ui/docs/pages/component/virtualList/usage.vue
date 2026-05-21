@@ -6,10 +6,13 @@ const listItems = Array.from({ length: 10000 }, (_, i) => `Item ${i + 1}`)
   <x-virtual-list
     :row-count="listItems.length"
     :row-height="48"
-    class="h-96 border border-gray-200 rounded-md bg-white"
+    class="h-96 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
   >
     <template #row="{ index, style }">
-      <div :style="style" class="h-12 flex items-center justify-center border-b border-gray-200">
+      <div
+        :style="style"
+        class="flex h-12 items-center justify-center border-b border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200"
+      >
         {{ listItems[index] }}
       </div>
     </template>

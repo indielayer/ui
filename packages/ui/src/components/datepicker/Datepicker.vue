@@ -326,8 +326,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
   </div>
 </template>
 
-<style lang="postcss">
-/* stylelint-disable selector-class-pattern */
+<style>
 .dp__menu {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);

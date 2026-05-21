@@ -182,44 +182,40 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
   </component>
 </template>
 
-<style lang="postcss" module scoped>
-  .menu-item {
-    color: var(--x-menu-item-text);
-    background-color: var(--x-menu-item-bg);
+<style module scoped>
+.menu-item {
+  color: var(--x-menu-item-text);
+  background-color: var(--x-menu-item-bg);
+}
 
-    &::before {
-      content: "";
-      position: absolute;
-      left: -1px;
-      height: 100%;
-      width: 1px;
-      background-color: transparent;
-    }
+.menu-item::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  height: 100%;
+  width: 1px;
+  background-color: transparent;
+}
 
-    &:hover {
-      color: var(--x-menu-item-text-hover, var(--x-menu-item-text));
-      background-color: var(--x-menu-item-bg-hover, var(--x-menu-item-bg));
-    }
+.menu-item:hover {
+  color: var(--x-menu-item-text-hover, var(--x-menu-item-text));
+  background-color: var(--x-menu-item-bg-hover, var(--x-menu-item-bg));
+}
 
-    :global(.dark) &,
-    &:global(.dark) {
-      color: var(--x-menu-item-dark-text);
-      background: var(--x-menu-item-dark-bg);
+:global(.dark) .menu-item,
+.menu-item:global(.dark) {
+  color: var(--x-menu-item-dark-text);
+  background: var(--x-menu-item-dark-bg);
+}
 
-      &:hover {
-        color: var(--x-menu-item-dark-text-hover, var(--x-menu-item-dark-text));
-        background-color: var(--x-menu-item-dark-bg-hover, var(--x-menu-item-dark-bg));
-      }
-    }
-  }
+:global(.dark) .menu-item:hover,
+.menu-item:global(.dark):hover {
+  color: var(--x-menu-item-dark-text-hover, var(--x-menu-item-dark-text));
+  background-color: var(--x-menu-item-dark-bg-hover, var(--x-menu-item-dark-bg));
+}
 
-  :global(.x-menu-inner) {
-    /* stylelint-disable-next-line no-descending-specificity */
-    .menu-item {
-      &:hover::before,
-      &--active::before {
-        background-color: var(--x-menu-item-border-hover);
-      }
-    }
-  }
+:global(.x-menu-inner) .menu-item:hover::before,
+:global(.x-menu-inner) .menu-item--active::before {
+  background-color: var(--x-menu-item-border-hover);
+}
 </style>

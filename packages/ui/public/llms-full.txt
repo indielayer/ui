@@ -101,40 +101,27 @@ yarn add @indielayer/ui
 pnpm add @indielayer/ui
 ```
 
-### 2. Setup Tailwind CSS
+### 2. Setup Tailwind CSS v4
 
-If you do not have Tailwind CSS 3 installed, see the [Tailwind 3 Vite install guide](https://tailwindcss.com/docs/guides/vite).
+Indielayer UI requires Tailwind CSS v4 (Safari 16.4+, Chrome 111+, Firefox 128+). See the [Tailwind v4 Vite guide](https://tailwindcss.com/docs/installation/using-vite).
 
-Add the Indielayer Tailwind CSS preset to your `tailwind.config.js`:
+Import theme tokens in your app stylesheet (`src/assets/tailwind.css`):
 
-```js
-// tailwind.config.js
-const colors = require('tailwindcss/colors')
-const indielayer = require('@indielayer/ui/tailwind.preset')
+```css
+@import "tailwindcss";
+@import "@indielayer/ui/tailwind.css";
 
-module.exports = {
-  darkMode: 'class',
-  presets: [indielayer()],
-  content: [
-    './index.html',
-    './**/*.vue',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-    'node_modules/@indielayer/ui/{lib,src}/**/*',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
-      },
-    },
-  },
-  plugins: [],
+@source "../../index.html";
+@source "../**/*.{vue,js,ts}";
+@source "../../node_modules/@indielayer/ui/{lib,src}/**/*";
+
+@theme {
+  --color-primary-500: var(--color-emerald-500);
+  --color-secondary-500: var(--color-slate-500);
 }
 ```
+
+Use `@tailwindcss/postcss` in Vite (`css.postcss.plugins`) or Nuxt (`postcss.plugins`). The `tailwind.preset.js` export was removed in v2; see the [upgrade guide](https://tailwindcss.com/docs/upgrade-guide).
 
 ---
 
@@ -172,9 +159,7 @@ export default defineNuxtConfig({
   css: ['~/assets/tailwind.css'],
   postcss: {
     plugins: {
-      'tailwindcss/nesting': {},
-      tailwindcss: {},
-      autoprefixer: {},
+      '@tailwindcss/postcss': {},
     },
   },
 })
@@ -2260,12 +2245,21 @@ const steps = [
 
 A flexible table component with support for sorting, expandable rows, virtual lists, selection, and custom cell templates.
 
+### Sorting
+
+Sort state is controlled with `v-model:sort` as an array of strings: `"columnKey,order"` where `order` is `-1` (descending) or `1` (ascending). Clicking a sortable header cycles that column: descending → ascending → cleared.
+
+By default (`sortMultiple: false`), only one column is sorted at a time — clicking another column replaces the previous sort. Set `sort-multiple` to allow stacking sorts; the array order defines priority (first entry is primary, then tie-breakers).
+
+The table does not sort `items` itself — apply the `sort` array in your data layer (see usage demo).
+
 ### Props
 | Name                  | Type                | Default    | Description                                 |
 |-----------------------|---------------------|------------|---------------------------------------------|
 | headers               | array of TableHeader| []         | Table column definitions                    |
 | items                 | array               | []         | Table data items                            |
 | sort                  | array of string     | []         | Sort state                                  |
+| sortMultiple          | boolean             | false      | Allow sorting by multiple columns at once   |
 | loading               | boolean             | false      | Show loading spinner                        |
 | loadingSkeleton       | boolean             | false      | Show skeleton loader                        |
 | loadingLines          | number \| string    | 3          | Number of skeleton lines                    |

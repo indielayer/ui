@@ -86,7 +86,7 @@ defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
   </div>
 </template>
 
-<style lang="postcss" module>
+<style module>
 .scrollwrap {
   &::before,
   &::after {

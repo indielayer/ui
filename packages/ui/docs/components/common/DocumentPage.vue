@@ -211,32 +211,34 @@ const nextTo = computed(() => (props.next ? `/component/${props.next}` : null))
   </div>
 </template>
 
-<style lang="postcss">
-.document-page {
-  h1,
-  h2,
-  h3 {
-    position: relative;
-  }
+<style>
+.document-page h1,
+.document-page h2,
+.document-page h3 {
+  position: relative;
+}
 
-  h2 {
-    @apply text-xl font-semibold mb-4 mt-8;
-  }
+.document-page h2 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--text-xl--line-height);
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
 
-  h1 .anchor,
-  h2 .anchor,
-  h3 .anchor {
-    position: absolute;
-    left: -24px;
-    width: 30px;
-    display: none;
-    color: #96a1b3 !important;
-  }
+.document-page h1 .anchor,
+.document-page h2 .anchor,
+.document-page h3 .anchor {
+  position: absolute;
+  left: -24px;
+  width: 30px;
+  display: none;
+  color: #96a1b3 !important;
+}
 
-  h1:hover .anchor,
-  h2:hover .anchor,
-  h3:hover .anchor {
-    display: block;
-  }
+.document-page h1:hover .anchor,
+.document-page h2:hover .anchor,
+.document-page h3:hover .anchor {
+  display: block;
 }
 </style>

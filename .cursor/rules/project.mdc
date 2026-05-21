@@ -8,7 +8,7 @@ alwaysApply: true
 - Primary package: `packages/ui` (`@indielayer/ui`)
 - Node.js 24 and pnpm 11 (see root `package.json` `packageManager`)
 - Use `pnpm` (not npm/yarn) from repo root
-- Before finishing any change under `packages/ui`: run `pnpm eslint --cache --fix --ext .js,.ts,.vue <changed-paths>` then `pnpm lint:ui` and `pnpm lint:style` (must pass with zero errors) and `pnpm test:ci` when library code changed
+- Before finishing any change under `packages/ui`: run `pnpm eslint --cache --fix --ext .js,.ts,.vue <changed-paths>` then `pnpm lint:ui` (must pass with zero errors) and `pnpm test:ci` when library code changed
 - **Tests in agents/CI**: never run bare `pnpm test` in non-interactive terminals — Vitest defaults to watch mode and the process will not exit. Use `pnpm test:ci` (or `CI=true pnpm test`) so tests run once and exit
 - Do not leave new ESLint errors or warnings in files you edited; fix manually if `--fix` does not resolve them
 - Do not edit `lib/` or other build output

@@ -12,6 +12,7 @@ const tableProps = {
     type: Array as PropType<string[]>,
     default: () => [],
   },
+  sortMultiple: Boolean,
   loading: Boolean,
   loadingSkeleton: Boolean,
   loadingLines: {
@@ -174,7 +175,26 @@ function getSort(headerValue: string | undefined, sort: string[]): TableHeaderSo
 }
 
 function sortHeader(header: TableHeader) {
-  // update sort array
+  if (!header.value) return
+
+  if (!props.sortMultiple) {
+    const index = props.sort.findIndex((entry) => entry.split(',')[0] === header.value)
+
+    if (index >= 0) {
+      const order = props.sort[index].split(',')[1]
+
+      if (order === '-1') {
+        emit('update:sort', [`${header.value},1`])
+      } else {
+        emit('update:sort', [])
+      }
+    } else {
+      emit('update:sort', [`${header.value},-1`])
+    }
+
+    return
+  }
+
   const sort = props.sort.slice(0)
   let exists = false
 
@@ -185,11 +205,9 @@ function sortHeader(header: TableHeader) {
       exists = true
 
       if (order === '-1') {
-        // update position to 1
         sort.splice(i, 1, `${header.value},1`)
         break
       } else if (order === '1') {
-        // delete position
         sort.splice(i, 1)
         break
       }

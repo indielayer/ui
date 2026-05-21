@@ -71,7 +71,7 @@ const { styles, classes, className } = useTheme('Alert', {}, props)
       <slot></slot>
     </div>
     <template v-if="removable">
-      <div class="flex-grow"></div>
+      <div class="grow"></div>
       <button type="button" class="shrink-0" :aria-label="closeLabel" @click="(e: Event) => $emit('remove', e)">
         <slot name="removeIcon">
           <x-icon :icon="closeIcon"/>
@@ -81,21 +81,21 @@ const { styles, classes, className } = useTheme('Alert', {}, props)
   </div>
 </template>
 
-<style lang="postcss" module>
+<style module>
 .alert {
   color: var(--x-alert-text);
   background-color: var(--x-alert-bg);
   border-color: var(--x-alert-border);
+}
 
-  &--glow {
-    box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-alert-glow), 0 4px 6px -4px var(--x-alert-glow);
-  }
+.alert--glow {
+  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-alert-glow), 0 4px 6px -4px var(--x-alert-glow);
+}
 
-  :global(.dark) &,
-  &:global(.dark) {
-    color: var(--x-alert-dark-text, var(--x-alert-text));
-    background-color: var(--x-alert-dark-bg, var(--x-alert-bg));
-    border-color: var(--x-alert-dark-border, var(--x-alert-border));
-  }
+:global(.dark) .alert,
+.alert:global(.dark) {
+  color: var(--x-alert-dark-text, var(--x-alert-text));
+  background-color: var(--x-alert-dark-bg, var(--x-alert-bg));
+  border-color: var(--x-alert-dark-border, var(--x-alert-border));
 }
 </style>

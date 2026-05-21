@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { XLink } from '@indielayer/ui'
+import { XButton, XLink } from '@indielayer/ui'
 </script>
 
 <template>
-  <div class="flex items-center justify-center h-screen bg-[#001e26] dark text-[#accac8] flex-col">
+  <div class="flex flex-col items-center justify-center h-screen bg-[#001e26] text-[#accac8]">
     <div class="text-2xl">Welcome!</div>
     <div class="mt-6">Documentation links to get you started:</div>
     <div class="flex flex-col space-y-8 my-6 text-center">
-      <x-link
-        href="https://v3.nuxtjs.org/"
+      <x-button
         color="emerald"
         shadow
-        external
-        target="_blank"
-      >Nuxt 3</x-link>
+      >
+        Click me
+      </x-button>
       <x-link
         href="https://vuejs.org/"
         color="emerald"

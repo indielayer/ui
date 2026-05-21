@@ -5,6 +5,7 @@ import { defineConfig, loadEnv, type PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { visualizer } from 'rollup-plugin-visualizer'
+import tailwindcssPostcss from '@tailwindcss/postcss'
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -19,6 +20,11 @@ export default defineConfig(({ command, mode }) => {
     return {
       base: viteEnv.VITE_BASE || '/',
       plugins: [vue(), vueJsx()],
+      css: {
+        postcss: {
+          plugins: [tailwindcssPostcss()],
+        },
+      },
       publicDir: 'public',
       resolve: {
         alias: {
@@ -81,10 +87,8 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     test: {
+      environment: 'jsdom',
       setupFiles: ['./vitest.setup.ts'],
-      transformMode: {
-        web: [/\.[jt]sx$/],
-      },
       exclude: ['**/lib/**', '**/node_modules/**', '**/dist/**', '**/cypress/**', '**/.{idea,git,cache,output,temp}/**'],
     },
   }

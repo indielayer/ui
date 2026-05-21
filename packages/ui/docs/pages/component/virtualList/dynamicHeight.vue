@@ -50,24 +50,24 @@ const rowHeight = useDynamicRowHeight({
   <x-virtual-list
     :row-count="items.length"
     :row-height="rowHeight"
-    style="height: 500px; border: 1px solid #ccc;"
+    class="h-[500px] rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
   >
     <template #row="{ index, style }">
       <div
         :style="style"
         :class="[
-          'flex items-start py-3 px-4 border-b border-gray-200 cursor-pointer transition-colors gap-2',
-          index % 2 === 0 ? 'bg-white' : 'bg-gray-50',
-          'hover:bg-gray-200',
-          isRowCollapsed(index) ? 'whitespace-nowrap overflow-hidden text-ellipsis' : ''
+          'flex cursor-pointer items-start gap-2 border-b border-gray-200 px-4 py-3 transition-colors dark:border-gray-700',
+          index % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-gray-50 dark:bg-gray-900',
+          'hover:bg-gray-100 dark:hover:bg-gray-800',
+          isRowCollapsed(index) ? 'overflow-hidden text-ellipsis whitespace-nowrap' : '',
         ]"
         @click="toggleRow(index)"
       >
-        <span class="flex-shrink-0 w-6 h-6 inline-flex items-center justify-center text-sm">
+        <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center text-sm">
           {{ isRowCollapsed(index) ? '➕' : '➖' }}
         </span>
-        <span class="flex-1 leading-normal">
-          <strong class="text-gray-700 mr-2">{{ index }}:</strong>{{ getText(index) }}
+        <span class="flex-1 leading-normal text-gray-800 dark:text-gray-200">
+          <strong class="mr-2 text-gray-700 dark:text-gray-300">{{ index }}:</strong>{{ getText(index) }}
         </span>
       </div>
     </template>

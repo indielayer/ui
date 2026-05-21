@@ -65,26 +65,24 @@ const { className, classes, styles } = useTheme('ButtonGroup', {}, props)
   </component>
 </template>
 
-<style lang="postcss" module>
-.button-group {
-  &:not(&--rounded) {
-    > :first-child {
-      @apply rounded-l-md;
-    }
+<style module>
+.button-group:not(.button-group--rounded) > :first-child {
+  border-start-start-radius: var(--radius-md);
+  border-end-start-radius: var(--radius-md);
+}
 
-    > :last-child {
-      @apply rounded-r-md;
-    }
-  }
+.button-group:not(.button-group--rounded) > :last-child {
+  border-start-end-radius: var(--radius-md);
+  border-end-end-radius: var(--radius-md);
+}
 
-  &--rounded {
-    > :first-of-type {
-      @apply rounded-l-full;
-    }
+.button-group--rounded > :first-of-type {
+  border-start-start-radius: 9999px;
+  border-end-start-radius: 9999px;
+}
 
-    > :last-child {
-      @apply rounded-r-full;
-    }
-  }
+.button-group--rounded > :last-child {
+  border-start-end-radius: 9999px;
+  border-end-end-radius: 9999px;
 }
 </style>

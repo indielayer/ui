@@ -58,37 +58,40 @@ const { styles, classes, className } = useTheme('Link', {}, props)
   </component>
 </template>
 
-<style lang="postcss" module scoped>
-  .link {
-    color: var(--x-link-text);
+<style module scoped>
+.link {
+  color: var(--x-link-text);
+}
 
-    &:hover {
-      color: var(--x-link-text-hover, var(--x-link-text));
-    }
+.link:hover {
+  color: var(--x-link-text-hover, var(--x-link-text));
+}
 
-    &--shadow {
-      box-shadow: inset 0 -0.315em 0 0 var(--x-link-shadow);
+.link--shadow {
+  box-shadow: inset 0 -0.315em 0 0 var(--x-link-shadow);
+}
 
-      &:hover {
-        box-shadow: inset 0 -1.325em 0 0 var(--x-link-shadow);
-      }
-    }
+.link--shadow:hover {
+  box-shadow: inset 0 -1.325em 0 0 var(--x-link-shadow);
+}
 
-    :global(.dark) &,
-    &:global(.dark) {
-      color: var(--x-link-dark-text);
+:global(.dark) .link,
+.link:global(.dark) {
+  color: var(--x-link-dark-text);
+}
 
-      &:hover {
-        color: var(--x-link-dark-text-hover, var(--x-link-dark-text));
-      }
+:global(.dark) .link:hover,
+.link:global(.dark):hover {
+  color: var(--x-link-dark-text-hover, var(--x-link-dark-text));
+}
 
-      &--shadow {
-        box-shadow: inset 0 -0.315em 0 0 var(--x-link-dark-shadow);
+:global(.dark) .link--shadow,
+.link--shadow:global(.dark) {
+  box-shadow: inset 0 -0.315em 0 0 var(--x-link-dark-shadow);
+}
 
-        &:hover {
-          box-shadow: inset 0 -1.325em 0 0 var(--x-link-dark-shadow);
-        }
-      }
-    }
-  }
+:global(.dark) .link--shadow:hover,
+.link--shadow:global(.dark):hover {
+  box-shadow: inset 0 -1.325em 0 0 var(--x-link-dark-shadow);
+}
 </style>
