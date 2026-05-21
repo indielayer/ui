@@ -5,7 +5,7 @@ const theme: ContainerTheme = {
     wrapper: ({ props }) => {
       const classes = ['px-4 md:px-6']
 
-      if (!props.fluid) classes.push('max-w-screen-lg mx-auto')
+      if (!props.fluid) classes.push('max-w-screen-xl mx-auto')
 
       return classes
     },

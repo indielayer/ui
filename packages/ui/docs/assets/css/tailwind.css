@@ -38,6 +38,12 @@ body {
   }
 }
 
+@layer components {
+  .docs-container {
+    @apply max-w-screen-2xl mx-auto w-full px-4 md:px-8 mt-8 md:mt-16;
+  }
+}
+
 .inset-center {
   position: absolute;
   top: 50%;

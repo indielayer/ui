@@ -8,7 +8,8 @@ alwaysApply: true
 - Primary package: `packages/ui` (`@indielayer/ui`)
 - Node.js 24 and pnpm 11 (see root `package.json` `packageManager`)
 - Use `pnpm` (not npm/yarn) from repo root
-- Before finishing UI changes: run `pnpm lint:ui` and `pnpm test` when you touched `packages/ui`
+- Before finishing any change under `packages/ui`: run `pnpm eslint --cache --fix --ext .js,.ts,.vue <changed-paths>` then `pnpm lint:ui` (must pass with zero errors) and `pnpm test` when library code changed
+- Do not leave new ESLint errors or warnings in files you edited; fix manually if `--fix` does not resolve them
 - Do not edit `lib/` or other build output
 - Commits follow `.github/COMMIT_CONVENTION.md` (e.g. `feat(divider): adjust spacing`)
 - Publishing changes need a changeset: `pnpm changeset`

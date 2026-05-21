@@ -2,6 +2,7 @@
 import { inject, ref, unref, watch } from 'vue'
 import { version, type UITheme } from '@indielayer/ui'
 import ToolbarSearch from './ToolbarSearch.vue'
+import ToolbarColorToggle from './ToolbarColorToggle.vue'
 
 const selectTheme = inject('selectTheme', {
   theme: {} as UITheme,
@@ -25,7 +26,7 @@ const isDev = import.meta.env.DEV
 </script>
 
 <template>
-  <x-container fluid class="bg-white dark:bg-secondary-800">
+  <x-container fluid class="bg-white dark:bg-slate-800/60">
     <div class="flex justify-items-center items-center py-2 min-h-[54px]">
       <a href="/" class="flex items-center">
         <img src="@/assets/images/logo_mini.svg" width="26" alt="Indielayer"/>
@@ -40,7 +41,15 @@ const isDev = import.meta.env.DEV
 
       <x-spacer/>
 
-      <div class="flex items-center font-semibold text-sm">
+      <div class="flex items-center font-semibold text-sm gap-1">
+        <x-select
+          v-if="isDev"
+          v-model="selected"
+          :options="options"
+          size="xs"
+          class="hidden md:block w-28"
+        />
+        <toolbar-color-toggle class="hidden sm:flex" />
         <toolbar-search />
         <x-divider vertical class="!h-2 px-2"/>
         <div class="tracking-wide text-xs">v{{ version }}</div>

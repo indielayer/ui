@@ -1,6 +1,8 @@
 {
   "recommendations": [
     "vue.volar",
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
     "indielayer.vscode-indielayer-theme",
     "indielayer.indielayer-vue-snippets"
   ]

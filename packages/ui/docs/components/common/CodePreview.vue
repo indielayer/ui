@@ -24,17 +24,22 @@ function toggleCode() {
   expandedSync.value = !expandedSync.value
 }
 
-function copy(text?: string) {
+async function copy(text?: string) {
   if (!text) return
 
-  const el = document.createElement('textarea')
+  try {
+    await navigator.clipboard.writeText(text)
+    notifications?.success('Copied to clipboard!')
+  } catch {
+    const el = document.createElement('textarea')
 
-  el.value = text
-  document.body.appendChild(el)
-  el.select()
-  document.execCommand('copy')
-  document.body.removeChild(el)
-  notifications?.success('Copied to clipboard!')
+    el.value = text
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
+    notifications?.success('Copied to clipboard!')
+  }
 }
 </script>
 
@@ -50,7 +55,7 @@ function copy(text?: string) {
           ghost
           size="sm"
           :href="`${github}/${title?.toLowerCase()}.vue`"
-          target="blank"
+          target="_blank"
         />
         <template #tooltip>
           Edit on <span class="text-gray-300">GitHub</span>

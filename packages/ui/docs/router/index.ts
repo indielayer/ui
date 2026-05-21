@@ -10,6 +10,7 @@ import IconsPage from '../pages/icons.vue'
 import PlayPage from '../pages/play.vue'
 import TypographyPage from '../pages/typography.vue'
 import ColorsPage from '../pages/colors.vue'
+import ErrorPage from '../pages/error.vue'
 
 const pages: Record<string, any> = import.meta.glob('../pages/component/*/index.vue', { eager: true })
 
@@ -59,14 +60,41 @@ const routes: RouteRecordRaw[] = [{
   path: '/play',
   component: PlayPage,
 }, {
-  path: '/:pathMatch(.*)*', name: 'NotFound', redirect: { name: 'getting-started' },
+  path: '/:pathMatch(.*)*',
+  name: 'NotFound',
+  component: ErrorPage,
 }]
 
 const router = createRouter({
-  history: createWebHistory('/'),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
-    document.getElementById('main')?.scrollTo(0, 0)
+    const main = document.getElementById('main')
+
+    if (to.hash) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const el = document.querySelector(to.hash)
+
+          if (el && main) {
+            const top = (el as HTMLElement).offsetTop - 80
+
+            main.scrollTo({ top, behavior: 'smooth' })
+          }
+          resolve({ el: to.hash, behavior: 'smooth', top: 80 })
+        }, 100)
+      })
+    }
+
+    if (savedPosition) {
+      main?.scrollTo(savedPosition)
+
+      return savedPosition
+    }
+
+    main?.scrollTo(0, 0)
+
+    return { top: 0 }
   },
 })
 

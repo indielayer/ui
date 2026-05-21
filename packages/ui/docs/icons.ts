@@ -28,6 +28,34 @@ export default {
   moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>',
   upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>',
   menu: '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>',
+  'menu-alt-1': '<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h7"/>',
+  'menu-alt-3': '<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />',
+  rewind: {
+    icon: '<polygon points="11 19 2 12 11 5 11 19"></polygon><polygon points="22 19 13 12 22 5 22 19"></polygon>',
+    filled: true,
+  },
+  play: {
+    icon: '<polygon points="5 3 19 12 5 21 5 3"></polygon>',
+    filled: true,
+  },
+  pause: {
+    icon: '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>',
+    filled: true,
+  },
+  forward: {
+    icon: '<polygon points="13 19 22 12 13 5 13 19"></polygon><polygon points="2 19 11 12 2 5 2 19"></polygon>',
+    filled: true,
+  },
+  vue: {
+    icon: '<path d="M17.2322 0.000135422L13.9992 5.77351L10.7661 0.000135422H-0.000488281L13.9992 24.9999L27.9988 0.000135422H17.2322Z" fill="#41B883"/><path d="M17.2322 0.000144958L13.9992 5.77352L10.7661 0.000144958H5.59937L13.9992 14.9997L22.3989 0.000144958H17.2322Z" fill="#34495E"/>',
+    filled: true,
+    viewBox: '0 0 28 25',
+  },
+  nuxt: {
+    icon: '<path fill-rule="evenodd" clip-rule="evenodd" d="M15.6348 2.10272C14.6734 0.449622 12.2697 0.449592 11.3083 2.10272L0.830082 20.1192C-0.131361 21.7723 1.07044 23.8387 2.99332 23.8387H11.1732C10.3515 23.1206 10.0473 21.8784 10.6691 20.8126L18.6048 7.2094L15.6348 2.10272Z" fill="#80EEC0"/><path d="M22.2744 6.05476C23.0701 4.7022 25.0593 4.7022 25.855 6.05476L34.5264 20.7955C35.3222 22.148 34.3277 23.8387 32.7364 23.8387H15.3931C13.8017 23.8387 12.8071 22.148 13.6028 20.7955L22.2744 6.05476Z" fill="#00DC82"/>',
+    filled: true,
+    viewBox: '0 0 35 24',
+  },
   bold: '<path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6z" /><path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7" />',
   italic: '<path stroke="none" d="M0 0h24v24H0z" fill="none"></path><line x1="11" y1="5" x2="17" y2="5"></line><line x1="7" y1="19" x2="13" y2="19"></line><line x1="14" y1="5" x2="10" y2="19"></line>',
   'edit': '<path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>',

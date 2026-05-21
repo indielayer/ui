@@ -2,10 +2,17 @@
 import { useEventListener, useMouse } from '@vueuse/core'
 import { computed, ref, watch, nextTick, onMounted } from 'vue'
 import Fuse from 'fuse.js'
-import ComponentsSearchIndex from '../../search/components.json'
+import SearchIndex from '../../search/index.json'
 import type { XInput } from 'src'
 
-const fuse = new Fuse(ComponentsSearchIndex, {
+type SearchItem = {
+  name: string;
+  description: string;
+  url: string;
+  category: 'guide' | 'component';
+}
+
+const fuse = new Fuse(SearchIndex as SearchItem[], {
   keys: [{
     name: 'name',
     weight: 2,
@@ -17,65 +24,63 @@ const fuse = new Fuse(ComponentsSearchIndex, {
 })
 
 type FuseResult = {
-  item: {
-    name: string;
-    description: string;
-    url: string;
-  };
+  item: SearchItem;
   refIndex: number;
   score: number;
 }
 
 const isModalOpen = ref(false)
 const searchInput = ref('')
-const ui = ref<FuseResult[]>([])
+const results = ref<FuseResult[]>([])
 const searchList = ref<HTMLDivElement>()
-const results = ref<HTMLLIElement[]>([])
+const resultElements = ref<HTMLLIElement[]>([])
 const selectedIndex = ref<number>(-1)
 
 const inputEl = ref<InstanceType<typeof XInput> | null>(null)
 
-watch(isModalOpen, (newValue, oldValue) => {
+const searchSections = computed(() => {
+  const guides = results.value.filter((r) => r.item.category === 'guide')
+  const components = results.value.filter((r) => r.item.category === 'component')
+
+  return [
+    { key: 'component', label: 'Components', items: components },
+    { key: 'guide', label: 'Guides', items: guides },
+  ].filter((s) => s.items.length > 0)
+})
+
+watch(isModalOpen, (newValue) => {
   setTimeout(() => {
     if (newValue) inputEl.value?.focus()
   }, 100)
 })
 
-const searchSections = computed(() => [
-  { key:'ui', label: 'UI', items: ui.value },
-])
-
 function clearSearch() {
   selectedIndex.value = -1
-  ui.value = []
+  results.value = []
 }
 
 function openSearch() {
   clearSearch()
-
   searchInput.value = ''
   isModalOpen.value = true
 }
 
 function selectItem(item: HTMLLIElement, index?: number) {
-  if (!item) {
-    return
-  }
+  if (!item) return
 
-  results.value?.[selectedIndex.value]?.setAttribute('aria-selected', 'false')
-
+  resultElements.value?.[selectedIndex.value]?.setAttribute('aria-selected', 'false')
   item.setAttribute('aria-selected', 'true')
-  item.scrollIntoView({ 'block':'nearest' })
+  item.scrollIntoView({ block: 'nearest' })
 
-  if (!index) {
-    index = results.value.findIndex(({ id }) => id === item.id)
+  if (index === undefined) {
+    index = resultElements.value.findIndex(({ id }) => id === item.id)
   }
 
   selectedIndex.value = index
 }
 
 function selectItemByIndex(index: number) {
-  selectItem(results.value?.[index], index)
+  selectItem(resultElements.value?.[index], index)
 }
 
 function selectFirstItem() {
@@ -83,39 +88,29 @@ function selectFirstItem() {
 }
 
 function selectLastItem() {
-  selectItemByIndex(results.value.length - 1)
+  selectItemByIndex(resultElements.value.length - 1)
 }
 
 function selectNextItem() {
-  const totalResults = results.value.length
+  const total = resultElements.value.length
 
-  if (totalResults <= 0) {
-    return
-  }
+  if (total <= 0) return
 
   const nextIndex = selectedIndex.value + 1
 
-  if (nextIndex >= totalResults) {
-    selectFirstItem()
-  } else {
-    selectItemByIndex(nextIndex)
-  }
+  if (nextIndex >= total) selectFirstItem()
+  else selectItemByIndex(nextIndex)
 }
 
 function selectPreviousItem() {
-  const totalResults = results.value.length
+  const total = resultElements.value.length
 
-  if (totalResults <= 0) {
-    return
-  }
+  if (total <= 0) return
 
   const previousIndex = selectedIndex.value - 1
 
-  if (previousIndex >= 0) {
-    selectItemByIndex(previousIndex)
-  } else {
-    selectLastItem()
-  }
+  if (previousIndex >= 0) selectItemByIndex(previousIndex)
+  else selectLastItem()
 }
 
 function keydownInput(e: KeyboardEvent) {
@@ -130,7 +125,7 @@ function keydownInput(e: KeyboardEvent) {
   }
 
   if (e.key === 'Enter') {
-    const item = results.value?.[selectedIndex.value]
+    const item = resultElements.value?.[selectedIndex.value]
 
     if (item) {
       (item.firstElementChild as HTMLLinkElement)?.click()
@@ -142,37 +137,38 @@ const { x: mouseX, y: mouseY } = useMouse({ type: 'page' })
 
 function hoverResult(e: MouseEvent) {
   if (mouseX.value !== e.x || mouseY.value !== e.y) {
-    selectItem(e.target as HTMLLIElement)
+    selectItem(e.currentTarget as HTMLLIElement)
   }
 }
 
 function searchIndexes() {
-  ui.value = fuse.search(searchInput.value, {
-    limit: 10,
-  }) as FuseResult[]
+  if (!searchInput.value.trim()) {
+    results.value = []
+
+    return
+  }
+
+  results.value = fuse.search(searchInput.value, { limit: 12 }) as FuseResult[]
 }
 
 watch(searchSections, async () => {
-  results.value = []
-
+  resultElements.value = []
   await nextTick()
 
   const items = searchList.value?.querySelectorAll('[data-name="list-item"]')
 
   items?.forEach((el) => {
     el.setAttribute('aria-selected', 'false')
-    results.value.push(el as HTMLLIElement)
+    resultElements.value.push(el as HTMLLIElement)
   })
 
-  setTimeout(() => selectFirstItem())
+  if (resultElements.value.length) setTimeout(() => selectFirstItem())
 })
 
 const metaKey = ref('')
 
 onMounted(() => {
-  metaKey.value = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)
-    ? '⌘'
-    : 'Ctrl'
+  metaKey.value = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl'
 })
 
 if (document) {
@@ -206,7 +202,7 @@ if (document) {
           v-model="searchInput"
           type="search"
           aria-controls="search-list"
-          placeholder="Search components"
+          placeholder="Search docs and components"
           hide-footer
           icon-left="search"
           @input="searchIndexes"
@@ -214,10 +210,10 @@ if (document) {
         />
       </div>
     </template>
-    <div id="search-list" ref="searchList">
+    <div id="search-list" ref="searchList" class="max-h-96 overflow-y-auto px-2">
       <template v-for="section in searchSections" :key="section.key">
-        <section v-if="section.items.length > 0">
-          <!-- <x-divider :id="`${section.key}-label`" class="my-2" :label="section.label" /> -->
+        <section v-if="section.items.length > 0" class="mb-2">
+          <x-divider :label="section.label" class="my-2" />
           <ul role="listbox" :aria-labelledby="`${section.key}-label`">
             <li
               v-for="(result) in section.items"
@@ -225,7 +221,7 @@ if (document) {
               :key="result.item.url"
               data-name="list-item"
               role="option"
-              class="aria-selected:bg-secondary-100 dark:aria-selected:bg-secondary-800 rounded p-2 mb-2"
+              class="aria-selected:bg-secondary-100 dark:aria-selected:bg-secondary-800 rounded p-2 mb-1"
               @mouseenter="hoverResult"
             >
               <x-link
@@ -234,12 +230,13 @@ if (document) {
                 @click="isModalOpen = false"
               >
                 <p class="text-base w-full mb-1 mt-0 font-bold">{{ result.item.name }}</p>
-                <p class="text-sm m-0">{{ result.item.description }}</p>
+                <p class="text-sm m-0 text-gray-500 dark:text-gray-400 line-clamp-2">{{ result.item.description }}</p>
               </x-link>
             </li>
           </ul>
         </section>
       </template>
+      <p v-if="searchInput && !results.length" class="text-center text-gray-500 py-8 text-sm">No results found.</p>
     </div>
 
     <template #actions>

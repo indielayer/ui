@@ -69,7 +69,7 @@ Indielayer UI is a Tailwind CSS UI component library for Vue.js 3 and Nuxt.js 3.
 To quickly scaffold a new project, run:
 
 ```bash
-npm init @indielayer/ui
+pnpm create @indielayer/ui
 ```
 
 This will launch the official Indielayer UI project scaffolding tool, with prompts for features like TypeScript, Vue 3, or Nuxt 3.

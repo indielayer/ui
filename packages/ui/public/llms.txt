@@ -1,70 +1,70 @@
 # Indielayer UI
 
-> Vue 3 and Tailwind CSS component library for fast web apps. Documentation: https://indielayer.com/ui/docs
+> Vue 3 and Tailwind CSS component library for fast web apps. Documentation: https://indielayer.com
 
 Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Use the links below for per-component docs and demos. For a single large context file, see the Optional section.
 
 ## Getting started
 
-- [Documentation home](https://indielayer.com/ui/docs/getting-started): install, usage, and theming
-- [Icons](https://indielayer.com/ui/docs/icons): icon set and usage
-- [Colors](https://indielayer.com/ui/docs/colors): palette and color props
-- [Typography](https://indielayer.com/ui/docs/typography): type scale
+- [Documentation home](https://indielayer.com/getting-started): install, usage, and theming
+- [Icons](https://indielayer.com/icons): icon set and usage
+- [Colors](https://indielayer.com/colors): palette and color props
+- [Typography](https://indielayer.com/typography): type scale
 
 ## Components
 
-- [Accordion](https://indielayer.com/ui/docs/component/accordion): Accordion is a component that allows you to collapse and expand content.
-- [Alert](https://indielayer.com/ui/docs/component/alert): Alerts are used to communicate a state that affects a system, feature or page.
-- [Avatar](https://indielayer.com/ui/docs/component/avatar): Avatars are used to represent a user.
-- [Badge](https://indielayer.com/ui/docs/component/badge): Badges are used to display a small amount of information.
-- [Breadcrumbs](https://indielayer.com/ui/docs/component/breadcrumbs): Breadcrumbs are used to indicate the current page\
-- [Button](https://indielayer.com/ui/docs/component/button): Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.
-- [Card](https://indielayer.com/ui/docs/component/card): Cards are used to display content in an organized manner.
-- [Carousel](https://indielayer.com/ui/docs/component/carousel): A carousel is a rotating set of images.
-- [Checkbox](https://indielayer.com/ui/docs/component/checkbox): Checkboxes enable users to select one or multiple options from a list. They are ideal for toggling settings or making selections where more than one choice is allowed. Each checkbox can be checked or unchecked independently.
-- [Container](https://indielayer.com/ui/docs/component/container): Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.
-- [Datepicker](https://indielayer.com/ui/docs/component/datepicker): The datepicker component is used to select a date or time.
-- [Divider](https://indielayer.com/ui/docs/component/divider): Dividers are used to separate content.
-- [Drawer](https://indielayer.com/ui/docs/component/drawer): Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.
-- [Form](https://indielayer.com/ui/docs/component/form): Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.
-- [FormGroup](https://indielayer.com/ui/docs/component/formGroup): Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.
-- [Icon](https://indielayer.com/ui/docs/component/icon): Icons visually represent actions, objects, or concepts, enhancing usability and recognition in interfaces. They can be used alone or alongside text for buttons, menus, and indicators.
-- [Image](https://indielayer.com/ui/docs/component/image): Image is used to load an image file with a skeleton as placeholder and on load display the image.
-- [InfiniteLoader](https://indielayer.com/ui/docs/component/infiniteLoader): InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.
-- [Input](https://indielayer.com/ui/docs/component/input): This is a text input component that allows users to enter and edit text.
-- [Link](https://indielayer.com/ui/docs/component/link): Links are used to navigate to a different page.
-- [Loader](https://indielayer.com/ui/docs/component/loader): Loader component is used to show a loading state.
-- [Menu](https://indielayer.com/ui/docs/component/menu): Menus are used to display a list of options.
-- [Modal](https://indielayer.com/ui/docs/component/modal): Modals are used to display content on top of the current page.
-- [Notifications](https://indielayer.com/ui/docs/component/notifications): Notifications provide timely feedback or alerts to users, such as success messages, warnings, or errors. They help keep users informed about important events or actions.
-- [Pagination](https://indielayer.com/ui/docs/component/pagination): Pagination divides large sets of content into manageable pages, allowing users to navigate through items efficiently. It is commonly used in tables, lists, and search results to improve usability and performance.
-- [Popover](https://indielayer.com/ui/docs/component/popover): Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.
-- [Progress](https://indielayer.com/ui/docs/component/progress): Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.
-- [QR Code](https://indielayer.com/ui/docs/component/qrCode): The QR Code component is used to generate a QR code.
-- [Radio](https://indielayer.com/ui/docs/component/radio): Radios allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side.
-- [Scroll](https://indielayer.com/ui/docs/component/scroll): The Scroll component enhances scrolling experiences by adding visual cues, such as inner shadows, to indicate additional content. It is useful for horizontally or vertically scrolling lists and containers.
-- [Select](https://indielayer.com/ui/docs/component/select): Selects allow the user to select one or more options from a set.
-- [Skeleton](https://indielayer.com/ui/docs/component/skeleton): Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.
-- [Slider](https://indielayer.com/ui/docs/component/slider): Sliders allow users to select a numeric value or range by dragging a handle along a track. They are ideal for adjusting settings such as volume, brightness, or price filters.
-- [Spacer](https://indielayer.com/ui/docs/component/spacer): Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.
-- [Spinner](https://indielayer.com/ui/docs/component/spinner): Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.
-- [Stepper](https://indielayer.com/ui/docs/component/stepper): Stepper is a navigation component that guides users through the steps of a task.
-- [Table](https://indielayer.com/ui/docs/component/table): Tables are used to display data in a tabular format.
-- [Tabs](https://indielayer.com/ui/docs/component/tabs): Tabs are used to navigate through a set of views.
-- [Tag](https://indielayer.com/ui/docs/component/tag): Tags are compact elements used to display brief information, such as categories, statuses, or labels. They help organize content and provide quick context or filtering options within lists and interfaces.
-- [Textarea](https://indielayer.com/ui/docs/component/textarea): Textareas provide a multi-line input field for users to enter longer text, such as comments, descriptions, or messages. They support resizing and can be customized for different use cases.
-- [Toggle](https://indielayer.com/ui/docs/component/toggle): Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.
-- [Tooltip](https://indielayer.com/ui/docs/component/tooltip): Tooltips are used to display a message when hovering over an element.
-- [Upload](https://indielayer.com/ui/docs/component/upload): Upload is a component that allows you to upload files.
-- [VirtualGrid](https://indielayer.com/ui/docs/component/virtualGrid): VirtualGrid is a component that allows you to render a grid of items in a virtualized way. It is a high-performance component that is used to render large grids of items.
-- [VirtualList](https://indielayer.com/ui/docs/component/virtualList): VirtualList is a component that allows you to render a list of items in a virtualized way. It is a high-performance component that is used to render large lists of items.
+- [Accordion](https://indielayer.com/component/accordion): Accordion is a component that allows you to collapse and expand content.
+- [Alert](https://indielayer.com/component/alert): Alerts are used to communicate a state that affects a system, feature or page.
+- [Avatar](https://indielayer.com/component/avatar): Avatars are used to represent a user.
+- [Badge](https://indielayer.com/component/badge): Badges are used to display a small amount of information.
+- [Breadcrumbs](https://indielayer.com/component/breadcrumbs): Breadcrumbs are used to indicate the current page\
+- [Button](https://indielayer.com/component/button): Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.
+- [Card](https://indielayer.com/component/card): Cards are used to display content in an organized manner.
+- [Carousel](https://indielayer.com/component/carousel): A carousel is a rotating set of images.
+- [Checkbox](https://indielayer.com/component/checkbox): Checkboxes enable users to select one or multiple options from a list. They are ideal for toggling settings or making selections where more than one choice is allowed. Each checkbox can be checked or unchecked independently.
+- [Container](https://indielayer.com/component/container): Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.
+- [Datepicker](https://indielayer.com/component/datepicker): The datepicker component is used to select a date or time.
+- [Divider](https://indielayer.com/component/divider): Dividers are used to separate content.
+- [Drawer](https://indielayer.com/component/drawer): Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.
+- [Form](https://indielayer.com/component/form): Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.
+- [FormGroup](https://indielayer.com/component/formGroup): Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.
+- [Icon](https://indielayer.com/component/icon): Icons visually represent actions, objects, or concepts, enhancing usability and recognition in interfaces. They can be used alone or alongside text for buttons, menus, and indicators.
+- [Image](https://indielayer.com/component/image): Image is used to load an image file with a skeleton as placeholder and on load display the image.
+- [InfiniteLoader](https://indielayer.com/component/infiniteLoader): InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.
+- [Input](https://indielayer.com/component/input): This is a text input component that allows users to enter and edit text.
+- [Link](https://indielayer.com/component/link): Links are used to navigate to a different page.
+- [Loader](https://indielayer.com/component/loader): Loader component is used to show a loading state.
+- [Menu](https://indielayer.com/component/menu): Menus are used to display a list of options.
+- [Modal](https://indielayer.com/component/modal): Modals are used to display content on top of the current page.
+- [Notifications](https://indielayer.com/component/notifications): Notifications provide timely feedback or alerts to users, such as success messages, warnings, or errors. They help keep users informed about important events or actions.
+- [Pagination](https://indielayer.com/component/pagination): Pagination divides large sets of content into manageable pages, allowing users to navigate through items efficiently. It is commonly used in tables, lists, and search results to improve usability and performance.
+- [Popover](https://indielayer.com/component/popover): Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.
+- [Progress](https://indielayer.com/component/progress): Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.
+- [QR Code](https://indielayer.com/component/qrCode): The QR Code component is used to generate a QR code.
+- [Radio](https://indielayer.com/component/radio): Radios allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side.
+- [Scroll](https://indielayer.com/component/scroll): The Scroll component enhances scrolling experiences by adding visual cues, such as inner shadows, to indicate additional content. It is useful for horizontally or vertically scrolling lists and containers.
+- [Select](https://indielayer.com/component/select): Selects allow the user to select one or more options from a set.
+- [Skeleton](https://indielayer.com/component/skeleton): Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.
+- [Slider](https://indielayer.com/component/slider): Sliders allow users to select a numeric value or range by dragging a handle along a track. They are ideal for adjusting settings such as volume, brightness, or price filters.
+- [Spacer](https://indielayer.com/component/spacer): Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.
+- [Spinner](https://indielayer.com/component/spinner): Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.
+- [Stepper](https://indielayer.com/component/stepper): Stepper is a navigation component that guides users through the steps of a task.
+- [Table](https://indielayer.com/component/table): Tables are used to display data in a tabular format.
+- [Tabs](https://indielayer.com/component/tabs): Tabs are used to navigate through a set of views.
+- [Tag](https://indielayer.com/component/tag): Tags are compact elements used to display brief information, such as categories, statuses, or labels. They help organize content and provide quick context or filtering options within lists and interfaces.
+- [Textarea](https://indielayer.com/component/textarea): Textareas provide a multi-line input field for users to enter longer text, such as comments, descriptions, or messages. They support resizing and can be customized for different use cases.
+- [Toggle](https://indielayer.com/component/toggle): Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.
+- [Tooltip](https://indielayer.com/component/tooltip): Tooltips are used to display a message when hovering over an element.
+- [Upload](https://indielayer.com/component/upload): Upload is a component that allows you to upload files.
+- [VirtualGrid](https://indielayer.com/component/virtualGrid): VirtualGrid is a component that allows you to render a grid of items in a virtualized way. It is a high-performance component that is used to render large grids of items.
+- [VirtualList](https://indielayer.com/component/virtualList): VirtualList is a component that allows you to render a list of items in a virtualized way. It is a high-performance component that is used to render large lists of items.
 
 ## Repository
 
 - [GitHub](https://github.com/indielayer/ui): source and issues
 - [npm @indielayer/ui](https://www.npmjs.com/package/@indielayer/ui): package installs
-- [Quickstart](https://www.npmjs.com/package/@indielayer/create-ui): `npm init @indielayer/ui`
+- [Quickstart](https://www.npmjs.com/package/@indielayer/create-ui): `pnpm create @indielayer/ui` (npm: `npm init @indielayer/ui`)
 
 ## Optional
 
-- [Full reference](https://indielayer.com/ui/docs/llms-full.txt): complete component API and examples (large file; skip if context is limited)
+- [Full reference](https://indielayer.com/llms-full.txt): complete component API and examples (large file; skip if context is limited)

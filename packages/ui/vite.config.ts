@@ -17,12 +17,18 @@ export default defineConfig(({ command, mode }) => {
 
   if (mode === 'docs') {
     return {
+      base: viteEnv.VITE_BASE || '/',
       plugins: [vue(), vueJsx()],
+      publicDir: 'public',
       resolve: {
         alias: {
           '@': fileURLToPath(new URL('./docs', import.meta.url)),
           '@indielayer/ui': fileURLToPath(new URL('./src', import.meta.url)),
         },
+      },
+      build: {
+        outDir: 'dist',
+        emptyOutDir: true,
       },
     }
   }

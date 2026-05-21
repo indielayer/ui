@@ -24,9 +24,7 @@ const drawer = ref(false)
     </x-drawer>
     <x-notifications>
       <div id="main" class="flex-1 overflow-y-scroll bg-secondary-50 dark:bg-gray-900">
-        <x-container class="py-4 lg:py-8" tag="section">
-          <router-view />
-        </x-container>
+        <router-view />
       </div>
     </x-notifications>
   </div>

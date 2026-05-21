@@ -8,7 +8,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const DOCS_BASE = 'https://indielayer.com/ui/docs'
+const DOCS_BASE = 'https://indielayer.com'
 const COMPONENTS_JSON = path.join(__dirname, '../docs/search/components.json')
 const OUTPUT = path.join(__dirname, '../public/llms.txt')
 
@@ -53,7 +53,7 @@ ${componentLines}
 
 - [GitHub](https://github.com/indielayer/ui): source and issues
 - [npm @indielayer/ui](https://www.npmjs.com/package/@indielayer/ui): package installs
-- [Quickstart](https://www.npmjs.com/package/@indielayer/create-ui): \`npm init @indielayer/ui\`
+- [Quickstart](https://www.npmjs.com/package/@indielayer/create-ui): \`pnpm create @indielayer/ui\` (npm: \`npm init @indielayer/ui\`)
 
 ## Optional
 
