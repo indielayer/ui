@@ -95,33 +95,27 @@ defineExpose<VirtualListImperativeAPI>({
 // Watch for dynamic row heights - run after DOM updates
 watch(
   [element, startIndexOverscan, stopIndexOverscan, isDynamicRowHeight, () => props.rowHeight],
-  ([el, start, stop, isDynamic]) => {
+  ([el, start, stop, isDynamic], _old, onCleanup) => {
     if (!el || !isDynamic) {
       return
     }
 
-    // Use nextTick to ensure DOM is fully updated
-    const setupObserver = () => {
-      const rows = Array.from(el.children).filter((item, index) => {
-        if (item.hasAttribute('aria-hidden')) {
-          // Ignore sizing element
-          return false
-        }
+    const rows = Array.from(el.children).filter((item, index) => {
+      if (item.hasAttribute('aria-hidden')) {
+        // Ignore sizing element
+        return false
+      }
 
-        const attribute = `${start + index}`
+      const attribute = `${start + index}`
 
-        item.setAttribute(DATA_ATTRIBUTE_LIST_INDEX, attribute)
+      item.setAttribute(DATA_ATTRIBUTE_LIST_INDEX, attribute)
 
-        return true
-      })
+      return true
+    })
 
-      const dynamicHeight = props.rowHeight as DynamicRowHeight
+    const dynamicHeight = props.rowHeight as DynamicRowHeight
 
-      return dynamicHeight.observeRowElements(rows)
-    }
-
-    // Return cleanup function
-    return setupObserver()
+    onCleanup(dynamicHeight.observeRowElements(rows))
   },
   { flush: 'post' }, // Run after DOM updates
 )

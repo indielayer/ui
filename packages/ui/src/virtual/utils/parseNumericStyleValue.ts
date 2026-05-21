@@ -16,4 +16,6 @@ export function parseNumericStyleValue(
       }
     }
   }
+
+  return undefined
 }
