@@ -5,14 +5,6 @@
   "outputDirectory": "packages/ui/dist",
   "rewrites": [
     {
-      "source": "/psbl/js/vendor.js",
-      "destination": "https://plausible.io/js/script.js"
-    },
-    {
-      "source": "/psbl/api/event",
-      "destination": "https://plausible.io/api/event"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
