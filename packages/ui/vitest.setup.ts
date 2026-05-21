@@ -1,3 +1,14 @@
+import { config } from '@vue/test-utils'
+
+// VTU <2.4.6 stubs <transition> JS hooks as strings (vuejs/test-utils#2430).
+config.global.stubs = {
+  ...config.global.stubs,
+  transition: false,
+  Transition: false,
+  'transition-group': false,
+  TransitionGroup: false,
+}
+
 // Polyfill DOMRect for Node.js test environment
 if (typeof global.DOMRect === 'undefined') {
   class DOMRectPolyfill implements DOMRect {

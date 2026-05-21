@@ -1,24 +1,38 @@
 import { describe, expect, test, beforeEach, afterEach } from 'vitest'
 import { ref, nextTick } from 'vue'
 import { useDynamicRowHeight, DATA_ATTRIBUTE_LIST_INDEX } from './useDynamicRowHeight'
+import type { DynamicRowHeight } from './types'
 import { mockResizeObserver, setElementSize } from '../../test-utils/mockResizeObserver'
 
 describe('useDynamicRowHeight', () => {
   let unmock: (() => void) | undefined
+  let instances: DynamicRowHeight[] = []
 
   beforeEach(() => {
     unmock = mockResizeObserver()
+    instances = []
   })
 
   afterEach(() => {
+    instances.forEach((instance) => instance.cleanup())
     if (unmock) {
       unmock()
     }
   })
 
+  function createDynamicRowHeight(
+    ...args: Parameters<typeof useDynamicRowHeight>
+  ): DynamicRowHeight {
+    const instance = useDynamicRowHeight(...args)
+
+    instances.push(instance)
+
+    return instance
+  }
+
   describe('getAverageRowHeight', () => {
     test('returns an initial estimate based on the defaultRowHeight', () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 
@@ -26,7 +40,7 @@ describe('useDynamicRowHeight', () => {
     })
 
     test('returns an estimate based on measured rows', () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 
@@ -43,7 +57,7 @@ describe('useDynamicRowHeight', () => {
 
     test('resets when key changes', async () => {
       const key = ref('a')
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
         key,
       })
@@ -64,7 +78,7 @@ describe('useDynamicRowHeight', () => {
 
   describe('getRowHeight', () => {
     test('returns estimated height for a row that has not yet been measured', () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 
@@ -72,7 +86,7 @@ describe('useDynamicRowHeight', () => {
     })
 
     test('returns the most recently measured size', () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 
@@ -90,7 +104,7 @@ describe('useDynamicRowHeight', () => {
 
     test('resets when key changes', async () => {
       const key = ref('a')
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
         key,
       })
@@ -119,7 +133,7 @@ describe('useDynamicRowHeight', () => {
     }
 
     test('should update cache when an observed element is resized', async () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 
@@ -151,7 +165,7 @@ describe('useDynamicRowHeight', () => {
     })
 
     test('should unobserve an element when requested', async () => {
-      const dynamicRowHeight = useDynamicRowHeight({
+      const dynamicRowHeight = createDynamicRowHeight({
         defaultRowHeight: 100,
       })
 

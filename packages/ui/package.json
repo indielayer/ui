@@ -75,7 +75,7 @@
     "@types/node": "^18.16.18",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "@vue/test-utils": "^2.4.0",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.4.0",
     "@vuepic/vue-datepicker": "^11.0.2",
     "@vueuse/core": "^11.1.0",

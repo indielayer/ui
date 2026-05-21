@@ -119,10 +119,12 @@ export function useDynamicRowHeight({
 
   const resizeObserver = new ResizeObserver(resizeObserverCallback)
 
-  onBeforeUnmount(cleanup)
-
   function cleanup() {
     resizeObserver.disconnect()
+  }
+
+  if (getCurrentInstance()) {
+    onBeforeUnmount(cleanup)
   }
 
   const observeRowElements = (elements: Element[] | NodeListOf<Element>) => {
