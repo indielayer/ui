@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 1.18.0
+
+### Minor Changes
+
+- feat(select): add prefix suffix slots to selected option ([`f33c8f1`](https://github.com/indielayer/ui/commit/f33c8f1bb19f4593d3949ac261863f914e092e8d))
+
+### Patch Changes
+
+- fix(input): suffix padding right ([`097106e`](https://github.com/indielayer/ui/commit/097106e3206ff5261ad8f9820c8d296172ad6117))
+
 ## 1.17.0
 
 ### Minor Changes
