@@ -41,7 +41,7 @@ function updateMode() {
 <template>
   <x-button
     ghost
-    size="sm"
+    size="xs"
     class="-ml-2"
     :icon-left="colorMode === 'light' ? 'sun' : 'moon'"
     @click="toggle"
