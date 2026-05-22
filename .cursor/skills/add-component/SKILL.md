@@ -31,7 +31,7 @@ From repo root:
 
 ```bash
 pnpm lint:ui
-pnpm test
+pnpm test:ci
 ```
 
 Reference: `packages/ui/src/components/button/`

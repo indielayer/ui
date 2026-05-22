@@ -17,6 +17,9 @@ const selectProps = {
     type: String,
     default: 'Filter by...',
   },
+  filterablePrefix: Boolean,
+  filterableSuffix: Boolean,
+  hideSelectedOptionSlots: Boolean,
   virtualList: Boolean,
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
@@ -110,11 +113,34 @@ const selected = computed<any | any[]>({
   },
 })
 
-const labelCache = computed(() => {
-  if (!props.options) return new Map<SelectOption, string>()
+const optionsByValue = computed(() => {
+  if (!props.options) return new Map<string | number, SelectOption>()
 
-  return new Map(props.options.map((option) => [option, option.label.toLowerCase()]))
+  return new Map(props.options.map((option) => [option.value, option]))
 })
+
+const filterCache = computed(() => {
+  if (!props.options) return new Map<SelectOption, { label: string; prefix?: string; suffix?: string; }>()
+
+  return new Map(props.options.map((option) => [
+    option,
+    {
+      label: option.label.toLowerCase(),
+      prefix: props.filterablePrefix && option.prefix ? option.prefix.toLowerCase() : undefined,
+      suffix: props.filterableSuffix && option.suffix ? option.suffix.toLowerCase() : undefined,
+    },
+  ]))
+})
+
+function matchesFilter(option: SelectOption, filterLower: string) {
+  const cached = filterCache.value.get(option)
+
+  if (!cached) return false
+
+  return cached.label.includes(filterLower)
+    || cached.prefix?.includes(filterLower)
+    || cached.suffix?.includes(filterLower)
+}
 
 const internalOptions = computed(() => {
   if (!props.options || props.options.length === 0) return []
@@ -128,10 +154,9 @@ const internalOptions = computed(() => {
       : [],
   )
   const singleSelectedValue = !internalMultiple.value ? selected.value : null
-  const cache = labelCache.value
 
   return props.options
-    .filter((option) => !hasFilter || cache.get(option)?.includes(filterLower))
+    .filter((option) => !hasFilter || matchesFilter(option, filterLower))
     .map((option) => {
       const isActive = internalMultiple.value
         ? selectedSet.has(option.value)
@@ -265,7 +290,7 @@ function findSelectableIndex(start: number | undefined, direction = 'down') {
 }
 
 function handleOptionClick(value: string | number) {
-  const option = props.options?.find((i) => i.value === value)
+  const option = getItem(value)
 
   if (!option || option.disabled) return
 
@@ -326,8 +351,14 @@ function handleRemove(e: Event, value: string) {
   }
 }
 
+function getItem(value: string | number | []) {
+  if (Array.isArray(value)) return undefined
+
+  return optionsByValue.value.get(value)
+}
+
 function getLabel(value: string | number | []) {
-  const option = props.options?.find((i) => i.value === value)
+  const option = getItem(value)
 
   if (option) return option.label
 
@@ -542,15 +573,29 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     :key="value"
                     size="xs"
                     removable
-                    :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
-                    :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
+                    :outlined="!(isDisabled || getItem(value)?.disabled)"
+                    :disabled="isDisabled || getItem(value)?.disabled"
                     :style="{ 'max-width': valueIndex === 0 && hiddenTagsCounterRef ? `calc(100% - ${hiddenTagsCounterRef.offsetWidth + 6 + 'px'})` : undefined }"
                     @remove="(e: Event) => { handleRemove(e, value) }"
                   >
-                    <template #prefix>
-                      <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                    <template v-if="!hideSelectedOptionSlots">
+                      <div class="flex items-center">
+                        <span v-if="$slots.prefix || getItem(value)?.prefix" class="mr-2 shrink-0">
+                          <slot name="prefix" :item="getItem(value)">{{ getItem(value)?.prefix }}</slot>
+                        </span>
+
+                        <span class="flex-1 truncate">
+                          {{ getLabel(value) }}
+                        </span>
+
+                        <span v-if="$slots.suffix || getItem(value)?.suffix" class="ml-1 shrink-0">
+                          <slot name="suffix" :item="getItem(value)">{{ getItem(value)?.suffix }}</slot>
+                        </span>
+                      </div>
                     </template>
-                    {{ getLabel(value) }}
+                    <template v-else>
+                      {{ getLabel(value) }}
+                    </template>
                   </x-tag>
 
                   <div
@@ -562,7 +607,24 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 </div>
               </template>
               <template v-else-if="!internalMultiple && !isEmpty(selected) && getLabel(selected) !== ''">
-                {{ getLabel(selected) }}
+                <template v-if="!hideSelectedOptionSlots">
+                  <div class="flex items-center">
+                    <span v-if="$slots.prefix || getItem(selected)?.prefix" class="mr-2 shrink-0">
+                      <slot name="prefix" :item="getItem(selected)">{{ getItem(selected)?.prefix }}</slot>
+                    </span>
+
+                    <span class="flex-1 truncate">
+                      {{ getLabel(selected) }}
+                    </span>
+
+                    <span v-if="$slots.suffix || getItem(selected)?.suffix" class="ml-1 shrink-0">
+                      <slot name="suffix" :item="getItem(selected)">{{ getItem(selected)?.suffix }}</slot>
+                    </span>
+                  </div>
+                </template>
+                <template v-else>
+                  {{ getLabel(selected) }}
+                </template>
               </template>
 
               <template v-else>
@@ -636,14 +698,28 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 :key="value"
                 size="xs"
                 removable
-                :outlined="!(isDisabled || options?.find((i) => i.value === value)?.disabled)"
-                :disabled="isDisabled || options?.find((i) => i.value === value)?.disabled"
+                :outlined="!(isDisabled || getItem(value)?.disabled)"
+                :disabled="isDisabled || getItem(value)?.disabled"
                 @remove="(e: Event) => { handleRemove(e, value) }"
               >
-                <template #prefix>
-                  <slot name="tag-prefix" :item="options?.find((i) => i.value === value)"></slot>
+                <template v-if="!hideSelectedOptionSlots">
+                  <div class="flex items-center">
+                    <span v-if="$slots.prefix || getItem(value)?.prefix" class="mr-2 shrink-0">
+                      <slot name="prefix" :item="getItem(value)">{{ getItem(value)?.prefix }}</slot>
+                    </span>
+
+                    <span class="flex-1 truncate">
+                      {{ getLabel(value) }}
+                    </span>
+
+                    <span v-if="$slots.suffix || getItem(value)?.suffix" class="ml-1 shrink-0">
+                      <slot name="suffix" :item="getItem(value)">{{ getItem(value)?.suffix }}</slot>
+                    </span>
+                  </div>
                 </template>
-                {{ getLabel(value) }}
+                <template v-else>
+                  {{ getLabel(value) }}
+                </template>
               </x-tag>
             </x-popover-container>
           </template>

@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { SelectOption } from '@indielayer/ui'
 
-const selected = ref<undefined | string>()
-const selected2 = ref<undefined | string>()
-const options = ref([
+const selected = ref<string>()
+const selected2 = ref<string>()
+const options = ref<SelectOption[]>([
   { value: 'A', label: 'Option A' },
   { value: 'B', label: 'Option B' },
   { value: 'C', label: 'Option C' },
@@ -11,16 +12,16 @@ const options = ref([
 
 // function to generate
 function genOptions(x: number) {
-  const options = []
+  const options: SelectOption[] = []
 
   for (let i = 0; i < x; i++) {
-    options.push({ value: i.toString(), label: 'Option ' + i, suffix: i })
+    options.push({ value: i.toString(), label: 'Option ' + i, prefix: 'bg-green-500', suffix: 'dude' + i.toString() })
   }
 
   return options
 }
 
-const options2 = ref(genOptions(1000))
+const options2 = ref<SelectOption[]>(genOptions(1000))
 </script>
 
 <template>
@@ -39,13 +40,18 @@ const options2 = ref(genOptions(1000))
       label="Filterable - virtual list"
       placeholder="Placeholder"
       filterable
+      filterable-prefix
+      filterable-suffix
       clearable
       virtual-list
       :virtual-list-item-height="33"
       :options="options2"
     >
+      <template #prefix="{ item }">
+        <div class="w-2 h-2 shrink-0 rounded-full text-xs" :class="item.prefix"></div>
+      </template>
       <template #suffix="{ item }">
-        <span class="text-secondary-400 text-xs font-mono w-2">#{{ item.suffix }}</span>
+        <span class="text-secondary-400 text-xs font-mono">#{{ item.suffix }}</span>
       </template>
     </x-select>
     <x-select
@@ -57,6 +63,7 @@ const options2 = ref(genOptions(1000))
     >
       <template #input="{ popover, label, disabled }">
         <button
+          type="button"
           class="w-full text-left border rounded-md px-3 py-2"
           :disabled="disabled"
           @click="popover?.show()"

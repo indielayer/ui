@@ -14,6 +14,7 @@
     "lint:style": "cd packages/ui && pnpm run stylelint",
     "lint:style:fix": "cd packages/ui && pnpm run stylelint:fix",
     "test": "cd packages/ui && pnpm test",
+    "test:ci": "cd packages/ui && pnpm test:ci",
     "changeset": "changeset",
     "version:prod": "changeset version",
     "publish:prod": "changeset publish",

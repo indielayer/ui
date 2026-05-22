@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const selected = ref<undefined | string>()
+const selected = ref<string>()
 const options = ref([
   { value: 'A', label: 'Option A' },
   { value: 'B', label: 'Option B' },

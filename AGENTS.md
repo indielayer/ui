@@ -14,10 +14,21 @@ From the repo root:
 ```bash
 pnpm i
 pnpm dev                    # docs + component dev (packages/ui)
-pnpm lint:ui && pnpm lint:style && pnpm test   # required before UI PRs (CI enforces this)
+pnpm lint:ui && pnpm lint:style && pnpm test:ci   # required before UI PRs (CI enforces this)
 pnpm build:docs             # production docs build
 pnpm changeset              # user-facing library changes (before merge)
 ```
+
+### Tests (required when library code changes)
+
+Vitest runs in **watch mode** by default. In agent terminals or CI, always use a single-run command or the process will hang:
+
+```bash
+pnpm test:ci              # preferred — runs vitest once and exits
+CI=true pnpm test         # equivalent (CI env disables watch mode)
+```
+
+Do **not** run bare `pnpm test` in non-interactive sessions.
 
 ### Linting (required)
 
