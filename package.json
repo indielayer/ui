@@ -54,5 +54,6 @@
   "simple-git-hooks": {
     "pre-commit": "pnpm exec lint-staged",
     "commit-msg": "pnpm exec tsx .scripts/verifyCommit.ts $1"
-  }
+  },
+  "packageManager": "pnpm@11.1.3"
 }
