@@ -1,11 +1,13 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const accordionProps = {
   tag: {
     type: String,
     default: 'div',
   },
   disabled: Boolean,
-  expanded: Boolean,
+  expanded: optionalBooleanProp(),
   showIcon: {
     type: Boolean,
     default: true,

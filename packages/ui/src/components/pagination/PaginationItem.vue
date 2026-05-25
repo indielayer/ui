@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const paginationItemProps = {
   ...useCommon.props(),
   value: {
@@ -6,7 +8,7 @@ const paginationItemProps = {
     default: 0,
   },
   selected: Boolean,
-  links: Boolean,
+  links: optionalBooleanProp(),
 }
 
 export type PaginationItemProps = ExtractPublicPropTypes<typeof paginationItemProps>

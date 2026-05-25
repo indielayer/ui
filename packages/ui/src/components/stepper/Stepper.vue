@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   ...useCommon.validators(),
   variant: ['line', 'dot'] as const,
@@ -35,7 +37,7 @@ const stepperProps = {
     type: Boolean,
     default: true,
   },
-  editable: Boolean,
+  editable: optionalBooleanProp(),
   disabled: Boolean,
   loading: Boolean,
   iconComplete: String,

@@ -41,3 +41,7 @@ Key must match the theme name used in `useTheme('<Name>', ...)`.
 When changing layout, states, or tokens in one variant, apply the same logical change to the other unless the carbon design intentionally differs.
 
 Reference: `packages/ui/src/components/button/theme/Button.base.theme.ts`
+
+## App-level `defaults`
+
+Variant/layout booleans that should respect `app.use(UI, { defaults })` must use `optionalBooleanProp()` from `packages/ui/src/common/props.ts` (not plain `Boolean`). Use `useResolvedComponentProps` when the template or script reads those props outside `useTheme`.

@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const progressProps = {
   ...useColors.props('primary'),
   percentage: {
@@ -6,12 +8,12 @@ const progressProps = {
     default: 0,
     validator: (value: number) => value >= 0 && value <= 100,
   },
-  gradient: Boolean,
+  gradient: optionalBooleanProp(),
   animate: {
     type: Boolean,
     default: true,
   },
-  thick: Boolean,
+  thick: optionalBooleanProp(),
 }
 
 export type ProgressProps = ExtractPublicPropTypes<typeof progressProps>

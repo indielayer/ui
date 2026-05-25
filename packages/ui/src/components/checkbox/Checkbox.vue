@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const checkboxProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
@@ -6,7 +8,7 @@ const checkboxProps = {
   ...useInputtable.props(),
   value: [String, Number],
   indeterminate: Boolean,
-  glow: Boolean,
+  glow: optionalBooleanProp(),
 }
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>

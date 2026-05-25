@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const inputProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
@@ -25,9 +27,9 @@ const inputProps = {
     default: 'text',
   },
   step: [Number, String],
-  block: Boolean,
-  showCounter: Boolean,
-  clearable: Boolean,
+  block: optionalBooleanProp(),
+  showCounter: optionalBooleanProp(),
+  clearable: optionalBooleanProp(),
 }
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
@@ -47,6 +49,7 @@ export default {
 <script setup lang="ts">
 import { ref, type PropType, type ExtractPublicPropTypes, watch, useAttrs, computed } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -58,6 +61,7 @@ import XIcon from '../icon/Icon.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(inputProps)
+const resolvedProps = useResolvedComponentProps('Input', props)
 
 const emit = defineEmits(useInputtable.emits())
 
@@ -97,7 +101,7 @@ function togglePasswordVisibility() {
   currentType.value = currentType.value === 'password' ? 'text' : 'password'
 }
 
-const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
+const showClearIcon = computed(() => resolvedProps.value.clearable && props.modelValue !== '')
 
 const { focus, blur } = useInteractive(elRef)
 
@@ -117,7 +121,7 @@ const currentLength = computed(() => {
   return value ? String(value).length : 0
 })
 
-const { styles, classes, className } = useTheme('Input', {}, props, { errorInternal })
+const { styles, classes, className } = useTheme('Input', {}, resolvedProps, { errorInternal })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -125,7 +129,7 @@ defineExpose({ focus, blur, reset, validate, setError })
 <template>
   <x-label
     :style="styles"
-    :block="block"
+    :block="resolvedProps.block"
     :disabled="disabled"
     :required="required"
     :is-inside-form="isInsideForm"
@@ -211,7 +215,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :helper="helper"
       :character-count="currentLength"
       :max-characters="maxlength"
-      :show-counter="showCounter"
+      :show-counter="resolvedProps.showCounter"
     />
   </x-label>
 </template>

@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   textAlign: [null, 'left', 'center', 'right', 'justify'] as const,
   verticalAlign: [null, 'baseline', 'bottom', 'middle', 'text-bottom', 'text-top', 'top'] as const,
@@ -8,8 +10,8 @@ const tableCellProps = {
     type: String as PropType<TableCellTextAlign>,
     validator: (value: string) => validators.textAlign.includes(value as any),
   },
-  truncate: Boolean,
-  dense: Boolean,
+  truncate: optionalBooleanProp(),
+  dense: optionalBooleanProp(),
   width: [String, Number],
   verticalAlign: {
     type: String as PropType<TableCellVerticalAlign>,

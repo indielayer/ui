@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   sort: [1, -1, undefined] as const,
   textAlign: ['left', 'center', 'right'] as const,
@@ -9,7 +11,7 @@ const tableHeaderProps = {
     type: Number as PropType<TableHeaderSort>,
     validator: (value: number) => validators.sort.includes(value as any),
   },
-  sortable: Boolean,
+  sortable: optionalBooleanProp(),
   textAlign: {
     type: String as PropType<TableHeaderAlign>,
     default: 'left',

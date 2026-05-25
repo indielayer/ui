@@ -1,10 +1,12 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const inputFooterProps = {
   helper: String,
   error: String,
   characterCount: Number,
   maxCharacters: [Number, String],
-  showCounter: Boolean,
+  showCounter: optionalBooleanProp(),
 }
 
 export type InputFooterProps = ExtractPublicPropTypes<typeof inputFooterProps>

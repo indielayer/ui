@@ -1,11 +1,13 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const iconProps = {
   ...useCommon.props(),
   icon: {
     type: String,
     required: true,
   },
-  filled: Boolean,
+  filled: optionalBooleanProp(),
   viewBox: {
     type: String,
     default: '0 0 24 24',

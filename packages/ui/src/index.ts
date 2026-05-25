@@ -5,6 +5,7 @@ export * from './composables'
 export * from './themes'
 export * from './virtual'
 export type { UITheme, ComponentThemes } from './theme'
+export type { ComponentDefaults } from './componentDefaults'
 
 export { default as createUI, type UIOptions } from './create'
 

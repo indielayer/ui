@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const menuItemProps = {
   ...useCommon.props(),
   ...useColors.props('secondary'),
@@ -31,10 +33,10 @@ const menuItemProps = {
   },
   selected: Boolean,
   disabled: Boolean,
-  minimal: Boolean,
+  minimal: optionalBooleanProp(),
   prefix: String,
   suffix: String,
-  checkbox: Boolean,
+  checkbox: optionalBooleanProp(),
 }
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>

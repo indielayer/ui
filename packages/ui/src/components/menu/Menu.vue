@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const menuProps = {
   ...useCommon.props(),
   ...useColors.props('secondary'),
@@ -8,7 +10,7 @@ const menuProps = {
     default: true,
   },
   collapseIcon: String,
-  expanded: Boolean,
+  expanded: optionalBooleanProp(),
   disabled: Boolean,
   rounded: {
     type: Boolean,
@@ -18,7 +20,7 @@ const menuProps = {
     type: Boolean,
     default: true,
   },
-  minimal: Boolean,
+  minimal: optionalBooleanProp(),
 }
 
 export type MenuArrayItem = {

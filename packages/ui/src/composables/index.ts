@@ -1,4 +1,5 @@
 export * from './keys'
+export * from './resolveComponentDefaults'
 export * from './useCommon'
 export * from './useColors'
 export * from './useCSS'

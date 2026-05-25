@@ -1,10 +1,12 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const labelProps = {
   ...useCommon.props(),
   label: String,
   disabled: Boolean,
   required: Boolean,
-  block: Boolean,
+  block: optionalBooleanProp(),
   isInsideForm: Boolean,
   tag: {
     type: String,

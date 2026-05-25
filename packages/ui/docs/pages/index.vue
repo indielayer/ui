@@ -91,8 +91,15 @@ const app = createApp(App)
 
 app.use(UI, {
   theme: BaseTheme,
+  defaults: {
+    Alert: { outlined: true },
+  },
 })`"
       />
+      <p class="my-4 text-sm text-gray-600 dark:text-gray-400">
+        Use <code>defaults</code> to set app-wide prop defaults per component (e.g. all alerts outlined). Instance props still override when passed explicitly.
+        Variant and layout booleans on themed components use <code>optionalBooleanProp()</code> so omitted attributes stay unset; plain <code>Boolean</code> props default to <code>false</code> in Vue and will not receive app defaults.
+      </p>
       <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
       <multi-snippet
         class="my-4"

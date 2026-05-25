@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js,.ts,.vue .",
     "lint:ui": "eslint --ext .js,.ts,.vue ./packages/ui",
     "lint:fix": "eslint --cache --fix --ext .js,.ts,.vue ./packages/ui",
+    "typecheck": "cd packages/ui && pnpm typecheck",
     "test": "cd packages/ui && pnpm test",
     "test:ci": "cd packages/ui && pnpm test:ci",
     "changeset": "changeset",

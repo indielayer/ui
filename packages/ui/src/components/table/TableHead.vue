@@ -1,6 +1,8 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const tableHeadProps = {
-  stickyHeader: Boolean,
+  stickyHeader: optionalBooleanProp(),
 }
 
 export type TableHeadProps = ExtractPublicPropTypes<typeof tableHeadProps>

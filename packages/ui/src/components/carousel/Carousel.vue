@@ -1,10 +1,12 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const carouselEffects = ['slide'] as const
 
 export type CarouselEffect = typeof carouselEffects[number]
 
 const carouselProps = {
-  autoplay: Boolean,
+  autoplay: optionalBooleanProp(),
   delay: {
     type: Number,
     default: 5000,

@@ -1,11 +1,13 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const radioProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
   value: [String, Number],
-  glow: Boolean,
+  glow: optionalBooleanProp(),
 }
 
 export type RadioProps = ExtractPublicPropTypes<typeof radioProps>

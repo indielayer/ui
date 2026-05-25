@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const textareaProps = {
   ...useCommon.props(),
   ...useInteractive.props(),
@@ -16,12 +18,12 @@ const textareaProps = {
   min: [Number, String],
   minlength: [Number, String],
   placeholder: String,
-  adjustToText: Boolean,
-  preventEnter: Boolean,
-  block: Boolean,
-  resizable: Boolean,
-  showCounter: Boolean,
-  clearable: Boolean,
+  adjustToText: optionalBooleanProp(),
+  preventEnter: optionalBooleanProp(),
+  block: optionalBooleanProp(),
+  resizable: optionalBooleanProp(),
+  showCounter: optionalBooleanProp(),
+  clearable: optionalBooleanProp(),
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>

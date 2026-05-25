@@ -1,8 +1,11 @@
 <script lang="ts">
+import { variantBooleanProps } from '../../common/props'
+
 const buttonProps = {
   ...useCommon.props(),
   ...useColors.props(),
   ...useInteractive.props(),
+  ...variantBooleanProps(),
   tag: {
     type: String,
     default: 'button',
@@ -15,13 +18,6 @@ const buttonProps = {
   iconLeft: String,
   iconRight: String,
   to: [String, Object],
-  outlined: Boolean,
-  rounded: Boolean,
-  glow: Boolean,
-  ghost: Boolean,
-  light: Boolean,
-  block: Boolean,
-  flat: Boolean,
 }
 
 export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
@@ -41,6 +37,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
@@ -50,6 +47,7 @@ import XLoader from '../loader/Loader.vue'
 import XIcon from '../icon/Icon.vue'
 
 const props = defineProps(buttonProps)
+const resolvedProps = useResolvedComponentProps('Button', props)
 
 const elRef = ref<HTMLElement | null>(null)
 
@@ -60,13 +58,15 @@ const buttonGroup = inject(injectButtonGroupKey, {
 })
 
 const { isButtonGroup } = buttonGroup
-const computedSize = computed(() => buttonGroup.groupProps.size || props.size)
-const computedFlat = computed(() => buttonGroup.groupProps.flat || props.flat)
-const computedColor = computed(() => props.color || buttonGroup.groupProps.color)
-const computedGhost = computed(() => props.ghost || buttonGroup.groupProps.ghost)
-const computedLight = computed(() => props.light || buttonGroup.groupProps.light)
-const computedOutlined = computed(() => props.outlined || buttonGroup.groupProps.outlined)
-const computedDisabled = computed(() => props.disabled || buttonGroup.groupProps.disabled)
+const group = () => buttonGroup.groupProps
+
+const computedSize = computed(() => group().size ?? resolvedProps.value.size)
+const computedFlat = computed(() => group().flat ?? resolvedProps.value.flat)
+const computedColor = computed(() => resolvedProps.value.color ?? group().color)
+const computedGhost = computed(() => group().ghost ?? resolvedProps.value.ghost)
+const computedLight = computed(() => group().light ?? resolvedProps.value.light)
+const computedOutlined = computed(() => group().outlined ?? resolvedProps.value.outlined)
+const computedDisabled = computed(() => props.disabled || group().disabled)
 const computedIconLeft = computed(() => props.icon || props.iconLeft)
 
 const attrs = useAttrs()
@@ -81,11 +81,11 @@ const computedProps = computed(() => ({
   outlined: unref(computedOutlined),
   disabled: unref(computedDisabled),
   loading: props.loading,
-  block: props.block,
-  glow: props.glow,
+  block: resolvedProps.value.block,
+  glow: resolvedProps.value.glow,
   iconLeft: unref(computedIconLeft),
   iconRight: props.iconRight,
-  rounded: props.rounded,
+  rounded: resolvedProps.value.rounded,
 }))
 
 const { className, classes, styles } = useTheme('Button', {}, computedProps, {
@@ -105,9 +105,9 @@ defineExpose({ focus, blur })
     :class="[
       className,
       $style['button'],
-      (glow && !computedDisabled && !loading) ? $style['button--glow'] : '',
+      (resolvedProps.glow && !computedDisabled && !loading) ? $style['button--glow'] : '',
       classes.wrapper,
-      { 'w-full': block }
+      { 'w-full': resolvedProps.block }
     ]"
     :style="styles"
     :aria-busy="loading ? 'true' : null"

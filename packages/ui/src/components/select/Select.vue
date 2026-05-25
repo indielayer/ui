@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const selectProps = {
   ...useColors.props('secondary'),
   ...useCommon.props(),
@@ -6,21 +8,21 @@ const selectProps = {
   ...useInputtable.props(),
   placeholder: String,
   options: Array as PropType<SelectOption[]>,
-  multiple: Boolean,
-  multipleCheckbox: Boolean,
-  truncate: Boolean,
-  flat: Boolean,
-  native: Boolean,
-  filterable: Boolean,
-  clearable: Boolean,
+  multiple: optionalBooleanProp(),
+  multipleCheckbox: optionalBooleanProp(),
+  truncate: optionalBooleanProp(),
+  flat: optionalBooleanProp(),
+  native: optionalBooleanProp(),
+  filterable: optionalBooleanProp(),
+  clearable: optionalBooleanProp(),
   filterPlaceholder: {
     type: String,
     default: 'Filter by...',
   },
-  filterablePrefix: Boolean,
-  filterableSuffix: Boolean,
-  hideSelectedOptionSlots: Boolean,
-  virtualList: Boolean,
+  filterablePrefix: optionalBooleanProp(),
+  filterableSuffix: optionalBooleanProp(),
+  hideSelectedOptionSlots: optionalBooleanProp(),
+  virtualList: optionalBooleanProp(),
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
   virtualListItemHeight: {

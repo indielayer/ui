@@ -32,6 +32,9 @@ jobs:
       - name: Linting
         run: pnpm run lint:ui
 
+      - name: Typecheck
+        run: pnpm run typecheck
+
       - name: Unit tests
         run: pnpm run test
 

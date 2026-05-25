@@ -1,10 +1,12 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const toggleProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  glow: Boolean,
+  glow: optionalBooleanProp(),
 }
 
 export type ToggleProps = ExtractPublicPropTypes<typeof toggleProps>

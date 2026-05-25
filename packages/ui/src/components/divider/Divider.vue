@@ -1,7 +1,9 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const dividerProps = {
   label: String,
-  vertical: Boolean,
+  vertical: optionalBooleanProp(),
 }
 
 export type DividerProps = ExtractPublicPropTypes<typeof dividerProps>

@@ -31,6 +31,7 @@ From repo root:
 
 ```bash
 pnpm lint:ui
+pnpm typecheck
 pnpm test:ci
 ```
 

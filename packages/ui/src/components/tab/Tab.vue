@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const tabProps = {
   ...useCommon.props(),
   value: {
@@ -13,7 +15,7 @@ const tabProps = {
   icon: String,
   disabled: Boolean,
   exact: Boolean,
-  removable: Boolean,
+  removable: optionalBooleanProp(),
 }
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
@@ -38,6 +40,7 @@ import { useMutationObserver } from '@vueuse/core'
 import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
@@ -47,6 +50,7 @@ import { closeIcon } from '../../common/icons'
 import type { TabGroupInjection, TabGroupVariant } from './TabGroup.vue'
 
 const props = defineProps(tabProps)
+const resolvedProps = useResolvedComponentProps('Tab', props)
 
 const computedValue = computed(() => (elRef.value as typeof XLink)?.$el?.href || props.value)
 const computedLabel = computed(() => props.label || props.value)
@@ -163,7 +167,7 @@ const { styles, classes, className } = useTheme('Tab', {}, ref({
         />
         <div :class="classes.label">{{ computedLabel }}</div>
         <x-icon
-          v-if="removable"
+          v-if="resolvedProps.removable"
           size="sm"
           :icon="closeIcon"
           class="ml-2 cursor-pointer hover:text-secondary-700 dark:hover:text-secondary-500 transition-colors duration-150"

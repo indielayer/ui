@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const tableProps = {
   headers: {
     type: Array as PropType<TableHeader[]>,
@@ -12,7 +14,7 @@ const tableProps = {
     type: Array as PropType<string[]>,
     default: () => [],
   },
-  sortMultiple: Boolean,
+  sortMultiple: optionalBooleanProp(),
   loading: Boolean,
   loadingSkeleton: Boolean,
   loadingLines: {
@@ -20,10 +22,10 @@ const tableProps = {
     default: 3,
   },
   error: Boolean,
-  dense: Boolean,
-  fixed: Boolean,
-  striped: Boolean,
-  pointer: Boolean,
+  dense: optionalBooleanProp(),
+  fixed: optionalBooleanProp(),
+  striped: optionalBooleanProp(),
+  pointer: optionalBooleanProp(),
   scrollable: {
     type: Boolean,
     default: true,
@@ -32,8 +34,8 @@ const tableProps = {
     type: Boolean,
     default: true,
   },
-  expandable: Boolean,
-  virtualList: Boolean,
+  expandable: optionalBooleanProp(),
+  virtualList: optionalBooleanProp(),
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
   virtualListItemHeight: {
@@ -45,8 +47,8 @@ const tableProps = {
     default: 10,
   },
   keyProp: String,
-  selectable: Boolean,
-  singleSelect: Boolean,
+  selectable: optionalBooleanProp(),
+  singleSelect: optionalBooleanProp(),
   autoClearSelected: {
     type: Boolean,
     default: true,

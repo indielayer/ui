@@ -14,7 +14,7 @@ From the repo root:
 ```bash
 pnpm i
 pnpm dev                    # docs + component dev (packages/ui)
-pnpm lint:ui && pnpm test:ci   # required before UI PRs (CI enforces this)
+pnpm lint:ui && pnpm typecheck && pnpm test:ci   # required before UI PRs
 pnpm build:docs             # production docs build
 pnpm changeset              # user-facing library changes (before merge)
 ```
@@ -30,15 +30,26 @@ CI=true pnpm test         # equivalent (CI env disables watch mode)
 
 Do **not** run bare `pnpm test` in non-interactive sessions.
 
+### Typecheck (required when library code changes)
+
+From the repo root:
+
+```bash
+pnpm typecheck            # vue-tsc in packages/ui
+```
+
+Run after editing `packages/ui` TypeScript or Vue files (components, composables, themes, tests). Fix all errors before finishing.
+
 ### Linting (required)
 
-- **CI**: `.github/workflows/pr_check.yml` runs `pnpm lint:ui` on every PR.
+- **CI**: `.github/workflows/pr_check.yml` runs `pnpm lint:ui` and `pnpm typecheck` on every PR.
 - **Pre-commit**: `lint-staged` runs `eslint --cache --fix` on staged `*.{js,ts,vue}` (via `simple-git-hooks`; enabled after `pnpm i`).
 - **Agents / editors**: After editing files, run ESLint on touched paths before finishing:
 
   ```bash
   pnpm eslint --cache --fix --ext .js,.ts,.vue packages/ui/docs   # docs example
-  pnpm lint:ui   # must exit 0 before merge
+  pnpm lint:ui      # must exit 0 before merge
+  pnpm typecheck    # when packages/ui src changed
   ```
 
 - **VS Code**: `.vscode/settings.json` enables ESLint fix-on-save when the ESLint extension is installed.

@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const linkProps = {
   ...useColors.props('secondary'),
   tag: {
@@ -6,9 +8,9 @@ const linkProps = {
     default: 'a',
   },
   to: [String, Object],
-  shadow: Boolean,
-  external: Boolean,
-  underline: Boolean,
+  shadow: optionalBooleanProp(),
+  external: optionalBooleanProp(),
+  underline: optionalBooleanProp(),
 }
 
 export type LinkProps = ExtractPublicPropTypes<typeof linkProps>
