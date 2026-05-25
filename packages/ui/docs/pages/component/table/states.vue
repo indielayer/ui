@@ -17,9 +17,11 @@ const items = ref([])
   <x-table :headers="headers" :items="items">
     <template #empty>
       <div class="p-4">
-        <div class="p-8 border-dashed border rounded-lg text-center">
-          Empty state slot
-        </div>
+        <x-empty
+          bordered
+          title="No data"
+          description="There are no rows to display."
+        />
       </div>
     </template>
   </x-table>

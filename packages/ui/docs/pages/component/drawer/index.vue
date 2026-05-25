@@ -13,7 +13,7 @@ const demos = [{
   component: UsageDemo,
 }]
 const back = 'divider'
-const next = 'icon'
+const next = 'empty'
 </script>
 
 <template>

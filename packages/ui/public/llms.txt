@@ -26,6 +26,7 @@ Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Us
 - [Datepicker](https://indielayer.com/component/datepicker): The datepicker component is used to select a date or time.
 - [Divider](https://indielayer.com/component/divider): Dividers are used to separate content.
 - [Drawer](https://indielayer.com/component/drawer): Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.
+- [Empty](https://indielayer.com/component/empty): Empty states communicate when there is no content to show. Use them in tables, lists, and panels with a title, description, optional icon, and actions.
 - [Form](https://indielayer.com/component/form): Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.
 - [FormGroup](https://indielayer.com/component/formGroup): Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.
 - [Icon](https://indielayer.com/component/icon): Icons visually represent actions and concepts. Register SVG paths in a global map, then reference them by name on XIcon.

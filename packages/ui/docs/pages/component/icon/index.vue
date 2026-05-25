@@ -26,7 +26,7 @@ const demos = [{
   code: VariantsDemoCode,
   component: VariantsDemo,
 }]
-const back = 'drawer'
+const back = 'empty'
 const next = 'image'
 </script>
 

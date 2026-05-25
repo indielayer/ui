@@ -16,6 +16,7 @@ import type {
   DatepickerTheme,
   DividerTheme,
   DrawerTheme,
+  EmptyTheme,
   FormTheme,
   FormGroupTheme,
   IconTheme,
@@ -72,6 +73,7 @@ export type ComponentThemes = {
   Datepicker: DatepickerTheme;
   Divider: DividerTheme;
   Drawer: DrawerTheme;
+  Empty: EmptyTheme;
   Form: FormTheme;
   FormGroup: FormGroupTheme;
   Icon: IconTheme;
