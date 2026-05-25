@@ -33,7 +33,7 @@ const demos = [{
   code: StatesDemoCode,
   component: StatesDemo,
 }]
-const back = 'form'
+const back = 'inputGroup'
 const next = 'radio'
 </script>
 

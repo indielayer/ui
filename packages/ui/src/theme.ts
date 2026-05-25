@@ -23,6 +23,7 @@ import type {
   ImageTheme,
   InputTheme,
   InputFooterTheme,
+  InputGroupTheme,
   LabelTheme,
   LinkTheme,
   LoaderTheme,
@@ -80,6 +81,7 @@ export type ComponentThemes = {
   Image: ImageTheme;
   Input: InputTheme;
   InputFooter: InputFooterTheme;
+  InputGroup: InputGroupTheme;
   Label: LabelTheme;
   Link: LinkTheme;
   Loader: LoaderTheme;

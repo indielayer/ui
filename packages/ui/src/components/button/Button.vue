@@ -23,7 +23,11 @@ const buttonProps = {
 export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
 
 type InternalClasses = 'wrapper' | 'iconLeft' | 'iconRight'
-type InternalExtraData = { isButtonGroup: boolean; }
+type InternalExtraData = {
+  isButtonGroup: boolean;
+  isInsideInputGroup: boolean;
+  inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined;
+}
 export interface ButtonTheme extends ThemeComponent<ButtonProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -35,13 +39,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, inject, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, inject, onMounted, onUnmounted, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
-import { injectButtonGroupKey } from '../../composables/keys'
+import { injectButtonGroupKey, injectInputGroupKey } from '../../composables/keys'
 
 import XLoader from '../loader/Loader.vue'
 import XIcon from '../icon/Icon.vue'
@@ -51,22 +55,57 @@ const resolvedProps = useResolvedComponentProps('Button', props)
 
 const elRef = ref<HTMLElement | null>(null)
 
-// Button group props
 const buttonGroup = inject(injectButtonGroupKey, {
   isButtonGroup: false,
   groupProps: {},
 })
 
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
+
+const childId = `btn-${Math.random().toString(36).slice(2)}`
+
+onMounted(() => {
+  if (inputGroup.isInsideInputGroup) inputGroup.registerChild(childId)
+})
+
+onUnmounted(() => {
+  if (inputGroup.isInsideInputGroup) inputGroup.unregisterChild(childId)
+})
+
 const { isButtonGroup } = buttonGroup
+const isInsideInputGroup = computed(() => inputGroup.isInsideInputGroup)
+const inputGroupPosition = computed(() => {
+  if (!inputGroup.isInsideInputGroup) return undefined
+
+  void inputGroup.childOrder.value
+
+  return inputGroup.getPosition(childId)
+})
+
 const group = () => buttonGroup.groupProps
 
-const computedSize = computed(() => group().size ?? resolvedProps.value.size)
+const computedSize = computed(() => {
+  if (inputGroup.isInsideInputGroup && inputGroup.groupProps?.size) {
+    return inputGroup.groupProps.size
+  }
+
+  return group().size ?? resolvedProps.value.size
+})
 const computedFlat = computed(() => group().flat ?? resolvedProps.value.flat)
 const computedColor = computed(() => resolvedProps.value.color ?? group().color)
 const computedGhost = computed(() => group().ghost ?? resolvedProps.value.ghost)
 const computedLight = computed(() => group().light ?? resolvedProps.value.light)
 const computedOutlined = computed(() => group().outlined ?? resolvedProps.value.outlined)
-const computedDisabled = computed(() => props.disabled || group().disabled)
+const computedDisabled = computed(() => props.disabled || group().disabled || !!inputGroup.groupProps?.disabled)
 const computedIconLeft = computed(() => props.icon || props.iconLeft)
 
 const attrs = useAttrs()
@@ -90,6 +129,8 @@ const computedProps = computed(() => ({
 
 const { className, classes, styles } = useTheme('Button', {}, computedProps, {
   isButtonGroup,
+  isInsideInputGroup,
+  inputGroupPosition,
 })
 
 const { focus, blur } = useInteractive(elRef)

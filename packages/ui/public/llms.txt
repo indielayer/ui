@@ -33,6 +33,7 @@ Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Us
 - [Image](https://indielayer.com/component/image): Loads a remote image after preloading. Use a background on the wrapper for a visible placeholder until load completes.
 - [InfiniteLoader](https://indielayer.com/component/infiniteLoader): InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.
 - [Input](https://indielayer.com/component/input): This is a text input component that allows users to enter and edit text.
+- [Input Group](https://indielayer.com/component/inputGroup): Input groups combine multiple inline fields (Input, Textarea, Select, Datepicker) into one control with a shared label and footer.
 - [Link](https://indielayer.com/component/link): Links are used to navigate to a different page.
 - [Loader](https://indielayer.com/component/loader): Loader component is used to show a loading state.
 - [Menu](https://indielayer.com/component/menu): Menus are used to display a list of options.

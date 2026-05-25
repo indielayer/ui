@@ -18,6 +18,7 @@ const components = [
       { to: '/component/datepicker', label: 'Datepicker' },
       { to: '/component/form', label: 'Form' },
       { to: '/component/formGroup', label: 'Form Group' },
+      { to: '/component/inputGroup', label: 'Input Group' },
       { to: '/component/input', label: 'Input' },
       { to: '/component/radio', label: 'Radio' },
       { to: '/component/select', label: 'Select' },

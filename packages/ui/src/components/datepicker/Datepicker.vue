@@ -129,7 +129,8 @@ const datepickerProps = {
 export type DatepickerProps = ExtractPublicPropTypes<typeof datepickerProps>
 
 type InternalClasses = 'wrapper'
-export interface DatepickerTheme extends ThemeComponent<DatepickerProps, InternalClasses> {}
+type InternalExtraData = { isInsideInputGroup: boolean; }
+export interface DatepickerTheme extends ThemeComponent<DatepickerProps, InternalClasses, InternalExtraData> {}
 
 export default {
   name: 'XDatepicker',
@@ -137,12 +138,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { ref, inject, computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import type { Size } from '../../composables/useCommon'
+import { injectInputGroupKey } from '../../composables/keys'
 import XInput from '../input/Input.vue'
 import type { Locale } from 'date-fns'
 import VueDatepicker, { type ModelValue, type TimeModel, type VueDatePickerProps } from '@vuepic/vue-datepicker'
@@ -150,7 +153,23 @@ import '@vuepic/vue-datepicker/dist/main.css'
 
 const props = defineProps(datepickerProps)
 
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
+
 const emit = defineEmits(useInputtable.emits())
+
+const isInsideInputGroup = computed(() => inputGroup.isInsideInputGroup)
+const computedSize = computed((): Size => inputGroup.groupProps?.size ?? props.size)
+const isDisabled = computed(() => props.disabled || props.loading || !!inputGroup.groupProps?.disabled)
+const computedLabel = computed(() => (inputGroup.isInsideInputGroup ? undefined : props.label))
 
 const inputRef = ref<InstanceType<typeof XInput> | null>(null)
 
@@ -183,17 +202,20 @@ useMutationObserver(htmlNode, (mutations) => {
   attributes: true,
 })
 
+const { hideFooterInternal } = useInputtable(props, { focus, emit })
+
 defineExpose({ focus, blur, validate })
 
-const { styles, classes, className } = useTheme('Datepicker', {}, props)
+const { styles, classes, className } = useTheme('Datepicker', {}, props, { isInsideInputGroup })
 </script>
 
 <template>
   <div
-    :style="[styles, { '--dp-clear-btn-top': !!label ? '2.75rem' : '1.2rem' }]"
+    :style="[styles, { '--dp-clear-btn-top': computedLabel ? '2.75rem' : '1.2rem' }]"
     :class="[
       className,
       classes.wrapper,
+      isInsideInputGroup ? 'flex-1 min-w-0' : '',
     ]"
   >
     <vue-datepicker
@@ -301,10 +323,11 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
           ref="inputRef"
           :readonly="textInput === false || readonly"
           :model-value="value"
-          :label="label"
-          :size="size"
-          :disabled="disabled"
+          :label="computedLabel"
+          :size="computedSize"
+          :disabled="isDisabled"
           :helper="helper"
+          :is-inside-input-group="isInsideInputGroup"
           icon-right="calendar"
           :loading="loading"
           data-1p-ignore
@@ -313,7 +336,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props)
           :tooltip="tooltip"
           :placeholder="placeholder"
           :required="required"
-          :hide-footer="hideFooter"
+          :hide-footer="hideFooterInternal"
           @keydown.prevent.enter="onEnter"
           @keydown.tab="onTab"
         />

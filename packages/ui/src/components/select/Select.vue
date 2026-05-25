@@ -49,7 +49,7 @@ export type SelectOption = {
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
 type InternalClasses = 'wrapper' | 'box' | 'truncateCounter' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'clearButton' | 'icon'
-type InternalExtraData = { errorInternal: Ref<boolean>; }
+type InternalExtraData = { errorInternal: Ref<boolean>; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -61,7 +61,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref, onUnmounted } from 'vue'
+import { computed, inject, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref, onUnmounted } from 'vue'
 import { useEventListener, useResizeObserver, useThrottleFn } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
@@ -69,6 +69,8 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
+import type { Size } from '../../composables/useCommon'
+import { injectInputGroupKey } from '../../composables/keys'
 import { checkIcon, selectIcon, closeIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
@@ -112,7 +114,18 @@ const selectedIndex = ref<number | undefined>()
 const filter = defineModel('filter', { default : '' })
 const filterRef = ref<InstanceType<typeof XInput> | null>(null)
 
-const isDisabled = computed(() => props.disabled || props.loading || props.readonly)
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
+
+const isDisabled = computed(() => props.disabled || props.loading || props.readonly || !!inputGroup.groupProps?.disabled)
 const isClearIconVisible = computed(() => !props.loading && !props.readonly && !props.disabled && props.clearable && !isEmpty(selected.value))
 
 const selected = computed<any | any[]>({
@@ -394,13 +407,25 @@ const { focus, blur } = useInteractive(elRef)
 const {
   errorInternal,
   hideFooterInternal,
+  hideLabelInternal,
   inputListeners,
   reset,
   validate,
   setError,
   isFocused,
   isInsideForm,
+  isInsideInputGroup,
+  inputGroupPosition,
 } = useInputtable(props, { focus, emit, withListeners: true })
+
+const computedSize = computed((): Size => inputGroup.groupProps?.size ?? props.size)
+const computedLabel = computed(() => (hideLabelInternal.value ? undefined : props.label))
+
+const themeProps = computed(() => ({
+  ...props,
+  size: computedSize.value,
+  disabled: isDisabled.value,
+}))
 
 const labelListeners = computed(() => {
   const { focus, blur } = unref(inputListeners)
@@ -535,7 +560,11 @@ watch(selected, (val) => {
   handleTruncate()
 }, { immediate: true, deep: true })
 
-const { styles, classes, className } = useTheme('Select', {}, props, { errorInternal })
+const { styles, classes, className } = useTheme('Select', {}, themeProps, {
+  errorInternal,
+  isInsideInputGroup,
+  inputGroupPosition,
+})
 
 defineExpose({ focus, blur, reset, validate, setError, filterRef })
 </script>
@@ -549,7 +578,8 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
     :disabled="isDisabled"
     :required="required"
     :is-inside-form="isInsideForm"
-    :label="label"
+    :is-inside-input-group="isInsideInputGroup"
+    :label="computedLabel"
     :class="[
       className,
       classes.wrapper,

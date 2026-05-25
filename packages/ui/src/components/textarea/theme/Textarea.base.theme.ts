@@ -1,11 +1,15 @@
 import type { TextareaTheme } from '../Textarea.vue'
+import { inputGroupRadiusClasses } from '../../../common/inputGroupRadius'
 
 const theme: TextareaTheme = {
   classes: {
     wrapper: '',
 
     input: ({ props, data }) => {
-      const classes = ['appearance-none block w-full placeholder-secondary-400 dark:placeholder-secondary-500 outline-transparent outline outline-2 outline-offset-[-1px] transition duration-150 ease-in-out border-secondary-300 dark:border-secondary-700 border shadow-xs rounded-md']
+      const classes = ['appearance-none block w-full placeholder-secondary-400 dark:placeholder-secondary-500 outline-transparent outline outline-2 outline-offset-[-1px] transition duration-150 ease-in-out border-secondary-300 dark:border-secondary-700 border shadow-xs']
+
+      if (!data.isInsideInputGroup) classes.push('rounded-md')
+      else classes.push(...inputGroupRadiusClasses(data.inputGroupPosition))
 
       if (!props.resizable) classes.push('resize-none')
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
@@ -24,6 +28,11 @@ const theme: TextareaTheme = {
     },
 
     icon: 'text-secondary-600 dark:text-secondary-300 absolute my-auto inset-y-0',
+    adornment: 'absolute inset-y-0 z-10 flex items-center gap-1.5 pointer-events-none',
+    adornmentStart: 'left-0 pl-2',
+    adornmentEnd: 'right-0 pr-2 top-2 items-start',
+    adornmentIcon: 'shrink-0 text-secondary-600 dark:text-secondary-300 pointer-events-auto',
+    adornmentSlot: 'shrink-0 pointer-events-auto text-secondary-600 dark:text-secondary-300 text-sm',
   },
 }
 

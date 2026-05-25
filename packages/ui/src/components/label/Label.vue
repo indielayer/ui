@@ -8,6 +8,7 @@ const labelProps = {
   required: Boolean,
   block: optionalBooleanProp(),
   isInsideForm: Boolean,
+  isInsideInputGroup: Boolean,
   tag: {
     type: String,
     default: 'label',
@@ -29,14 +30,31 @@ export default {
 </script>
 
 <script setup lang="ts">
-import type { ExtractPublicPropTypes } from 'vue'
+import { computed, inject, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
+import { injectInputGroupKey } from '../../composables/keys'
 import XToggleTip from '../tooltip/ToggleTip.vue'
 
 const props = defineProps(labelProps)
 
-const { styles, classes, className } = useTheme('Label', {}, props)
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
+
+const themeProps = computed(() => ({
+  ...props,
+  isInsideInputGroup: props.isInsideInputGroup ?? inputGroup.isInsideInputGroup,
+}))
+
+const { styles, classes, className } = useTheme('Label', {}, themeProps)
 </script>
 
 <template>

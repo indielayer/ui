@@ -13,7 +13,7 @@ const demos = [{
   component: UsageDemo,
 }]
 const back = 'form'
-const next = 'input'
+const next = 'inputGroup'
 </script>
 
 <template>

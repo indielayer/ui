@@ -66,6 +66,7 @@ const {
   errorInternal,
   hideFooterInternal,
   isInsideForm,
+  isInsideInputGroup,
   inputListeners,
   reset,
   validate,
@@ -83,6 +84,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     :disabled="disabled"
     :required="required"
     :is-inside-form="isInsideForm"
+    :is-inside-input-group="isInsideInputGroup"
     :label="label"
     :class="[
       className,

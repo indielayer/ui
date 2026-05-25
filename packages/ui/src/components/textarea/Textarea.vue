@@ -28,8 +28,8 @@ const textareaProps = {
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
 
-type InternalClasses = 'wrapper' | 'input' | 'icon'
-type InternalExtraData = { errorInternal: Ref<boolean>; }
+type InternalClasses = 'wrapper' | 'input' | 'icon' | 'adornment' | 'adornmentStart' | 'adornmentEnd' | 'adornmentIcon' | 'adornmentSlot'
+type InternalExtraData = { errorInternal: Ref<boolean>; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
 
 export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}
 
@@ -42,7 +42,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, watch, type ExtractPublicPropTypes, type Ref, useAttrs, computed } from 'vue'
+import { ref, inject, watch, type ExtractPublicPropTypes, type Ref, useAttrs, computed, useSlots } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -50,6 +50,8 @@ import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
+import type { Size } from '../../composables/useCommon'
+import { injectInputGroupKey } from '../../composables/keys'
 
 import XLabel from '../label/Label.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
@@ -57,6 +59,17 @@ import XIcon from '../icon/Icon.vue'
 import { closeIcon } from '../../common/icons'
 
 const props = defineProps(textareaProps)
+
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
 
 const emit = defineEmits(useInputtable.emits())
 
@@ -106,12 +119,25 @@ const { focus, blur } = useInteractive(elRef)
 const {
   errorInternal,
   hideFooterInternal,
+  hideLabelInternal,
   isInsideForm,
+  isInsideInputGroup,
+  inputGroupPosition,
   inputListeners,
   reset,
   validate,
   setError,
 } = useInputtable(props, { focus, emit })
+
+const computedSize = computed((): Size => inputGroup.groupProps?.size ?? props.size)
+const isDisabled = computed(() => props.disabled || !!inputGroup.groupProps?.disabled)
+const computedLabel = computed(() => (hideLabelInternal.value ? undefined : props.label))
+
+const themeProps = computed(() => ({
+  ...props,
+  size: computedSize.value,
+  disabled: isDisabled.value,
+}))
 
 const currentLength = computed(() => {
   const value = props.modelValue
@@ -121,13 +147,33 @@ const currentLength = computed(() => {
 
 const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
 
+const slots = useSlots()
+const hasPrefixSlot = computed(() => !!slots.prefix)
+const hasSuffixSlot = computed(() => !!slots.suffix)
+const hasRightAdornment = computed(() => hasSuffixSlot.value || showClearIcon.value)
+
+const leftPaddingClass = computed(() => (hasPrefixSlot.value ? '!pl-10' : ''))
+
+const rightPaddingClass = computed(() => {
+  const units = (showClearIcon.value ? 1 : 0) + (hasSuffixSlot.value ? 1 : 0)
+
+  if (units >= 2) return '!pr-16'
+  if (units === 1) return '!pr-10'
+
+  return ''
+})
+
 function isEmpty(value: typeof props.modelValue) {
   if (typeof value === 'undefined' || value === null) return true
 
   return false
 }
 
-const { styles, classes, className } = useTheme('Textarea', {}, props, { errorInternal })
+const { styles, classes, className } = useTheme('Textarea', {}, themeProps, {
+  errorInternal,
+  isInsideInputGroup,
+  inputGroupPosition,
+})
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -136,10 +182,11 @@ defineExpose({ focus, blur, reset, validate, setError })
   <x-label
     :style="styles"
     :block="block"
-    :disabled="disabled"
+    :disabled="isDisabled"
     :required="required"
     :is-inside-form="isInsideForm"
-    :label="label"
+    :is-inside-input-group="isInsideInputGroup"
+    :label="computedLabel"
     :class="[
       className,
       classes.wrapper,
@@ -147,7 +194,15 @@ defineExpose({ focus, blur, reset, validate, setError })
     :tooltip="tooltip"
   >
     <div class="relative">
-      <slot name="prefix"></slot>
+      <div
+        v-if="hasPrefixSlot"
+        :class="[classes.adornment, classes.adornmentStart]"
+      >
+        <div :class="classes.adornmentSlot">
+          <slot name="prefix" ></slot>
+        </div>
+      </div>
+
       <textarea
         :id="id"
         ref="elRef"
@@ -158,8 +213,10 @@ defineExpose({ focus, blur, reset, validate, setError })
           errorInternal
             ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
             : 'focus:outline-[color:var(--x-textarea-border)]',
+          leftPaddingClass,
+          rightPaddingClass,
         ]"
-        :disabled="disabled"
+        :disabled="isDisabled"
         :max="max"
         :maxlength="maxlength"
         :min="min"
@@ -176,16 +233,21 @@ defineExpose({ focus, blur, reset, validate, setError })
         @input="onInput"
       ></textarea>
 
-      <slot name="suffix">
+      <div
+        v-if="hasRightAdornment"
+        :class="[classes.adornment, classes.adornmentEnd]"
+      >
+        <div v-if="hasSuffixSlot" :class="classes.adornmentSlot">
+          <slot name="suffix" ></slot>
+        </div>
         <x-icon
           v-if="showClearIcon"
-          :size="size"
+          :size="computedSize"
           :icon="closeIcon"
-          class="right-2 cursor-pointer"
-          :class="classes.icon"
+          :class="[classes.adornmentIcon, 'cursor-pointer']"
           @click="reset()"
         />
-      </slot>
+      </div>
     </div>
 
     <x-input-footer

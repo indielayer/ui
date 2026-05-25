@@ -1,17 +1,20 @@
 import type { MaybeRef, PropType } from 'vue'
 import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
-import { injectFormGroupKey, injectFormKey } from './keys'
+import { injectFormGroupKey, injectFormKey, injectInputGroupKey } from './keys'
 
 export interface XFormInputMethods {
   focus: () => void;
-  validate: (val: any) => boolean;
+  validate: (val?: any) => boolean;
   setError: (val: string) => void;
+  getError: () => string;
+  getValue: () => unknown;
 }
 
-export const useInputtable = (props: any, { focus, emit, withListeners = true }: { focus: () => void; emit: any; withListeners?: boolean; }) => {
+export const useInputtable = (props: any, { focus, emit, withListeners = true, formValidate }: { focus: () => void; emit: any; withListeners?: boolean; formValidate?: () => boolean; }) => {
   const isFirstValidation = ref(true)
   const errorInternal = ref(props.error)
   const hideFooterInternal = ref(props.hideFooter)
+  const hideLabelInternal = ref(false)
 
   const name = props.name ? props.name : (Math.random() + 1).toString(36).substring(7)
   const nameInternal = ref(name)
@@ -27,8 +30,32 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     value: undefined,
   })
 
-  if (formGroup.isInsideFormGroup) {
+  const inputGroup = inject(injectInputGroupKey, {
+    registerChild: () => {},
+    unregisterChild: () => {},
+    registerInput: () => {},
+    unregisterInput: () => {},
+    getPosition: () => 'only' as const,
+    childOrder: computed(() => []),
+    isInsideInputGroup: false,
+    groupProps: {},
+  })
+
+  const inputGroupPosition = computed(() => {
+    if (!inputGroup.isInsideInputGroup) return undefined
+
+    // Subscribe to sibling mount order so radius classes update after each child registers
+    void inputGroup.childOrder.value
+
+    return inputGroup.getPosition(nameInternal.value)
+  })
+
+  if (formGroup.isInsideFormGroup || inputGroup.isInsideInputGroup) {
     hideFooterInternal.value = true
+  }
+
+  if (inputGroup.isInsideInputGroup) {
+    hideLabelInternal.value = true
   }
 
   const form = inject(injectFormKey, {
@@ -48,7 +75,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
   }
 
   const validate = (val?: any): boolean => {
-    val = val || props.modelValue
+    val = val === undefined ? props.modelValue : val
 
     isFirstValidation.value = false
 
@@ -118,8 +145,18 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     if (formGroup.isInsideFormGroup) {
       formGroup.registerInputGroup(nameInternal.value, focus)
     } else {
-      if (!props.skipFormRegistry)
-        form.registerInput(nameInternal.value, focus, validate, setError)
+      if (inputGroup.isInsideInputGroup) {
+        inputGroup.registerInput(nameInternal.value, {
+          focus,
+          validate,
+          setError,
+          getError: () => errorInternal.value,
+          getValue: () => props.modelValue,
+        })
+      }
+
+      if (!props.skipFormRegistry && !inputGroup.isInsideInputGroup)
+        form.registerInput(nameInternal.value, focus, formValidate ?? validate, setError)
     }
   })
 
@@ -127,7 +164,11 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     if (formGroup.isInsideFormGroup) {
       formGroup.unregisterInputGroup(nameInternal.value)
     } else {
-      if (!props.skipFormRegistry)
+      if (inputGroup.isInsideInputGroup) {
+        inputGroup.unregisterInput(nameInternal.value)
+      }
+
+      if (!props.skipFormRegistry && !inputGroup.isInsideInputGroup)
         form.unregisterInput(nameInternal.value)
     }
 
@@ -137,14 +178,20 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true }:
     isFirstValidation,
     errorInternal,
     hideFooterInternal,
+    hideLabelInternal,
     isFocused,
     isInsideForm: props.skipFormRegistry ? false : form.isInsideForm,
     isInsideFormGroup: formGroup.isInsideFormGroup,
+    isInsideInputGroup: inputGroup.isInsideInputGroup,
+    inputGroupPosition,
+    nameInternal,
     inputListeners,
     formGroup,
+    inputGroup,
     reset,
     validate,
     setError,
+    getError: () => errorInternal.value,
   }
 }
 

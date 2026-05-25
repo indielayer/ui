@@ -1,4 +1,5 @@
 import type { ButtonTheme } from '../Button.vue'
+import { inputGroupRadiusClasses } from '../../../common/inputGroupRadius'
 
 const theme: ButtonTheme = {
   classes: {
@@ -6,8 +7,13 @@ const theme: ButtonTheme = {
       const classes = ['relative transition duration-150 inline-flex whitespace-nowrap overflow-hidden align-top appearance-none text-sm active:shadow-none border !leading-[1.28572] tracking-wide font-light']
 
       // radius
-      if (!data.isButtonGroup) classes.push(props.rounded ? 'rounded-full' : '')
-      else classes.push('!rounded-none')
+      if (data.isInsideInputGroup) {
+        classes.push(...inputGroupRadiusClasses(data.inputGroupPosition))
+      } else if (!data.isButtonGroup) {
+        classes.push(props.rounded ? 'rounded-full' : '')
+      } else {
+        classes.push('!rounded-none')
+      }
 
       // size
       if (slots.default) {
