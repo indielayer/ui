@@ -41,7 +41,6 @@ const components = [
       { to: '/component/breadcrumbs', label: 'Breadcrumbs' },
       { to: '/component/card', label: 'Card' },
       { to: '/component/carousel', label: 'Carousel' },
-      { to: '/component/container', label: 'Container' },
       { to: '/component/divider', label: 'Divider' },
       { to: '/component/drawer', label: 'Drawer' },
       { to: '/component/icon', label: 'Icon' },
@@ -70,6 +69,7 @@ const components = [
     collapseIcon: 'chevron-down',
     expanded: true,
     items: [
+      { to: '/component/container', label: 'Container' },
       { to: '/component/infiniteLoader', label: 'Infinite Loader' },
       { to: '/component/scroll', label: 'Scroll' },
       { to: '/component/spacer', label: 'Spacer' },

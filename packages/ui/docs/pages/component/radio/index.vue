@@ -2,8 +2,8 @@
 import { XRadio } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
-import VariantsDemoCode from './variants.vue?raw'
-import VariantsDemo from './variants.vue'
+import PaymentMethodDemoCode from './payment-method.vue?raw'
+import PaymentMethodDemo from './payment-method.vue'
 import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 import SizeDemoCode from './size.vue?raw'
@@ -18,10 +18,10 @@ const demos = [{
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
-  name: 'Variants',
-  description: '',
-  code: VariantsDemoCode,
-  component: VariantsDemo,
+  name: 'Payment method',
+  description: 'Bordered cards with default slot content for extra details.',
+  code: PaymentMethodDemoCode,
+  component: PaymentMethodDemo,
 }, {
   name: 'States',
   description: '',

@@ -57,6 +57,7 @@
     "gen:version": "node .scripts/gen-version.cjs",
     "gen:search": "node .scripts/gen-search.cjs",
     "gen:llms": "node .scripts/gen-llms.cjs",
+    "gen:llms-full": "node .scripts/gen-llms-full.cjs",
     "gen:sitemap": "node .scripts/gen-sitemap.cjs",
     "test": "pnpm test:unit",
     "test:ci": "vitest run --environment jsdom",
