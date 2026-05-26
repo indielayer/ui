@@ -61,7 +61,7 @@ async function init() {
       message: 'Project type:',
       choices: [
         { title: 'Vue 3', value: 'vue' },
-        { title: 'Nuxt 3', value: 'nuxt' },
+        { title: 'Nuxt 4', value: 'nuxt' },
       ],
     }],
     {

@@ -10,6 +10,6 @@
     "@cypress/vite-dev-server": "^7.3.3",
     "@cypress/vue": "^6.0.3",
     "cypress": "^15.0.0",
-    "vite": "^8.0.0"
+    "vite": "^8.0.14"
   }
 }

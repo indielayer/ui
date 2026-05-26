@@ -4,11 +4,17 @@ packages:
   - 'packages/demo-vue'
   - 'packages/create-ui'
 
-# Pin unhead v1 for Nuxt 3.10 compatibility (v2 breaks createServerHead)
 overrides:
-  unhead: 1.8.10
-  '@unhead/vue': 1.8.10
+  vite: 8.0.14
+  vite-plugin-inspect: 12.0.0-beta.2
+
+peerDependencyRules:
+  allowedVersions:
+    '@nuxt/kit': '4'
+    eslint: '8'
+
 allowBuilds:
+  '@parcel/watcher': set this to true or false
   esbuild: true
   simple-git-hooks: true
   vue-demi: true

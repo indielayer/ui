@@ -4,18 +4,18 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
     "preview": "nuxt preview"
   },
   "devDependencies": {
     "@indielayer/ui": "^1.5.1",
-    "@nuxt/devtools": "latest",
-    "@types/node": "^18",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.12.0",
     "@vuepic/vue-datepicker": "^11.0.1",
     "@vueuse/core": "^11.1.0",
-    "@tailwindcss/postcss": "^4.0.0",
     "floating-vue": "^5.2.2",
-    "nuxt": "^3.10.1",
-    "postcss": "^8.4.24",
-    "tailwindcss": "^4.0.0"
+    "nuxt": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^8.0.14"
   }
 }

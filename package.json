@@ -40,7 +40,7 @@
     "is-ci": "^3.0.1",
     "lint-staged": "^13.3.0",
     "simple-git-hooks": "^2.9.0",
-    "tsx": "^3.14.0"
+    "tsx": "^4.8.1"
   },
   "lint-staged": {
     "*.{cjs,js,jsx,ts,tsx,vue}": [
