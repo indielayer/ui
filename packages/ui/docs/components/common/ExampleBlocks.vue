@@ -41,15 +41,123 @@ const password = ref('')
 const slider = ref(80)
 const isPlaying = ref(false)
 let interval: ReturnType<typeof setInterval> | null = null
+let audioContext: AudioContext | null = null
+let masterGain: GainNode | null = null
+let sequencerStep = 0
 
-function togglePlayer() {
+const BPM = 128
+const STEPS_PER_BAR = 16
+const KICK_PATTERN = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0]
+const HAT_PATTERN = [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0]
+const BASS_PATTERN = [0, 7, 0, 10, 0, 7, 0, 5, 0, 7, 0, 10, 0, 7, 0, 3]
+
+function ensureAudioEngine() {
+  if (audioContext) return
+  const Context = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext; }).webkitAudioContext
+
+  if (!Context) return
+
+  audioContext = new Context()
+  masterGain = audioContext.createGain()
+  masterGain.gain.value = 0.2
+  masterGain.connect(audioContext.destination)
+}
+
+function triggerKick(time: number) {
+  if (!audioContext || !masterGain) return
+  const osc = audioContext.createOscillator()
+  const gain = audioContext.createGain()
+
+  osc.type = 'sine'
+  osc.frequency.setValueAtTime(140, time)
+  osc.frequency.exponentialRampToValueAtTime(48, time + 0.12)
+  gain.gain.setValueAtTime(0.001, time)
+  gain.gain.exponentialRampToValueAtTime(0.9, time + 0.01)
+  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.12)
+  osc.connect(gain).connect(masterGain)
+  osc.start(time)
+  osc.stop(time + 0.13)
+}
+
+function triggerHat(time: number) {
+  if (!audioContext || !masterGain) return
+  const bufferSize = Math.floor(audioContext.sampleRate * 0.03)
+  const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate)
+  const channel = buffer.getChannelData(0)
+
+  for (let i = 0; i < bufferSize; i += 1) {
+    channel[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize)
+  }
+
+  const source = audioContext.createBufferSource()
+  const bandPass = audioContext.createBiquadFilter()
+  const gain = audioContext.createGain()
+
+  source.buffer = buffer
+  bandPass.type = 'highpass'
+  bandPass.frequency.value = 7000
+  gain.gain.setValueAtTime(0.001, time)
+  gain.gain.exponentialRampToValueAtTime(0.2, time + 0.004)
+  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.03)
+  source.connect(bandPass).connect(gain).connect(masterGain)
+  source.start(time)
+  source.stop(time + 0.035)
+}
+
+function triggerBass(time: number, semitone: number) {
+  if (!audioContext || !masterGain) return
+  const osc = audioContext.createOscillator()
+  const filter = audioContext.createBiquadFilter()
+  const gain = audioContext.createGain()
+  const baseHz = 55
+  const frequency = baseHz * 2 ** (semitone / 12)
+
+  osc.type = 'sawtooth'
+  osc.frequency.setValueAtTime(frequency, time)
+  filter.type = 'lowpass'
+  filter.frequency.setValueAtTime(220, time)
+  filter.Q.value = 5
+  gain.gain.setValueAtTime(0.001, time)
+  gain.gain.exponentialRampToValueAtTime(0.22, time + 0.01)
+  gain.gain.exponentialRampToValueAtTime(0.001, time + 0.18)
+  osc.connect(filter).connect(gain).connect(masterGain)
+  osc.start(time)
+  osc.stop(time + 0.2)
+}
+
+function tickSequencer() {
+  if (!audioContext) return
+  const step = sequencerStep % STEPS_PER_BAR
+  const now = audioContext.currentTime
+  const hitTime = now + 0.01
+
+  if (KICK_PATTERN[step]) triggerKick(hitTime)
+  if (HAT_PATTERN[step]) triggerHat(hitTime)
+  const bassNote = BASS_PATTERN[step]
+
+  if (bassNote > 0) triggerBass(hitTime, bassNote)
+
+  slider.value = (slider.value + 1) % 100
+  sequencerStep += 1
+}
+
+async function togglePlayer() {
   if (isPlaying.value) {
     if (interval) clearInterval(interval)
     interval = null
+    masterGain?.gain.cancelScheduledValues(0)
+    masterGain?.gain.setTargetAtTime(0.0001, audioContext?.currentTime ?? 0, 0.02)
   } else {
-    interval = setInterval(() => {
-      slider.value += 1
-    }, 1000)
+    ensureAudioEngine()
+    if (!audioContext || !masterGain) return
+    if (audioContext.state === 'suspended') {
+      await audioContext.resume()
+    }
+    masterGain.gain.cancelScheduledValues(audioContext.currentTime)
+    masterGain.gain.setTargetAtTime(0.2, audioContext.currentTime, 0.03)
+    const stepMs = ((60 / BPM) / 4) * 1000
+
+    interval = setInterval(tickSequencer, stepMs)
   }
 
   isPlaying.value = !isPlaying.value
@@ -57,6 +165,12 @@ function togglePlayer() {
 
 onBeforeUnmount(() => {
   if (interval) clearInterval(interval)
+  interval = null
+  if (audioContext) {
+    void audioContext.close()
+    audioContext = null
+    masterGain = null
+  }
 })
 </script>
 
