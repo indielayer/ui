@@ -43,6 +43,7 @@ const components = [
       { to: '/component/carousel', label: 'Carousel' },
       { to: '/component/divider', label: 'Divider' },
       { to: '/component/drawer', label: 'Drawer' },
+      { to: '/component/empty', label: 'Empty' },
       { to: '/component/icon', label: 'Icon' },
       { to: '/component/image', label: 'Image' },
       { to: '/component/loader', label: 'Loader' },
