@@ -1,6 +1,31 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
 
+/** Generic silhouette placeholder (no external image). */
+const exampleAvatar =
+  'data:image/svg+xml,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Placeholder avatar">'
+    + '<rect width="80" height="80" fill="#0f766e"/>'
+    + '<circle cx="40" cy="28" r="14" fill="#ccfbf1"/>'
+    + '<ellipse cx="40" cy="88" rx="32" ry="36" fill="#ccfbf1"/>'
+    + '</svg>',
+  )
+
+const TRACKS = [
+  { title: 'Neon Gridlock', artist: 'VOIDRUNNER' },
+  { title: 'Pulsewidth 303', artist: 'KryoTek Unit' },
+  { title: 'Sub-Basement FM', artist: 'Driftvector' },
+  { title: 'Chrome & Concrete', artist: 'Null Sector' },
+  { title: '4AM Warehouse', artist: 'Phase-Locked Loop' },
+  { title: 'Resonant Cage', artist: 'Hexaflux' },
+  { title: 'Dry Ice Protocol', artist: 'Tin Manifold' },
+  { title: 'BPM 128 (Locked)', artist: 'Cyanline' },
+  { title: 'Ghost in the Mixer', artist: 'Modul_8' },
+  { title: 'Afterhours Telemetry', artist: 'NØVA CACHE' },
+] as const
+
+const nowPlaying = ref(TRACKS[Math.floor(Math.random() * TRACKS.length)]!)
+
 const selected = ref('A')
 const options = [{
   value: 'A',
@@ -57,7 +82,7 @@ onBeforeUnmount(() => {
       </div>
       <x-card class="p-4 flex items-center mt-4">
         <x-badge outlined position="bottom">
-          <x-avatar image="https://avatars.githubusercontent.com/u/3942799?v=4" rounded/>
+          <x-avatar :image="exampleAvatar" rounded/>
         </x-badge>
         <div class="ml-4">
           <div class="font-bold">John Smith</div>
@@ -78,10 +103,10 @@ onBeforeUnmount(() => {
       </div>
       <x-card flat class="border mt-4">
         <div class="p-2 flex items-center">
-          <x-avatar image="https://avatars.githubusercontent.com/u/3942799?v=4" size="lg"/>
+          <x-avatar :image="exampleAvatar" size="lg"/>
           <div class="ml-4">
-            <div class="font-bold">Holding back</div>
-            <div class="text-gray-400 text-sm">BANKS</div>
+            <div class="font-bold">{{ nowPlaying.title }}</div>
+            <div class="text-gray-400 text-sm">{{ nowPlaying.artist }}</div>
           </div>
         </div>
         <x-divider/>
