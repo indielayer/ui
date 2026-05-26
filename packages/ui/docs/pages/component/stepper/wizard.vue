@@ -11,7 +11,6 @@ const saving = ref(false)
 
 const firstName = ref('')
 const lastName = ref('')
-const email = ref('')
 const phone = ref('')
 
 const rules = {
@@ -65,10 +64,9 @@ async function onPrimaryClick() {
       class="min-h-[16rem]"
     >
       <template #account="{ next }">
-        <div class="grid gap-4 sm:grid-cols-2 max-w-lg">
+        <div class="grid gap-4 max-w-lg">
           <x-input v-model="firstName" label="First name" :rules="[rules.isRequired]" />
           <x-input v-model="lastName" label="Last name" :rules="[rules.isRequired]" />
-          <x-input v-model="email" class="sm:col-span-2" label="Email" :rules="[rules.isRequired, rules.isEmail]" />
         </div>
         <div class="mt-6 flex justify-end">
           <x-button @click="next">Continue</x-button>
@@ -77,7 +75,6 @@ async function onPrimaryClick() {
 
       <template #summary-account>
         <span v-if="accountSummary">{{ accountSummary }}</span>
-        <span v-else-if="email">{{ email }}</span>
       </template>
 
       <template #contact="{ next, prev }">
@@ -97,10 +94,6 @@ async function onPrimaryClick() {
           <div class="flex justify-between gap-4">
             <dt class="text-secondary-500">Name</dt>
             <dd>{{ accountSummary || '—' }}</dd>
-          </div>
-          <div class="flex justify-between gap-4">
-            <dt class="text-secondary-500">Email</dt>
-            <dd>{{ email || '—' }}</dd>
           </div>
           <div class="flex justify-between gap-4">
             <dt class="text-secondary-500">Phone</dt>

@@ -139,7 +139,6 @@ const localSteps = ref<InternalStep[]>([])
 const activeIndex = ref(0)
 const previousIndex = ref(0)
 const maxVisited = ref(0)
-const transitionDirection = ref<'forward' | 'back'>('forward')
 
 watch(() => props.steps, (steps) => {
   localSteps.value = steps.map((step) => ({
@@ -263,7 +262,7 @@ async function runBeforeChange(to: string | number, from: string | number) {
   return result !== false
 }
 
-async function setActiveIndex(index: number, direction: 'forward' | 'back' = 'forward') {
+async function setActiveIndex(index: number) {
   if (index === activeIndex.value) return
   if (index < 0 || index >= localSteps.value.length) return
 
@@ -277,7 +276,6 @@ async function setActiveIndex(index: number, direction: 'forward' | 'back' = 'fo
   if (index !== activeIndex.value && !(await runLeaveGuards())) return
 
   previousIndex.value = activeIndex.value
-  transitionDirection.value = direction
   activeIndex.value = index
   emit('change', to, index)
 }
@@ -296,7 +294,7 @@ async function next() {
   current.completed = true
   emit('step-complete', current.value, activeIndex.value)
 
-  if (!isLast.value) await setActiveIndex(activeIndex.value + 1, 'forward')
+  if (!isLast.value) await setActiveIndex(activeIndex.value + 1)
 }
 
 async function prev() {
@@ -304,7 +302,7 @@ async function prev() {
 
   if (!(await runLeaveGuards())) return
 
-  await setActiveIndex(activeIndex.value - 1, 'back')
+  await setActiveIndex(activeIndex.value - 1)
 }
 
 async function goTo(target: string | number) {
@@ -316,9 +314,7 @@ async function goTo(target: string | number) {
   if (!props.interactive) return
   if (!canGoToIndex(index)) return
 
-  const direction = index > activeIndex.value ? 'forward' : 'back'
-
-  await setActiveIndex(index, direction)
+  await setActiveIndex(index)
 }
 
 function onNavClick(index: number) {
@@ -443,10 +439,6 @@ function indicatorContent(step: InternalStep, index: number) {
   return { type: 'number' as const, number: index + 1 }
 }
 
-const panelTransitionEnterFrom = computed(() =>
-  transitionDirection.value === 'forward' ? '-translate-y-full' : 'translate-y-full',
-)
-
 const { styles, classes, className } = useTheme('Stepper', {}, props)
 
 defineExpose({
@@ -553,10 +545,10 @@ defineExpose({
       >
         <slot name="content-prefix" ></slot>
         <transition
-          :enter-from-class="panelTransitionEnterFrom"
-          enter-active-class="transition-transform duration-300 ease-out"
-          :leave-to-class="panelTransitionEnterFrom"
-          leave-active-class="transition-transform duration-300 ease-in"
+          enter-active-class="transition-opacity duration-200"
+          enter-from-class="opacity-0"
+          leave-active-class="transition-opacity duration-150"
+          leave-to-class="opacity-0"
           mode="out-in"
         >
           <div
