@@ -49,7 +49,12 @@ export type SelectOption = {
 export type SelectProps = ExtractPublicPropTypes<typeof selectProps>
 
 type InternalClasses = 'wrapper' | 'box' | 'truncateCounter' | 'content' | 'search' | 'contentBody' | 'iconWrapper' | 'clearButton' | 'icon'
-type InternalExtraData = { errorInternal: Ref<boolean>; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
+type InternalExtraData = {
+  errorInternal: Ref<boolean>;
+  isInsideInputGroup: boolean;
+  inputGroupPosition: InputGroupPosition | undefined;
+  isPopoverOpen: ComputedRef<boolean>;
+}
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -61,7 +66,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, inject, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, nextTick, unref, onUnmounted } from 'vue'
+import { computed, inject, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, type ComputedRef, nextTick, unref, onUnmounted } from 'vue'
 import { useEventListener, useResizeObserver, useThrottleFn } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
@@ -72,6 +77,7 @@ import { useVirtualList } from '../../composables/useVirtualList'
 import type { Size } from '../../composables/useCommon'
 import { injectInputGroupKey } from '../../composables/keys'
 import { checkIcon, selectIcon, closeIcon } from '../../common/icons'
+import type { InputGroupPosition } from '../../common/inputGroupRadius'
 
 import XLabel from '../label/Label.vue'
 import XTag from '../tag/Tag.vue'
@@ -220,6 +226,8 @@ const { list, scrollTo: scrollToVirtualList, containerProps, wrapperProps } = us
 )
 
 const isOpen = computed(() => popoverRef.value?.isOpen)
+
+const isPopoverOpen = computed(() => Boolean(unref(isOpen.value)))
 
 watch(filter, (val) => {
   if (val) {
@@ -564,6 +572,7 @@ const { styles, classes, className } = useTheme('Select', {}, themeProps, {
   errorInternal,
   isInsideInputGroup,
   inputGroupPosition,
+  isPopoverOpen,
 })
 
 defineExpose({ focus, blur, reset, validate, setError, filterRef })

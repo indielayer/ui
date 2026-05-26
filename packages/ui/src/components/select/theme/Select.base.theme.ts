@@ -24,8 +24,10 @@ const theme: SelectTheme = {
 
       if (data.errorInternal) {
         classes.push('border-error-500 dark:border-error-400 group-focus:outline-error-500')
+        if (data.isPopoverOpen) classes.push('outline-error-500!')
       } else if (!props.disabled) {
         classes.push('group-focus:outline-[color:var(--x-select-border)]')
+        if (data.isPopoverOpen) classes.push('outline-[color:var(--x-select-border)]!')
       }
 
       if (!props.multiple && !props.multipleCheckbox) {
