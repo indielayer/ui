@@ -14,7 +14,7 @@ peerDependencyRules:
     eslint: '8'
 
 allowBuilds:
-  '@parcel/watcher': set this to true or false
+  '@parcel/watcher': false
   esbuild: true
   simple-git-hooks: true
   vue-demi: true

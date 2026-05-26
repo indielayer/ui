@@ -10,7 +10,7 @@ export interface XFormInputMethods {
   getValue: () => unknown;
 }
 
-export const useInputtable = (props: any, { focus, emit, withListeners = true, formValidate }: { focus: () => void; emit: any; withListeners?: boolean; formValidate?: () => boolean; }) => {
+export const useInputtable = (props: any, { focus, emit, withListeners = true, formValidate, formGroupJoined }: { focus: () => void; emit: any; withListeners?: boolean; formValidate?: () => boolean; formGroupJoined?: boolean; }) => {
   const isFirstValidation = ref(true)
   const errorInternal = ref(props.error)
   const hideFooterInternal = ref(props.hideFooter)
@@ -143,7 +143,7 @@ export const useInputtable = (props: any, { focus, emit, withListeners = true, f
 
   onMounted(() => {
     if (formGroup.isInsideFormGroup) {
-      formGroup.registerInputGroup(nameInternal.value, focus)
+      formGroup.registerInputGroup(nameInternal.value, focus, formGroupJoined ? { joined: true } : undefined)
     } else {
       if (inputGroup.isInsideInputGroup) {
         inputGroup.registerInput(nameInternal.value, {

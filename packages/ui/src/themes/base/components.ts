@@ -36,6 +36,7 @@ export { default as PopoverContainer } from '../../components/popover/theme/Popo
 export { default as Progress } from '../../components/progress/theme/Progress.base.theme'
 export { default as QrCode } from '../../components/qrCode/theme/QrCode.base.theme'
 export { default as Radio } from '../../components/radio/theme/Radio.base.theme'
+export { default as RadioButton } from '../../components/radioButton/theme/RadioButton.base.theme'
 export { default as Scroll } from '../../components/scroll/theme/Scroll.base.theme'
 export { default as Select } from '../../components/select/theme/Select.base.theme'
 export { default as Skeleton } from '../../components/skeleton/theme/Skeleton.base.theme'

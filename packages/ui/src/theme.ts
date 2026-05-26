@@ -38,6 +38,7 @@ import type {
   ProgressTheme,
   QrCodeTheme,
   RadioTheme,
+  RadioButtonTheme,
   ScrollTheme,
   SelectTheme,
   SkeletonTheme,
@@ -96,6 +97,7 @@ export type ComponentThemes = {
   Progress: ProgressTheme;
   QrCode: QrCodeTheme;
   Radio: RadioTheme;
+  RadioButton: RadioButtonTheme;
   Scroll: ScrollTheme;
   Select: SelectTheme;
   Skeleton: SkeletonTheme;

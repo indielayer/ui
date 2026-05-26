@@ -1362,7 +1362,7 @@ Form groups organize related form elements together, providing structure and sha
 | modelValue | unknown |  | (from useInputtable) |
 | name | String |  | (from useInputtable) |
 | readonly | Boolean |  | (from useInputtable) |
-| registerInputGroup | (name: string, focus: () => void) => void; |  |  |
+| registerInputGroup | (name: string, focus: () => void, options?: FormGroupRegisterOptions) => void; |  |  |
 | required | Boolean |  | (from useInputtable) |
 | rules | unknown |  | (from useInputtable) |
 | setValue | (val: string \| number \| string[] \| number[]) => void; |  |  |
@@ -3017,7 +3017,7 @@ const options = [
 ```
 ---
 ## Radio
-Radios allow the user to select one option from a set. Use radio buttons for exclusive selection if you think that the user needs to see all available options side-by-side.
+Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -3101,6 +3101,39 @@ const selected = ref('a')
     >
       <div class="text-gray-400 font-light text-sm">Santander · · · · 1580</div>
     </x-radio>
+  </div>
+</template>
+```
+
+#### Radio Button Form Group
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const plan = ref('pro')
+</script>
+
+<template>
+  <x-form-group v-model="plan" label="Billing plan">
+    <x-radio-button value="starter" label="Starter" />
+    <x-radio-button value="pro" label="Pro" />
+    <x-radio-button value="team" label="Team" />
+  </x-form-group>
+</template>
+```
+
+#### Radio Button
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('monthly')
+</script>
+
+<template>
+  <div class="inline-flex gap-2">
+    <x-radio-button v-model="selected" value="monthly" label="Monthly" />
+    <x-radio-button v-model="selected" value="yearly" label="Yearly" />
   </div>
 </template>
 ```
@@ -3713,7 +3746,6 @@ const saving = ref(false)
 
 const firstName = ref('')
 const lastName = ref('')
-const email = ref('')
 const phone = ref('')
 
 const rules = {
@@ -3767,10 +3799,9 @@ async function onPrimaryClick() {
       class="min-h-[16rem]"
     >
       <template #account="{ next }">
-        <div class="grid gap-4 sm:grid-cols-2 max-w-lg">
+        <div class="grid gap-4 max-w-lg">
           <x-input v-model="firstName" label="First name" :rules="[rules.isRequired]" />
           <x-input v-model="lastName" label="Last name" :rules="[rules.isRequired]" />
-          <x-input v-model="email" class="sm:col-span-2" label="Email" :rules="[rules.isRequired, rules.isEmail]" />
         </div>
         <div class="mt-6 flex justify-end">
           <x-button @click="next">Continue</x-button>
@@ -3779,7 +3810,6 @@ async function onPrimaryClick() {
 
       <template #summary-account>
         <span v-if="accountSummary">{{ accountSummary }}</span>
-        <span v-else-if="email">{{ email }}</span>
       </template>
 
       <template #contact="{ next, prev }">
@@ -3799,10 +3829,6 @@ async function onPrimaryClick() {
           <div class="flex justify-between gap-4">
             <dt class="text-secondary-500">Name</dt>
             <dd>{{ accountSummary || '—' }}</dd>
-          </div>
-          <div class="flex justify-between gap-4">
-            <dt class="text-secondary-500">Email</dt>
-            <dd>{{ email || '—' }}</dd>
           </div>
           <div class="flex justify-between gap-4">
             <dt class="text-secondary-500">Phone</dt>
