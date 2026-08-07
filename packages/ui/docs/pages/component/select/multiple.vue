@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'])
+const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'NON EXISTING'])
 
 const options = ref([
-  { value: 'A', label: 'Option lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum', color: 'bg-red-500' },
+  { value: 'A', label: 'Option lorem ipsum lorem ipsum', color: 'bg-red-500' },
   { value: 'B', label: 'Option B ipsum', color: 'bg-orange-500' },
   { value: 'C', label: 'Option C lorem ipsum', color: 'bg-amber-500' },
   { value: 'D', label: 'D', color: 'bg-yellow-500' },
