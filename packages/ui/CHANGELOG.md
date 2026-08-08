@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 1.18.1
+
+### Patch Changes
+
+- fix(select): item prefix/suffix typescript ([#140](https://github.com/indielayer/ui/pull/140)) ([`1c392d1`](https://github.com/indielayer/ui/commit/1c392d11b2e54c105ced2ec689edaac33063e18d))
+
 ## 1.18.0
 
 ### Minor Changes
