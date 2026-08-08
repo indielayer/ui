@@ -92,3 +92,4 @@ packages/starter
 packages/ui/src/version.ts
 .vercel
 .pnpm-store
+.env*.local
