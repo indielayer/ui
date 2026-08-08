@@ -83,6 +83,21 @@ const props = defineProps(selectProps)
 
 const emit = defineEmits([...useInputtable.emits(), 'close', 'open'])
 
+defineSlots<{
+  prefix(props: { item: SelectOption; }): any;
+  suffix(props: { item: SelectOption; }): any;
+  label(props: { item: SelectOption; }): any;
+  input(props: {
+    popover: InstanceType<typeof XPopover> | null;
+    selected: any;
+    disabled: boolean;
+    label: string;
+  }): any;
+  'content-header'(props?: Record<string, never>): any;
+  'content-footer'(props?: Record<string, never>): any;
+  icon(props?: Record<string, never>): any;
+}>()
+
 const internalMultiple = computed(() => props.multiple || props.multipleCheckbox)
 
 const elRef = ref<HTMLElement | null>(null)
@@ -360,9 +375,16 @@ function getItem(value: string | number | []) {
 function getLabel(value: string | number | []) {
   const option = getItem(value)
 
-  if (option) return option.label
+  if (option) return option.label?.toString()
 
-  return ''
+  return value?.toString()
+}
+
+function fallbackSelectOption(value: string | number | []): SelectOption {
+  return {
+    value: value?.toString() || '',
+    label: value?.toString() || '',
+  }
 }
 
 const { focus, blur } = useInteractive(elRef)
@@ -581,7 +603,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     <template v-if="!hideSelectedOptionSlots">
                       <div class="flex items-center">
                         <span v-if="$slots.prefix || getItem(value)?.prefix" class="mr-2 shrink-0">
-                          <slot name="prefix" :item="getItem(value)">{{ getItem(value)?.prefix }}</slot>
+                          <slot name="prefix" :item="getItem(value) || fallbackSelectOption(value)">{{ getItem(value)?.prefix }}</slot>
                         </span>
 
                         <span class="flex-1 truncate">
@@ -589,7 +611,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                         </span>
 
                         <span v-if="$slots.suffix || getItem(value)?.suffix" class="ml-1 shrink-0">
-                          <slot name="suffix" :item="getItem(value)">{{ getItem(value)?.suffix }}</slot>
+                          <slot name="suffix" :item="getItem(value) || fallbackSelectOption(value)">{{ getItem(value)?.suffix }}</slot>
                         </span>
                       </div>
                     </template>
@@ -610,7 +632,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 <template v-if="!hideSelectedOptionSlots">
                   <div class="flex items-center">
                     <span v-if="$slots.prefix || getItem(selected)?.prefix" class="mr-2 shrink-0">
-                      <slot name="prefix" :item="getItem(selected)">{{ getItem(selected)?.prefix }}</slot>
+                      <slot name="prefix" :item="getItem(selected) || fallbackSelectOption(selected)">{{ getItem(selected)?.prefix }}</slot>
                     </span>
 
                     <span class="flex-1 truncate">
@@ -618,7 +640,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     </span>
 
                     <span v-if="$slots.suffix || getItem(selected)?.suffix" class="ml-1 shrink-0">
-                      <slot name="suffix" :item="getItem(selected)">{{ getItem(selected)?.suffix }}</slot>
+                      <slot name="suffix" :item="getItem(selected) || fallbackSelectOption(selected)">{{ getItem(selected)?.suffix }}</slot>
                     </span>
                   </div>
                 </template>
@@ -705,7 +727,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 <template v-if="!hideSelectedOptionSlots">
                   <div class="flex items-center">
                     <span v-if="$slots.prefix || getItem(value)?.prefix" class="mr-2 shrink-0">
-                      <slot name="prefix" :item="getItem(value)">{{ getItem(value)?.prefix }}</slot>
+                      <slot name="prefix" :item="getItem(value) || fallbackSelectOption(value)">{{ getItem(value)?.prefix }}</slot>
                     </span>
 
                     <span class="flex-1 truncate">
@@ -713,7 +735,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     </span>
 
                     <span v-if="$slots.suffix || getItem(value)?.suffix" class="ml-1 shrink-0">
-                      <slot name="suffix" :item="getItem(value)">{{ getItem(value)?.suffix }}</slot>
+                      <slot name="suffix" :item="getItem(value) || fallbackSelectOption(value)">{{ getItem(value)?.suffix }}</slot>
                     </span>
                   </div>
                 </template>
