@@ -1,28 +1,36 @@
 export default `
-html {
-  color: #111827;
-  background-color: white;
-}
+@layer base {
+  html {
+    color: #111827;
+    background-color: white;
+  }
 
-html.dark {
-  color: #f3f4f6;
-  background-color: #111827;
-}
+  html.dark {
+    color: #f3f4f6;
+    background-color: #111827;
+  }
 
-body {
-  font-size: 14px;
-}
+  body {
+    font-size: 14px;
+  }
 
-*,
-::before,
-::after {
-  border-color: #e5e7eb;
-}
+  *,
+  ::before,
+  ::after {
+    border-color: #e5e7eb;
+  }
 
-.dark *,
-.dark ::before,
-.dark ::after {
-  border-color: #374151;
+  .dark *,
+  .dark ::before,
+  .dark ::after {
+    border-color: #374151;
+  }
+
+  .dark {
+    input[type="time"]::-webkit-calendar-picker-indicator{
+      filter: invert(100%);
+    }
+  }
 }
 
 :root {

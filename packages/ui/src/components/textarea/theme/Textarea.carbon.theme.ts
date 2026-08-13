@@ -25,6 +25,11 @@ const theme: TextareaTheme = {
     },
 
     icon: 'text-secondary-600 dark:text-secondary-300 absolute my-auto inset-y-0',
+    adornment: 'absolute inset-y-0 z-10 flex items-center gap-1.5 pointer-events-none',
+    adornmentStart: 'left-0 pl-2',
+    adornmentEnd: 'right-0 pr-2 top-2 items-start',
+    adornmentIcon: 'shrink-0 text-secondary-600 dark:text-secondary-300 pointer-events-auto',
+    adornmentSlot: 'shrink-0 pointer-events-auto text-secondary-600 dark:text-secondary-300 text-sm',
   },
 }
 

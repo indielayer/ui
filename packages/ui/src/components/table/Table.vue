@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const tableProps = {
   headers: {
     type: Array as PropType<TableHeader[]>,
@@ -12,6 +14,7 @@ const tableProps = {
     type: Array as PropType<string[]>,
     default: () => [],
   },
+  sortMultiple: optionalBooleanProp(),
   loading: Boolean,
   loadingSkeleton: Boolean,
   loadingLines: {
@@ -19,10 +22,10 @@ const tableProps = {
     default: 3,
   },
   error: Boolean,
-  dense: Boolean,
-  fixed: Boolean,
-  striped: Boolean,
-  pointer: Boolean,
+  dense: optionalBooleanProp(),
+  fixed: optionalBooleanProp(),
+  striped: optionalBooleanProp(),
+  pointer: optionalBooleanProp(),
   scrollable: {
     type: Boolean,
     default: true,
@@ -31,8 +34,8 @@ const tableProps = {
     type: Boolean,
     default: true,
   },
-  expandable: Boolean,
-  virtualList: Boolean,
+  expandable: optionalBooleanProp(),
+  virtualList: optionalBooleanProp(),
   virtualListOffsetTop: Number,
   virtualListOffsetBottom: Number,
   virtualListItemHeight: {
@@ -44,8 +47,8 @@ const tableProps = {
     default: 10,
   },
   keyProp: String,
-  selectable: Boolean,
-  singleSelect: Boolean,
+  selectable: optionalBooleanProp(),
+  singleSelect: optionalBooleanProp(),
   autoClearSelected: {
     type: Boolean,
     default: true,
@@ -174,7 +177,26 @@ function getSort(headerValue: string | undefined, sort: string[]): TableHeaderSo
 }
 
 function sortHeader(header: TableHeader) {
-  // update sort array
+  if (!header.value) return
+
+  if (!props.sortMultiple) {
+    const index = props.sort.findIndex((entry) => entry.split(',')[0] === header.value)
+
+    if (index >= 0) {
+      const order = props.sort[index].split(',')[1]
+
+      if (order === '-1') {
+        emit('update:sort', [`${header.value},1`])
+      } else {
+        emit('update:sort', [])
+      }
+    } else {
+      emit('update:sort', [`${header.value},-1`])
+    }
+
+    return
+  }
+
   const sort = props.sort.slice(0)
   let exists = false
 
@@ -185,11 +207,9 @@ function sortHeader(header: TableHeader) {
       exists = true
 
       if (order === '-1') {
-        // update position to 1
         sort.splice(i, 1, `${header.value},1`)
         break
       } else if (order === '1') {
-        // delete position
         sort.splice(i, 1)
         break
       }

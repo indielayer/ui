@@ -24,6 +24,11 @@ app.use(UI, {
   prefix: 'X',
   icons,
   theme: BaseTheme,
+  defaults: {
+    // Empty: {
+    //   bordered: true,
+    // },
+  },
 })
 
 app.use(router)

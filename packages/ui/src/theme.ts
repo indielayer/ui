@@ -16,12 +16,14 @@ import type {
   DatepickerTheme,
   DividerTheme,
   DrawerTheme,
+  EmptyTheme,
   FormTheme,
   FormGroupTheme,
   IconTheme,
   ImageTheme,
   InputTheme,
   InputFooterTheme,
+  InputGroupTheme,
   LabelTheme,
   LinkTheme,
   LoaderTheme,
@@ -36,6 +38,7 @@ import type {
   ProgressTheme,
   QrCodeTheme,
   RadioTheme,
+  RadioButtonTheme,
   ScrollTheme,
   SelectTheme,
   SkeletonTheme,
@@ -72,12 +75,14 @@ export type ComponentThemes = {
   Datepicker: DatepickerTheme;
   Divider: DividerTheme;
   Drawer: DrawerTheme;
+  Empty: EmptyTheme;
   Form: FormTheme;
   FormGroup: FormGroupTheme;
   Icon: IconTheme;
   Image: ImageTheme;
   Input: InputTheme;
   InputFooter: InputFooterTheme;
+  InputGroup: InputGroupTheme;
   Label: LabelTheme;
   Link: LinkTheme;
   Loader: LoaderTheme;
@@ -92,6 +97,7 @@ export type ComponentThemes = {
   Progress: ProgressTheme;
   QrCode: QrCodeTheme;
   Radio: RadioTheme;
+  RadioButton: RadioButtonTheme;
   Scroll: ScrollTheme;
   Select: SelectTheme;
   Skeleton: SkeletonTheme;

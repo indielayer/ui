@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   ...useCommon.validators(),
   variant: ['line', 'block'] as const,
@@ -16,8 +18,8 @@ const tabGroupProps = {
     type: String as PropType<'left' | 'center' | 'right'>,
     default: 'left',
   },
-  ghost: Boolean,
-  grow: Boolean,
+  ghost: optionalBooleanProp(),
+  grow: optionalBooleanProp(),
   exact: Boolean,
   fullWidth: {
     type: Boolean,
@@ -58,10 +60,12 @@ import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 
 import XScroll from '../../components/scroll/Scroll.vue'
 
 const props = defineProps(tabGroupProps)
+const resolvedProps = useResolvedComponentProps('TabGroup', props)
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -80,8 +84,8 @@ watchEffect(() => {
 const state = reactive({
   active: computed(() => active.value),
   variant: computed(() => props.variant),
-  ghost: computed(() => props.ghost),
-  grow: computed(() => props.grow),
+  ghost: computed(() => resolvedProps.value.ghost ?? false),
+  grow: computed(() => resolvedProps.value.grow ?? false),
   exact: computed(() => props.exact),
   size: computed(() => props.size),
   color: computed(() => props.color),

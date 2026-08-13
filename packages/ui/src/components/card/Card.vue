@@ -1,10 +1,12 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const cardProps = {
   tag: {
     type: String,
     default: 'div',
   },
-  flat: Boolean,
+  flat: optionalBooleanProp(),
 }
 
 export type CardProps = ExtractPublicPropTypes<typeof cardProps>

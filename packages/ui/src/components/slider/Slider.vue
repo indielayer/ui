@@ -66,6 +66,7 @@ const {
   errorInternal,
   hideFooterInternal,
   isInsideForm,
+  isInsideInputGroup,
   inputListeners,
   reset,
   validate,
@@ -83,6 +84,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     :disabled="disabled"
     :required="required"
     :is-inside-form="isInsideForm"
+    :is-inside-input-group="isInsideInputGroup"
     :label="label"
     :class="[
       className,
@@ -97,7 +99,7 @@ defineExpose({ focus, blur, reset, validate, setError })
           :id="id"
           ref="elRef"
           type="range"
-          :class="[classes.input, 'absolute z-10 appearance-none bg-transparent focus:outline-none focus-visible:outline-none']"
+          :class="[classes.input, 'absolute z-10 appearance-none bg-transparent focus:outline-hidden focus-visible:outline-hidden']"
           :disabled="disabled"
           :name="name"
           :max="max"
@@ -121,22 +123,31 @@ defineExpose({ focus, blur, reset, validate, setError })
   </x-label>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 [type="range"]::-webkit-slider-thumb {
-  @apply cursor-pointer h-5 w-5 border-solid border rounded-full
-    bg-white appearance-none border-[color:var(--x-slider-bg)];
+  appearance: none;
+  background-color: white;
+  border: 1px solid var(--x-slider-bg);
+  border-radius: 9999px;
+  cursor: pointer;
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 [type="range"]:focus::-webkit-slider-thumb {
-  @apply ring ring-offset-1;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--color-primary-500, currentColor);
 }
 
 [type="range"]::-moz-range-thumb {
-  @apply cursor-pointer h-5 w-5 border-solid border rounded-full
-    bg-white border-[color:var(--x-slider-bg)];
+  background-color: white;
+  border: 1px solid var(--x-slider-bg);
+  border-radius: 9999px;
+  cursor: pointer;
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 [type="range"]:focus::-moz-range-thumb {
-  @apply ring ring-offset-1;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--color-primary-500, currentColor);
 }
 </style>

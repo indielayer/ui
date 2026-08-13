@@ -200,12 +200,26 @@ export function useVirtualizer<Props extends object>({
   }
 
   watch(
-    [containerElement, () => direction, () => cachedBounds.value],
-    ([el]) => {
-      const scrollOffset =
-        (direction === 'vertical' ? el?.scrollTop : el?.scrollLeft) ?? 0
+    [
+      containerElement,
+      containerSize,
+      itemCount,
+      () => overscanCount,
+      () => cachedBounds.value,
+    ],
+    () => {
+      const el = containerElement.value
 
-      indices.value = getStartStopIndices(scrollOffset)
+      if (!el) return
+
+      const scrollOffset =
+        (direction === 'vertical' ? el.scrollTop : el.scrollLeft) ?? 0
+
+      const next = getStartStopIndices(scrollOffset)
+
+      if (!shallowCompare(next, indices.value)) {
+        indices.value = next
+      }
     },
     { immediate: true },
   )

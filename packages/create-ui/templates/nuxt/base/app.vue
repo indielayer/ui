@@ -4,12 +4,12 @@
     <div class="mt-6">Documentation links to get you started:</div>
     <div class="flex flex-col space-y-8 my-6 text-center">
       <x-link
-        href="https://v3.nuxtjs.org/"
+        href="https://nuxt.com/docs/4.x/getting-started/introduction"
         color="emerald"
         shadow
         external
         target="_blank"
-      >Nuxt 3</x-link>
+      >Nuxt 4</x-link>
       <x-link
         href="https://vuejs.org/"
         color="emerald"

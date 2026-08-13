@@ -1,5 +1,6 @@
 import { computed, inject, unref, useSlots, type Slots, type UnwrapNestedRefs, type UnwrapRef, type MaybeRef, type CSSProperties } from 'vue'
-import { injectThemeKey } from './keys'
+import { injectOptionsKey, injectThemeKey } from './keys'
+import { resolvePropsWithDefaults } from './resolveComponentDefaults'
 import { useColors, type ColorComposition } from './useColors'
 import { useCSS, type CSSComposition } from './useCSS'
 import { isFunction, isObject, mergeRightDeep, smartUnref } from '../common/utils'
@@ -26,6 +27,12 @@ export type ThemeParams<P = Record<string, any>, D = Record<string, any>> = {
 
 export const useTheme = <P extends object = object, K extends string = string, D extends object = object>(namespace: keyof ComponentThemes, defaultTheme: ThemeComponent<P, K, D> = {}, props: MaybeRef<P> = {} as P, data: D = {} as D) => {
   const userTheme = inject(injectThemeKey, {})
+  const options = inject(injectOptionsKey, {})
+
+  const resolvedProps = computed(() => resolvePropsWithDefaults(
+    unref(props),
+    options.defaults?.[namespace] as Partial<P> | undefined,
+  ))
 
   const rawClasses = computed(() => {
     if (unref(userTheme)?.components?.[namespace]) return mergeRightDeep(defaultTheme.classes || {}, unref(userTheme).components?.[namespace].classes || {})
@@ -45,7 +52,7 @@ export const useTheme = <P extends object = object, K extends string = string, D
   const colors = useColors()
   const css = useCSS(cssNamespace)
   const classes = computed<Record<K, ThemeVueClass>>(() => getClasses(rawClasses.value, {
-    props: unref(props),
+    props: resolvedProps.value,
     slots,
     data: smartUnref(data),
     colors,
@@ -56,7 +63,7 @@ export const useTheme = <P extends object = object, K extends string = string, D
   const styles = computed(() => {
     const componentTheme = unref(userTheme)?.components?.[namespace] || {}
     const params = {
-      props: unref(props),
+      props: resolvedProps.value,
       slots,
       data: smartUnref(data),
       colors,

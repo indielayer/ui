@@ -6,6 +6,6 @@ describe('Spacer', () => {
   it('renders without errors', () => {
     const wrapper = mount(Spacer)
 
-    expect(wrapper.classes()).toContain('flex-grow')
+    expect(wrapper.classes()).toContain('grow')
   })
 })

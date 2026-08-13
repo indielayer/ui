@@ -1,10 +1,20 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "docs/**/*.vue", "./volar.d.ts"],
-  "exclude": ["src/**/__tests__/*"],
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "docs/**/*.vue",
+    "docs/utils/shikiHighlighter.ts",
+    "docs/components/common/Indielayer-theme.json",
+    "./volar.d.ts"
+  ],
+  "exclude": ["src/**/__tests__/*", "docs/**/*.vue.js"],
   "compilerOptions": {
     "composite": true,
+    "rootDir": ".",
     "outDir": "lib",
     "baseUrl": ".",
+    "resolveJsonModule": true
   }
 }

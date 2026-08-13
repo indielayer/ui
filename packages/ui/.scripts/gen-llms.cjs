@@ -1,12 +1,10 @@
 /**
- * Generates public/llms.txt for the docs site (https://llmstxt.org/).
+ * Generates public/llms.txt and public/llms-full.txt for the docs site (https://llmstxt.org/).
  * Reads docs/search/components.json (from gen:search).
- *
- * llms-full.txt is maintained separately — full API reference, update manually
- * when component APIs or examples change significantly.
  */
 const fs = require('fs')
 const path = require('path')
+const { main: generateLlmsFull } = require('./gen-llms-full.cjs')
 
 const DOCS_BASE = 'https://indielayer.com'
 const COMPONENTS_JSON = path.join(__dirname, '../docs/search/components.json')
@@ -62,6 +60,7 @@ ${componentLines}
 
   fs.writeFileSync(OUTPUT, content)
   console.log(`llms.txt written (${components.length} components)`)
+  generateLlmsFull()
 }
 
 main()

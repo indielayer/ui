@@ -143,22 +143,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <p class="info">
+  <p class="mb-2 text-sm text-gray-600 dark:text-gray-400">
     Loaded {{ loadedCount }} of {{ infiniteRowCount }} items
-    <span v-if="isLoading" class="loading"> (Loading...)</span>
+    <span v-if="isLoading" class="text-gray-500 dark:text-gray-300"> (Loading...)</span>
   </p>
   <x-virtual-list
     :row-count="infiniteRowCount"
     :row-height="50"
-    class="h-96 border border-gray-200 rounded-md bg-white"
+    class="h-96 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
     :on-rows-rendered="onRowsRendered"
   >
     <template #row="{ index, style }">
       <div
         :style="style"
         :class="[
-          'h-12 flex items-center justify-center border-b border-gray-200',
-          { 'loading-indicator': index === infiniteItems.length && hasMoreData }
+          'flex h-12 items-center justify-center border-b border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200',
+          index === infiniteItems.length && hasMoreData
+            ? 'bg-gray-50 text-gray-500 dark:bg-gray-900 dark:text-gray-400'
+            : '',
         ]"
       >
         {{ getItem(index) }}

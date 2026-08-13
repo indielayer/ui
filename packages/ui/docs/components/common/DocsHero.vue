@@ -90,7 +90,7 @@ function scrollToInstallation() {
             width="52"
             height="49"
             alt=""
-            class="shrink-0 drop-shadow-sm"
+            class="shrink-0 drop-shadow-xs"
           />
           <div>
             <div class="flex items-center gap-2 flex-wrap">
@@ -141,7 +141,7 @@ function scrollToInstallation() {
           <x-tag size="sm" outlined rounded>{{ componentCount }}+ components</x-tag>
           <x-tag size="sm" outlined rounded>Vue 3</x-tag>
           <x-tag size="sm" outlined rounded>Nuxt 3</x-tag>
-          <x-tag size="sm" outlined rounded>Tailwind CSS 3</x-tag>
+          <x-tag size="sm" outlined rounded>Tailwind CSS 4</x-tag>
         </div>
       </div>
 
@@ -166,7 +166,7 @@ function scrollToInstallation() {
   </section>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
 .docs-hero {
   background: radial-gradient(50% 100% at 25% 100%, #f8fafc 0%, rgb(248 250 252 / 0%) 100%);
 }

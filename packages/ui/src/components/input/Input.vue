@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const inputProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
@@ -25,15 +27,15 @@ const inputProps = {
     default: 'text',
   },
   step: [Number, String],
-  block: Boolean,
-  showCounter: Boolean,
-  clearable: Boolean,
+  block: optionalBooleanProp(),
+  showCounter: optionalBooleanProp(),
+  clearable: optionalBooleanProp(),
 }
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
-type InternalClasses = 'wrapper' | 'input' | 'icon'
-type InternalExtraData = { errorInternal: any; }
+type InternalClasses = 'wrapper' | 'input' | 'icon' | 'adornment' | 'adornmentStart' | 'adornmentEnd' | 'adornmentIcon' | 'adornmentSlot'
+type InternalExtraData = { errorInternal: any; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
 export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -45,12 +47,15 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, type PropType, type ExtractPublicPropTypes, watch, useAttrs, computed } from 'vue'
+import { ref, inject, computed, type PropType, type ExtractPublicPropTypes, watch, useAttrs, useSlots } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
+import type { Size } from '../../composables/useCommon'
+import { injectInputGroupKey } from '../../composables/keys'
 import { closeIcon, eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
@@ -58,6 +63,18 @@ import XIcon from '../icon/Icon.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(inputProps)
+const resolvedProps = useResolvedComponentProps('Input', props)
+
+const inputGroup = inject(injectInputGroupKey, {
+  registerChild: () => {},
+  unregisterChild: () => {},
+  registerInput: () => {},
+  unregisterInput: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+  isInsideInputGroup: false,
+  groupProps: {},
+})
 
 const emit = defineEmits(useInputtable.emits())
 
@@ -97,19 +114,70 @@ function togglePasswordVisibility() {
   currentType.value = currentType.value === 'password' ? 'text' : 'password'
 }
 
-const showClearIcon = computed(() => props.clearable && props.modelValue !== '')
+const showClearIcon = computed(() => resolvedProps.value.clearable && props.modelValue !== '')
+
+const slots = useSlots()
+const hasPrefixSlot = computed(() => !!slots.prefix)
+const hasSuffixSlot = computed(() => !!slots.suffix)
+const hasLeftIcon = computed(() => !!(props.iconLeft || props.icon))
+const showPasswordToggleIcon = computed(
+  () => props.type === 'password' && resolvedProps.value.showPasswordToggle && !props.iconRight,
+)
+const rightIconCount = computed(() => {
+  let count = 0
+
+  if (showClearIcon.value) count++
+  if (props.iconRight) count++
+  else if (showPasswordToggleIcon.value) count++
+
+  return count
+})
+const hasLeftAdornment = computed(() => hasLeftIcon.value || hasPrefixSlot.value)
+const hasRightAdornment = computed(() => hasSuffixSlot.value || rightIconCount.value > 0)
+
+const leftPaddingClass = computed(() => {
+  const units = (hasLeftIcon.value ? 1 : 0) + (hasPrefixSlot.value ? 1 : 0)
+
+  if (units >= 2) return '!pl-16'
+  if (units === 1) return '!pl-10'
+
+  return ''
+})
+
+const rightPaddingClass = computed(() => {
+  const units = rightIconCount.value + (hasSuffixSlot.value ? 1 : 0)
+
+  if (units >= 3) return '!pr-24'
+  if (units === 2) return '!pr-16'
+  if (units === 1) return '!pr-10'
+
+  return ''
+})
 
 const { focus, blur } = useInteractive(elRef)
 
 const {
   errorInternal,
   hideFooterInternal,
+  hideLabelInternal,
   isInsideForm,
+  isInsideInputGroup,
+  inputGroupPosition,
   inputListeners,
   reset,
   validate,
   setError,
 } = useInputtable(props, { focus, emit })
+
+const computedSize = computed((): Size => inputGroup.groupProps?.size ?? resolvedProps.value.size)
+const isDisabled = computed(() => props.disabled || !!inputGroup.groupProps?.disabled)
+const computedLabel = computed(() => (hideLabelInternal.value ? undefined : props.label))
+
+const themeProps = computed(() => ({
+  ...resolvedProps.value,
+  size: computedSize.value,
+  disabled: isDisabled.value,
+}))
 
 const currentLength = computed(() => {
   const value = props.modelValue
@@ -117,7 +185,11 @@ const currentLength = computed(() => {
   return value ? String(value).length : 0
 })
 
-const { styles, classes, className } = useTheme('Input', {}, props, { errorInternal })
+const { styles, classes, className } = useTheme('Input', {}, themeProps, {
+  errorInternal,
+  isInsideInputGroup,
+  inputGroupPosition,
+})
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>
@@ -125,11 +197,12 @@ defineExpose({ focus, blur, reset, validate, setError })
 <template>
   <x-label
     :style="styles"
-    :block="block"
-    :disabled="disabled"
+    :block="resolvedProps.block"
+    :disabled="isDisabled"
     :required="required"
     :is-inside-form="isInsideForm"
-    :label="label"
+    :is-inside-input-group="isInsideInputGroup"
+    :label="computedLabel"
     :class="[
       className,
       classes.wrapper,
@@ -137,15 +210,20 @@ defineExpose({ focus, blur, reset, validate, setError })
     :tooltip="tooltip"
   >
     <div class="relative">
-      <slot name="prefix">
+      <div
+        v-if="hasLeftAdornment"
+        :class="[classes.adornment, classes.adornmentStart]"
+      >
         <x-icon
-          v-if="iconLeft || icon"
-          :size="size"
+          v-if="hasLeftIcon"
+          :size="computedSize"
           :icon="iconLeft || icon"
-          class="ml-2 left-1"
-          :class="classes.icon"
+          :class="classes.adornmentIcon"
         />
-      </slot>
+        <div v-if="hasPrefixSlot" :class="classes.adornmentSlot">
+          <slot name="prefix" ></slot>
+        </div>
+      </div>
 
       <input
         :id="id"
@@ -156,12 +234,10 @@ defineExpose({ focus, blur, reset, validate, setError })
           errorInternal
             ? 'border-error-500 dark:border-error-400 focus:outline-error-500'
             : 'focus:outline-[color:var(--x-input-border)]',
-          {
-            '!pl-10': iconLeft || icon,
-            '!pr-10': iconRight || showPasswordToggle || showClearIcon,
-          },
+          leftPaddingClass,
+          rightPaddingClass,
         ]"
-        :disabled="disabled"
+        :disabled="isDisabled"
         :min="min"
         :max="max"
         :minlength="minlength"
@@ -178,31 +254,34 @@ defineExpose({ focus, blur, reset, validate, setError })
         @change="onChange"
       />
 
-      <slot name="suffix">
+      <div
+        v-if="hasRightAdornment"
+        :class="[classes.adornment, classes.adornmentEnd]"
+      >
+        <div v-if="hasSuffixSlot" :class="classes.adornmentSlot">
+          <slot name="suffix" ></slot>
+        </div>
         <x-icon
           v-if="showClearIcon"
-          :size="size"
+          :size="computedSize"
           :icon="closeIcon"
-          class="mr-2 right-1 cursor-pointer"
-          :class="classes.icon"
+          :class="[classes.adornmentIcon, 'cursor-pointer']"
           @click="reset()"
         />
         <x-icon
           v-if="iconRight"
-          :size="size"
+          :size="computedSize"
           :icon="iconRight"
-          class="mr-2 right-1"
-          :class="classes.icon"
+          :class="classes.adornmentIcon"
         />
         <x-icon
-          v-else-if="type === 'password' && showPasswordToggle"
-          :size="size"
+          v-else-if="showPasswordToggleIcon"
+          :size="computedSize"
           :icon="currentType === 'password' ? eyeIcon : eyeVisibleIcon"
-          class="mr-2 right-1 cursor-pointer"
-          :class="classes.icon"
+          :class="[classes.adornmentIcon, 'cursor-pointer']"
           @click="togglePasswordVisibility()"
         />
-      </slot>
+      </div>
     </div>
 
     <x-input-footer
@@ -211,7 +290,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :helper="helper"
       :character-count="currentLength"
       :max-characters="maxlength"
-      :show-counter="showCounter"
+      :show-counter="resolvedProps.showCounter"
     />
   </x-label>
 </template>

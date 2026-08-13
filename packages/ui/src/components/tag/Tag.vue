@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const tagProps = {
   ...useCommon.props(),
   ...useColors.props('secondary'),
@@ -6,10 +8,10 @@ const tagProps = {
     type: String,
     default: 'span',
   },
-  rounded: Boolean,
-  removable: Boolean,
-  outlined: Boolean,
-  filled: Boolean,
+  rounded: optionalBooleanProp(),
+  removable: optionalBooleanProp(),
+  outlined: optionalBooleanProp(),
+  filled: optionalBooleanProp(),
   disabled: Boolean,
   to: [String, Object],
 }
@@ -32,11 +34,13 @@ import { computed, useAttrs, type ExtractPublicPropTypes } from 'vue'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { closeIcon } from '../../common/icons'
 
 import XIcon from '../icon/Icon.vue'
 
 const props = defineProps(tagProps)
+const resolvedProps = useResolvedComponentProps('Tag', props)
 
 defineEmits(['remove'])
 
@@ -65,15 +69,15 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
       [
         className,
         classes.wrapper,
-        outlined ?
+        resolvedProps.outlined ?
           'border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]' :
           '!border-transparent bg-[color:var(--x-tag-bg)] dark:bg-[color:var(--x-tag-dark-bg)]',
-        rounded ? 'rounded-full' : 'rounded'
+        resolvedProps.rounded ? 'rounded-full' : 'rounded'
       ]"
   >
     <span
       class="max-w-full"
-      :class="{'pr-4': removable }"
+      :class="{'pr-4': resolvedProps.removable }"
     >
       <div class="flex items-center gap-2">
         <slot name="prefix"></slot>
@@ -83,7 +87,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
         </div>
       </div>
 
-      <div v-if="removable" class="absolute right-1.5 top-0 h-full flex items-center">
+      <div v-if="resolvedProps.removable" class="absolute right-1.5 top-0 h-full flex items-center">
         <x-icon
           :size="closeIconSize"
           :icon="closeIcon"

@@ -2,14 +2,17 @@
 @import url("https://1.www.s81c.com/common/carbon/plex/sans.css");
 @import url("https://1.www.s81c.com/common/carbon/plex/mono.css");
 
+@import "tailwindcss";
+@import "../../../exports/tailwind.css";
+
+@source "../../../index.html";
+@source "../../**/*.{vue,js,ts,jsx,tsx}";
+@source "../../../src/**/*.{vue,js,ts,jsx,tsx}";
+
 html,
 body {
   height: 100%;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 @layer base {
   .text-2xs {
@@ -18,29 +21,51 @@ body {
   }
 
   .text-h1 {
-    @apply text-5xl font-black;
+    font-size: var(--text-5xl);
+    line-height: var(--text-5xl--line-height);
+    font-weight: 900;
   }
 
   .text-h2 {
-    @apply text-4xl font-black;
+    font-size: var(--text-4xl);
+    line-height: var(--text-4xl--line-height);
+    font-weight: 900;
   }
 
   .text-h3 {
-    @apply text-2xl font-black;
+    font-size: var(--text-2xl);
+    line-height: var(--text-2xl--line-height);
+    font-weight: 900;
   }
 
   .text-h4 {
-    @apply text-xl font-black;
+    font-size: var(--text-xl);
+    line-height: var(--text-xl--line-height);
+    font-weight: 900;
   }
 
   .text-overline {
-    @apply tracking-widest uppercase text-2xs;
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    font-size: 0.625rem;
+    line-height: 1rem;
   }
 }
 
 @layer components {
   .docs-container {
-    @apply max-w-screen-2xl mx-auto w-full px-4 md:px-8 mt-8 md:mt-16;
+    max-width: var(--breakpoint-2xl);
+    margin-inline: auto;
+    width: 100%;
+    padding-inline: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (width >= 48rem) {
+    .docs-container {
+      padding-inline: 2rem;
+      margin-top: 4rem;
+    }
   }
 }
 

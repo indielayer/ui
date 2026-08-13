@@ -32,7 +32,7 @@ function mountVirtualList(
 }
 
 function createMockDynamicRowHeight(defaultRowHeight = 50) {
-  const unobserve = vi.fn<[], void>()
+  const unobserve = vi.fn<() => void>()
 
   const dynamicRowHeight: DynamicRowHeight = {
     getAverageRowHeight: vi.fn(() => defaultRowHeight),
@@ -46,6 +46,16 @@ function createMockDynamicRowHeight(defaultRowHeight = 50) {
 }
 
 describe('VirtualList', () => {
+  let unmockResizeObserver: (() => void) | undefined
+
+  beforeEach(() => {
+    unmockResizeObserver = mockResizeObserver()
+  })
+
+  afterEach(() => {
+    unmockResizeObserver?.()
+  })
+
   it('renders correctly', () => {
     const wrapper = mountVirtualList({})
 
@@ -59,6 +69,37 @@ describe('VirtualList', () => {
     const rows = wrapper.findAll('.test-row')
 
     expect(rows.length).toBeGreaterThan(0)
+  })
+
+  it('renders full viewport after container size is measured', async () => {
+    const wrapper = mount(VirtualList, {
+      props: {
+        rowCount: 100,
+        rowHeight: 48,
+        class: 'h-96 w-full',
+      },
+      slots: {
+        row: ({ index, style }: RowSlotProps) =>
+          h('div', { style, class: 'test-row' }, `Row ${index}`),
+      },
+    })
+
+    await flushPromises()
+    await nextTick()
+
+    setElementSize({
+      element: wrapper.element as HTMLElement,
+      height: 384,
+      width: 800,
+    })
+
+    await flushPromises()
+    await nextTick()
+
+    const rows = wrapper.findAll('.test-row')
+
+    // 384px / 48px row height = 8 visible rows (+ overscan)
+    expect(rows.length).toBeGreaterThanOrEqual(8)
   })
 
   describe('dynamic row height watch', () => {
@@ -126,17 +167,14 @@ describe('VirtualList', () => {
   })
 
   describe('dynamic row height integration', () => {
-    let unmockResizeObserver: (() => void) | undefined
     let dynamicRowHeight: DynamicRowHeight | undefined
 
     beforeEach(() => {
-      unmockResizeObserver = mockResizeObserver()
       dynamicRowHeight = useDynamicRowHeight({ defaultRowHeight: 50 })
     })
 
     afterEach(() => {
       dynamicRowHeight?.cleanup()
-      unmockResizeObserver?.()
     })
 
     it('updates measured heights when observed rows resize', async () => {

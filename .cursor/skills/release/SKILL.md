@@ -31,6 +31,7 @@ Do not bump `packages/ui/package.json` version in the feature PR; Changesets han
 
 ```bash
 pnpm lint:ui
+pnpm typecheck
 pnpm test:ci
 pnpm build
 ```

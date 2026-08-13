@@ -2,12 +2,14 @@ import type { App, InjectionKey, MaybeRef } from 'vue'
 import { injectIconsKey, injectOptionsKey, injectThemeKey } from './composables/keys'
 import { injectThemeStyles, type UITheme } from './theme'
 import type { IconInjection } from './components/icon/Icon.vue'
+import type { ComponentDefaults } from './componentDefaults'
 
 export type UIOptions = {
   prefix?: string;
   components?: any[];
   icons?: Record<string, any>;
   theme?: UITheme;
+  defaults?: ComponentDefaults;
   injectIconsKey?: InjectionKey<IconInjection>;
   injectOptionsKey?: InjectionKey<UIOptions>;
   injectThemeKey?: InjectionKey<MaybeRef<UITheme>>;

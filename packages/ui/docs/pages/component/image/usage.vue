@@ -1,8 +1,11 @@
 <template>
-  <x-image
-    src="https://images.unsplash.com/photo-1543352634-99a5d50ae78e?auto=format&fit=crop&q=80&w=2671&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    width="256"
-    height="256"
-    alt=""
-  />
+  <div class="inline-block rounded-lg overflow-hidden bg-secondary-200 dark:bg-secondary-800">
+    <x-image
+      src="https://picsum.photos/id/237/400/300"
+      alt="Golden retriever sitting on a path"
+      class="block w-full max-w-sm h-auto object-cover"
+      width="400"
+      height="300"
+    />
+  </div>
 </template>

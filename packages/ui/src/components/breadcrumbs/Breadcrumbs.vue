@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const breadcrumbsProps = {
   ...useColors.props(),
   items: Array as PropType<BreadcrumbsItem[]>,
@@ -7,8 +9,8 @@ const breadcrumbsProps = {
     default: '/',
   },
   icon: String,
-  shadow: Boolean,
-  underline: Boolean,
+  shadow: optionalBooleanProp(),
+  underline: optionalBooleanProp(),
 }
 
 export type BreadcrumbsItem = {

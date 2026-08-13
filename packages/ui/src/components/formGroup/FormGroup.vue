@@ -10,8 +10,12 @@ const formGroupProps = {
 
 export type FormGroupProps = ExtractPublicPropTypes<typeof formGroupProps>
 
+export type FormGroupRegisterOptions = {
+  joined?: boolean;
+}
+
 export type FormGroupInjection = {
-  registerInputGroup: (name: string, focus: () => void) => void;
+  registerInputGroup: (name: string, focus: () => void, options?: FormGroupRegisterOptions) => void;
   unregisterInputGroup: (name: string) => void;
   setValue: (val: string | number | string[] | number[]) => void;
   value: MaybeRef<string | number | string[] | number[] | null | undefined>;
@@ -21,10 +25,12 @@ export type FormGroupInjection = {
 export type FormGroupInput = {
   name: string;
   focus: () => void;
+  joined?: boolean;
 }
 
 type InternalClasses = 'wrapper'
-export interface FormGroupTheme extends ThemeComponent<FormGroupProps, InternalClasses> {}
+type InternalExtraData = { hasJoinedLayout: boolean; }
+export interface FormGroupTheme extends ThemeComponent<FormGroupProps, InternalClasses, InternalExtraData> {}
 
 export default {
   name: 'XFormGroup',
@@ -32,7 +38,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { provide, computed, type ExtractPublicPropTypes, type MaybeRef } from 'vue'
+import { provide, computed, ref, type ExtractPublicPropTypes, type MaybeRef } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
@@ -44,6 +50,8 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(formGroupProps)
 
 const inputs: FormGroupInput[] = []
+const joinedInputCount = ref(0)
+const hasJoinedLayout = computed(() => joinedInputCount.value > 0)
 
 const value = computed<string | number | string[] | number[]>(() => {
   if (typeof props.modelValue === 'string') return props.modelValue
@@ -54,13 +62,17 @@ const value = computed<string | number | string[] | number[]>(() => {
 })
 
 provide(injectFormGroupKey, {
-  registerInputGroup: (name: string, focus: () => void) => {
-    inputs.push({ name, focus })
+  registerInputGroup: (name: string, focus: () => void, options?: FormGroupRegisterOptions) => {
+    inputs.push({ name, focus, joined: options?.joined })
+    if (options?.joined) joinedInputCount.value++
   },
   unregisterInputGroup: (name: string) => {
     const index = inputs.findIndex((i) => i.name === name)
 
-    inputs.splice(index, 1)
+    if (index !== -1) {
+      if (inputs[index]?.joined) joinedInputCount.value--
+      inputs.splice(index, 1)
+    }
   },
   setValue: (val) => {
     emit('update:modelValue', val)
@@ -96,7 +108,7 @@ function manualValidate() {
   if (props.validateOnInput && !isFirstValidation.value) validate(props.modelValue)
 }
 
-const { styles, classes, className } = useTheme('FormGroup', {}, props, { errorInternal })
+const { styles, classes, className } = useTheme('FormGroup', {}, props, { errorInternal, hasJoinedLayout })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

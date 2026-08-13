@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const badgeAlign = ['left', 'right'] as const
 const badgePosition = ['top', 'bottom'] as const
 const badgeProps = {
@@ -18,8 +20,8 @@ const badgeProps = {
   },
   offsetX: [Number, String],
   offsetY: [Number, String],
-  animated: Boolean,
-  outlined: Boolean,
+  animated: optionalBooleanProp(),
+  outlined: optionalBooleanProp(),
   icon: String,
   show: {
     type: Boolean,
@@ -47,10 +49,12 @@ export default {
 <script setup lang="ts">
 import { computed, useSlots, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 
 const props = defineProps(badgeProps)
+const resolvedProps = useResolvedComponentProps('Badge', props)
 
 const slots = useSlots()
 
@@ -62,7 +66,7 @@ const positionClasses = computed(() => {
   if (props.align === 'left') classes.push('left-0')
   if (props.align === 'right') classes.push('right-0')
   if (slots.content) classes.push('-m-[7.5%]')
-  else if (props.outlined) {
+  else if (resolvedProps.value.outlined) {
     classes.push('-m-[5%]')
   } else {
     classes.push('-m-[3.5%]')

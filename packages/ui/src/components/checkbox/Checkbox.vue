@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const checkboxProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
@@ -6,7 +8,7 @@ const checkboxProps = {
   ...useInputtable.props(),
   value: [String, Number],
   indeterminate: Boolean,
-  glow: Boolean,
+  glow: optionalBooleanProp(),
 }
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
@@ -175,10 +177,8 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
   </label>
 </template>
 
-<style lang="postcss" module>
-  .checkbox {
-    &--glow {
-      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-checkbox-glow), 0 4px 6px -4px var(--x-checkbox-glow);
-    }
-  }
+<style module>
+.checkbox--glow {
+  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-checkbox-glow), 0 4px 6px -4px var(--x-checkbox-glow);
+}
 </style>

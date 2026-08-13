@@ -1,0 +1,74 @@
+/**
+ * Indielayer UI theme tokens for Tailwind CSS v4.
+ * Import after tailwindcss in your app stylesheet:
+ *   @import "tailwindcss";
+ *   @import "@indielayer/ui/tailwind.css";
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --color-primary-50: rgb(var(--primary-color-50));
+  --color-primary-100: rgb(var(--primary-color-100));
+  --color-primary-200: rgb(var(--primary-color-200));
+  --color-primary-300: rgb(var(--primary-color-300));
+  --color-primary-400: rgb(var(--primary-color-400));
+  --color-primary-500: rgb(var(--primary-color-500));
+  --color-primary-600: rgb(var(--primary-color-600));
+  --color-primary-700: rgb(var(--primary-color-700));
+  --color-primary-800: rgb(var(--primary-color-800));
+  --color-primary-900: rgb(var(--primary-color-900));
+  --color-primary-950: rgb(var(--primary-color-950));
+
+  --color-secondary-50: rgb(var(--secondary-color-50));
+  --color-secondary-100: rgb(var(--secondary-color-100));
+  --color-secondary-200: rgb(var(--secondary-color-200));
+  --color-secondary-300: rgb(var(--secondary-color-300));
+  --color-secondary-400: rgb(var(--secondary-color-400));
+  --color-secondary-500: rgb(var(--secondary-color-500));
+  --color-secondary-600: rgb(var(--secondary-color-600));
+  --color-secondary-700: rgb(var(--secondary-color-700));
+  --color-secondary-800: rgb(var(--secondary-color-800));
+  --color-secondary-900: rgb(var(--secondary-color-900));
+  --color-secondary-950: rgb(var(--secondary-color-950));
+
+  --color-success-50: rgb(var(--success-color-50));
+  --color-success-100: rgb(var(--success-color-100));
+  --color-success-200: rgb(var(--success-color-200));
+  --color-success-300: rgb(var(--success-color-300));
+  --color-success-400: rgb(var(--success-color-400));
+  --color-success-500: rgb(var(--success-color-500));
+  --color-success-600: rgb(var(--success-color-600));
+  --color-success-700: rgb(var(--success-color-700));
+  --color-success-800: rgb(var(--success-color-800));
+  --color-success-900: rgb(var(--success-color-900));
+  --color-success-950: rgb(var(--success-color-950));
+
+  --color-warning-50: rgb(var(--warning-color-50));
+  --color-warning-100: rgb(var(--warning-color-100));
+  --color-warning-200: rgb(var(--warning-color-200));
+  --color-warning-300: rgb(var(--warning-color-300));
+  --color-warning-400: rgb(var(--warning-color-400));
+  --color-warning-500: rgb(var(--warning-color-500));
+  --color-warning-600: rgb(var(--warning-color-600));
+  --color-warning-700: rgb(var(--warning-color-700));
+  --color-warning-800: rgb(var(--warning-color-800));
+  --color-warning-900: rgb(var(--warning-color-900));
+  --color-warning-950: rgb(var(--warning-color-950));
+
+  --color-error-50: rgb(var(--error-color-50));
+  --color-error-100: rgb(var(--error-color-100));
+  --color-error-200: rgb(var(--error-color-200));
+  --color-error-300: rgb(var(--error-color-300));
+  --color-error-400: rgb(var(--error-color-400));
+  --color-error-500: rgb(var(--error-color-500));
+  --color-error-600: rgb(var(--error-color-600));
+  --color-error-700: rgb(var(--error-color-700));
+  --color-error-800: rgb(var(--error-color-800));
+  --color-error-900: rgb(var(--error-color-900));
+  --color-error-950: rgb(var(--error-color-950));
+
+  --color-border: rgb(var(--border-color));
+
+  --font-sans: var(--font-family-sans);
+  --font-mono: var(--font-family-mono);
+}

@@ -1,8 +1,10 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const scrollProps = {
-  shadow: Boolean,
-  horizontal: Boolean,
-  mousewheel: Boolean,
+  shadow: optionalBooleanProp(),
+  horizontal: optionalBooleanProp(),
+  mousewheel: optionalBooleanProp(),
   scrollbar: {
     type: Boolean,
     default: true,
@@ -86,7 +88,7 @@ defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
   </div>
 </template>
 
-<style lang="postcss" module>
+<style module>
 .scrollwrap {
   &::before,
   &::after {

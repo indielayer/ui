@@ -1,13 +1,15 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   verticalAlign: ['baseline', 'bottom', 'middle', 'text-bottom', 'text-top', 'top'],
 }
 
 const tableRowProps = {
-  pointer: Boolean,
-  striped: Boolean,
+  pointer: optionalBooleanProp(),
+  striped: optionalBooleanProp(),
   selected: Boolean,
-  singleSelect: Boolean,
+  singleSelect: optionalBooleanProp(),
   verticalAlign: {
     type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
     default: 'top',

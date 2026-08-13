@@ -8,6 +8,20 @@ useDocMeta({
   description: 'Tailwind CSS UI components for Vue.js 3 and Nuxt.js 3. Build and prototype fast web applications.',
   path: '/getting-started',
 })
+
+const tailwindSetupSnippet = `/* src/assets/tailwind.css */
+@import "tailwindcss";
+@import "@indielayer/ui/tailwind.css";
+
+@source "../../index.html";
+@source "../**/*.{vue,js,ts}";
+@source "../../node_modules/@indielayer/ui/{lib,src}/**/*";
+
+/* Optional: map semantic colors to Tailwind palettes */
+@theme {
+  --color-primary-500: var(--color-emerald-500);
+  --color-secondary-500: var(--color-slate-500);
+}`
 </script>
 
 <template>
@@ -54,40 +68,18 @@ useDocMeta({
         }]"
       />
 
-      <h3 class="text-2xl mt-8 mb-4">2. Setup TailwindCSS</h3>
-      <p>If you do not have Tailwind CSS 3 installed in your project, please see the <x-link href="https://tailwindcss.com/docs/guides/vite" external shadow color="primary">Tailwind 3 Vite install guide here</x-link> before proceeding.</p>
+      <h3 class="text-2xl mt-8 mb-4">2. Setup Tailwind CSS v4</h3>
+      <p>Indielayer UI requires <b>Tailwind CSS v4</b> (Safari 16.4+, Chrome 111+, Firefox 128+). See the <x-link href="https://tailwindcss.com/docs/installation/using-vite" external shadow color="primary">Tailwind v4 install guide</x-link> and install <code class="text-sm">tailwindcss</code> plus <code class="text-sm">@tailwindcss/postcss</code> (Vite and Nuxt).</p>
       <p class="my-4">
-        Add Indielayer Tailwind CSS preset <b>tailwind.preset.js</b> to your Tailwind CSS configuration file tailwind.config.js and <b>purge css configurations.</b>
+        Import Indielayer theme tokens from <b>@indielayer/ui/tailwind.css</b> in your app stylesheet and register source paths for class scanning:
       </p>
       <code-snippet
-        lang="js"
-        :code="`// tailwind.config.js
-const colors = require('tailwindcss/colors')
-const indielayer = require('@indielayer/ui/tailwind.preset')
-
-module.exports = {
-  darkMode: 'class',
-  presets: [indielayer()],
-  content: [
-    './index.html',
-    './**/*.vue',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-    'node_modules/@indielayer/ui/{lib,src}/**/*',
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: colors.emerald,
-        secondary: colors.slate,
-        success: colors.green,
-        warning: colors.yellow,
-        error: colors.red,
-      },
-    },
-  },
-  plugins: [],
-}`"
+        lang="css"
+        :code="tailwindSetupSnippet"
       />
+      <p class="my-4 text-sm text-gray-600 dark:text-gray-400">
+        Add <code>@tailwindcss/postcss</code> to your PostCSS config (Vite <code>css.postcss.plugins</code> or Nuxt <code>postcss.plugins</code>). See the <x-link href="https://tailwindcss.com/docs/upgrade-guide" external shadow color="primary">upgrade guide</x-link> when migrating from v3.
+      </p>
       <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your project</h3>
       <h4 class="text-xl mt-8 mb-4">Load on a Vue 3 project</h4>
       <code-snippet
@@ -99,8 +91,15 @@ const app = createApp(App)
 
 app.use(UI, {
   theme: BaseTheme,
+  defaults: {
+    Alert: { outlined: true },
+  },
 })`"
       />
+      <p class="my-4 text-sm text-gray-600 dark:text-gray-400">
+        Use <code>defaults</code> to set app-wide prop defaults per component (e.g. all alerts outlined). Instance props still override when passed explicitly.
+        Variant and layout booleans on themed components use <code>optionalBooleanProp()</code> so omitted attributes stay unset; plain <code>Boolean</code> props default to <code>false</code> in Vue and will not receive app defaults.
+      </p>
       <h4 class="text-xl mt-8 mb-4">Load on a Nuxt 3 project</h4>
       <multi-snippet
         class="my-4"
@@ -127,9 +126,7 @@ app.use(UI, {
   css: ['~/assets/tailwind.css'],
   postcss: {
     plugins: {
-      'tailwindcss/nesting': {},
-      tailwindcss: {},
-      autoprefixer: {},
+      '@tailwindcss/postcss': {},
     },
   },
 })`"

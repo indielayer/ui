@@ -23,7 +23,7 @@ From `packages/ui`:
 
 ```bash
 pnpm gen:search
-pnpm gen:llms
+pnpm gen:llms   # also writes public/llms-full.txt
 ```
 
 ## Verify

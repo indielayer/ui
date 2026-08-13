@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const avatarProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
@@ -9,8 +11,8 @@ const avatarProps = {
   name: String,
   alt: String,
   image: String,
-  outlined: Boolean,
-  rounded: Boolean,
+  outlined: optionalBooleanProp(),
+  rounded: optionalBooleanProp(),
 }
 
 export type AvatarProps = ExtractPublicPropTypes<typeof avatarProps>
@@ -92,7 +94,7 @@ const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
   </component>
 </template>
 
-<style lang="postcss" module>
+<style module>
 .avatar {
   color: var(--x-avatar-text);
   background-color: var(--x-avatar-bg);

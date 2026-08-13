@@ -1,8 +1,10 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const paginationVariant = ['simple', 'quick', 'dots'] as const
 const paginationProps = {
   ...useCommon.props(),
-  links: Boolean,
+  links: optionalBooleanProp(),
   totalPages: {
     type: Number,
     default: 1,

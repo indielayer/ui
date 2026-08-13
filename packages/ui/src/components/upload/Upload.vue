@@ -1,4 +1,6 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const validators = {
   ...useCommon.validators(),
   variant: ['box'] as const,
@@ -8,7 +10,7 @@ const uploadProps = {
   ...useInputtable.props(),
   placeholder: String,
   accept: String,
-  multiple: Boolean,
+  multiple: optionalBooleanProp(),
   maxFiles: [Number, String],
   maxFileSize: [Number, String],
   variant: {
@@ -24,7 +26,7 @@ const uploadProps = {
     type: String as PropType<'POST' | 'PUT'>,
     default: 'POST',
   },
-  withCredentials: Boolean,
+  withCredentials: optionalBooleanProp(),
   fileFormDataName: {
     type: String,
     default: 'file',
@@ -291,6 +293,7 @@ const {
   errorInternal,
   hideFooterInternal,
   isInsideForm,
+  isInsideInputGroup,
   inputListeners,
   isFirstValidation,
   validate,
@@ -314,6 +317,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :disabled="disabled"
       :required="required"
       :is-inside-form="isInsideForm"
+      :is-inside-input-group="isInsideInputGroup"
       :label="label"
       :tooltip="tooltip"
     >

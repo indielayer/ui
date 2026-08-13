@@ -1,11 +1,13 @@
 import { createApp } from 'vue'
-import { createUI } from '@indielayer/ui'
+import { createUI, BaseTheme } from '@indielayer/ui'
 import App from './App.vue'
 import './main.css'
 
 const app = createApp(App)
 
-const UI = createUI()
+const UI = createUI({
+  theme: BaseTheme,
+})
 
 app.use(UI)
 

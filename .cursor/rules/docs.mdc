@@ -12,5 +12,5 @@ alwaysApply: false
 - Import components from `@indielayer/ui`; use `?raw` imports for code preview snippets
 - Wire `back` / `next` to adjacent component folder names (lowercase)
 - Wrap content in `<document-page>` — see `docs/pages/component/button/index.vue`
-- After adding docs: `cd packages/ui && pnpm gen:search && pnpm gen:llms`
-- After editing docs: `pnpm eslint --cache --fix --ext .js,.ts,.vue packages/ui/docs` and `pnpm lint:style` when styles changed — CI runs `pnpm lint:ui` (includes `docs/`) and `pnpm lint:style`
+- After adding docs: `cd packages/ui && pnpm gen:search && pnpm gen:llms` (writes `llms.txt` and `llms-full.txt`)
+- After editing docs: `pnpm eslint --cache --fix --ext .js,.ts,.vue packages/ui/docs` — CI runs `pnpm lint:ui` (includes `docs/`)

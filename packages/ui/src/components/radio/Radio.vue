@@ -1,11 +1,13 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const radioProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
   value: [String, Number],
-  glow: Boolean,
+  glow: optionalBooleanProp(),
 }
 
 export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
@@ -153,27 +155,28 @@ defineExpose({ focus, blur, reset, validate, setError })
   </label>
 </template>
 
-<style lang="postcss" module>
-  .radio {
-    border-color: var(--x-radio-border);
-    background-color: var(--x-radio-bg);
+<style module>
+.radio {
+  border-color: var(--x-radio-border);
+  background-color: var(--x-radio-bg);
+}
 
-    &_circle {
-      color: var(--x-radio-circle);
-    }
+.radio--glow {
+  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-radio-glow), 0 4px 6px -4px var(--x-radio-glow);
+}
 
-    &--glow {
-      box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-radio-glow), 0 4px 6px -4px var(--x-radio-glow);
-    }
+.radio_circle {
+  color: var(--x-radio-circle);
+}
 
-    :global(.dark) &,
-    &:global(.dark) {
-      border-color: var(--x-radio-dark-border);
-      background-color: var(--x-radio-dark-bg);
+:global(.dark) .radio,
+.radio:global(.dark) {
+  border-color: var(--x-radio-dark-border);
+  background-color: var(--x-radio-dark-bg);
+}
 
-      &_circle {
-        color: var(--x-radio-dark-circle);
-      }
-    }
-  }
+:global(.dark) .radio_circle,
+.radio_circle:global(.dark) {
+  color: var(--x-radio-dark-circle);
+}
 </style>

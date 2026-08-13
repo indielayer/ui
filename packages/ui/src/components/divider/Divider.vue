@@ -1,7 +1,9 @@
 <script lang="ts">
+import { optionalBooleanProp } from '../../common/props'
+
 const dividerProps = {
   label: String,
-  vertical: Boolean,
+  vertical: optionalBooleanProp(),
 }
 
 export type DividerProps = ExtractPublicPropTypes<typeof dividerProps>
@@ -40,7 +42,6 @@ const { styles, classes, className } = useTheme('Divider', {}, props)
     ></div>
     <div
       v-if="label"
-      class="font-medium text-sm text-secondary-600 dark:text-secondary-300"
       :class="[
         classes.label,
         {

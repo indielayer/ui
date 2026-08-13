@@ -72,7 +72,7 @@ async function copy(text?: string) {
         <template #tooltip>{{ expandedSync ? 'Hide' : 'Show' }} code</template>
       </x-tooltip>
     </h2>
-    <p>{{ description }}</p>
+    <p v-if="description" class="capitalize text-secondary-500 dark:text-secondary-400 mb-4">{{ description }}</p>
     <slot></slot>
     <x-accordion-item ref="codeRef" :expanded="expanded" :show-icon="false">
       <template #content>

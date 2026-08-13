@@ -241,11 +241,11 @@ if (document) {
 
     <template #actions>
       <footer class="w-full flex gap-2 items-center justify-center">
-        <span class="bg-context-7 px-1 inline-flex items-center rounded-sm">&#8626;</span>
+        <span class="bg-context-7 px-1 inline-flex items-center rounded-xs">&#8626;</span>
         <span class="text-xs">to select</span>
-        <span class="bg-context-7 px-1 inline-flex items-center rounded-sm">&#11139;</span>
+        <span class="bg-context-7 px-1 inline-flex items-center rounded-xs">&#11139;</span>
         <span class="text-xs">to navigate</span>
-        <span class="bg-context-7 px-1 inline-flex items-center rounded-sm">&#9243;</span>
+        <span class="bg-context-7 px-1 inline-flex items-center rounded-xs">&#9243;</span>
         <span class="text-xs">to close</span>
       </footer>
     </template>

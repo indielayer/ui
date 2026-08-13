@@ -1,11 +1,15 @@
 import type { SelectTheme } from '../Select.vue'
+import { inputGroupRadiusClasses } from '../../../common/inputGroupRadius'
 
 const theme: SelectTheme = {
   classes: {
     wrapper: '',
 
     box: ({ props, data }) => {
-      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out rounded-md shadow-sm']
+      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out shadow-xs']
+
+      if (!data.isInsideInputGroup) classes.push('rounded-md')
+      else classes.push(...inputGroupRadiusClasses(data.inputGroupPosition))
 
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
 
@@ -20,8 +24,10 @@ const theme: SelectTheme = {
 
       if (data.errorInternal) {
         classes.push('border-error-500 dark:border-error-400 group-focus:outline-error-500')
+        if (data.isPopoverOpen) classes.push('outline-error-500!')
       } else if (!props.disabled) {
         classes.push('group-focus:outline-[color:var(--x-select-border)]')
+        if (data.isPopoverOpen) classes.push('outline-[color:var(--x-select-border)]!')
       }
 
       if (!props.multiple && !props.multipleCheckbox) {

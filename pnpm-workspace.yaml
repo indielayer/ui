@@ -3,8 +3,19 @@ packages:
   - 'packages/demo-nuxt'
   - 'packages/demo-vue'
   - 'packages/create-ui'
+
+overrides:
+  vite: 8.0.14
+  vite-plugin-inspect: 12.0.0-beta.2
+
+peerDependencyRules:
+  allowedVersions:
+    '@nuxt/kit': '4'
+    eslint: '8'
+
 allowBuilds:
-  esbuild: false
+  '@parcel/watcher': false
+  esbuild: true
   simple-git-hooks: true
   vue-demi: true
 publishBranch: main

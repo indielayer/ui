@@ -4,9 +4,9 @@ const theme: DividerTheme = {
   classes: {
     wrapper: ({ props }) => `flex justify-center items-center ${props.vertical ? 'h-full flex-col' : 'w-full'}`,
 
-    label: 'font-medium text-xs text-slate-400 dark:text-secondary-300',
+    label: 'text-xs text-secondary-400',
 
-    line: 'bg-secondary-200 dark:bg-secondary-700 flex-grow',
+    line: 'bg-secondary-200 dark:bg-secondary-700 grow',
   },
 }
 
