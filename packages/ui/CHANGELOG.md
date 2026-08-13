@@ -1,5 +1,38 @@
 # @indielayer/ui
 
+## 2.0.0
+
+### Major Changes
+
+- Migrate to Tailwind CSS v4 with a CSS-first public API.
+
+  **Breaking changes**
+
+  - Peer dependency is now `tailwindcss@^4.0.0` (requires Safari 16.4+, Chrome 111+, Firefox 128+).
+  - Removed `@indielayer/ui/tailwind.preset` — use `@import "@indielayer/ui/tailwind.css"` in your app stylesheet instead.
+  - Configure content scanning with `@source` directives; JavaScript `tailwind.config.js` presets are no longer used.
+
+  **Migration**
+
+  1. Upgrade Tailwind and add `@tailwindcss/postcss` (Vite: `css.postcss.plugins`; Nuxt: `postcss.plugins`).
+  2. Replace `@tailwind` directives with `@import "tailwindcss"` and import `@indielayer/ui/tailwind.css`.
+  3. Add `@source` paths including `node_modules/@indielayer/ui/{lib,src}/**/*`.
+  4. Update renamed utilities (`shadow-sm` → `shadow-xs`, `flex-grow` → `grow`, `outline-none` → `outline-hidden`, etc.) if you copied v3 class names.
+
+  See the [Tailwind upgrade guide](https://tailwindcss.com/docs/upgrade-guide) and the docs getting-started page.
+  ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+
+### Minor Changes
+
+- feat(table): optional multiple sort ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+- Add `defaults` option on `UIOptions` for app-wide component prop defaults (e.g. `Alert: { outlined: true }`). Defaults merge in `useTheme` and via `useResolvedComponentProps` for template usage. Themed components use `optionalBooleanProp()` for variant/layout booleans so omitted props stay `undefined` and receive app defaults (Vue otherwise coerces plain `Boolean` to `false`). ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+- Add `XEmpty` component for empty states with title, description, icon, actions slot, and optional bordered layout. ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+- Add `XInputGroup` for inline multi-field controls with a shared label and InputFooter. Supports `XInput`, `XTextarea`, `XSelect`, and `XDatepicker` as children. ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+- feat(stepper)!: rebuild as multi-step wizard with named slots and navigation API
+
+  BREAKING CHANGE: `XStepper` no longer uses manual `status` or `label` on steps. Use `value`, `title`, named panel slots (`#stepId`), optional `#summary-stepId` slots, and exposed `next()` / `prev()` / `goTo()` / `reset()` methods. `v-model` is the active step `value` (string or number), not a numeric index.
+  ([#139](https://github.com/indielayer/ui/pull/139)) ([`8744d9d`](https://github.com/indielayer/ui/commit/8744d9d56cde572b14e0f89737a12be171fae45c))
+
 ## 1.18.1
 
 ### Patch Changes
