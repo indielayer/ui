@@ -95,6 +95,7 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
             :with-credentials="false"
             :rules="[rules.isValidUpload]"
             placeholder="Upload game title cover image"
+            accept="image/*"
             max-file-size="2000000"
             label="Cover Image"
             tooltip="Title cover image should be 16:9 aspect ratio and max 2MB"

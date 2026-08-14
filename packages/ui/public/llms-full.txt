@@ -583,9 +583,9 @@ Buttons allow users to perform actions and make choices with a single click. The
       <x-button>right</x-button>
     </x-button-group>
     <x-button-group color="primary" light outlined>
-      <x-button icon="edit"/>
-      <x-button icon="code"/>
-      <x-button icon="smile"/>
+      <x-button icon="edit" tooltip="Edit" />
+      <x-button icon="code" tooltip="Code" />
+      <x-button icon="smile" tooltip="Smile" />
     </x-button-group>
     <x-button-group color="indigo" outlined disabled>
       <x-button>left</x-button>
@@ -2368,7 +2368,12 @@ const rules = {
         helper="Select date and time"
         :rules="[rules.required]"
       >
-        <x-datepicker v-model="start" placeholder="Date" :enable-time-picker="false" />
+        <x-datepicker
+          v-model="start"
+          teleport="body"
+          placeholder="Date"
+          :enable-time-picker="false"
+        />
         <x-input v-model="end" type="time" placeholder="Time" />
       </x-input-group>
     </div>
@@ -2932,6 +2937,20 @@ Popovers display additional information or interactive content in a floating ove
         </x-popover-container>
       </template>
     </x-popover>
+
+    <x-button-group>
+      <x-button icon="plus" tooltip="Add New">Add New</x-button>
+      <x-popover>
+        <x-button icon="chevron-down" tooltip="More Options"/>
+        <template #content>
+          <x-popover-container class="p-2">
+            <x-button>Option 1</x-button>
+            <x-button>Option 2</x-button>
+            <x-button>Option 3</x-button>
+          </x-popover-container>
+        </template>
+      </x-popover>
+    </x-button-group>
   </div>
 </template>
 ```
@@ -4986,6 +5005,7 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
             :with-credentials="false"
             :rules="[rules.isValidUpload]"
             placeholder="Upload game title cover image"
+            accept="image/*"
             max-file-size="2000000"
             label="Cover Image"
             tooltip="Title cover image should be 16:9 aspect ratio and max 2MB"

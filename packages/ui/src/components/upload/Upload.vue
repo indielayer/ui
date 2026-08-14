@@ -61,6 +61,7 @@ import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { uploadIcon, closeIcon, fileIcon } from '../../common/icons'
+import { isFileAccepted } from './fileAccept'
 
 import XLabel from '../label/Label.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
@@ -104,12 +105,8 @@ function isInputValid(files: File[] | FileList | null) {
   }
 
   if (props.accept) {
-    const accept = props.accept.split(',').map((type) => type.trim())
-
     for (let i = 0; i < files.length; i++) {
-      const file = files[i]
-
-      if (!accept.some((type) => file.type === type || file.name.endsWith(type))) {
+      if (!isFileAccepted(files[i], props.accept)) {
         errorInternal.value = 'Invalid file type'
 
         return false
