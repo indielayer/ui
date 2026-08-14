@@ -143,13 +143,46 @@ import { useMutationObserver } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
-import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { useTheme, type StyleValue, type ThemeComponent } from '../../composables/useTheme'
 import type { Size } from '../../composables/useCommon'
 import { injectInputGroupKey } from '../../composables/keys'
 import XInput from '../input/Input.vue'
 import type { Locale } from 'date-fns'
 import VueDatepicker, { type ModelValue, type TimeModel, type VueDatePickerProps } from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
+
+let datepickerThemeSeq = 0
+
+/** Flatten theme StyleValue into CSS declarations for a teleported menu stylesheet. */
+function styleValueToCssText(value: StyleValue | StyleValue[]): string {
+  const decls: string[] = []
+
+  const visit = (v: unknown) => {
+    if (v === null || v === undefined || v === false) return
+    if (typeof v === 'string') {
+      const trimmed = v.trim()
+
+      if (trimmed) decls.push(trimmed.endsWith(';') ? trimmed.slice(0, -1) : trimmed)
+
+      return
+    }
+    if (Array.isArray(v)) {
+      v.forEach(visit)
+
+      return
+    }
+    if (typeof v === 'object') {
+      for (const [key, val] of Object.entries(v as Record<string, unknown>)) {
+        if (val === null || val === undefined || val === false) continue
+        decls.push(`${key}: ${val}`)
+      }
+    }
+  }
+
+  visit(value)
+
+  return decls.join(';\n')
+}
 
 const props = defineProps(datepickerProps)
 
@@ -207,6 +240,26 @@ const { hideFooterInternal } = useInputtable(props, { focus, emit })
 defineExpose({ focus, blur, validate })
 
 const { styles, classes, className } = useTheme('Datepicker', {}, props, { isInsideInputGroup })
+
+// Teleported menus leave the wrapper, so theme CSS vars must travel with the menu.
+const menuThemeClass = `x-datepicker-menu-${++datepickerThemeSeq}`
+
+const mergedUi = computed(() => {
+  const userUi = props.ui ?? {}
+  const userMenu = userUi.menu
+  const menu = [
+    ...(Array.isArray(userMenu) ? userMenu : userMenu ? [userMenu] : []),
+    menuThemeClass,
+  ]
+
+  return { ...userUi, menu }
+})
+
+const menuThemeCss = computed(() => {
+  const declarations = styleValueToCssText(styles.value)
+
+  return declarations ? `.${menuThemeClass}{\n${declarations}\n}` : ''
+})
 </script>
 
 <template>
@@ -218,8 +271,9 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props, { isIns
       isInsideInputGroup ? 'flex-1 min-w-0' : '',
     ]"
   >
+    <component :is="'style'">{{ menuThemeCss }}</component>
     <vue-datepicker
-      :ui="ui"
+      :ui="mergedUi"
       :model-value="modelValue"
       :multi-calendars="multiCalendars"
       :model-type="modelType"
@@ -436,7 +490,7 @@ const { styles, classes, className } = useTheme('Datepicker', {}, props, { isIns
 }
 
 .dp__action_row {
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--dp-border-color, #eee);
   margin-top: 10px;
 }
 </style>

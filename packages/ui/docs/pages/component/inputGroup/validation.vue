@@ -23,7 +23,12 @@ const rules = {
         helper="Select date and time"
         :rules="[rules.required]"
       >
-        <x-datepicker v-model="start" placeholder="Date" :enable-time-picker="false" />
+        <x-datepicker
+          v-model="start"
+          teleport="body"
+          placeholder="Date"
+          :enable-time-picker="false"
+        />
         <x-input v-model="end" type="time" placeholder="Time" />
       </x-input-group>
     </div>

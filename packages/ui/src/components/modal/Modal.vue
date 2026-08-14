@@ -100,7 +100,7 @@ watch(value, (val) => {
   if (val) {
     setTimeout(() => {
       stopClickOutside = onClickOutside(modalRef, clickOutsideCallback, {
-        ignore: ['.v-popper__popper'],
+        ignore: ['.v-popper__popper', '.dp__menu', '.dp--menu-wrapper'],
       })
     })
   }
@@ -141,7 +141,7 @@ async function checkVisibility() {
 if (typeof window !== 'undefined') useEventListener(document, 'keydown', onKeyDown)
 
 const shouldIgnoreEvent = (event: KeyboardEvent) => {
-  return ['.v-popper__popper', '.x-datepicker'].some((target) => {
+  return ['.v-popper__popper', '.x-datepicker', '.dp__menu', '.dp--menu-wrapper'].some((target) => {
     if (typeof target === 'string') {
       return Array.from(window.document.querySelectorAll(target))
         .some((el) => el === event.target || event.composedPath().includes(el))
