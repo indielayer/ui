@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 const tab = ref('a')
 const linkTab = ref(null)
+const metric = ref('unique')
+const view = ref('grid')
 </script>
 
 <template>
@@ -130,6 +132,30 @@ const linkTab = ref(null)
       content e
     </x-tab>
   </x-tab-group>
+
+  <p>Compact</p>
+  <div class="flex gap-4 items-start">
+    <x-tab-group
+      v-model="metric"
+      color="indigo"
+      class="pb-10"
+      variant="compact"
+    >
+      <x-tab value="unique" label="Unique" />
+      <x-tab value="total" label="Total" />
+    </x-tab-group>
+
+    <x-tab-group
+      v-model="view"
+      color="indigo"
+      class="pb-10"
+      size="md"
+      variant="compact"
+    >
+      <x-tab value="grid" icon="sun" tooltip="Grid view" />
+      <x-tab value="list" icon="moon" tooltip="List view" />
+    </x-tab-group>
+  </div>
 
   <p>Automatic link as value</p>
   <x-tab-group v-model="linkTab" class="pb-10" exact>

@@ -3,7 +3,7 @@ import { optionalBooleanProp } from '../../common/props'
 
 const validators = {
   ...useCommon.validators(),
-  variant: ['line', 'block'] as const,
+  variant: ['line', 'block', 'compact'] as const,
   align: ['left', 'center', 'right'] as const,
 }
 const tabGroupProps = {
@@ -11,7 +11,7 @@ const tabGroupProps = {
   ...useColors.props('primary'),
   modelValue: [String, Number],
   variant: {
-    type: String as PropType<'line' | 'block'>,
+    type: String as PropType<'line' | 'block' | 'compact'>,
     default: 'line',
   },
   align: {

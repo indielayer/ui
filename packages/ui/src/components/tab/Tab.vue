@@ -3,6 +3,10 @@ import { optionalBooleanProp } from '../../common/props'
 
 const tabProps = {
   ...useCommon.props(),
+  size: {
+    type: String as PropType<Size>,
+    validator: (value: string) => useCommon.validators().size.includes(value),
+  },
   value: {
     type: [String, Number],
   },
@@ -13,6 +17,11 @@ const tabProps = {
   to: [String, Object],
   label: String,
   icon: String,
+  tooltip: String,
+  tooltipPosition: {
+    type: String as PropType<TooltipPosition>,
+    default: 'top',
+  },
   disabled: Boolean,
   exact: Boolean,
   removable: optionalBooleanProp(),
@@ -23,6 +32,7 @@ export type TabProps = ExtractPublicPropTypes<typeof tabProps>
 type InternalClasses = 'wrapper' | 'content' | 'label' | 'icon' | 'tabpanel'
 type InternalExtraData = {
   selected: boolean;
+  showLabel: boolean;
 } & Pick<TabGroupInjection, 'state'>['state']
 export interface TabTheme extends ThemeComponent<TabProps, InternalClasses, InternalExtraData> {}
 
@@ -35,7 +45,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { inject, reactive, computed, ref, onMounted, onBeforeUnmount, type ExtractPublicPropTypes } from 'vue'
+import { inject, reactive, computed, ref, onMounted, onBeforeUnmount, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
@@ -44,16 +54,32 @@ import { useResolvedComponentProps } from '../../composables/resolveComponentDef
 
 import XIcon from '../icon/Icon.vue'
 import XLink from '../link/Link.vue'
+import XTooltip from '../tooltip/Tooltip.vue'
 
 import { closeIcon } from '../../common/icons'
 
+import type { TooltipPosition } from '../tooltip/Tooltip.vue'
 import type { TabGroupInjection, TabGroupVariant } from './TabGroup.vue'
 
 const props = defineProps(tabProps)
 const resolvedProps = useResolvedComponentProps('Tab', props)
 
 const computedValue = computed(() => (elRef.value as typeof XLink)?.$el?.href || props.value)
+const showLabel = computed(() => {
+  if (props.icon && (props.label === undefined || props.label === '')) return false
+
+  return true
+})
 const computedLabel = computed(() => props.label || props.value)
+const ariaLabel = computed(() => {
+  if (showLabel.value) return undefined
+
+  if (props.tooltip) return props.tooltip
+  if (props.label) return props.label
+  if (computedValue.value !== undefined && computedValue.value !== null) return String(computedValue.value)
+
+  return undefined
+})
 const teleportTo = ref<HTMLElement | null>(null)
 const elRef = ref<HTMLElement | typeof XLink | null>(null)
 
@@ -74,7 +100,7 @@ const tabs = inject(injectTabGroupKey, {
 })
 
 const computedExact = computed(() => tabs.state.exact || props.exact)
-const computedSize = computed(() => props.size || tabs.state.size)
+const computedSize = computed(() => props.size ?? tabs.state.size ?? 'md')
 
 onMounted(() => {
   teleportTo.value = tabs.tabsContentRef.value
@@ -119,74 +145,98 @@ function onClickTab(e: MouseEvent) {
 
 defineEmits(['remove'])
 
-const { styles, classes, className } = useTheme('Tab', {}, ref({
+const isBlockLike = computed(() => tabs.state.variant === 'block' || tabs.state.variant === 'compact')
+
+const themeProps = computed(() => ({
   ...props,
   size: computedSize.value,
   exact: computedExact.value,
-}), {
+}))
+
+const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
   ...tabs.state,
   selected,
+  showLabel,
 })
 </script>
 
 <template>
-  <component
-    :is="to ? XLink : tag"
-    ref="elRef"
-    :type="tag === 'button' ? 'button' : undefined"
+  <x-tooltip
+    :position="tooltipPosition"
     :data-value="computedValue"
-    :to="to"
-    :color="selected ? color : undefined"
-    :style="[
-      styles,
-      to && selected && tabs.state.variant === 'block'
-        ? '--x-link-text: var(--x-tab-group-text); --x-link-text-hover: var(--x-tab-group-text);'
-        : ''
-    ]"
     :class="[
-      className,
-      classes.wrapper,
       'shrink-0',
-      {
-        'flex-1': tabs.state.grow,
-        'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected,
-        'cursor-pointer': !disabled,
-        'cursor-not-allowed': disabled,
-        'cursor-not-allowed text-secondary-500': disabled && !selected,
-      },
+      { 'flex-1': tabs.state.grow },
     ]"
-    :aria-disabled="disabled ? 'true' : undefined"
-    :aria-selected="selected ? 'true' : 'false'"
-    @click="onClickTab"
   >
-    <slot
-      name="tab"
-      :label="label"
-      :value="value"
-      :size="computedSize"
-      :icon="icon"
+    <template v-if="$slots.tooltip || tooltip" #tooltip>
+      <slot name="tooltip">
+        {{ tooltip }}
+      </slot>
+    </template>
+    <component
+      :is="to ? XLink : tag"
+      ref="elRef"
+      :type="tag === 'button' ? 'button' : undefined"
+      :to="to"
+      :color="selected ? color : undefined"
+      :style="[
+        styles,
+        to && selected && isBlockLike
+          ? '--x-link-text: var(--x-tab-group-text); --x-link-text-hover: var(--x-tab-group-text);'
+          : ''
+      ]"
+      :class="[
+        className,
+        classes.wrapper,
+        'flex items-center justify-center',
+        {
+          'w-full': tabs.state.grow,
+          'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected,
+          'cursor-pointer': !disabled,
+          'cursor-not-allowed': disabled,
+          'cursor-not-allowed text-secondary-500': disabled && !selected,
+        },
+      ]"
+      :aria-label="ariaLabel"
+      :aria-disabled="disabled ? 'true' : undefined"
+      :aria-selected="selected ? 'true' : 'false'"
+      @click="onClickTab"
     >
-      <div :class="classes.content">
-        <x-icon
-          v-if="icon"
-          :icon="icon"
-          :size="computedSize"
-          :class="classes.icon"
-        />
-        <div :class="classes.label">{{ computedLabel }}</div>
-        <x-icon
-          v-if="resolvedProps.removable"
-          size="sm"
-          :icon="closeIcon"
-          class="ml-2 cursor-pointer hover:text-secondary-700 dark:hover:text-secondary-500 transition-colors duration-150"
-          @click="(e: Event) => $emit('remove', e)"
-        />
-      </div>
-    </slot>
-    <teleport v-if="selected && teleportTo" :to="teleportTo">
-      <div v-if="$slots.default" role="tabpanel" :class="classes.tabpanel">
-        <slot></slot>
-      </div>
-    </teleport>
-  </component>
+      <slot
+        name="tab"
+        :label="label"
+        :value="value"
+        :size="computedSize"
+        :icon="icon"
+      >
+        <div :class="classes.content">
+          <x-icon
+            v-if="icon"
+            :icon="icon"
+            :size="computedSize"
+            :class="classes.icon"
+          />
+          <div
+            v-if="showLabel"
+            :class="classes.label"
+          >
+            {{ computedLabel }}
+          </div>
+          <x-icon
+            v-if="resolvedProps.removable"
+            size="sm"
+            :icon="closeIcon"
+            class="ml-2 cursor-pointer hover:text-secondary-700 dark:hover:text-secondary-500 transition-colors duration-150"
+            @click="(e: Event) => $emit('remove', e)"
+          />
+        </div>
+      </slot>
+      <teleport v-if="selected && teleportTo" :to="teleportTo">
+        <div v-if="$slots.default" role="tabpanel" :class="classes.tabpanel">
+          <slot></slot>
+        </div>
+      </teleport>
+    </component>
+  </x-tooltip>
 </template>
