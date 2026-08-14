@@ -29,7 +29,9 @@ const tabGroupProps = {
 
 export type TabGroupInjection = {
   tabsContentRef: Ref<HTMLElement | null>;
-  activateTab: (tab: string | number) => void;
+  activateTab: (tab: string | number | null) => void;
+  registerTab: (tab: string | number) => void;
+  unregisterTab: (tab: string | number) => void;
   state: {
     active: string | number | undefined;
     variant: TabGroupVariant;
@@ -91,38 +93,100 @@ const state = reactive({
   color: computed(() => props.color),
 })
 
+const showTracker = ref(true)
+const registeredTabs: (string | number)[] = []
+
 function activateTab(tab: string | number | null) {
   active.value = tab
   emit('update:modelValue', tab)
 }
 
+function registerTab(tab: string | number) {
+  if (!registeredTabs.includes(tab)) registeredTabs.push(tab)
+}
+
+function unregisterTab(tab: string | number) {
+  const index = registeredTabs.indexOf(tab)
+
+  if (index === -1) return
+
+  registeredTabs.splice(index, 1)
+
+  if (active.value !== tab) return
+
+  const fallback = registeredTabs[Math.min(index, registeredTabs.length - 1)]
+
+  if (typeof fallback !== 'undefined') {
+    activateTab(fallback)
+  } else {
+    activateTab(null)
+    showTracker.value = false
+  }
+}
+
 provide(injectTabGroupKey, {
   tabsContentRef,
   activateTab,
+  registerTab,
+  unregisterTab,
   state,
 })
 
 const updateTracker = useThrottleFn(async (value: string | number | undefined) => {
-  if (typeof value === 'undefined') return
+  if (typeof value === 'undefined' || value === null) {
+    showTracker.value = false
+
+    return
+  }
 
   await nextTick()
 
   const tabEl = tabsRef.value?.querySelector(`[data-value="${value}"]`) as HTMLElement
 
-  if (!tabEl || !trackerRef.value) return
+  if (!tabEl || !trackerRef.value) {
+    showTracker.value = false
 
+    return
+  }
+
+  showTracker.value = true
   trackerRef.value.style.left = `${tabEl.offsetLeft}px`
   trackerRef.value.style.width = `${tabEl.offsetWidth}px`
 
-  if (!tabsRef.value || !scrollRef.value) return
+  if (!tabsRef.value || !scrollRef.value?.scrollEl) return
 
-  // scrollIntoView only updates one at a time
-  const center = tabEl.offsetLeft - (tabsRef.value.getBoundingClientRect().width - tabEl.getBoundingClientRect().width) / 2
+  const scrollEl = scrollRef.value.scrollEl
+  // Measure overflow from the in-flow tabs list only (tracker is absolute and clipped).
+  const maxScroll = Math.max(0, tabsRef.value.scrollWidth - scrollEl.clientWidth)
+  const viewLeft = scrollEl.scrollLeft
+  const viewRight = viewLeft + scrollEl.clientWidth
+  const tabLeft = tabEl.offsetLeft
+  const tabRight = tabLeft + tabEl.offsetWidth
+  const tabFullyVisible = tabLeft >= viewLeft && tabRight <= viewRight
 
-  if (scrollRef.value.scrollEl) scrollRef.value.scrollEl.scrollTo({ left: center, behavior: 'smooth' })
+  if (maxScroll <= 0) {
+    if (scrollEl.scrollLeft !== 0) scrollEl.scrollTo({ left: 0 })
+    scrollEl.dispatchEvent(new CustomEvent('scroll'))
+
+    return
+  }
+
+  if (tabFullyVisible) {
+    scrollEl.dispatchEvent(new CustomEvent('scroll'))
+
+    return
+  }
+
+  let nextLeft = viewLeft
+
+  if (tabLeft < viewLeft) nextLeft = tabLeft
+  else if (tabRight > viewRight) nextLeft = tabRight - scrollEl.clientWidth
+
+  nextLeft = Math.max(0, Math.min(nextLeft, maxScroll))
+
+  if (nextLeft !== viewLeft) scrollEl.scrollTo({ left: nextLeft, behavior: 'smooth' })
+  else scrollEl.dispatchEvent(new CustomEvent('scroll'))
 }, 100, true)
-
-const showTracker = ref(true)
 
 function check() {
   if (!tabsRef.value?.querySelector('.router-link-active')) {
@@ -170,18 +234,21 @@ const { styles, classes, className } = useTheme('TabGroup', {}, props)
         mousewheel
         :class="classes.scroller"
       >
-        <div
-          ref="tabsRef"
-          class="relative"
-          :class="classes.list"
-        >
-          <slot></slot>
+        <div class="relative overflow-x-clip">
+          <div
+            ref="tabsRef"
+            class="relative"
+            :class="classes.list"
+          >
+            <slot></slot>
+          </div>
+          <div
+            v-show="showTracker"
+            ref="trackerRef"
+            class="pointer-events-none"
+            :class="classes.tracker"
+          ></div>
         </div>
-        <div
-          v-show="showTracker"
-          ref="trackerRef"
-          :class="classes.tracker"
-        ></div>
       </x-scroll>
     </div>
     <div ref="tabsContentRef"></div>

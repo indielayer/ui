@@ -35,7 +35,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { inject, reactive, computed, ref, onMounted, type ExtractPublicPropTypes } from 'vue'
+import { inject, reactive, computed, ref, onMounted, onBeforeUnmount, type ExtractPublicPropTypes } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
@@ -60,6 +60,8 @@ const elRef = ref<HTMLElement | typeof XLink | null>(null)
 const tabs = inject(injectTabGroupKey, {
   tabsContentRef: ref(null),
   activateTab: () => {},
+  registerTab: () => {},
+  unregisterTab: () => {},
   state: reactive({
     active: undefined,
     variant: 'line' as TabGroupVariant,
@@ -77,6 +79,8 @@ const computedSize = computed(() => props.size || tabs.state.size)
 onMounted(() => {
   teleportTo.value = tabs.tabsContentRef.value
 
+  if (typeof computedValue.value !== 'undefined') tabs.registerTab(computedValue.value)
+
   if (props.to && elRef.value) {
     check()
     useMutationObserver((elRef.value as typeof XLink).$el, check, {
@@ -84,6 +88,10 @@ onMounted(() => {
       attributeFilter: ['class'],
     })
   }
+})
+
+onBeforeUnmount(() => {
+  if (typeof computedValue.value !== 'undefined') tabs.unregisterTab(computedValue.value)
 })
 
 function check() {
