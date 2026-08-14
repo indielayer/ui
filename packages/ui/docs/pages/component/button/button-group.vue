@@ -10,9 +10,9 @@
       <x-button>right</x-button>
     </x-button-group>
     <x-button-group color="primary" light outlined>
-      <x-button icon="edit"/>
-      <x-button icon="code"/>
-      <x-button icon="smile"/>
+      <x-button icon="edit" tooltip="Edit" />
+      <x-button icon="code" tooltip="Code" />
+      <x-button icon="smile" tooltip="Smile" />
     </x-button-group>
     <x-button-group color="indigo" outlined disabled>
       <x-button>left</x-button>

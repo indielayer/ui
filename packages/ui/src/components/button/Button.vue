@@ -18,6 +18,11 @@ const buttonProps = {
   iconLeft: String,
   iconRight: String,
   to: [String, Object],
+  tooltip: String,
+  tooltipPosition: {
+    type: String as PropType<TooltipPosition>,
+    default: 'top',
+  },
 }
 
 export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
@@ -25,6 +30,8 @@ export type ButtonProps = ExtractPublicPropTypes<typeof buttonProps>
 type InternalClasses = 'wrapper' | 'iconLeft' | 'iconRight'
 type InternalExtraData = {
   isButtonGroup: boolean;
+  buttonGroupPosition: import('../../common/buttonGroupRadius').ButtonGroupPosition | undefined;
+  buttonGroupRounded: boolean;
   isInsideInputGroup: boolean;
   inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined;
 }
@@ -39,7 +46,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, inject, onMounted, onUnmounted, useAttrs, unref, type ExtractPublicPropTypes } from 'vue'
+import { computed, ref, inject, onMounted, onUnmounted, useAttrs, useSlots, unref, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
@@ -49,15 +56,23 @@ import { injectButtonGroupKey, injectInputGroupKey } from '../../composables/key
 
 import XLoader from '../loader/Loader.vue'
 import XIcon from '../icon/Icon.vue'
+import XTooltip from '../tooltip/Tooltip.vue'
+
+import type { TooltipPosition } from '../tooltip/Tooltip.vue'
 
 const props = defineProps(buttonProps)
 const resolvedProps = useResolvedComponentProps('Button', props)
+const slots = useSlots()
 
 const elRef = ref<HTMLElement | null>(null)
 
 const buttonGroup = inject(injectButtonGroupKey, {
   isButtonGroup: false,
   groupProps: {},
+  registerChild: () => {},
+  unregisterChild: () => {},
+  getPosition: () => 'only' as const,
+  childOrder: computed(() => []),
 })
 
 const inputGroup = inject(injectInputGroupKey, {
@@ -74,14 +89,24 @@ const inputGroup = inject(injectInputGroupKey, {
 const childId = `btn-${Math.random().toString(36).slice(2)}`
 
 onMounted(() => {
+  if (buttonGroup.isButtonGroup) buttonGroup.registerChild(childId)
   if (inputGroup.isInsideInputGroup) inputGroup.registerChild(childId)
 })
 
 onUnmounted(() => {
+  if (buttonGroup.isButtonGroup) buttonGroup.unregisterChild(childId)
   if (inputGroup.isInsideInputGroup) inputGroup.unregisterChild(childId)
 })
 
 const { isButtonGroup } = buttonGroup
+const buttonGroupPosition = computed(() => {
+  if (!buttonGroup.isButtonGroup) return undefined
+
+  void buttonGroup.childOrder.value
+
+  return buttonGroup.getPosition(childId)
+})
+const buttonGroupRounded = computed(() => !!buttonGroup.groupProps?.rounded)
 const isInsideInputGroup = computed(() => inputGroup.isInsideInputGroup)
 const inputGroupPosition = computed(() => {
   if (!inputGroup.isInsideInputGroup) return undefined
@@ -111,6 +136,23 @@ const computedIconLeft = computed(() => props.icon || props.iconLeft)
 const attrs = useAttrs()
 const htmlTag = computed(() => (attrs.href ? 'a' : props.to ? 'router-link' : props.tag))
 
+const hasTooltip = computed(() => !!(props.tooltip || slots.tooltip))
+const isIconOnly = computed(() => !slots.default)
+const ariaLabel = computed(() => {
+  const fromAttrs = attrs['aria-label']
+
+  if (fromAttrs !== undefined && fromAttrs !== null) return fromAttrs as string
+  if (isIconOnly.value && props.tooltip) return props.tooltip
+
+  return undefined
+})
+const tooltipWrapperClass = computed(() => {
+  if (resolvedProps.value.block) return 'block w-full'
+  if (isButtonGroup) return 'inline-flex self-stretch'
+
+  return undefined
+})
+
 const computedProps = computed(() => ({
   size: unref(computedSize),
   flat: unref(computedFlat),
@@ -129,6 +171,8 @@ const computedProps = computed(() => ({
 
 const { className, classes, styles } = useTheme('Button', {}, computedProps, {
   isButtonGroup,
+  buttonGroupPosition,
+  buttonGroupRounded,
   isInsideInputGroup,
   inputGroupPosition,
 })
@@ -139,8 +183,71 @@ defineExpose({ focus, blur })
 </script>
 
 <template>
+  <x-tooltip
+    v-if="hasTooltip"
+    :position="tooltipPosition"
+    :class="tooltipWrapperClass"
+  >
+    <template #tooltip>
+      <slot name="tooltip">
+        {{ tooltip }}
+      </slot>
+    </template>
+    <component
+      :is="htmlTag"
+      ref="elRef"
+      :to="to"
+      :class="[
+        className,
+        $style['button'],
+        (resolvedProps.glow && !computedDisabled && !loading) ? $style['button--glow'] : '',
+        classes.wrapper,
+        {
+          'w-full': resolvedProps.block,
+          'h-full': isButtonGroup,
+        }
+      ]"
+      :style="styles"
+      :aria-label="ariaLabel"
+      :aria-busy="loading ? 'true' : null"
+      :aria-disabled="tag !== 'button' && computedDisabled ? 'true' : null"
+      :disabled="computedDisabled || loading"
+      :type="tag === 'button' ? type : null"
+    >
+      <x-loader
+        v-if="loading"
+        class="absolute"
+        :size="computedSize"
+        :label="loadingLabel"
+        :status="loadingStatus"
+      />
+      <div class="inline-flex items-center justify-center" :class="{ 'invisible': loading }">
+        <x-icon
+          v-if="computedIconLeft"
+          :size="computedSize"
+          :icon="computedIconLeft"
+          :class="[
+            classes.iconLeft,
+          ]"
+        />
+        <span>
+          <slot></slot>
+        </span>
+      </div>
+      <x-icon
+        v-if="iconRight"
+        :size="computedSize"
+        :icon="iconRight"
+        :class="[
+          classes.iconRight,
+          { 'invisible': loading },
+        ]"
+      />
+    </component>
+  </x-tooltip>
   <component
     :is="htmlTag"
+    v-else
     ref="elRef"
     :to="to"
     :class="[

@@ -17,5 +17,19 @@
         </x-popover-container>
       </template>
     </x-popover>
+
+    <x-button-group>
+      <x-button icon="plus" tooltip="Add New">Add New</x-button>
+      <x-popover>
+        <x-button icon="chevron-down" tooltip="More Options"/>
+        <template #content>
+          <x-popover-container class="p-2">
+            <x-button>Option 1</x-button>
+            <x-button>Option 2</x-button>
+            <x-button>Option 3</x-button>
+          </x-popover-container>
+        </template>
+      </x-popover>
+    </x-button-group>
   </div>
 </template>

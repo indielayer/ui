@@ -68,9 +68,21 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { type PropType, type ExtractPublicPropTypes, ref } from 'vue'
+import { type PropType, type ExtractPublicPropTypes, ref, inject, computed } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
+import { injectButtonGroupKey } from '../../composables/keys'
 import { Dropdown as VDropdown, type Placement, type TriggerEvent } from 'floating-vue'
+import PopoverContentBoundary from './PopoverContentBoundary.vue'
+import type { ButtonGroupInjection } from '../button/ButtonGroup.vue'
+
+const inactiveButtonGroup: ButtonGroupInjection = {
+  isButtonGroup: false,
+  groupProps: {},
+  registerChild: () => {},
+  unregisterChild: () => {},
+  getPosition: () => 'only',
+  childOrder: computed(() => []),
+}
 
 const props = defineProps(popoverProps)
 
@@ -95,6 +107,8 @@ const isOpen = ref(false)
 
 defineExpose({ show, hide, toggle, isOpen })
 
+const buttonGroup = inject(injectButtonGroupKey, inactiveButtonGroup)
+
 const { styles, classes, className } = useTheme('Popover', {}, props)
 </script>
 
@@ -102,7 +116,11 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   <v-dropdown
     ref="elRef"
     :style="styles"
-    :class="[className, classes.wrapper]"
+    :class="[
+      className,
+      classes.wrapper,
+      { 'inline-flex self-stretch': buttonGroup.isButtonGroup },
+    ]"
     :positioning-disabled="positioningDisabled"
     :placement="placement"
     :disabled="disabled"
@@ -141,7 +159,9 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   >
     <slot></slot>
     <template #popper>
-      <slot name="content"></slot>
+      <popover-content-boundary>
+        <slot name="content"></slot>
+      </popover-content-boundary>
     </template>
   </v-dropdown>
 </template>

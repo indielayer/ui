@@ -6,6 +6,8 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 import IconsDemoCode from './icons.vue?raw'
 import IconsDemo from './icons.vue'
+import TooltipDemoCode from './tooltip.vue?raw'
+import TooltipDemo from './tooltip.vue'
 import ButtonGroupDemoCode from './button-group.vue?raw'
 import ButtonGroupDemo from './button-group.vue'
 import SizeDemoCode from './size.vue?raw'
@@ -31,6 +33,11 @@ const demos = [{
   description: '',
   code: IconsDemoCode,
   component: IconsDemo,
+}, {
+  name: 'Tooltip',
+  description: '',
+  code: TooltipDemoCode,
+  component: TooltipDemo,
 }, {
   name: 'Size',
   description: '',

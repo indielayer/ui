@@ -541,12 +541,14 @@ Buttons allow users to perform actions and make choices with a single click. The
 | size | unknown |  | (from useCommon) |
 | tag | unknown |  |  |
 | to | [String, Object] |  |  |
+| tooltip | String |  |  |
+| tooltipPosition | unknown |  |  |
 | type | unknown |  |  |
 | validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
 
 ### Slots & Events
 - **Slots:**
-  - _(none)_
+  - `tooltip`
 - **Events:**
   - _(none)_
 
@@ -625,6 +627,20 @@ Buttons allow users to perform actions and make choices with a single click. The
   <div class="space-x-4">
     <x-button disabled>Disabled</x-button>
     <x-button loading>Disabled</x-button>
+  </div>
+</template>
+```
+
+#### Tooltip
+```vue
+<template>
+  <div class="flex flex-wrap items-center gap-4">
+    <x-button icon="check" tooltip="Save your changes" />
+    <x-button ghost icon="smile" tooltip="More options" />
+    <x-button icon="heart" tooltip="Favorite" tooltip-position="bottom" />
+    <x-button tooltip="Delete this item" tooltip-position="right">
+      Delete
+    </x-button>
   </div>
 </template>
 ```
@@ -3115,9 +3131,24 @@ const plan = ref('pro')
 
 <template>
   <x-form-group v-model="plan" label="Billing plan">
-    <x-radio-button value="starter" label="Starter" />
-    <x-radio-button value="pro" label="Pro" />
-    <x-radio-button value="team" label="Team" />
+    <x-radio-button
+      size="sm"
+      value="starter"
+      label="Starter"
+      color="primary"
+    />
+    <x-radio-button
+      size="sm"
+      value="pro"
+      label="Pro"
+      color="primary"
+    />
+    <x-radio-button
+      size="sm"
+      value="team"
+      label="Team"
+      color="primary"
+    />
   </x-form-group>
 </template>
 ```
@@ -3132,8 +3163,22 @@ const selected = ref('monthly')
 
 <template>
   <div class="inline-flex gap-2">
-    <x-radio-button v-model="selected" value="monthly" label="Monthly" />
-    <x-radio-button v-model="selected" value="yearly" label="Yearly" />
+    <x-radio-button
+      v-model="selected"
+      value="monthly"
+      label="Monthly"
+      color="primary"
+      light
+      outlined
+    />
+    <x-radio-button
+      v-model="selected"
+      value="yearly"
+      label="Yearly"
+      color="primary"
+      light
+      outlined
+    />
   </div>
 </template>
 ```
@@ -3360,10 +3405,10 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'])
+const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'NON EXISTING'])
 
 const options = ref([
-  { value: 'A', label: 'Option lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum', color: 'bg-red-500' },
+  { value: 'A', label: 'Option lorem ipsum lorem ipsum', color: 'bg-red-500' },
   { value: 'B', label: 'Option B ipsum', color: 'bg-orange-500' },
   { value: 'C', label: 'Option C lorem ipsum', color: 'bg-amber-500' },
   { value: 'D', label: 'D', color: 'bg-yellow-500' },
@@ -4209,7 +4254,7 @@ Tabs are used to navigate through a set of views.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| activateTab | (tab: string \| number) => void; |  |  |
+| activateTab | (tab: string \| number \| null) => void; |  |  |
 | active | string \| number \| undefined; |  |  |
 | align | unknown |  |  |
 | color | string; |  |  |
@@ -4218,10 +4263,12 @@ Tabs are used to navigate through a set of views.
 | ghost | boolean; |  |  |
 | grow | boolean; |  |  |
 | modelValue | [String, Number] |  |  |
+| registerTab | (tab: string \| number) => void; |  |  |
 | size | Size; |  |  |
 | state | unknown |  |  |
 | tabsContentRef | Ref<HTMLElement \| null>; |  |  |
 | type | Boolean |  |  |
+| unregisterTab | (tab: string \| number) => void; |  |  |
 | validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
 | variant | TabGroupVariant; |  |  |
 
@@ -4239,6 +4286,8 @@ import { ref } from 'vue'
 
 const tab = ref('a')
 const linkTab = ref(null)
+const metric = ref('unique')
+const view = ref('grid')
 </script>
 
 <template>
@@ -4366,6 +4415,30 @@ const linkTab = ref(null)
       content e
     </x-tab>
   </x-tab-group>
+
+  <p>Compact</p>
+  <div class="flex gap-4 items-start">
+    <x-tab-group
+      v-model="metric"
+      color="indigo"
+      class="pb-10"
+      variant="compact"
+    >
+      <x-tab value="unique" label="Unique" />
+      <x-tab value="total" label="Total" />
+    </x-tab-group>
+
+    <x-tab-group
+      v-model="view"
+      color="indigo"
+      class="pb-10"
+      size="md"
+      variant="compact"
+    >
+      <x-tab value="grid" icon="sun" tooltip="Grid view" />
+      <x-tab value="list" icon="moon" tooltip="List view" />
+    </x-tab-group>
+  </div>
 
   <p>Automatic link as value</p>
   <x-tab-group v-model="linkTab" class="pb-10" exact>

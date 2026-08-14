@@ -1,5 +1,6 @@
 <script lang="ts">
 import { variantBooleanProps } from '../../common/props'
+import type { ButtonGroupPosition } from '../../common/buttonGroupRadius'
 
 const buttonGroupProps = {
   ...useCommon.props(),
@@ -16,6 +17,10 @@ export type ButtonGroupProps = ExtractPublicPropTypes<typeof buttonGroupProps>
 export type ButtonGroupInjection = {
   groupProps: ButtonGroupProps;
   isButtonGroup: boolean;
+  registerChild: (id: string) => void;
+  unregisterChild: (id: string) => void;
+  getPosition: (id: string) => ButtonGroupPosition;
+  childOrder: ComputedRef<string[]>;
 }
 
 type InternalClasses = 'wrapper'
@@ -31,7 +36,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { provide, type ExtractPublicPropTypes } from 'vue'
+import { provide, ref, computed, type ExtractPublicPropTypes, type ComputedRef } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useCommon } from '../../composables/useCommon'
@@ -42,9 +47,38 @@ import { injectButtonGroupKey } from '../../composables/keys'
 const props = defineProps(buttonGroupProps)
 const resolvedProps = useResolvedComponentProps('ButtonGroup', props)
 
+const childOrder = ref<string[]>([])
+const childOrderReadonly = computed(() => childOrder.value)
+
+function getPosition(id: string): ButtonGroupPosition {
+  const order = childOrderReadonly.value
+  const index = order.indexOf(id)
+
+  if (index === -1 || order.length === 0) return 'only'
+  if (order.length === 1) return 'only'
+  if (index === 0) return 'first'
+  if (index === order.length - 1) return 'last'
+
+  return 'middle'
+}
+
+function registerChild(id: string) {
+  if (!childOrder.value.includes(id)) {
+    childOrder.value = [...childOrder.value, id]
+  }
+}
+
+function unregisterChild(id: string) {
+  childOrder.value = childOrder.value.filter((n) => n !== id)
+}
+
 provide(injectButtonGroupKey, {
   groupProps: props,
   isButtonGroup: true,
+  registerChild,
+  unregisterChild,
+  getPosition,
+  childOrder: childOrderReadonly,
 })
 
 const { className, classes, styles } = useTheme('ButtonGroup', {}, resolvedProps)
@@ -56,33 +90,9 @@ const { className, classes, styles } = useTheme('ButtonGroup', {}, resolvedProps
     :style="styles"
     :class="[
       className,
-      $style['button-group'],
-      resolvedProps.rounded ? $style['button-group--rounded'] : '',
       classes.wrapper
     ]"
   >
     <slot></slot>
   </component>
 </template>
-
-<style module>
-.button-group:not(.button-group--rounded) > :first-child {
-  border-start-start-radius: var(--radius-md);
-  border-end-start-radius: var(--radius-md);
-}
-
-.button-group:not(.button-group--rounded) > :last-child {
-  border-start-end-radius: var(--radius-md);
-  border-end-end-radius: var(--radius-md);
-}
-
-.button-group--rounded > :first-of-type {
-  border-start-start-radius: 9999px;
-  border-end-start-radius: 9999px;
-}
-
-.button-group--rounded > :last-child {
-  border-start-end-radius: 9999px;
-  border-end-end-radius: 9999px;
-}
-</style>
