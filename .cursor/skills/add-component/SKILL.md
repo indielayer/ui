@@ -17,9 +17,14 @@ Create `packages/ui/src/components/<name>/`:
 
 ## Register
 
-1. `packages/ui/src/components/index.ts`
+1. `packages/ui/src/components/index.ts` (or `src/virtual/index.ts`)
 2. `packages/ui/src/themes/base/components.ts`
 3. `packages/ui/src/themes/carbon/components.ts`
+4. `packages/ui/volar.d.ts` — add `X<Name>` to `GlobalComponents` (alphabetical):
+
+```ts
+XRadioButton: typeof import('@indielayer/ui')['XRadioButton']
+```
 
 ## Docs (if user-facing)
 

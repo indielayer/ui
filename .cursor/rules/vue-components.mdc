@@ -1,6 +1,6 @@
 ---
 description: Vue component patterns for @indielayer/ui
-globs: packages/ui/src/components/**/*
+globs: packages/ui/src/components/**/*,packages/ui/src/virtual/**/*,packages/ui/volar.d.ts
 alwaysApply: false
 ---
 
@@ -11,6 +11,13 @@ alwaysApply: false
 - Use `ExtractPublicPropTypes` for public prop types
 - Prefer existing composables: `useTheme`, `useColors`, `useCommon` — read a sibling component before adding new patterns
 - Sub-components live in the same folder with their own theme files
-- Register new components in `src/components/index.ts` and both `src/themes/base/components.ts` and `src/themes/carbon/components.ts`
+- Register every new public `X*` component (including sub-components and `src/virtual/`) in:
+  1. `src/components/index.ts` (or `src/virtual/index.ts`)
+  2. `src/themes/base/components.ts` and `src/themes/carbon/components.ts` (themed components only)
+  3. `packages/ui/volar.d.ts` — add to `GlobalComponents` in alphabetical order:
+
+```ts
+XRadioButton: typeof import('@indielayer/ui')['XRadioButton']
+```
 
 Reference implementation: `packages/ui/src/components/button/`

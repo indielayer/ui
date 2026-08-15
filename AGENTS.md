@@ -68,6 +68,7 @@ pnpm gen:sitemap            # regenerate public/sitemap.xml
 - Commits: [.github/COMMIT_CONVENTION.md](.github/COMMIT_CONVENTION.md)
 - Do not edit `packages/ui/lib/` or other build output
 - User-facing `packages/ui` changes need a changeset: `pnpm changeset`
+- New public `X*` components must be added to `packages/ui/volar.d.ts` (`GlobalComponents`)
 
 ## AI configuration
 
