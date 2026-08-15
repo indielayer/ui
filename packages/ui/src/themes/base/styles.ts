@@ -3,6 +3,7 @@ export default `
   html {
     color: #111827;
     background-color: white;
+    color-scheme: light;
   }
 
   html.dark {
@@ -27,9 +28,7 @@ export default `
   }
 
   .dark {
-    input[type="time"]::-webkit-calendar-picker-indicator{
-      filter: invert(100%);
-    }
+    color-scheme: dark;
   }
 }
 
