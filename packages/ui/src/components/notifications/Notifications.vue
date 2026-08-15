@@ -294,6 +294,7 @@ defineExpose({ log, info, success, warn, warning: warn, error })
       :class="[
         className,
         classes.wrapper,
+        'pointer-events-none',
         {
           // align
           'left-0': internalAlign === 'left',
@@ -310,6 +311,7 @@ defineExpose({ log, info, success, warn, warning: warn, error })
         ]"
         :class="[
           classes.list,
+          'pointer-events-none',
           { 'flex-col-reverse': internalPosition }
         ]"
         enter-active-class="transition ease-out duration-200"
@@ -325,6 +327,7 @@ defineExpose({ log, info, success, warn, warning: warn, error })
           :key="notification.id"
           :class="[
             classes.item,
+            'pointer-events-auto',
             {
               'mb-2': internalPosition === 'bottom',
               'mt-2': internalPosition === 'top',
