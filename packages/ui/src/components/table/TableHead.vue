@@ -2,7 +2,7 @@
 import { optionalBooleanProp } from '../../common/props'
 
 const tableHeadProps = {
-  stickyHeader: optionalBooleanProp(),
+  stickyHeader: optionalBooleanProp('Keeps the header row sticky while the table scrolls.'),
 }
 
 export type TableHeadProps = ExtractPublicPropTypes<typeof tableHeadProps>
@@ -10,7 +10,14 @@ export type TableHeadProps = ExtractPublicPropTypes<typeof tableHeadProps>
 type InternalClasses = 'thead' | 'row'
 export interface TableHeadTheme extends ThemeComponent<TableHeadProps, InternalClasses> {}
 
-export default { name: 'XTableHead' }
+export default {
+  name: 'XTableHead',
+  docs: {
+    slots: {
+      default: 'Header cells (`x-table-header` children).',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

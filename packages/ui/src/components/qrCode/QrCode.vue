@@ -1,21 +1,28 @@
 <script lang="ts">
 const qrCodeProps = {
-  value: String,
+  value: {
+    type: String,
+    description: 'Text or URL encoded in the QR code.',
+  },
   color: {
     type: String,
     default: '#000',
+    description: 'Foreground module color.',
   },
   backgroundColor: {
     type: String,
     default: '#fff',
+    description: 'Background color behind the modules.',
   },
   size: {
     type: [String, Number],
     default: 100,
+    description: 'Rendered size of the QR canvas in pixels.',
   },
   errorCorrectionLevel: {
     type: String,
     default: 'M',
+    description: 'Error correction level (L, M, Q, or H).',
   },
 }
 
@@ -29,6 +36,7 @@ export default {
   validators: {
     errorCorrectionLevel: ['L', 'M', 'Q', 'H'],
   },
+  docs: {},
 }
 </script>
 

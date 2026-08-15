@@ -4,18 +4,21 @@ import { optionalBooleanProp } from '../../common/props'
 const paginationVariant = ['simple', 'quick', 'dots'] as const
 const paginationProps = {
   ...useCommon.props(),
-  links: optionalBooleanProp(),
+  links: optionalBooleanProp('Renders page buttons as links (`?page=` query).'),
   totalPages: {
     type: Number,
     default: 1,
+    description: 'Total number of pages.',
   },
   modelValue: {
     type: Number,
     default: 1,
+    description: 'Current page (v-model).',
   },
   variant: {
     type: String as PropType<PaginationVariant>,
     default: 'simple',
+    description: 'Layout style (simple, quick, or dots).',
   },
 }
 
@@ -30,6 +33,11 @@ export default {
   validators: {
     ...useCommon.validators(),
     variant: paginationVariant,
+  },
+  docs: {
+    emits: {
+      'update:modelValue': 'Emitted when the current page changes (v-model).',
+    },
   },
 }
 </script>

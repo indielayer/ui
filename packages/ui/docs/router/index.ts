@@ -1,8 +1,7 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw, RouterScrollBehavior } from 'vue-router'
 
 // layouts
 import DefaultLayout from '../layouts/default.vue'
-import SimpleLayout from '../layouts/simple.vue'
 
 // help
 import HomePage from '../pages/index.vue'
@@ -14,22 +13,22 @@ import ErrorPage from '../pages/error.vue'
 
 const pages: Record<string, any> = import.meta.glob('../pages/component/*/index.vue', { eager: true })
 
-const componentPages: RouteRecordRaw[] = []
+const componentPages: RouteRecordRaw[] = Object.keys(pages).flatMap((filePath) => {
+  const match = filePath.match(/\/pages\/component\/(.*)\/index\.vue$/)
 
-Object.keys(pages).forEach((path) => {
-  const match = path.match(/\/pages\/component\/(.*)\/index\.vue$/)
+  if (!match) return []
 
-  if (match) {
-    const name = match[1].toLowerCase()
+  const name = match[1]
 
-    componentPages.push({
-      path: name,
-      component: pages[path].default,
-    })
-  }
+  return [{
+    // Absolute child path: nests in DefaultLayout but keeps a root URL.
+    path: `/component/${name}`,
+    name: `component-${name}`,
+    component: pages[filePath].default,
+  }]
 })
 
-const routes: RouteRecordRaw[] = [{
+export const routes: RouteRecordRaw[] = [{
   path: '/',
   component: DefaultLayout,
   children: [{
@@ -51,11 +50,9 @@ const routes: RouteRecordRaw[] = [{
     path: 'colors',
     name: 'colors',
     component: ColorsPage,
-  }, {
-    path: 'component',
-    component: SimpleLayout,
-    children: componentPages,
-  }],
+  },
+  ...componentPages,
+  ],
 }, {
   path: '/play',
   component: PlayPage,
@@ -65,37 +62,35 @@ const routes: RouteRecordRaw[] = [{
   component: ErrorPage,
 }]
 
-const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    const main = document.getElementById('main')
+export const scrollBehavior: RouterScrollBehavior = (to, _from, savedPosition) => {
+  if (typeof document === 'undefined') return { top: 0 }
 
-    if (to.hash) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          const el = document.querySelector(to.hash)
+  const main = document.getElementById('main')
 
-          if (el && main) {
-            const top = (el as HTMLElement).offsetTop - 80
+  if (to.hash) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const el = document.querySelector(to.hash)
 
-            main.scrollTo({ top, behavior: 'smooth' })
-          }
-          resolve({ el: to.hash, behavior: 'smooth', top: 80 })
-        }, 100)
-      })
-    }
+        if (el && main) {
+          const top = (el as HTMLElement).offsetTop - 80
 
-    if (savedPosition) {
-      main?.scrollTo(savedPosition)
+          main.scrollTo({ top, behavior: 'smooth' })
+        }
+        resolve({ el: to.hash, behavior: 'smooth', top: 80 })
+      }, 100)
+    })
+  }
 
-      return savedPosition
-    }
+  if (savedPosition) {
+    main?.scrollTo(savedPosition)
 
-    main?.scrollTo(0, 0)
+    return savedPosition
+  }
 
-    return { top: 0 }
-  },
-})
+  main?.scrollTo(0, 0)
 
-export default router
+  return { top: 0 }
+}
+
+export default routes

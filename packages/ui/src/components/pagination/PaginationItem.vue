@@ -6,9 +6,13 @@ const paginationItemProps = {
   value: {
     type: Number,
     default: 0,
+    description: 'Page number shown on the control.',
   },
-  selected: Boolean,
-  links: optionalBooleanProp(),
+  selected: {
+    type: Boolean,
+    description: 'Marks this page as the current selection.',
+  },
+  links: optionalBooleanProp('Renders as a link to `?page=` instead of a button.'),
 }
 
 export type PaginationItemProps = ExtractPublicPropTypes<typeof paginationItemProps>
@@ -20,6 +24,11 @@ export default {
   name: 'XPaginationItem',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    emits: {
+      input: 'Emitted with the page number when an unselected item is clicked.',
+    },
   },
 }
 </script>

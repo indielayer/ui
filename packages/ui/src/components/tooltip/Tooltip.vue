@@ -3,12 +3,20 @@ const tooltipProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag wrapping the trigger.',
   },
-  tooltip: String,
-  disabled: Boolean,
+  tooltip: {
+    type: String,
+    description: 'Tooltip text shown on hover. Prefer the tooltip slot for custom content.',
+  },
+  disabled: {
+    type: Boolean,
+    description: 'Disables showing the tooltip.',
+  },
   position: {
     type: String as PropType<TooltipPosition>,
     default: 'bottom',
+    description: 'Preferred placement relative to the trigger (top, bottom, left, right).',
   },
 }
 
@@ -19,7 +27,15 @@ export type TooltipProps = ExtractPublicPropTypes<typeof tooltipProps>
 type InternalClasses = 'tooltip'
 export interface TooltipTheme extends ThemeComponent<TooltipProps, InternalClasses> {}
 
-export default { name: 'XTooltip' }
+export default {
+  name: 'XTooltip',
+  docs: {
+    slots: {
+      default: 'Trigger content the tooltip is attached to.',
+      tooltip: 'Custom tooltip content; overrides the `tooltip` prop.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

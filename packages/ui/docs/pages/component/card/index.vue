@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Card'
-const description = 'Cards are used to display content in an organized manner.'
+const description = 'A bordered content container for grouping related information, media, and actions. Use cards in grids and dashboards when each block should stand alone.'
 const components = [XCard]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

@@ -133,7 +133,9 @@ function keydownInput(e: KeyboardEvent) {
   }
 }
 
-const { x: mouseX, y: mouseY } = useMouse({ type: 'page' })
+const { x: mouseX, y: mouseY } = import.meta.env.SSR
+  ? { x: ref(0), y: ref(0) }
+  : useMouse({ type: 'page' })
 
 function hoverResult(e: MouseEvent) {
   if (mouseX.value !== e.x || mouseY.value !== e.y) {
@@ -169,16 +171,14 @@ const metaKey = ref('')
 
 onMounted(() => {
   metaKey.value = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl'
-})
 
-if (document) {
   useEventListener(document, 'keydown', (e: KeyboardEvent) => {
     if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
       e.preventDefault()
       openSearch()
     }
   })
-}
+})
 </script>
 
 <template>

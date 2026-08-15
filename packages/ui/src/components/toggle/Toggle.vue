@@ -6,7 +6,7 @@ const toggleProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  glow: optionalBooleanProp(),
+  glow: optionalBooleanProp('Soft colored glow when the toggle is on.'),
 }
 
 export type ToggleProps = ExtractPublicPropTypes<typeof toggleProps>
@@ -18,6 +18,14 @@ export default {
   name: 'XToggle',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    emits: {
+      ...useInputtable.emitDocs(false),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

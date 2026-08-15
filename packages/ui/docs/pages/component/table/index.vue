@@ -14,22 +14,22 @@ const description = 'Tables display tabular data with single- or multi-column so
 const components = [XTable, XTableBody, XTableCell, XTableHead, XTableHeader, XTableRow]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Selectable',
-  description: '',
+  description: 'Row selection with checkboxes.',
   code: SelectableDemoCode,
   component: SelectableDemo,
 }, {
   name: 'Virtual List',
-  description: '',
+  description: 'Virtualized rows for large datasets.',
   code: VirtualDemoCode,
   component: VirtualDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Loading, empty, and other table states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]

@@ -7,36 +7,85 @@ const menuItemProps = {
   item: {
     type: Object as PropType<MenuArrayItem>,
     default: () => {},
+    description: 'Item data object. Individual props override matching fields.',
   },
-  active: Boolean,
+  active: {
+    type: Boolean,
+    description: 'Forces active styling when not using router link classes.',
+  },
   attrs: {
     type: Object,
     default: () => {},
+    description: 'Extra HTML attributes merged onto the root element.',
   },
-  onClick: Function,
-  value: [Number, String],
-  to: [String, Object],
-  exact: Boolean,
-  href: String,
-  target: String,
-  label: String,
-  icon: String,
-  iconRight: String,
-  loading: Boolean,
+  onClick: {
+    type: Function,
+    description: 'Click handler invoked when the item is activated.',
+  },
+  value: {
+    type: [Number, String],
+    description: 'Item value identifier.',
+  },
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; renders as a router-link when set.',
+  },
+  exact: {
+    type: Boolean,
+    description: 'Requires exact route match for active state.',
+  },
+  href: {
+    type: String,
+    description: 'Native link URL; renders as an anchor when set.',
+  },
+  target: {
+    type: String,
+    description: 'Anchor target when `href` is set.',
+  },
+  label: {
+    type: String,
+    description: 'Visible label text.',
+  },
+  icon: {
+    type: String,
+    description: 'Icon name shown before the label.',
+  },
+  iconRight: {
+    type: String,
+    description: 'Icon name shown after the label.',
+  },
+  loading: {
+    type: Boolean,
+    description: 'Shows a spinner in place of the trailing icon.',
+  },
   rounded: {
     type: Boolean,
     default: true,
+    description: 'Applies rounded corners.',
   },
   filled: {
     type: Boolean,
     default: true,
+    description: 'Filled background style.',
   },
-  selected: Boolean,
-  disabled: Boolean,
-  minimal: optionalBooleanProp(),
-  prefix: String,
-  suffix: String,
-  checkbox: optionalBooleanProp(),
+  selected: {
+    type: Boolean,
+    description: 'Selected visual state.',
+  },
+  disabled: {
+    type: Boolean,
+    description: 'Disables interaction.',
+  },
+  minimal: optionalBooleanProp('Hides the label; icon-only layout.'),
+  prefix: {
+    type: String,
+    description: 'Text before the label when no prefix slot is used.',
+  },
+  suffix: {
+    type: String,
+    description: 'Text after the label when no suffix slot is used.',
+  },
+  checkbox: optionalBooleanProp('Shows a checkbox before the label.'),
 }
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
@@ -49,6 +98,18 @@ export default {
   name: 'XMenuItem',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Label content. Slot prop: item.',
+      prefix: 'Content before the label. Slot prop: item.',
+      suffix: 'Content after the label. Slot prop: item.',
+    },
+    emits: {
+      active: 'Emitted when the item becomes active (route or `active` prop).',
+      click: 'Emitted on item click when not disabled.',
+      'checkbox-click': 'Emitted when the checkbox is clicked.',
+    },
   },
 }
 </script>

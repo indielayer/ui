@@ -1,40 +1,51 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const colorMode = ref('light')
 
-try {
-  const storedMode = localStorage.getItem('color-mode')
+function updateMode() {
+  if (typeof document === 'undefined') return
 
-  if (storedMode) {
-    colorMode.value = storedMode
-  } else {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      colorMode.value = 'dark'
-    }
-  }
-} catch (e) {
-  colorMode.value = 'light'
+  colorMode.value === 'light'
+    ? document.querySelector('html')?.classList.remove('dark')
+    : document.querySelector('html')?.classList.add('dark')
 }
 
-updateMode()
+function readInitialMode() {
+  if (import.meta.env.SSR || typeof localStorage === 'undefined') return 'light'
+
+  try {
+    const storedMode = localStorage.getItem('color-mode')
+
+    if (storedMode) return storedMode
+
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
+      return 'dark'
+    }
+  } catch {
+    // ignore
+  }
+
+  return 'light'
+}
+
+onMounted(() => {
+  colorMode.value = readInitialMode()
+  updateMode()
+})
 
 function toggle() {
   colorMode.value = (colorMode.value === 'light') ? 'dark' : 'light'
 
   updateMode()
 
+  if (import.meta.env.SSR || typeof localStorage === 'undefined') return
+
   try {
     localStorage.setItem('color-mode', colorMode.value)
-  } catch (e) {
+  } catch {
     colorMode.value = 'light'
   }
-}
-
-function updateMode() {
-  colorMode.value === 'light'
-    ? document.querySelector('html')?.classList.remove('dark')
-    : document.querySelector('html')?.classList.add('dark')
 }
 </script>
 

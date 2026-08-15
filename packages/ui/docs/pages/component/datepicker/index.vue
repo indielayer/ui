@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Datepicker'
-const description = 'The datepicker component is used to select a date or time.'
+const description = 'Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it for forms that need calendar or datetime selection with Indielayer look and feel.'
 const components = [XDatepicker]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

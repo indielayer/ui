@@ -12,17 +12,17 @@ const description = 'Input groups combine multiple inline fields (Input, Textare
 const components = [XInputGroup]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Mixed',
-  description: '',
+  description: 'Mixing inputs, selects, and buttons in one group.',
   code: MixedDemoCode,
   component: MixedDemo,
 }, {
   name: 'Validation',
-  description: '',
+  description: 'Shared validation and footer messaging.',
   code: ValidationDemoCode,
   component: ValidationDemo,
 }]

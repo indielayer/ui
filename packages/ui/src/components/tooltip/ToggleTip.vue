@@ -1,12 +1,21 @@
 <script lang="ts">
 const toggleTipProps = {
-  content: String,
-  icon: String,
+  content: {
+    type: String,
+    description: 'HTML or text shown inside the tooltip.',
+  },
+  icon: {
+    type: String,
+    description: 'Icon name for the trigger. Defaults to the info icon.',
+  },
 }
 
 export type ToggleTipProps = ExtractPublicPropTypes<typeof toggleTipProps>
 
-export default { name: 'XToggleTip' }
+export default {
+  name: 'XToggleTip',
+  docs: {},
+}
 </script>
 
 <script setup lang="ts">

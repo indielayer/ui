@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'QR Code'
-const description = 'The QR Code component is used to generate a QR code.'
+const description = 'Renders a QR code from a string or URL for scanning with mobile devices. Use it for share links, payments, and quick machine-readable payloads.'
 const components = [XQrCode]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

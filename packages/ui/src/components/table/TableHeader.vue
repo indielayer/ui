@@ -10,14 +10,19 @@ const tableHeaderProps = {
   sort: {
     type: Number as PropType<TableHeaderSort>,
     validator: (value: number) => validators.sort.includes(value as any),
+    description: 'Current sort direction: `1` ascending, `-1` descending, or unset.',
   },
-  sortable: optionalBooleanProp(),
+  sortable: optionalBooleanProp('Shows the sort icon and enables sort interaction.'),
   textAlign: {
     type: String as PropType<TableHeaderAlign>,
     default: 'left',
     validator: (value: string) => validators.textAlign.includes(value as any),
+    description: 'Horizontal alignment of the header label.',
   },
-  tooltip: String,
+  tooltip: {
+    type: String,
+    description: 'Optional tooltip shown next to the header label.',
+  },
 }
 
 export type TableHeaderSort = typeof validators.sort[number]
@@ -27,7 +32,15 @@ export type TableHeaderProps = ExtractPublicPropTypes<typeof tableHeaderProps>
 type InternalClasses = 'th' | 'sortIcon' | 'header'
 export interface TableHeaderTheme extends ThemeComponent<TableHeaderProps, InternalClasses> {}
 
-export default { name: 'XTableHeader', validators }
+export default {
+  name: 'XTableHeader',
+  validators,
+  docs: {
+    slots: {
+      default: 'Header label content.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

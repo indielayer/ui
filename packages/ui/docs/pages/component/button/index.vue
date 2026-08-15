@@ -16,41 +16,41 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Button'
-const description = 'Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.'
+const description = 'Clickable controls for primary actions—submit, open dialogs, or run commands. Customize style, size, and icons; group related actions with x-button-group.'
 const components = [XButton, XButtonGroup]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }, {
   name: 'Icons',
-  description: '',
+  description: 'Leading, trailing, and icon-only buttons.',
   code: IconsDemoCode,
   component: IconsDemo,
 }, {
   name: 'Tooltip',
-  description: '',
+  description: 'Buttons with hover tooltips.',
   code: TooltipDemoCode,
   component: TooltipDemo,
 }, {
   name: 'Size',
-  description: '',
+  description: 'Size options from xs to lg.',
   code: SizeDemoCode,
   component: SizeDemo,
 }, {
   name: 'Button Group',
-  description: '',
+  description: 'Joined buttons sharing a common group layout.',
   code: ButtonGroupDemoCode,
   component: ButtonGroupDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]

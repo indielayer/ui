@@ -5,6 +5,7 @@ const formGroupProps = {
   vertical: {
     type: Boolean,
     default: false,
+    description: 'Stacks child controls vertically instead of in a row.',
   },
 }
 
@@ -34,6 +35,17 @@ export interface FormGroupTheme extends ThemeComponent<FormGroupProps, InternalC
 
 export default {
   name: 'XFormGroup',
+  docs: {
+    slots: {
+      default: 'Grouped inputs (radios, checkboxes, radio buttons, etc.).',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
+  },
 }
 </script>
 

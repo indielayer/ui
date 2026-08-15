@@ -1,11 +1,17 @@
 {
-  "framework": "vite",
-  "devCommand": "pnpm dev",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build:docs",
   "outputDirectory": "packages/ui/dist",
+  "installCommand": "pnpm install",
+  "trailingSlash": false,
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/play",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/play/(.*)",
       "destination": "/index.html"
     }
   ]

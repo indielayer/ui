@@ -97,7 +97,9 @@ export function useFocusTrap() {
   }
 
   function clearFocusTrap(options?: { returnFocus?: boolean; }) {
-    document.removeEventListener('keydown', handleKeydown)
+    if (typeof document !== 'undefined') {
+      document.removeEventListener('keydown', handleKeydown)
+    }
     observer?.disconnect()
     observer = null
     if (options?.returnFocus && prevActiveElement) {

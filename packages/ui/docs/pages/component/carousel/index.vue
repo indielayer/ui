@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Carousel'
-const description = 'A carousel is a rotating set of images.'
+const description = 'A sliding viewport for cycling through images or content panels. Use carousels for galleries and featured items when horizontal space is limited.'
 const components = [XCarousel]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

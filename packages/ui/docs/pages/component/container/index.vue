@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Container'
-const description = 'Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.'
+const description = 'Layout wrapper that constrains content width and alignment for consistent page structure. Use containers to center and pad main content across breakpoints.'
 const components = [XContainer]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

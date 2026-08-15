@@ -6,16 +6,16 @@ import DynamicHeightDemoCode from './dynamicHeight.vue?raw'
 import DynamicHeightDemo from './dynamicHeight.vue'
 
 const title = 'VirtualList'
-const description = 'VirtualList is a component that allows you to render a list of items in a virtualized way. It is a high-performance component that is used to render large lists of items.'
+const description = 'Renders only visible rows of a long list for better scroll performance. Use VirtualList for feeds and catalogs with thousands of items.'
 const components = [XVirtualList]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Dynamic Height',
-  description: '',
+  description: 'Rows with variable heights while scrolling.',
   code: DynamicHeightDemoCode,
   component: DynamicHeightDemo,
 }]

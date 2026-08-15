@@ -11,11 +11,13 @@ const skeletonProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
   shape: {
     type: String as PropType<SkeletonShape>,
     default: 'line',
     validator: (val: SkeletonShape) => validators.shape.includes(val),
+    description: 'Placeholder shape (line or circle).',
   },
 }
 
@@ -27,6 +29,7 @@ export interface SkeletonTheme extends ThemeComponent<SkeletonProps, InternalCla
 export default {
   name: 'XSkeleton',
   validators,
+  docs: {},
 }
 </script>
 

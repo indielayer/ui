@@ -5,8 +5,9 @@ const cardProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
-  flat: optionalBooleanProp(),
+  flat: optionalBooleanProp('Removes elevation and border emphasis.'),
 }
 
 export type CardProps = ExtractPublicPropTypes<typeof cardProps>
@@ -14,7 +15,14 @@ export type CardProps = ExtractPublicPropTypes<typeof cardProps>
 type InternalClasses = 'wrapper'
 export interface CardTheme extends ThemeComponent<CardProps, InternalClasses> {}
 
-export default { name: 'XCard' }
+export default {
+  name: 'XCard',
+  docs: {
+    slots: {
+      default: 'Card content.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

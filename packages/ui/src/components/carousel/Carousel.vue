@@ -6,20 +6,26 @@ const carouselEffects = ['slide'] as const
 export type CarouselEffect = typeof carouselEffects[number]
 
 const carouselProps = {
-  autoplay: optionalBooleanProp(),
+  autoplay: optionalBooleanProp('Advances slides automatically.'),
   delay: {
     type: Number,
     default: 5000,
+    description: 'Autoplay interval in milliseconds.',
   },
   showDots: {
     type: Boolean,
     default: true,
+    description: 'Shows pagination dots under the slides.',
   },
   effect: {
     type: String as PropType<CarouselEffect>,
     default: 'slide',
+    description: 'Transition effect between slides.',
   },
-  classDots: [Array, String],
+  classDots: {
+    type: [Array, String],
+    description: 'Extra class(es) on the default dots container.',
+  },
 }
 
 export type CarouselProps = ExtractPublicPropTypes<typeof carouselProps>
@@ -34,6 +40,20 @@ export interface CarouselTheme extends ThemeComponent<CarouselProps, InternalCla
 export default {
   name: 'XCarousel',
   validators: {},
+  docs: {
+    slots: {
+      default: 'Slides (typically x-carousel-slide). Slot props: to, next, prev, current, total.',
+      dots: 'Custom pagination dots. Slot props: to, next, prev, current, total.',
+    },
+    emits: {
+      update: 'Emitted when the current slide index changes.',
+    },
+    methods: {
+      to: 'Go to a slide by zero-based index.',
+      next: 'Go to the next slide (wraps to the first).',
+      prev: 'Go to the previous slide (wraps to the last).',
+    },
+  },
 }
 </script>
 

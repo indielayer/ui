@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Drawer'
-const description = 'Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.'
+const description = 'Panels that slide in from the screen edge for navigation, filters, or extra content. Use drawers when side context should overlay without leaving the page.'
 const components = [XDrawer]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

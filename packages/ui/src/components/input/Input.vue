@@ -9,27 +9,57 @@ const inputProps = {
   showPasswordToggle: {
     type: Boolean,
     default: true,
+    description: 'Shows a visibility toggle when `type` is `password`.',
   },
   dir: {
     type: String as PropType<'ltr' | 'rtl'>,
     default: 'ltr',
+    description: 'Text direction for the native input (`ltr` or `rtl`).',
   },
-  icon: String,
-  iconLeft: String,
-  iconRight: String,
-  max: [Number, String],
-  maxlength: [Number, String],
-  min: [Number, String],
-  minlength: [Number, String],
-  placeholder: String,
+  icon: {
+    type: String,
+    description: 'Shortcut for `iconLeft`.',
+  },
+  iconLeft: {
+    type: String,
+    description: 'Icon name shown before the input value.',
+  },
+  iconRight: {
+    type: String,
+    description: 'Icon name shown after the input value.',
+  },
+  max: {
+    type: [Number, String],
+    description: 'Native `max` attribute (typically for number inputs).',
+  },
+  maxlength: {
+    type: [Number, String],
+    description: 'Maximum character length for the input value.',
+  },
+  min: {
+    type: [Number, String],
+    description: 'Native `min` attribute (typically for number inputs).',
+  },
+  minlength: {
+    type: [Number, String],
+    description: 'Minimum character length for the input value.',
+  },
+  placeholder: {
+    type: String,
+    description: 'Placeholder text shown when the value is empty.',
+  },
   type: {
     type: String,
     default: 'text',
+    description: 'Native input type (text, password, email, number, etc.).',
   },
-  step: [Number, String],
-  block: optionalBooleanProp(),
-  showCounter: optionalBooleanProp(),
-  clearable: optionalBooleanProp(),
+  step: {
+    type: [Number, String],
+    description: 'Native `step` attribute for numeric inputs.',
+  },
+  block: optionalBooleanProp('Stretches to the full width of the parent.'),
+  showCounter: optionalBooleanProp('Shows a character counter in the footer.'),
+  clearable: optionalBooleanProp('Shows a clear button when the value is not empty.'),
 }
 
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
@@ -42,6 +72,18 @@ export default {
   name: 'XInput',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      prefix: 'Content before the input (left adornment).',
+      suffix: 'Content after the input (right adornment).',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

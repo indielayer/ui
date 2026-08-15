@@ -7,13 +7,20 @@ const tagProps = {
   tag: {
     type: String,
     default: 'span',
+    description: 'Root element tag. Becomes an anchor or router-link when `href` or `to` is set.',
   },
-  rounded: optionalBooleanProp(),
-  removable: optionalBooleanProp(),
-  outlined: optionalBooleanProp(),
-  filled: optionalBooleanProp(),
-  disabled: Boolean,
-  to: [String, Object],
+  rounded: optionalBooleanProp('Fully rounded corners (pill shape).'),
+  removable: optionalBooleanProp('Shows a remove control that emits `remove`.'),
+  outlined: optionalBooleanProp('Outline style with a transparent fill.'),
+  filled: optionalBooleanProp('Filled style using the theme color.'),
+  disabled: {
+    type: Boolean,
+    description: 'Disables the remove control and applies disabled styling.',
+  },
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; renders as a link when set.',
+  },
 }
 
 export type TagProps = ExtractPublicPropTypes<typeof tagProps>
@@ -25,6 +32,15 @@ export default {
   name: 'XTag',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Tag label and content.',
+      prefix: 'Content shown before the label.',
+    },
+    emits: {
+      remove: 'Emitted when the remove icon is clicked.',
+    },
   },
 }
 </script>

@@ -4,9 +4,16 @@ const loaderProps = {
   status: {
     type: String as PropType<LoaderStatus>,
     default: 'active',
+    description: 'Visual status (active spinner, success, or error).',
   },
-  icon: String,
-  label: String,
+  icon: {
+    type: String,
+    description: 'Custom spinner icon when status is `active`.',
+  },
+  label: {
+    type: String,
+    description: 'Optional text shown next to the status icon.',
+  },
 }
 
 export type LoaderStatus = 'active' | 'success' | 'error'
@@ -21,6 +28,7 @@ export default {
     ...useCommon.validators(),
     status: ['active', 'success', 'error'],
   },
+  docs: {},
 }
 </script>
 

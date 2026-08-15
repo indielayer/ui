@@ -2,11 +2,23 @@
 import { optionalBooleanProp } from '../../common/props'
 
 const inputFooterProps = {
-  helper: String,
-  error: String,
-  characterCount: Number,
-  maxCharacters: [Number, String],
-  showCounter: optionalBooleanProp(),
+  helper: {
+    type: String,
+    description: 'Helper text shown when there is no error.',
+  },
+  error: {
+    type: String,
+    description: 'Error message; takes priority over helper text.',
+  },
+  characterCount: {
+    type: Number,
+    description: 'Current character count for the counter.',
+  },
+  maxCharacters: {
+    type: [Number, String],
+    description: 'Maximum characters shown as `count/max` in the counter.',
+  },
+  showCounter: optionalBooleanProp('Shows the character counter.'),
 }
 
 export type InputFooterProps = ExtractPublicPropTypes<typeof inputFooterProps>
@@ -14,7 +26,10 @@ export type InputFooterProps = ExtractPublicPropTypes<typeof inputFooterProps>
 type InternalClasses = 'wrapper' | 'helperText' | 'errorText' | 'container' | 'counter'
 export interface InputFooterTheme extends ThemeComponent<InputFooterProps, InternalClasses> {}
 
-export default { name: 'XInputFooter' }
+export default {
+  name: 'XInputFooter',
+  docs: {},
+}
 </script>
 
 <script setup lang="ts">

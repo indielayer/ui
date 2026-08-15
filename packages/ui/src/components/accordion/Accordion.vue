@@ -5,15 +5,26 @@ const accordionProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
-  disabled: Boolean,
-  expanded: optionalBooleanProp(),
+  disabled: {
+    type: Boolean,
+    description: 'Disables all accordion items when set.',
+  },
+  expanded: optionalBooleanProp('Default expanded state passed to child items.'),
   showIcon: {
     type: Boolean,
     default: true,
+    description: 'Shows the expand/collapse icon on child items.',
   },
-  icon: String,
-  iconAlign: String as PropType<AccordionItemAlign>,
+  icon: {
+    type: String,
+    description: 'Default expand/collapse icon name for child items.',
+  },
+  iconAlign: {
+    type: String as PropType<AccordionItemAlign>,
+    description: 'Default icon alignment for child items (left or right).',
+  },
 }
 
 export type AccordionProps = ExtractPublicPropTypes<typeof accordionProps>
@@ -28,6 +39,11 @@ export interface AccordionTheme extends ThemeComponent<AccordionProps, InternalC
 export default {
   name: 'XAccordion',
   validators: {},
+  docs: {
+    slots: {
+      default: 'Accordion items (typically x-accordion-item children).',
+    },
+  },
 }
 </script>
 

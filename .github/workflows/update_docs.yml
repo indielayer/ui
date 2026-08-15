@@ -28,9 +28,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install --ignore-scripts
 
-      - name: Build documentation
+      - name: Build documentation (vite-ssg)
+        run: pnpm run build:docs
+
+      - name: Smoke-check prerendered docs
+        run: bash .scripts/docs-ssg-smoke.sh
+
+      - name: Add GitHub Pages SPA fallback
         run: |
-          pnpm run build:docs
+          # Unknown paths (e.g. /play) fall back to the app shell for client routing.
           cp ./packages/ui/dist/index.html ./packages/ui/dist/404.html
 
       - name: Update pages

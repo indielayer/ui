@@ -5,31 +5,38 @@ const notificationsProps = {
     type: String as PropType<NotificationsAlign>,
     default: 'right',
     validator: (value: string) => validators.align.includes(value as NotificationsAlign),
+    description: 'Horizontal placement of the toast stack (left or right).',
   },
   position: {
     type: String as PropType<NotificationsPosition>,
     default: 'bottom',
     validator: (value: string) => validators.position.includes(value as NotificationsPosition),
+    description: 'Vertical placement of the toast stack (top or bottom).',
   },
   timeout: {
     type: Number,
     default: 3500,
+    description: 'Default auto-dismiss delay in milliseconds. Set 0 to keep until removed.',
   },
   removable: {
     type: Boolean,
     default: true,
+    description: 'Shows a dismiss control on each notification by default.',
   },
   pauseOnHover: {
     type: Boolean,
     default: true,
+    description: 'Pauses the dismiss timer while the pointer hovers a notification.',
   },
   injectKey: {
     type: [Symbol, String],
     default: injectNotificationKey,
+    description: 'Provide/inject key for notification helpers (log, info, success, warn, error).',
   },
   offset: {
     type: [String, Number],
     default: 0,
+    description: 'Extra inset from the viewport edge in pixels.',
   },
 }
 
@@ -78,6 +85,19 @@ export interface NotificationsTheme extends ThemeComponent<NotificationsProps, I
 export default {
   name: 'XNotifications',
   validators,
+  docs: {
+    slots: {
+      default: 'App content that can inject notification helpers.',
+    },
+    methods: {
+      log: 'Show a plain notification.',
+      info: 'Show an info-styled notification.',
+      success: 'Show a success-styled notification.',
+      warn: 'Show a warning-styled notification.',
+      warning: 'Alias of `warn`.',
+      error: 'Show an error-styled notification.',
+    },
+  },
 }
 </script>
 

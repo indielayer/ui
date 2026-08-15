@@ -31,6 +31,16 @@ fs.writeFileSync('./docs/search/components.json', JSON.stringify(components))
 fs.writeFileSync('./docs/search/index.json', JSON.stringify(index))
 console.log(`search index updated (${components.length} components, ${GUIDES.length} guides)`)
 
+function extractQuoted(source, name) {
+  const double = source.match(new RegExp(`const ${name} = "([^"]*)"`))
+  if (double) return double[1]
+
+  const single = source.match(new RegExp(String.raw`const ${name} = '((?:\\'|[^'])*)'`))
+  if (!single) return null
+
+  return single[1].replace(/\\'/g, "'").replace(/\\n/g, ' ')
+}
+
 function createComponentIndex(filesToFetch) {
   const collection = []
 
@@ -38,10 +48,8 @@ function createComponentIndex(filesToFetch) {
     const fileRead = fs.readFileSync(doc, { encoding: 'utf8' })
 
     if (doc.includes('index.vue')) {
-      const titleMatch = fileRead.match(/const title = '([^']*)'/)
-      const descriptionMatch = fileRead.match(/const description = '([^']*)'/)
-      const title = titleMatch ? titleMatch[1] : null
-      const description = descriptionMatch ? descriptionMatch[1] : null
+      const title = extractQuoted(fileRead, 'title')
+      const description = extractQuoted(fileRead, 'description')
 
       if (title && description) {
         collection.push({

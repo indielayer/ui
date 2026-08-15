@@ -15,7 +15,8 @@ From the repo root:
 pnpm i
 pnpm dev                    # docs + component dev (packages/ui)
 pnpm lint:ui && pnpm typecheck && pnpm test:ci   # required before UI PRs
-pnpm build:docs             # production docs build
+pnpm build:docs             # production docs build (vite-ssg prerender)
+# after build:docs, optional: bash .scripts/docs-ssg-smoke.sh
 pnpm changeset              # user-facing library changes (before merge)
 ```
 

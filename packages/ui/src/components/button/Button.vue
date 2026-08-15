@@ -9,19 +9,37 @@ const buttonProps = {
   tag: {
     type: String,
     default: 'button',
+    description: 'Root element tag. Becomes a router-link when `to` is set.',
   },
   type: {
     type: String,
     default: 'button',
+    description: 'Native button type when `tag` is `button` (button, submit, reset).',
   },
-  icon: String,
-  iconLeft: String,
-  iconRight: String,
-  to: [String, Object],
-  tooltip: String,
+  icon: {
+    type: String,
+    description: 'Shortcut for `iconLeft`.',
+  },
+  iconLeft: {
+    type: String,
+    description: 'Icon name shown before the label.',
+  },
+  iconRight: {
+    type: String,
+    description: 'Icon name shown after the label.',
+  },
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; renders as a link when set.',
+  },
+  tooltip: {
+    type: String,
+    description: 'Tooltip text shown on hover. Prefer the tooltip slot for custom content.',
+  },
   tooltipPosition: {
     type: String as PropType<TooltipPosition>,
     default: 'top',
+    description: 'Tooltip placement relative to the button.',
   },
 }
 
@@ -41,6 +59,16 @@ export default {
   name: 'XButton',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Button label and content.',
+      tooltip: 'Custom tooltip content; overrides the `tooltip` prop.',
+    },
+    methods: {
+      focus: 'Focus the underlying control.',
+      blur: 'Remove focus from the underlying control.',
+    },
   },
 }
 </script>

@@ -6,16 +6,16 @@ import ComposableDemoCode from './composable.vue?raw'
 import ComposableDemo from './composable.vue'
 
 const title = 'InfiniteLoader'
-const description = 'InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.'
+const description = 'Loads more list items as the user scrolls near the end of a container. Use InfiniteLoader for feeds and catalogs that grow on demand.'
 const components = [XInfiniteLoader]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Scroll to load more items as you reach the end.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Composable',
-  description: '',
+  description: 'Using the infinite-loader composable API.',
   code: ComposableDemoCode,
   component: ComposableDemo,
 }]

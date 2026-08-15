@@ -3,6 +3,7 @@ const carouselSlideProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
 }
 
@@ -13,6 +14,11 @@ export interface CarouselSlideTheme extends ThemeComponent<CarouselSlideProps, I
 
 export default {
   name: 'XCarouselSlide',
+  docs: {
+    slots: {
+      default: 'Slide content.',
+    },
+  },
 }
 </script>
 

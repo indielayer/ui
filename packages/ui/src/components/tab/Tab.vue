@@ -6,25 +6,47 @@ const tabProps = {
   size: {
     type: String as PropType<Size>,
     validator: (value: string) => useCommon.validators().size.includes(value),
+    description: 'Tab size. Falls back to the parent tab group size when omitted.',
   },
   value: {
     type: [String, Number],
+    description: 'Value used to select this tab in the group.',
   },
   tag: {
     type: String,
     default: 'button',
+    description: 'Root element tag when not using `to`.',
   },
-  to: [String, Object],
-  label: String,
-  icon: String,
-  tooltip: String,
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; renders as a link when set.',
+  },
+  label: {
+    type: String,
+    description: 'Visible label. Defaults to `value` when omitted.',
+  },
+  icon: {
+    type: String,
+    description: 'Icon name shown before the label.',
+  },
+  tooltip: {
+    type: String,
+    description: 'Tooltip text. Prefer the tooltip slot for custom content.',
+  },
   tooltipPosition: {
     type: String as PropType<TooltipPosition>,
     default: 'top',
+    description: 'Tooltip placement relative to the tab.',
   },
-  disabled: Boolean,
-  exact: Boolean,
-  removable: optionalBooleanProp(),
+  disabled: {
+    type: Boolean,
+    description: 'Prevents selecting this tab.',
+  },
+  exact: {
+    type: Boolean,
+    description: 'Requires exact route match when using `to`.',
+  },
+  removable: optionalBooleanProp('Shows a remove control that emits `remove`.'),
 }
 
 export type TabProps = ExtractPublicPropTypes<typeof tabProps>
@@ -40,6 +62,16 @@ export default {
   name: 'XTab',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Tab panel content shown when this tab is selected.',
+      tab: 'Custom tab trigger content. Slot props: label, value, size, icon.',
+      tooltip: 'Custom tooltip content; overrides the `tooltip` prop.',
+    },
+    emits: {
+      remove: 'Emitted when the remove control is clicked.',
+    },
   },
 }
 </script>

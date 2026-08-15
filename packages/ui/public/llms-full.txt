@@ -80,7 +80,7 @@ This will launch the official Indielayer UI project scaffolding tool, with promp
 ## Features
 
 - 50+ accessible, customizable UI components
-- Tailwind CSS v3 preset and theme integration
+- Tailwind CSS v4 theme tokens (`@indielayer/ui/tailwind.css`)
 - Vue 3 and Nuxt 3 support
 - Tree-shakable: import only what you need
 - Dark mode support
@@ -204,7 +204,7 @@ app.use(UI, {
 
 ### Colors
 
-Override CSS variables or Tailwind `@theme` tokens. See the [Colors](/colors) guide on the docs site.
+Override CSS variables or Tailwind `@theme` tokens. See the [Colors](https://indielayer.com/colors) guide on the docs site.
 
 ### Icons
 
@@ -236,23 +236,22 @@ Indielayer UI ships with a default icon set. Use `icon`, `icon-left`, or `icon-r
 # Components Full Reference
 
 ## Accordion
-Accordion is a component that allows you to collapse and expand content.
+Collapsible panels for showing and hiding related content. Use x-accordion with x-accordion-item when space is limited and users need progressive disclosure.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| disabled | Boolean |  |  |
-| expanded | Boolean |  |  |
-| icon | String |  |  |
-| iconAlign | String as PropType<AccordionItemAlign> |  |  |
-| showIcon | unknown |  |  |
-| tag | unknown |  |  |
-| type | Boolean |  |  |
+| disabled | Boolean |  | Disables all accordion items when set. |
+| expanded | Boolean |  | Default expanded state passed to child items. |
+| icon | String |  | Default expand/collapse icon name for child items. |
+| iconAlign | String AccordionItemAlign |  | Default icon alignment for child items (left or right). |
+| showIcon | Boolean | true | Shows the expand/collapse icon on child items. |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Accordion items (typically x-accordion-item children).
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -296,22 +295,25 @@ function onChange(expanded: boolean) {
 ```
 ---
 ## Alert
-Alerts are used to communicate a state that affects a system, feature or page.
+Inline notices for system, feature, or page status—success, warning, error, or info. Use alerts when the message should stay visible until addressed.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| closeLabel | String |  |  |
-| glow | Boolean |  |  |
-| light | Boolean |  |  |
-| outlined | Boolean |  |  |
-| removable | Boolean |  |  |
+| closeLabel | String |  | Accessible label for the remove button. |
+| color | String |  | Theme or CSS color used for the control accents. |
+| glow | Boolean |  | Soft colored glow behind the alert. |
+| light | Boolean |  | Tinted background using the color at low opacity. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| removable | Boolean |  | Shows a close control that emits `remove`. |
+| type | String AlertType |  | Semantic alert type (info, success, error, warning). Controls the default icon. |
 
-### Slots & Events
-- **Slots:**
-  - `icon`
-  - `removeIcon`
-- **Events:**
-  - `remove`
+### Slots
+- `default`: Alert message content.
+- `icon`: Custom icon; overrides the type-based icon.
+- `removeIcon`: Custom icon for the remove button.
+
+### Events
+- `remove`: Emitted when the remove button is clicked.
 
 ### Demos
 #### Usage
@@ -337,26 +339,25 @@ Alerts are used to communicate a state that affects a system, feature or page.
 ```
 ---
 ## Avatar
-Avatars are used to represent a user.
+Displays a user's photo, initials, or icon in a compact frame. Use avatars in lists, headers, and comments to identify people at a glance.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| alt | String |  |  |
-| color | string | primary | (from useColors) |
-| image | String |  |  |
-| name | String |  |  |
-| outlined | Boolean |  |  |
-| rounded | Boolean |  |  |
-| size | unknown |  | (from useCommon) |
-| tag | unknown |  |  |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| alt | String |  | Alt text for the image when `image` is set. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| image | String |  | Image URL. Falls back to initials or the avatar icon if unloadable. |
+| name | String |  | Display name used to derive initials when no image is loaded. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| rounded | Boolean |  | Fully rounded corners (circle). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `avatarIcon`: Fallback icon when no name or image is available.
+- `default`
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -398,29 +399,28 @@ Avatars are used to represent a user.
 ```
 ---
 ## Badge
-Badges are used to display a small amount of information.
+Small status indicators that overlay or sit beside another element—counts, labels, or presence dots. Use badges to draw attention without interrupting the layout.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| align | unknown |  |  |
-| animated | Boolean |  |  |
-| color | string | primary | (from useColors) |
-| icon | String |  |  |
-| offsetX | [Number, String] |  |  |
-| offsetY | [Number, String] |  |  |
-| outlined | Boolean |  |  |
-| position | unknown |  |  |
-| show | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| tag | unknown |  |  |
-| type | Boolean |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| align | String BadgeAlign | right | Horizontal placement of the badge relative to the content (left, right). |
+| animated | Boolean |  | Adds a ping animation around the badge. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| icon | String |  | Icon name for the badge indicator. Prefer the content slot for custom content. |
+| offsetX | [Number, String] |  | Horizontal offset in pixels from the aligned edge. |
+| offsetY | [Number, String] |  | Vertical offset in pixels from the positioned edge. |
+| outlined | Boolean |  | Adds a border around the badge. |
+| position | String BadgePosition | top | Vertical placement of the badge relative to the content (top, bottom). |
+| show | Boolean | true | Controls whether the badge indicator is visible. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - `content`
-- **Events:**
-  - _(none)_
+### Slots
+- `content`: Badge label or custom indicator content.
+- `default`: Content the badge is attached to.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -478,22 +478,22 @@ Badges are used to display a small amount of information.
 ```
 ---
 ## Breadcrumbs
-Breadcrumbs are used to indicate the current page\
+Shows the current page's place in a navigational hierarchy. Use breadcrumbs for deep page trees so users can jump back to parent sections.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| icon | String |  |  |
-| items | Array as PropType<BreadcrumbsItem[]> |  |  |
-| label | string; |  |  |
-| separator | unknown |  |  |
-| shadow | Boolean |  |  |
-| underline | Boolean |  |  |
+| color | String |  | Theme or CSS color used for the control accents. |
+| icon | String |  | Icon name used as the separator between items. |
+| items | Array BreadcrumbsItem[] |  | Breadcrumb items with label and optional to, href, icon, and style overrides. |
+| separator | String | / | Text separator between items when `icon` is not set. |
+| shadow | Boolean |  | Applies the link shadow style to items. |
+| underline | Boolean |  | Underlines item links. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -520,37 +520,42 @@ const breadcrumbs = [
 ```
 ---
 ## Button
-Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.
+Clickable controls for primary actions—submit, open dialogs, or run commands. Customize style, size, and icons; group related actions with x-button-group.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| block | Boolean |  | (from variantBooleanProps) |
-| disabled | Boolean |  | (from useInteractive) |
-| flat | Boolean |  | (from variantBooleanProps) |
-| ghost | Boolean |  | (from variantBooleanProps) |
-| glow | Boolean |  | (from variantBooleanProps) |
-| icon | String |  |  |
-| iconLeft | String |  |  |
-| iconRight | String |  |  |
-| light | Boolean |  | (from variantBooleanProps) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| outlined | Boolean |  | (from variantBooleanProps) |
-| rounded | Boolean |  | (from variantBooleanProps) |
-| size | unknown |  | (from useCommon) |
-| tag | unknown |  |  |
-| to | [String, Object] |  |  |
-| tooltip | String |  |  |
-| tooltipPosition | unknown |  |  |
-| type | unknown |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| block | Boolean |  | Stretches to the full width of the parent. |
+| color | String |  | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| flat | Boolean |  | Removes elevation and border emphasis. |
+| ghost | Boolean |  | Minimal style with no background until hover. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| icon | String |  | Shortcut for `iconLeft`. |
+| iconLeft | String |  | Icon name shown before the label. |
+| iconRight | String |  | Icon name shown after the label. |
+| light | Boolean |  | Tinted background using the color at low opacity. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| rounded | Boolean |  | Fully rounded corners (pill shape). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | button | Root element tag. Becomes a router-link when `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
+| tooltip | String |  | Tooltip text shown on hover. Prefer the tooltip slot for custom content. |
+| tooltipPosition | String TooltipPosition | top | Tooltip placement relative to the button. |
+| type | String | button | Native button type when `tag` is `button` (button, submit, reset). |
 
-### Slots & Events
-- **Slots:**
-  - `tooltip`
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Button label and content.
+- `tooltip`: Custom tooltip content; overrides the `tooltip` prop.
+
+### Events
+- _(none)_
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
 
 ### Demos
 #### Usage
@@ -657,18 +662,18 @@ Buttons allow users to perform actions and make choices with a single click. The
 ```
 ---
 ## Card
-Cards are used to display content in an organized manner.
+A bordered content container for grouping related information, media, and actions. Use cards in grids and dashboards when each block should stand alone.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| flat | Boolean |  |  |
-| tag | unknown |  |  |
+| flat | Boolean |  | Removes elevation and border emphasis. |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Card content.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -682,22 +687,27 @@ Cards are used to display content in an organized manner.
 ```
 ---
 ## Carousel
-A carousel is a rotating set of images.
+A sliding viewport for cycling through images or content panels. Use carousels for galleries and featured items when horizontal space is limited.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| autoplay | Boolean |  |  |
-| classDots | [Array, String] |  |  |
-| delay | unknown |  |  |
-| effect | unknown |  |  |
-| showDots | unknown |  |  |
-| type | Boolean |  |  |
+| autoplay | Boolean |  | Advances slides automatically. |
+| classDots | [Array, String] |  | Extra class(es) on the default dots container. |
+| delay | Number | 5000 | Autoplay interval in milliseconds. |
+| effect | String CarouselEffect | slide | Transition effect between slides. |
+| showDots | Boolean | true | Shows pagination dots under the slides. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `update`
+### Slots
+- `default`: Slides (typically x-carousel-slide). Slot props: to, next, prev, current, total.
+- `dots`: Custom pagination dots. Slot props: to, next, prev, current, total.
+
+### Events
+- `update`: Emitted when the current slide index changes.
+
+### Methods
+- `next`: Go to the next slide (wraps to the first).
+- `prev`: Go to the previous slide (wraps to the last).
+- `to`: Go to a slide by zero-based index.
 
 ### Demos
 #### Usage
@@ -715,44 +725,47 @@ A carousel is a rotating set of images.
 ```
 ---
 ## Checkbox
-Checkboxes enable users to select one or multiple options from a list. They are ideal for toggling settings or making selections where more than one choice is allowed. Each checkbox can be checked or unchecked independently.
+Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | primary | (from useColors) |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| glow | Boolean |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| indeterminate | Boolean |  |  |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| value | [String, Number] |  |  |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| indeterminate | Boolean |  | Shows an indeterminate (mixed) check state. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| value | [String, Number] |  | Value used when the checkbox is inside an x-form-group (array selection). |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`: Label content when the `label` prop is not set.
+- `icon`: Custom checked-state icon.
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `toggle`: Toggle the checked state (no-op when disabled, loading, or readonly).
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -806,19 +819,18 @@ const checked = ref(true)
 ```
 ---
 ## Container
-Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.
+Layout wrapper that constrains content width and alignment for consistent page structure. Use containers to center and pad main content across breakpoints.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| fluid | unknown |  |  |
-| tag | unknown |  |  |
-| type | Boolean |  |  |
+| fluid | Boolean | false | Removes max-width constraints so the container spans the full parent width. |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Container content.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -829,140 +841,143 @@ Containers provide a flexible layout element for grouping and organizing content
 ```
 ---
 ## Datepicker
-The datepicker component is used to select a date or time.
+Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it for forms that need calendar or datetime selection with Indielayer look and feel.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| actionRow | Object Partial<any> | [] |  |
-| allowedDates | Array string[]  \|  Date[] | null |  |
-| altPosition | Function VueDatePickerProps['altPosition'] | null |  |
-| alwaysClearable | Boolean boolean | false |  |
-| ariaLabels | Object Partial<VueDatePickerProps['ariaLabels']> | [] |  |
-| arrowNavigation | Boolean boolean | false |  |
-| autoApply | Boolean boolean | false |  |
-| autoPosition | Boolean boolean | true |  |
-| autocomplete | String string | off |  |
-| calendar | Function VueDatePickerProps['calendar'] | null |  |
-| cancelText | String string | Cancel |  |
-| clearable | Boolean boolean | false |  |
-| config | Object Partial<VueDatePickerProps['config']> |  |  |
-| customProps | Object as PropType<Record<string | null |  |
-| dark | Boolean boolean | false |  |
-| dayClass | Function (date: Date) = string> | null |  |
-| dayNames | unknown |  |  |
-| disableMonthYearSelect | Boolean boolean | false |  |
-| disableYearSelect | Boolean boolean | false |  |
-| disabled | Boolean |  | (from useInteractive) |
-| disabledDates | [Array | [] |  |
-| disabledTimes | [Function |  |  |
-| disabledWeekDays | Array string[]  \|  number[] | [] |  |
-| enableMinutes | Boolean boolean | true |  |
-| enableSeconds | Boolean boolean | false |  |
-| enableTimePicker | Boolean boolean | true |  |
-| error | String |  | (from useInputtable) |
-| escClose | Boolean boolean | true |  |
-| filters | Object Partial<VueDatePickerProps['filters']> | [] |  |
-| flow | Array VueDatePickerProps['flow'] | [] |  |
-| focusStartDate | Boolean boolean | false |  |
-| format | unknown |  |  |
-| formatLocale | Object Locale | null |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| hideInputIcon | Boolean boolean | false |  |
-| hideNavigation | Array VueDatePickerProps['hideNavigation'] | [] |  |
-| hideOffsetDates | Boolean boolean | false |  |
-| highlight | unknown |  |  |
-| hoursGridIncrement | [String | 1 |  |
-| hoursIncrement | [Number | 1 |  |
-| id | String |  | (from useInputtable) |
-| ignoreTimeValidation | Boolean boolean | false |  |
-| inline | [Boolean | false |  |
-| is24 | Boolean boolean | true |  |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| locale | String string | en-Us |  |
-| markers | Array VueDatePickerProps['markers'] | [] |  |
-| maxDate | [Date | null |  |
-| maxTime | Object Partial<TimeModel> | null |  |
-| minDate | [Date | null |  |
-| minTime | Object Partial<TimeModel> | null |  |
-| minutesGridIncrement | [String | 5 |  |
-| minutesIncrement | [Number | 1 |  |
-| modelAuto | Boolean boolean | false |  |
-| modelType | String VueDatePickerProps['modelType'] | null |  |
-| modelValue | unknown |  | (from useInputtable) |
-| monthChangeOnArrows | Boolean boolean | true |  |
-| monthChangeOnScroll | [Boolean | true |  |
-| monthNameFormat | String 'long'  \|  'short' | short |  |
-| monthPicker | Boolean boolean | false |  |
-| multiCalendars | [Boolean |  |  |
-| multiDates | Boolean boolean | false |  |
-| name | String |  | (from useInputtable) |
-| noDisabledRange | Boolean boolean | false |  |
-| noHoursOverlay | Boolean boolean | false |  |
-| noMinutesOverlay | Boolean boolean | false |  |
-| noSecondsOverlay | Boolean boolean | false |  |
-| noToday | Boolean boolean | false |  |
-| nowButtonLabel | String string | Now |  |
-| offset | [Number | 10 |  |
-| onInternalModelChange | [Function | null |  |
-| partialFlow | Boolean boolean | false |  |
-| placeholder | String string |  |  |
-| position | String VueDatePickerProps['position'] | center |  |
-| presetDates | Array VueDatePickerProps['presetDates'] | [] |  |
-| preventMinMaxNavigation | Boolean boolean | false |  |
-| previewFormat | unknown |  |  |
-| quarterPicker | Boolean boolean | false |  |
-| range | [Boolean | false |  |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| reverseYears | Boolean boolean | false |  |
-| rules | unknown |  | (from useInputtable) |
-| secondsGridIncrement | [String | 5 |  |
-| secondsIncrement | [Number | 1 |  |
-| selectText | String string | Select |  |
-| showLastInRange | Boolean boolean | true |  |
-| sixWeeks | [Boolean | false |  |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| spaceConfirm | Boolean boolean | true |  |
-| startDate | [Date | null |  |
-| startTime | [Object | null |  |
-| state | Boolean VueDatePickerProps['state'] | null |  |
-| teleport | [String | null |  |
-| teleportCenter | Boolean boolean | false |  |
-| textInput | [Boolean | false |  |
-| timePicker | Boolean boolean | false |  |
-| timePickerInline | Boolean boolean | false |  |
-| timezone | [String | null |  |
-| tooltip | String |  | (from useInputtable) |
-| transitions | [Boolean | true |  |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| ui | Object Partial<VueDatePickerProps['ui']> | [] |  |
-| uid | String string | null |  |
-| utc | [Boolean | false |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| vertical | Boolean boolean | false |  |
-| weekNumName | String string | W |  |
-| weekNumbers | unknown |  |  |
-| weekPicker | Boolean boolean | false |  |
-| weekStart | [Number | 1 |  |
-| yearFirst | Boolean boolean | false |  |
-| yearPicker | Boolean boolean | false |  |
-| yearRange | Array number[] | [] |  |
+| actionRow | Object Partial<any> | [] | Passed through to @vuepic/vue-datepicker. |
+| allowedDates | Array string[]  \|  Date[] | null | Passed through to @vuepic/vue-datepicker. |
+| altPosition | Function VueDatePickerProps['altPosition'] | null | Passed through to @vuepic/vue-datepicker. |
+| alwaysClearable | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| ariaLabels | Object Partial<VueDatePickerProps['ariaLabels']> | [] | Passed through to @vuepic/vue-datepicker. |
+| arrowNavigation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| autoApply | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| autoPosition | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| autocomplete | String string | off | Passed through to @vuepic/vue-datepicker. |
+| calendar | Function VueDatePickerProps['calendar'] | null | Passed through to @vuepic/vue-datepicker. |
+| cancelText | String string | Cancel | Passed through to @vuepic/vue-datepicker. |
+| clearable | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| config | Object Partial<VueDatePickerProps['config']> |  | Passed through to @vuepic/vue-datepicker. |
+| customProps | Object as PropType<Record<string | null | Passed through to @vuepic/vue-datepicker. |
+| dark | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| dayClass | Function (date: Date) = string> | null | Passed through to @vuepic/vue-datepicker. |
+| dayNames | [Function, Array] | null | Passed through to @vuepic/vue-datepicker. |
+| disableMonthYearSelect | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| disableYearSelect | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| disabledDates | [Array, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| disabledTimes | [Function, Array] |  | Passed through to @vuepic/vue-datepicker. |
+| disabledWeekDays | Array string[]  \|  number[] | [] | Passed through to @vuepic/vue-datepicker. |
+| enableMinutes | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| enableSeconds | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| enableTimePicker | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| error | String |  | External error message; overrides rule errors when set. |
+| escClose | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| filters | Object Partial<VueDatePickerProps['filters']> | [] | Passed through to @vuepic/vue-datepicker. |
+| flow | Array VueDatePickerProps['flow'] | [] | Passed through to @vuepic/vue-datepicker. |
+| focusStartDate | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| format | [String, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| formatLocale | Object Locale | null | Passed through to @vuepic/vue-datepicker. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| hideInputIcon | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| hideNavigation | Array VueDatePickerProps['hideNavigation'] | [] | Passed through to @vuepic/vue-datepicker. |
+| hideOffsetDates | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| highlight | [Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| hoursGridIncrement | [String, Number] | 1 | Passed through to @vuepic/vue-datepicker. |
+| hoursIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| id | String |  | Native id attribute for the input element. |
+| ignoreTimeValidation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| inline | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| is24 | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| locale | String string | en-Us | Passed through to @vuepic/vue-datepicker. |
+| markers | Array VueDatePickerProps['markers'] | [] | Passed through to @vuepic/vue-datepicker. |
+| maxDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| maxTime | Object Partial<TimeModel> | null | Passed through to @vuepic/vue-datepicker. |
+| minDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| minTime | Object Partial<TimeModel> | null | Passed through to @vuepic/vue-datepicker. |
+| minutesGridIncrement | [String, Number] | 5 | Passed through to @vuepic/vue-datepicker. |
+| minutesIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| modelAuto | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| modelType | String VueDatePickerProps['modelType'] | null | Passed through to @vuepic/vue-datepicker. |
+| modelValue | [String, Date, Array, Object, Number] | null | Passed through to @vuepic/vue-datepicker. |
+| monthChangeOnArrows | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| monthChangeOnScroll | [Boolean, String] | true | Passed through to @vuepic/vue-datepicker. |
+| monthNameFormat | String 'long'  \|  'short' | short | Passed through to @vuepic/vue-datepicker. |
+| monthPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| multiCalendars | [Boolean, Number, String, Object] |  | Passed through to @vuepic/vue-datepicker. |
+| multiDates | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| name | String |  | Native name attribute for form submission. |
+| noDisabledRange | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noHoursOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noMinutesOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noSecondsOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noToday | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| nowButtonLabel | String string | Now | Passed through to @vuepic/vue-datepicker. |
+| offset | [Number, String] | 10 | Passed through to @vuepic/vue-datepicker. |
+| onInternalModelChange | [Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| partialFlow | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| placeholder | String string |  | Passed through to @vuepic/vue-datepicker. |
+| position | String VueDatePickerProps['position'] | center | Passed through to @vuepic/vue-datepicker. |
+| presetDates | Array VueDatePickerProps['presetDates'] | [] | Passed through to @vuepic/vue-datepicker. |
+| preventMinMaxNavigation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| previewFormat | [String, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| quarterPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| range | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| reverseYears | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| secondsGridIncrement | [String, Number] | 5 | Passed through to @vuepic/vue-datepicker. |
+| secondsIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| selectText | String string | Select | Passed through to @vuepic/vue-datepicker. |
+| showLastInRange | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| sixWeeks | [Boolean, String] | false | Passed through to @vuepic/vue-datepicker. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| spaceConfirm | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| startDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| startTime | [Object, Array] | null | Passed through to @vuepic/vue-datepicker. |
+| state | Boolean VueDatePickerProps['state'] | null | Passed through to @vuepic/vue-datepicker. |
+| teleport | [String, Boolean, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| teleportCenter | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| textInput | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| timePicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| timePickerInline | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| timezone | [String, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| transitions | [Boolean, Object] | true | Passed through to @vuepic/vue-datepicker. |
+| ui | Object Partial<VueDatePickerProps['ui']> | [] | Passed through to @vuepic/vue-datepicker. |
+| uid | String string | null | Passed through to @vuepic/vue-datepicker. |
+| utc | [Boolean, String] | false | Passed through to @vuepic/vue-datepicker. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| vertical | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| weekNumName | String string | W | Passed through to @vuepic/vue-datepicker. |
+| weekNumbers | [String, Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| weekPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| weekStart | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| yearFirst | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| yearPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| yearRange | Array number[] | [] | Passed through to @vuepic/vue-datepicker. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `dp-input`: Custom input trigger; receives value, onEnter, and onTab from vue-datepicker.
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the datepicker input.
+- `focus`: Focus the datepicker input.
+- `validate`: Run validation on the underlying input.
 
 ### Demos
 #### Usage
@@ -992,18 +1007,18 @@ date.value = [startDate, endDate]
 ```
 ---
 ## Divider
-Dividers are used to separate content.
+A horizontal or vertical rule that separates sections of content. Use dividers in lists, toolbars, and layouts to create clear visual breaks.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| label | String |  |  |
-| vertical | Boolean |  |  |
+| label | String |  | Optional text shown between the divider lines. |
+| vertical | Boolean |  | Renders the divider vertically instead of horizontally. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -1045,25 +1060,29 @@ Dividers are used to separate content.
 ```
 ---
 ## Drawer
-Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.
+Panels that slide in from the screen edge for navigation, filters, or extra content. Use drawers when side context should overlay without leaving the page.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| backdrop | unknown |  |  |
-| breakpoint | [String, Number] |  |  |
-| height | unknown |  |  |
-| modelValue | Boolean |  |  |
-| position | unknown |  |  |
-| teleportTo | unknown |  |  |
-| type | Boolean |  |  |
-| width | unknown |  |  |
+| backdrop | Boolean | true | Shows a dimmed backdrop behind the drawer when detached. |
+| breakpoint | [String, Number] |  | Below this viewport size the drawer becomes an overlay. Tailwind key or pixel width. |
+| height | [String, Number] | 320 | Panel height in pixels when position is top or bottom. |
+| modelValue | Boolean |  | Open state (v-model). |
+| position | String DrawerPosition | left | Edge the drawer attaches to (left, right, top, bottom). |
+| teleportTo | [String, Object] | body | Teleport target when the drawer is detached (overlay mode). |
+| width | [String, Number] | 220 | Panel width in pixels when position is left or right. |
 
-### Slots & Events
-- **Slots:**
-  - `footer`
-  - `header`
-- **Events:**
-  - `update:modelValue`
+### Slots
+- `default`: Main drawer body (scrollable).
+- `footer`: Content below the scrollable body.
+- `header`: Content above the scrollable body.
+
+### Events
+- `update:modelValue`: Emitted when open state changes (v-model).
+
+### Methods
+- `close`: Close the drawer.
+- `open`: Open the drawer.
 
 ### Demos
 #### Usage
@@ -1131,22 +1150,21 @@ Empty states communicate when there is no content to show. Use them in tables, l
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| bordered | Boolean |  |  |
-| description | String |  |  |
-| icon | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| title | String |  |  |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| bordered | Boolean |  | Adds a border around the empty state. |
+| description | String |  | Supporting text shown below the title. |
+| icon | String | emptyIcon | Icon name shown above the title. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| title | String |  | Primary empty-state heading. |
 
-### Slots & Events
-- **Slots:**
-  - `actions`
-  - `description`
-  - `icon`
-  - `title`
-- **Events:**
-  - _(none)_
+### Slots
+- `actions`: Action controls shown below the description.
+- `default`
+- `description`: Custom description content; overrides the `description` prop.
+- `icon`: Custom icon; overrides the `icon` prop.
+- `title`: Custom title content; overrides the `title` prop.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -1186,29 +1204,31 @@ Empty states communicate when there is no content to show. Use them in tables, l
 ```
 ---
 ## Form
-Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.
+Structured form wrapper for collecting and validating user input. Use x-form to group fields, run validation, and handle submit in one place.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| autoFocus | unknown |  |  |
-| autoValidate | unknown |  |  |
-| description | String |  |  |
-| disabled | Boolean |  |  |
-| errors | unknown |  |  |
-| field | string; |  |  |
-| hasFooter | unknown |  |  |
-| isInsideForm | boolean; |  |  |
-| msg | string; |  |  |
-| registerInput | (name: string, focus: () => void, validate: () => boolean, setError: (val: string) => void) => void; |  |  |
-| title | String |  |  |
-| type | Boolean |  |  |
-| unregisterInput | (name: string) => void; |  |  |
+| autoFocus | Boolean | true | Focuses the first registered field when the form mounts. |
+| autoValidate | Boolean | true | Runs validation on all registered fields before emitting submit. |
+| description | String |  | Optional description shown under the title in the default header. |
+| disabled | Boolean |  | Disables all fields inside the form fieldset. |
+| errors | [Array, Object] | [] | External field errors (`field` + `msg`) applied to registered inputs. |
+| hasFooter | Boolean | true | Renders the footer slot area for form actions. |
+| title | String |  | Optional title shown in the default header. |
 
-### Slots & Events
-- **Slots:**
-  - `header`
-- **Events:**
-  - `submit`
+### Slots
+- `default`: Form fields and content inside the fieldset.
+- `footer`: Custom footer; wraps primary and secondary actions by default.
+- `header`: Custom header; overrides the default title/description block.
+- `primary-action`: Primary action control in the default footer.
+- `secondary-action`: Secondary action control in the default footer.
+
+### Events
+- `submit`: Emitted on form submit with whether validation passed.
+
+### Methods
+- `submit`: Programmatically submit the form (runs auto-validate when enabled).
+- `validate`: Validate all registered fields; focuses the first invalid field.
 
 ### Demos
 #### Usage
@@ -1361,44 +1381,45 @@ function onSubmit(isValid: string) {
 ```
 ---
 ## FormGroup
-Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.
+Groups related fields with a shared label and validation context. Use form groups for checkboxes, radios, or inputs that belong to one logical section.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| isInsideFormGroup | boolean; |  |  |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| registerInputGroup | (name: string, focus: () => void, options?: FormGroupRegisterOptions) => void; |  |  |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| setValue | (val: string \| number \| string[] \| number[]) => void; |  |  |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | Boolean |  |  |
-| unregisterInputGroup | (name: string) => void; |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| value | MaybeRef<string \| number \| string[] \| number[] \| null \| undefined>; |  |  |
-| vertical | unknown |  |  |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| vertical | Boolean | false | Stacks child controls vertically instead of in a row. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`: Grouped inputs (radios, checkboxes, radio buttons, etc.).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -1457,19 +1478,16 @@ Icons visually represent actions and concepts. Register SVG paths in a global ma
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| filled | Boolean |  |  |
-| icon | unknown |  |  |
-| required | true |  |  |
-| size | unknown |  | (from useCommon) |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| viewBox | unknown |  |  |
+| filled | Boolean |  | Renders a filled icon instead of an outline stroke. |
+| icon | String |  | Icon name from the injected icon set, or raw SVG path markup. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| viewBox | String | 0 0 24 24 | SVG viewBox when rendering path markup. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -1622,13 +1640,13 @@ Loads a remote image after preloading. Use a background on the wrapper for a vis
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| src | String |  |  |
+| src | String |  | Image URL. Shows a transparent placeholder until the image loads. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -1742,17 +1760,21 @@ const brokenSrc = 'https://invalid.example/image.jpg'
 ```
 ---
 ## InfiniteLoader
-InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.
+Loads more list items as the user scrolls near the end of a container. Use InfiniteLoader for feeds and catalogs that grow on demand.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| _(none)_ | | | |
+| isRowLoaded | Function (index: number) = boolean> |  | Returns whether the row at the given index is already loaded. |
+| loadMoreRows | Function as PropType<(startIndex: number |  | Loads more rows for the given index range; resolve when finished. |
+| minimumBatchSize | Number |  | Minimum rows to request per load (default 10). Batches HTTP fetches. |
+| rowCount | Number |  | Total row count; may be an upper bound if the true size is unknown. |
+| threshold | Number |  | Prefetch when the user scrolls within this many rows of unloaded data (default 15). |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Render prop slot; receives `onRowsRendered` to wire into a virtual list.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -2097,56 +2119,63 @@ onMounted(() => {
 ```
 ---
 ## Input
-This is a text input component that allows users to enter and edit text.
+Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| block | Boolean |  |  |
-| clearable | Boolean |  |  |
-| color | string | primary | (from useColors) |
-| dir | unknown |  |  |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| icon | String |  |  |
-| iconLeft | String |  |  |
-| iconRight | String |  |  |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| max | [Number, String] |  |  |
-| maxlength | [Number, String] |  |  |
-| min | [Number, String] |  |  |
-| minlength | [Number, String] |  |  |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| placeholder | String |  |  |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| showCounter | Boolean |  |  |
-| showPasswordToggle | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| step | [Number, String] |  |  |
-| tooltip | String |  | (from useInputtable) |
-| type | unknown |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| block | Boolean |  | Stretches to the full width of the parent. |
+| clearable | Boolean |  | Shows a clear button when the value is not empty. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| dir | String 'ltr'  \|  'rtl' | ltr | Text direction for the native input (`ltr` or `rtl`). |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| icon | String |  | Shortcut for `iconLeft`. |
+| iconLeft | String |  | Icon name shown before the input value. |
+| iconRight | String |  | Icon name shown after the input value. |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] |  | Native `max` attribute (typically for number inputs). |
+| maxlength | [Number, String] |  | Maximum character length for the input value. |
+| min | [Number, String] |  | Native `min` attribute (typically for number inputs). |
+| minlength | [Number, String] |  | Minimum character length for the input value. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Placeholder text shown when the value is empty. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| showCounter | Boolean |  | Shows a character counter in the footer. |
+| showPasswordToggle | Boolean | true | Shows a visibility toggle when `type` is `password`. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| step | [Number, String] |  | Native `step` attribute for numeric inputs. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| type | String | text | Native input type (text, password, email, number, etc.). |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
 
-### Slots & Events
-- **Slots:**
-  - `prefix`
-  - `suffix`
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`
+- `prefix`: Content before the input (left adornment).
+- `suffix`: Content after the input (right adornment).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -2254,45 +2283,42 @@ Input groups combine multiple inline fields (Input, Textarea, Select, Datepicker
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| block | Boolean |  |  |
-| childOrder | ComputedRef<string[]>; |  |  |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| getPosition | (id: string) => InputGroupPosition; |  |  |
-| groupProps | unknown |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| isInsideInputGroup | boolean; |  |  |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| registerChild | (id: string) => void; |  |  |
-| registerInput | (name: string, methods: XFormInputMethods) => void; |  |  |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| unregisterChild | (id: string) => void; |  |  |
-| unregisterInput | (name: string) => void; |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| block | Boolean |  | Stretches the group to the full width of the parent. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`: Grouped controls (inputs, buttons, or other adornments).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -2384,22 +2410,22 @@ const rules = {
 ```
 ---
 ## Link
-Links are used to navigate to a different page.
+Styled anchor for navigating to another page or external URL. Use x-link when you need consistent link styling, external indicators, and accessibility.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | secondary | (from useColors) |
-| external | Boolean |  |  |
-| shadow | Boolean |  |  |
-| tag | unknown |  |  |
-| to | [String, Object] |  |  |
-| underline | Boolean |  |  |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| external | Boolean |  | Appends an external-link icon after the label. |
+| shadow | Boolean |  | Inset shadow highlight under the link text. |
+| tag | String | a | Root element tag. Becomes a router-link when `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
+| underline | Boolean |  | Underlines the link text. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Link label and content.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -2419,22 +2445,20 @@ Links are used to navigate to a different page.
 ```
 ---
 ## Loader
-Loader component is used to show a loading state.
+Full-area loading overlay that blocks interaction while content or an action completes. Use Loader when the whole region should wait before continuing.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| icon | String |  |  |
-| label | String |  |  |
-| size | unknown |  | (from useCommon) |
-| status | unknown |  | values: active, success, error |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| icon | String |  | Custom spinner icon when status is `active`. |
+| label | String |  | Optional text shown next to the status icon. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| status | String LoaderStatus | active | Visual status (active spinner, success, or error). Values: active, success, error. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -2449,28 +2473,27 @@ Loader component is used to show a loading state.
 ```
 ---
 ## Menu
-Menus are used to display a list of options.
+Dropdown list of actionable items triggered from a button or other control. Use x-menu with x-menu-item for contextual actions and navigation.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| collapseIcon | String |  |  |
-| collapsible | unknown |  |  |
-| color | string | secondary | (from useColors) |
-| disabled | Boolean |  |  |
-| expanded | Boolean |  |  |
-| filled | unknown |  |  |
-| items | Array as PropType<MenuArrayItem[]> |  |  |
-| minimal | Boolean |  |  |
-| rounded | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| type | Boolean |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| collapseIcon | String |  | Default icon for collapsible group headers. |
+| collapsible | Boolean | true | Allows nested groups to collapse when they have child items. |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables all menu items. |
+| expanded | Boolean |  | Default expanded state for collapsible groups. |
+| filled | Boolean | true | Filled item backgrounds (vs. minimal text-only look). |
+| items | Array MenuArrayItem[] |  | Menu tree. Each item may nest `items`, links, icons, and dividers. |
+| minimal | Boolean |  | Hides item labels; icons-only layout. |
+| rounded | Boolean | true | Applies rounded corners to menu items. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `expand`
+### Slots
+- `default`
+
+### Events
+- `expand`: Emitted when a nested group expands or a linked item becomes active.
+- `item-click`: Emitted when a menu item is clicked.
 
 ### Demos
 #### Usage
@@ -2554,41 +2577,49 @@ const menu2: MenuArrayItem[] = [{
 ```
 ---
 ## Modal
-Modals are used to display content on top of the current page.
+Dialog overlay that focuses attention on a task or message above the current page. Use modals for confirmations, forms, and details that need temporary focus.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| backdrop | unknown |  |  |
-| description | String |  |  |
-| fluid | Boolean |  |  |
-| formAutoValidate | unknown |  |  |
-| formDescription | String |  |  |
-| formDisabled | Boolean |  |  |
-| formErrors | unknown |  |  |
-| formTitle | String |  |  |
-| hasActions | unknown |  |  |
-| hasHeader | unknown |  |  |
-| isForm | Boolean |  |  |
-| label | String |  |  |
-| loading | Boolean |  |  |
-| loadingText | String |  |  |
-| modelValue | Boolean |  |  |
-| persistent | Boolean |  |  |
-| position | unknown |  |  |
-| showClose | Boolean |  |  |
-| size | unknown |  |  |
-| title | String |  |  |
-| type | [Array, Object] FormError[]  \|  FormError |  |  |
+| backdrop | Boolean | true | Shows a dimmed backdrop behind the dialog. |
+| description | String |  | Body description shown above the default slot. |
+| fluid | Boolean |  | Stretches the dialog to fill available width within its size. |
+| formAutoValidate | Boolean | true | Auto-validate the inner form on submit when `isForm` is set. |
+| formDescription | String |  | Description passed to the inner form when `isForm` is set. |
+| formDisabled | Boolean |  | Disables the inner form when `isForm` is set. |
+| formErrors | [Array, Object] | [] | External form errors passed to the inner form when `isForm` is set. |
+| formTitle | String |  | Title passed to the inner form when `isForm` is set. |
+| hasActions | Boolean | true | Renders the default actions footer region when no footer slot is used. |
+| hasHeader | Boolean | true | Renders the default header region when no header slot is used. |
+| label | String |  | Small label above the title in the header. |
+| loading | Boolean |  | Loading state for the modal (theme/visual). |
+| loadingText | String |  | Text shown while loading. |
+| modelValue | Boolean |  | Open state (v-model). |
+| persistent | Boolean |  | Prevents closing on Escape or backdrop click. |
+| position | String ModalPosition | center | Vertical placement of the dialog (top, center, bottom). |
+| showClose | Boolean |  | Shows a close button in the corner. |
+| size | String ModalSize | lg | Dialog width preset (xs, sm, md, lg, xl, full). |
+| title | String |  | Header title text. |
 
-### Slots & Events
-- **Slots:**
-  - `actions`
-  - `footer`
-  - `header`
-  - `image`
-- **Events:**
-  - `submit`
-  - `update:modelValue`
+### Slots
+- `actions`: Custom actions row inside the default footer.
+- `cancel-action`: Cancel / dismiss control in the actions row.
+- `default`: Main modal body content.
+- `footer`: Replaces the default actions footer.
+- `header`: Replaces the default header region.
+- `header-content`: Custom header content inside the default header layout.
+- `image`: Optional media above the header.
+- `primary-action`: Primary action control in the actions row.
+- `secondary-action`: Secondary action control in the actions row.
+- `tertiary-action`: Tertiary action control in the actions row.
+
+### Events
+- `submit`: Emitted when the inner form submits. Payload is the validation result.
+- `update:modelValue`: Emitted when open state changes (v-model).
+
+### Methods
+- `close`: Close the modal.
+- `open`: Open the modal.
 
 ### Demos
 #### Usage
@@ -2750,28 +2781,32 @@ function onSubmit(isValid: boolean) {
 ```
 ---
 ## Notifications
-Notifications provide timely feedback or alerts to users, such as success messages, warnings, or errors. They help keep users informed about important events or actions.
+Toast-style feedback for success, warning, or error after an action. Use notifications for transient messages that should not block the page.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| align | ['left', 'right'] |  |  |
-| color | string | primary | (from useColors) |
-| injectKey | unknown |  |  |
-| label | string; |  |  |
-| offset | unknown |  |  |
-| onClick | () => void; |  |  |
-| pauseOnHover | unknown |  |  |
-| position | ['bottom', 'top'] |  |  |
-| removable | unknown |  |  |
-| timeout | unknown |  |  |
-| type | [String, Number] |  |  |
-| validator | (value: string) => validators.position.includes(value as NotificationsPosition) |  |  |
+| align | String NotificationsAlign | right | Horizontal placement of the toast stack (left or right). |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| injectKey | [Symbol, String] | injectNotificationKey | Provide/inject key for notification helpers (log, info, success, warn, error). |
+| offset | [String, Number] | 0 | Extra inset from the viewport edge in pixels. |
+| pauseOnHover | Boolean | true | Pauses the dismiss timer while the pointer hovers a notification. |
+| position | String NotificationsPosition | bottom | Vertical placement of the toast stack (top or bottom). |
+| removable | Boolean | true | Shows a dismiss control on each notification by default. |
+| timeout | Number | 3500 | Default auto-dismiss delay in milliseconds. Set 0 to keep until removed. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: App content that can inject notification helpers.
+
+### Events
+- _(none)_
+
+### Methods
+- `error`: Show an error-styled notification.
+- `info`: Show an info-styled notification.
+- `log`: Show a plain notification.
+- `success`: Show a success-styled notification.
+- `warn`: Show a warning-styled notification.
+- `warning`: Alias of `warn`.
 
 ### Demos
 #### Usage
@@ -2835,23 +2870,21 @@ const custom2 = () => {
 ```
 ---
 ## Pagination
-Pagination divides large sets of content into manageable pages, allowing users to navigate through items efficiently. It is commonly used in tables, lists, and search results to improve usability and performance.
+Controls for moving through large result sets page by page. Use pagination with tables, lists, and search results to keep each view manageable.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| links | Boolean |  |  |
-| modelValue | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| totalPages | unknown |  |  |
-| type | Number |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| variant | unknown |  |  |
+| links | Boolean |  | Renders page buttons as links (`?page=` query). |
+| modelValue | Number | 1 | Current page (v-model). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| totalPages | Number | 1 | Total number of pages. |
+| variant | String PaginationVariant | simple | Layout style (simple, quick, or dots). |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `update:modelValue`
+### Slots
+- _(none)_
+
+### Events
+- `update:modelValue`: Emitted when the current page changes (v-model).
 
 ### Demos
 #### Usage
@@ -2877,43 +2910,53 @@ const page = ref(1)
 ```
 ---
 ## Popover
-Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.
+Floating panel anchored to a trigger for extra content or actions. Use popovers for menus and contextual UI without leaving the current view.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| autoHide | unknown |  |  |
-| boundary | [String, Object] |  |  |
-| computeTransformOrigin | Boolean |  |  |
-| container | unknown |  |  |
-| delay | unknown |  |  |
-| disabled | Boolean |  |  |
-| distance | [Number, String] |  |  |
-| eagerMount | Boolean |  |  |
-| handleResize | unknown |  |  |
-| hideArrow | unknown |  |  |
-| hideTriggers | [Array, Function] Array<PopoverTriggerEvent  \|  ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)> |  |  |
-| instantMove | Boolean |  |  |
-| placement | unknown |  |  |
-| popperClass | [String, Array, Object] |  |  |
-| popperHideTriggers | [Array, Function] Array<PopoverTriggerEvent  \|  ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)> |  |  |
-| popperShowTriggers | [Array, Function] Array<PopoverTriggerEvent  \|  ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)> |  |  |
-| popperTriggers | Array as PropType<Array<PopoverTriggerEvent>> |  |  |
-| positioningDisabled | Boolean |  |  |
-| showTriggers | [Array, Function] Array<PopoverTriggerEvent  \|  ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)> |  |  |
-| shown | Boolean |  |  |
-| skidding | [Number, String] |  |  |
-| strategy | unknown |  |  |
-| triggers | unknown |  |  |
-| type | Boolean |  |  |
+| autoHide | [Boolean, Function] | true | Hides on outside click, or a predicate deciding whether to hide. |
+| boundary | [String, Object] |  | Overflow boundary used for flip/shift positioning. |
+| computeTransformOrigin | Boolean |  | Computes transform-origin for scale transitions. |
+| container | [String, Object, Boolean] | body | Element that contains the floating popover DOM. |
+| delay | [String, Number, Object] | 0 | Show/hide delay in ms, or `{ show, hide }`. |
+| disabled | Boolean |  | Disables showing the popover. |
+| distance | [Number, String] |  | Offset along the placement axis in pixels. |
+| eagerMount | Boolean |  | Mounts popover content immediately instead of on first open. |
+| handleResize | Boolean | true | Repositions when the popover content size changes. |
+| hideArrow | Boolean | true | Hides the popover arrow. |
+| hideTriggers | [Array, Function] |  | Events that hide the popover, or a function deriving them from `triggers`. |
+| instantMove | Boolean |  | Skips transition when the popover moves between placements. |
+| placement | String PopoverPlacement | bottom-start | Preferred placement relative to the trigger. |
+| popperClass | [String, Array, Object] |  | Extra class(es) on the floating popover element. |
+| popperHideTriggers | [Array, Function] |  | Events on the content that hide the popover. |
+| popperShowTriggers | [Array, Function] |  | Events on the content that show the popover. |
+| popperTriggers | Array Array<PopoverTriggerEvent> |  | Events on the popover content that keep it open. |
+| positioningDisabled | Boolean |  | Keeps the popover in the DOM flow without floating positioning. |
+| showTriggers | [Array, Function] |  | Events that show the popover, or a function deriving them from `triggers`. |
+| shown | Boolean |  | Controlled open state. |
+| skidding | [Number, String] |  | Offset along the trigger edge in pixels. |
+| strategy | String 'absolute'  \|  'fixed' | absolute | CSS position strategy for the floating element. |
+| triggers | Array Array<PopoverTriggerEvent> | [] | Events that toggle the popover (for example click, hover, focus). |
 
-### Slots & Events
-- **Slots:**
-  - `content`
-- **Events:**
-  - `hide`
-  - `resize`
-  - `show`
-  - `update:shown`
+### Slots
+- `content`: Popover panel content.
+- `default`: Trigger element.
+
+### Events
+- `apply-hide`: Emitted after the hide transition is applied.
+- `apply-show`: Emitted after the show transition is applied.
+- `auto-hide`: Emitted when auto-hide closes the popover.
+- `close-directive`: Emitted when closed via the close directive.
+- `close-group`: Emitted when a popover group close is requested.
+- `hide`: Emitted when the popover starts closing.
+- `resize`: Emitted when popover content is resized.
+- `show`: Emitted when the popover starts opening.
+- `update:shown`: Emitted when open state changes.
+
+### Methods
+- `hide`: Hide the popover.
+- `show`: Show the popover.
+- `toggle`: Toggle open state.
 
 ### Demos
 #### Usage
@@ -2956,23 +2999,21 @@ Popovers display additional information or interactive content in a floating ove
 ```
 ---
 ## Progress
-Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.
+Bar that shows how far a task or process has completed. Use progress for uploads, multi-step jobs, and determinate loading states.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| animate | unknown |  |  |
-| color | string | primary | (from useColors) |
-| gradient | Boolean |  |  |
-| percentage | unknown |  |  |
-| thick | Boolean |  |  |
-| type | Boolean |  |  |
-| validator | (value: number) => value >= 0 && value <= 100 |  |  |
+| animate | Boolean | true | Animates width changes when the percentage updates. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| gradient | Boolean |  | Uses a gradient fill instead of a solid color. |
+| percentage | [Number, String] | 0 | Fill amount from 0 to 100. |
+| thick | Boolean |  | Increases the bar thickness. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -3009,22 +3050,21 @@ onMounted(() => {
 ```
 ---
 ## QR Code
-The QR Code component is used to generate a QR code.
+Renders a QR code from a string or URL for scanning with mobile devices. Use it for share links, payments, and quick machine-readable payloads.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| backgroundColor | unknown |  |  |
-| color | unknown |  |  |
-| errorCorrectionLevel | unknown |  | values: L, M, Q, H |
-| size | unknown |  |  |
-| type | [String, Number] |  |  |
-| value | String |  |  |
+| backgroundColor | String | #fff | Background color behind the modules. |
+| color | String | #000 | Foreground module color. |
+| errorCorrectionLevel | String | M | Error correction level (L, M, Q, or H). Values: L, M, Q, H. |
+| size | [String, Number] | 100 | Rendered size of the QR canvas in pixels. |
+| value | String |  | Text or URL encoded in the QR code. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -3056,39 +3096,40 @@ Radios allow the user to select one option from a set. Use classic radios for st
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | primary | (from useColors) |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| glow | Boolean |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| value | [String, Number] |  |  |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| value | [String, Number] |  | Value emitted when this option is selected (v-model / form-group). |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`: Optional content shown below the label.
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -3239,21 +3280,23 @@ const selected = ref('a')
 ```
 ---
 ## Scroll
-The Scroll component enhances scrolling experiences by adding visual cues, such as inner shadows, to indicate additional content. It is useful for horizontally or vertically scrolling lists and containers.
+Scroll container with optional edge shadows that hint at more content. Use Scroll for overflow lists and panels that scroll vertically or horizontally.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| horizontal | Boolean |  |  |
-| mousewheel | Boolean |  |  |
-| scrollbar | unknown |  |  |
-| shadow | Boolean |  |  |
-| type | Boolean |  |  |
+| horizontal | Boolean |  | Scrolls horizontally instead of vertically. |
+| mousewheel | Boolean |  | Maps vertical mouse wheel to horizontal scroll when `horizontal` is set. |
+| scrollbar | Boolean | true | Shows the native scrollbar. Set false to hide it. |
+| shadow | Boolean |  | Shows edge shadows when more content can be scrolled. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Scrollable content.
+
+### Events
+- _(none)_
+
+### Methods
+- `scrollEl`: Ref to the inner scrollable element.
 
 ### Demos
 #### Usage
@@ -3284,61 +3327,73 @@ The Scroll component enhances scrolling experiences by adding visual cues, such 
 ```
 ---
 ## Select
-Selects allow the user to select one or more options from a set.
+Dropdown for choosing one or more options from a predefined list. Use Select for enums, filters, and form fields where free text is not needed.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| clearable | Boolean |  |  |
-| color | string | secondary | (from useColors) |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| filterPlaceholder | unknown |  |  |
-| filterable | Boolean |  |  |
-| filterablePrefix | Boolean |  |  |
-| filterableSuffix | Boolean |  |  |
-| flat | Boolean |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| hideSelectedOptionSlots | Boolean |  |  |
-| id | String |  | (from useInputtable) |
-| label | string; |  |  |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| multiple | Boolean |  |  |
-| multipleCheckbox | Boolean |  |  |
-| name | String |  | (from useInputtable) |
-| native | Boolean |  |  |
-| options | Array as PropType<SelectOption[]> |  |  |
-| placeholder | String |  |  |
-| placement | String as PropType<PopoverPlacement> |  |  |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| truncate | Boolean |  |  |
-| type | Number |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| value | number \| string; |  |  |
-| virtualList | Boolean |  |  |
-| virtualListItemHeight | unknown |  |  |
-| virtualListOffsetBottom | Number |  |  |
-| virtualListOffsetTop | Number |  |  |
-| virtualListOverscan | unknown |  |  |
+| clearable | Boolean |  | Shows a clear control when a value is selected. |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| filterPlaceholder | String | Filter by... | Placeholder for the filter input when `filterable` is enabled. |
+| filterable | Boolean |  | Shows a filter input inside the options list. |
+| filterablePrefix | Boolean |  | Includes option prefixes when filtering. |
+| filterableSuffix | Boolean |  | Includes option suffixes when filtering. |
+| flat | Boolean |  | Removes elevation and border emphasis on the trigger. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| hideSelectedOptionSlots | Boolean |  | Hides prefix/suffix slots on the selected value display. |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| multiple | Boolean |  | Allows selecting more than one option. |
+| multipleCheckbox | Boolean |  | Multiple selection with checkbox-style items. |
+| name | String |  | Native name attribute for form submission. |
+| native | Boolean |  | Renders a native HTML select instead of the custom popover. |
+| options | Array SelectOption[] |  | Available options (`value`, `label`, optional prefix/suffix/disabled). |
+| placeholder | String |  | Placeholder shown when no option is selected. |
+| placement | String PopoverPlacement |  | Popover placement for the options menu. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| truncate | Boolean |  | Truncates selected labels when space is limited. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| virtualList | Boolean |  | Virtualizes the options list for large datasets. |
+| virtualListItemHeight | Number | 33 | Estimated row height (px) used by the virtual list. |
+| virtualListOffsetBottom | Number |  | Extra bottom offset (px) for the virtual list viewport. |
+| virtualListOffsetTop | Number |  | Extra top offset (px) for the virtual list viewport. |
+| virtualListOverscan | Number | 10 | Extra rows rendered above/below the visible virtual list window. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `content-footer`: Content below the options list.
+- `content-header`: Content above the options list (default includes the filter).
+- `icon`: Custom chevron/icon on the trigger.
+- `input`: Custom trigger content (popover, selected value, disabled, label).
+- `label`: Custom label content for an option (`item`).
+- `prefix`: Prefix content for an option or the selected value (`item`).
+- `suffix`: Suffix content for an option or the selected value (`item`).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `close`: Emitted when the options popover closes.
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `open`: Emitted when the options popover opens.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -3543,19 +3598,18 @@ const options = ref([
 ```
 ---
 ## Skeleton
-Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.
+Placeholder shapes that mirror content layout while data loads. Use skeletons to reduce layout shift and improve perceived loading performance.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| shape | unknown |  |  |
-| tag | unknown |  |  |
-| validator | (val: SkeletonShape) => validators.shape.includes(val) |  |  |
+| shape | String SkeletonShape | line | Placeholder shape (line or circle). |
+| tag | String | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -3573,43 +3627,50 @@ Skeletons provide placeholder elements that mimic the layout of content while da
 ```
 ---
 ## Slider
-Sliders allow users to select a numeric value or range by dragging a handle along a track. They are ideal for adjusting settings such as volume, brightness, or price filters.
+Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | primary | (from useColors) |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| max | unknown |  |  |
-| min | unknown |  |  |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| step | unknown |  |  |
-| tooltip | String |  | (from useInputtable) |
-| type | [Number, String] |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] | 100 | Maximum value of the range. |
+| min | [Number, String] | 0 | Minimum value of the range. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| step | [Number, String] | 1 | Increment between selectable values. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
 
-### Slots & Events
-- **Slots:**
-  - `prefix`
-  - `suffix`
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`
+- `prefix`: Content before the track (`value`).
+- `suffix`: Content after the track (`value`).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -3630,17 +3691,17 @@ const value = ref(30)
 ```
 ---
 ## Spacer
-Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.
+Flex-friendly gap that expands or shrinks between siblings without extra margin or padding. Use spacers to push items apart in toolbars and rows.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | _(none)_ | | | |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -3656,20 +3717,18 @@ Spacers create adjustable gaps between elements within flex layouts, helping to 
 ```
 ---
 ## Spinner
-Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.
+Animated indicator that a background process is still running. Use spinners for indeterminate loading when completion percentage is unknown.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| icon | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| icon | String | <g stroke-width=0><path fill=currentColor d=M12 | SVG markup or icon name used for the spinner. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -3697,33 +3756,40 @@ Multi-step wizard with declarative steps, named panel slots, programmatic next/p
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| beforeChange | Function as PropType<(to: string \| number, from: string \| number) => boolean \| Promise<boolean>> |  |  |
-| color | string | primary | (from useColors) |
-| disabled | Boolean |  |  |
-| editable | Boolean |  |  |
-| iconComplete | String |  |  |
-| iconEdit | String |  |  |
-| iconError | String |  |  |
-| interactive | unknown |  |  |
-| labelPlacement | unknown |  |  |
-| linear | unknown |  |  |
-| loading | Boolean |  |  |
-| modelValue | [String, Number] |  |  |
-| orientation | unknown |  |  |
-| size | unknown |  | (from useCommon) |
-| steps | unknown |  |  |
-| title | string; |  |  |
-| type | Boolean |  |  |
-| validate | Function as PropType<() => boolean> |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| value | string \| number; |  |  |
-| variant | unknown |  |  |
+| beforeChange | Function as PropType<(to: string  \|  number |  | Async guard before changing steps; return false to cancel. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables all step navigation. |
+| editable | Boolean |  | Allow revisiting completed steps (shows edit icon). |
+| iconComplete | String |  | Icon for completed steps. |
+| iconEdit | String |  | Icon for editable completed steps. |
+| iconError | String |  | Icon for steps in an error state. |
+| interactive | Boolean | true | Allow clicking step indicators to navigate. |
+| labelPlacement | String StepperLabelPlacement | end | Where labels sit relative to indicators in horizontal mode. |
+| linear | Boolean | true | Require prior steps to be completed before navigating ahead. |
+| loading | Boolean |  | Blocks navigation while an async step action runs. |
+| modelValue | [String, Number] |  | Active step value (`v-model`). |
+| orientation | String StepperOrientation | vertical | Layout direction: vertical (sidebar) or horizontal. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| steps | Array StepperStep[] | [] | Step definitions (value, title, optional, completed, error, etc.). |
+| validate | Function () = boolean> |  | Runs before leaving the current step; return false to block navigation. |
+| variant | String StepperVariant | line | Indicator style: line or dot. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `[stepValue]`: Panel content for a step; slot name matches `step.value`.
+- `content-prefix`: Content rendered above the active step panel.
+- `default`
+- `summary-[stepValue]`: Sidebar summary for a completed step (vertical orientation).
+
+### Events
+- `change`: Emitted when the active step changes; payload is `(value, index)`.
+- `step-complete`: Emitted when a step is marked complete via `next()`; payload is `(value, index)`.
+- `update:modelValue`: Active step value (`v-model`).
+
+### Methods
+- `goTo`: Navigate to a step by value or index when allowed.
+- `next`: Advance to the next step after validation.
+- `prev`: Go to the previous step.
+- `reset`: Clear completion state and return to the first step.
 
 ### Demos
 #### Usage
@@ -3930,41 +3996,51 @@ Tables display tabular data with single- or multi-column sorting, selection, exp
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| autoClearSelected | unknown |  |  |
-| dense | Boolean |  |  |
-| error | Boolean |  |  |
-| expandable | Boolean |  |  |
-| fixed | Boolean |  |  |
-| headers | unknown |  |  |
-| hrefFn | Function as PropType<(item: unknown) => string> |  |  |
-| hrefTarget | String as PropType<'_blank' \| '_self' \| '_parent' \| '_top'> |  |  |
-| items | unknown |  |  |
-| keyProp | String |  |  |
-| loading | Boolean |  |  |
-| loadingLines | unknown |  |  |
-| loadingSkeleton | Boolean |  |  |
-| pointer | Boolean |  |  |
-| scrollable | unknown |  |  |
-| selectable | Boolean |  |  |
-| singleSelect | Boolean |  |  |
-| sort | unknown |  |  |
-| sortMultiple | Boolean |  |  |
-| stickyHeader | unknown |  |  |
-| striped | Boolean |  |  |
-| toFn | Function as PropType<(item: unknown) => string \| Record<string, unknown> \| undefined> |  |  |
-| type | Boolean |  |  |
-| virtualList | Boolean |  |  |
-| virtualListItemHeight | unknown |  |  |
-| virtualListOffsetBottom | Number |  |  |
-| virtualListOffsetTop | Number |  |  |
-| virtualListOverscan | unknown |  |  |
+| autoClearSelected | Boolean | true | Clears selection entries that no longer exist in `items`. |
+| dense | Boolean |  | Compact cell padding. |
+| error | Boolean |  | Shows the error slot instead of rows. |
+| expandable | Boolean |  | Adds an expand control and `expanded-row` slot per row. |
+| fixed | Boolean |  | Fixed table layout for consistent column widths. |
+| headers | Array TableHeader[] | [] | Column definitions (text, value, sortable, align, width, etc.). |
+| hrefFn | Function (item: unknown) = string> |  | Returns an href to make each cell an anchor. |
+| hrefTarget | String '_blank'  \|  '_self'  \|  '_parent'  \|  '_top' |  | Target for links created by `hrefFn`. |
+| items | Array | [] | Row data array. Cell values resolve from each header `value` path. |
+| keyProp | String |  | Item property used as the stable row key (falls back to index). |
+| loading | Boolean |  | Shows loading rows (skeletons) and a spinner overlay. |
+| loadingLines | [Number, String] | 3 | Number of skeleton rows shown while loading. |
+| loadingSkeleton | Boolean |  | When set, loading rows use skeleton placeholders. |
+| pointer | Boolean |  | Pointer cursor on rows (also set when `toFn` or `hrefFn` is used). |
+| scrollable | Boolean | true | Enables horizontal overflow scrolling for wide tables. |
+| selectable | Boolean |  | Enables row selection (`v-model:selected`). |
+| singleSelect | Boolean |  | Select only one row at a time. |
+| sort | Array string[] | [] | Active sort entries as `column,-1\|1` (use with `v-model:sort`). |
+| sortMultiple | Boolean |  | Allow sorting by multiple columns at once. |
+| stickyHeader | Boolean | true | Keeps the header row sticky while scrolling. |
+| striped | Boolean |  | Alternating row background colors. |
+| toFn | Function (item: unknown) = string  \|  Record<string |  | Returns a Vue Router location to make each cell a link. |
+| virtualList | Boolean |  | Virtualizes rows for large datasets. |
+| virtualListItemHeight | Number | 54 | Fixed row height (px) for virtual list measurement. |
+| virtualListOffsetBottom | Number |  | Bottom spacer offset (px) when using virtual list. |
+| virtualListOffsetTop | Number |  | Top spacer offset (px) when using virtual list. |
+| virtualListOverscan | Number | 10 | Extra rows rendered above/below the viewport when virtualized. |
 
-### Slots & Events
-- **Slots:**
-  - `actions`
-  - `title`
-- **Events:**
-  - _(none)_
+### Slots
+- `actions`: Optional actions above the table.
+- `default`
+- `empty`: Content when there are no items.
+- `error`: Content when `error` is true.
+- `expanded-row`: Expanded content for a row when `expandable` is set.
+- `footer`: Custom footer (`tfoot`); overrides per-column footer slots when provided.
+- `footer-[column]`: Footer cell content for a column (`footer-{value}`).
+- `header-[column]`: Header cell content for a column (`header-{value}`).
+- `item-[column]`: Cell content for a column (`item-{value}`).
+- `loading-[column]`: Loading cell content for a column (`loading-{value}`).
+- `title`: Optional title above the table.
+
+### Events
+- `click-row`: Emitted when a row is clicked; payload is `(item, index)`.
+- `update:selected`: Emitted when selection changes (`v-model:selected`).
+- `update:sort`: Emitted when sort changes (`v-model:sort`).
 
 ### Demos
 #### Usage
@@ -4269,33 +4345,25 @@ const selected = ref<number[]>([])
 ```
 ---
 ## Tabs
-Tabs are used to navigate through a set of views.
+Tabbed navigation that switches between related views in the same region. Use x-tab-group with x-tab when content shares context but not space.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| activateTab | (tab: string \| number \| null) => void; |  |  |
-| active | string \| number \| undefined; |  |  |
-| align | unknown |  |  |
-| color | string; |  |  |
-| exact | boolean; |  |  |
-| fullWidth | unknown |  |  |
-| ghost | boolean; |  |  |
-| grow | boolean; |  |  |
-| modelValue | [String, Number] |  |  |
-| registerTab | (tab: string \| number) => void; |  |  |
-| size | Size; |  |  |
-| state | unknown |  |  |
-| tabsContentRef | Ref<HTMLElement \| null>; |  |  |
-| type | Boolean |  |  |
-| unregisterTab | (tab: string \| number) => void; |  |  |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
-| variant | TabGroupVariant; |  |  |
+| align | String 'left'  \|  'center'  \|  'right' | left | Horizontal alignment of tabs in the list. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| exact | Boolean |  | Default exact route matching for linked tabs. |
+| fullWidth | Boolean | true | Stretches the tab list to the container width. |
+| ghost | Boolean |  | Subtle styling with less background emphasis. |
+| grow | Boolean |  | Stretches tabs to fill the list width. |
+| modelValue | [String, Number] |  | Active tab value (v-model). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| variant | String 'line'  \|  'block'  \|  'compact' | line | Visual style of the tab list (line, block, or compact). |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `update:modelValue`
+### Slots
+- `default`: Tab triggers (typically x-tab children).
+
+### Events
+- `update:modelValue`: Emitted when the active tab changes (v-model).
 
 ### Demos
 #### Usage
@@ -4472,27 +4540,26 @@ const view = ref('grid')
 ```
 ---
 ## Tag
-Tags are compact elements used to display brief information, such as categories, statuses, or labels. They help organize content and provide quick context or filtering options within lists and interfaces.
+Compact labels for categories, statuses, or filters. Use tags in lists and chip groups when a short keyword should stand out.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | secondary | (from useColors) |
-| disabled | Boolean |  |  |
-| filled | Boolean |  |  |
-| outlined | Boolean |  |  |
-| removable | Boolean |  |  |
-| rounded | Boolean |  |  |
-| size | unknown |  | (from useCommon) |
-| tag | unknown |  |  |
-| to | [String, Object] |  |  |
-| type | String as PropType<Size> |  | (from useCommon) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables the remove control and applies disabled styling. |
+| filled | Boolean |  | Filled style using the theme color. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| removable | Boolean |  | Shows a remove control that emits `remove`. |
+| rounded | Boolean |  | Fully rounded corners (pill shape). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | span | Root element tag. Becomes an anchor or router-link when `href` or `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
 
-### Slots & Events
-- **Slots:**
-  - `prefix`
-- **Events:**
-  - `remove`
+### Slots
+- `default`: Tag label and content.
+- `prefix`: Content shown before the label.
+
+### Events
+- `remove`: Emitted when the remove icon is clicked.
 
 ### Demos
 #### Usage
@@ -4555,54 +4622,60 @@ const notifications = useNotifications()
 ```
 ---
 ## Textarea
-Textareas provide a multi-line input field for users to enter longer text, such as comments, descriptions, or messages. They support resizing and can be customized for different use cases.
+Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| adjustToText | Boolean |  |  |
-| block | Boolean |  |  |
-| clearable | Boolean |  |  |
-| dir | unknown |  |  |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| max | [Number, String] |  |  |
-| maxlength | [Number, String] |  |  |
-| min | [Number, String] |  |  |
-| minlength | [Number, String] |  |  |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| placeholder | String |  |  |
-| preventEnter | Boolean |  |  |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| resizable | Boolean |  |  |
-| rows | unknown |  |  |
-| rules | unknown |  | (from useInputtable) |
-| showCounter | Boolean |  |  |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [Number, String] |  |  |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| adjustToText | Boolean |  | Auto-grows the height to fit the content. |
+| block | Boolean |  | Stretches to the full width of the parent. |
+| clearable | Boolean |  | Shows a clear button when the value is not empty. |
+| dir | String | ltr | Text direction for the textarea (`ltr` or `rtl`). |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] |  | Native `max` attribute when applicable. |
+| maxlength | [Number, String] |  | Maximum character length for the value. |
+| min | [Number, String] |  | Native `min` attribute when applicable. |
+| minlength | [Number, String] |  | Minimum character length for the value. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Placeholder text shown when the value is empty. |
+| preventEnter | Boolean |  | Prevents the Enter key from inserting a newline. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| resizable | Boolean |  | Allows the user to resize the textarea. |
+| rows | [Number, String] | 2 | Visible number of text lines. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| showCounter | Boolean |  | Shows a character counter in the footer. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
 
-### Slots & Events
-- **Slots:**
-  - `prefix`
-  - `suffix`
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `default`
+- `prefix`: Content before the textarea (left adornment).
+- `suffix`: Content after the textarea (right adornment).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -4677,42 +4750,43 @@ const sizes = ref('Text size')
 ```
 ---
 ## Toggle
-Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.
+Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| color | string | primary | (from useColors) |
-| disabled | Boolean |  | (from useInteractive) |
-| error | String |  | (from useInputtable) |
-| glow | Boolean |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| modelValue | unknown |  | (from useInputtable) |
-| name | String |  | (from useInputtable) |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| size | unknown |  | (from useCommon) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| validateOnInput | unknown |  | (from useInputtable) |
-| validator | (value: string) => validators.size.includes(value) |  | (from useCommon) |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow when the toggle is on. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- _(none)_
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -4772,16 +4846,17 @@ Tooltips display contextual help on hover. Use XToggleTip for a compact info-ico
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| disabled | Boolean |  |  |
-| position | unknown |  |  |
-| tag | unknown |  |  |
-| tooltip | String |  |  |
+| disabled | Boolean |  | Disables showing the tooltip. |
+| position | String TooltipPosition | bottom | Preferred placement relative to the trigger (top, bottom, left, right). |
+| tag | String | div | Root element tag wrapping the trigger. |
+| tooltip | String |  | Tooltip text shown on hover. Prefer the tooltip slot for custom content. |
 
-### Slots & Events
-- **Slots:**
-  - `tooltip`
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Trigger content the tooltip is attached to.
+- `tooltip`: Custom tooltip content; overrides the `tooltip` prop.
+
+### Events
+- _(none)_
 
 ### Demos
 #### Usage
@@ -4856,54 +4931,60 @@ const placements = ['top', 'bottom', 'left', 'right'] as const
 ```
 ---
 ## Upload
-Upload is a component that allows you to upload files.
+File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| accept | String |  |  |
-| action | String |  |  |
-| completed | boolean; |  |  |
-| disabled | Boolean |  | (from useInteractive) |
-| error | string; |  |  |
-| file | File; |  |  |
-| fileFormDataName | unknown |  |  |
-| headers | Object as PropType<Record<string, string>> |  |  |
-| helper | String |  | (from useInputtable) |
-| hideFooter | Boolean |  | (from useInputtable) |
-| id | String |  | (from useInputtable) |
-| label | String |  | (from useInputtable) |
-| loading | Boolean |  | (from useInteractive) |
-| loadingLabel | String |  | (from useInteractive) |
-| loadingStatus | unknown |  | (from useInteractive) |
-| maxFileSize | [Number, String] |  |  |
-| maxFiles | [Number, String] |  |  |
-| method | unknown |  |  |
-| modelValue | unknown |  | (from useInputtable) |
-| multiple | Boolean |  |  |
-| name | String |  | (from useInputtable) |
-| placeholder | String |  |  |
-| progress | number; |  |  |
-| readonly | Boolean |  | (from useInputtable) |
-| required | Boolean |  | (from useInputtable) |
-| rules | unknown |  | (from useInputtable) |
-| skipFormRegistry | Boolean |  | (from useInputtable) |
-| tooltip | String |  | (from useInputtable) |
-| type | [String, Number, Boolean, Object, Array] string  \|  number  \|  boolean  \|  object  \|  any[]  \|  undefined |  | (from useInputtable) |
-| validateOnInput | unknown |  | (from useInputtable) |
-| variant | unknown |  |  |
-| withCredentials | Boolean |  |  |
+| accept | String |  | Accepted file types (native `accept` attribute). |
+| action | String |  | URL to upload files to; enables remote upload mode when set. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| fileFormDataName | String | file | FormData field name for each uploaded file. |
+| headers | Object as PropType<Record<string |  | Additional HTTP headers sent with the upload request. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| maxFileSize | [Number, String] |  | Maximum file size in bytes. |
+| maxFiles | [Number, String] |  | Maximum number of files allowed. |
+| method | String 'POST'  \|  'PUT' | POST | HTTP method used when uploading to `action`. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| multiple | Boolean |  | Allows selecting more than one file. |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Text shown in the default drop zone. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| variant | String UploadVariant | box | Visual variant of the upload control. |
+| withCredentials | Boolean |  | Sends cookies/credentials with the upload request. |
 
-### Slots & Events
-- **Slots:**
-  - `box`
-  - `files`
-  - `removeIcon`
-- **Events:**
-  - `blur`
-  - `change`
-  - `focus`
-  - `input`
-  - `update:modelValue`
+### Slots
+- `box`: Custom drop zone UI (`is-over` when dragging files).
+- `default`
+- `files`: Custom file list (`files` upload state array).
+- `removeIcon`: Icon for the remove-file control.
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `remove`: Emitted when a file is removed from the list.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+- `upload`: Emitted when a file finishes uploading (remote mode).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
 
 ### Demos
 #### Usage
@@ -5037,17 +5118,37 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
 ```
 ---
 ## VirtualGrid
-VirtualGrid is a component that allows you to render a grid of items in a virtualized way. It is a high-performance component that is used to render large grids of items.
+Renders only visible cells of a large grid for better scroll performance. Use VirtualGrid when a dense grid would be too heavy to mount all at once.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| _(none)_ | | | |
+| cellProps | Object as PropType<Record<string |  | Extra props passed to the cell slot as `props`. |
+| class | String |  | CSS class name on the root element. |
+| columnCount | Number |  | Total number of columns in the grid. |
+| columnWidth | [Number, String, Function] |  | Column width as px, percent string, or a function of index. |
+| defaultHeight | Number | 0 | Initial grid height before measure; important for SSR. |
+| defaultWidth | Number | 0 | Initial grid width before measure; important for SSR. |
+| dir | String 'ltr'  \|  'rtl'  \|  'auto' |  | Text directionality for cell layout (ltr, rtl, or auto). |
+| onCellsRendered | Function as PropType<(       visibleCells: {         columnStartIndex: number;         columnStopIndex: number;         rowStartIndex: number;         rowStopIndex: number; |  | Called when the visible or overscan cell range changes. |
+| onResize | Function as PropType<(       size: { height: number; width: number; |  | Called when the grid root resizes. |
+| overscanCount | Number | 3 | Extra rows/columns rendered outside the visible area. |
+| rowCount | Number |  | Total number of rows in the grid. |
+| rowHeight | [Number, String, Function] |  | Row height as px, percent string, or a function of index. |
+| style | Object CSSProperties |  | Inline styles; the grid fills the size defined here. |
+| tag | String TagNames | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `cell`: Render a single cell. Receives columnIndex, rowIndex, style, ariaAttributes, and props.
+- `default`: Optional content rendered after the virtualized cells.
+
+### Events
+- _(none)_
+
+### Methods
+- `element`: Root HTML element when mounted, otherwise null.
+- `scrollToCell`: Scroll so the given cell (row and column) is visible.
+- `scrollToColumn`: Scroll so the given column index is visible.
+- `scrollToRow`: Scroll so the given row index is visible.
 
 ### Demos
 #### Usage
@@ -5078,17 +5179,31 @@ const gridColumnCount = 1000
 ```
 ---
 ## VirtualList
-VirtualList is a component that allows you to render a list of items in a virtualized way. It is a high-performance component that is used to render large lists of items.
+Renders only visible rows of a long list for better scroll performance. Use VirtualList for feeds and catalogs with thousands of items.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| _(none)_ | | | |
+| class | String |  | CSS class name on the root element. |
+| defaultHeight | Number | 0 | Initial list height before measure; important for SSR. |
+| onResize | Function as PropType<(       size: { height: number; width: number; |  | Called when the list root resizes. |
+| onRowsRendered | Function as PropType<(       visibleRows: { startIndex: number; stopIndex: number; |  | Called when the visible or overscan row range changes. |
+| overscanCount | Number | 3 | Extra rows rendered outside the visible area to reduce scroll flicker. |
+| rowCount | Number |  | Total number of rows in the list. |
+| rowHeight | [Number, String, Function, Object] |  | Row height as px, percent string, function, or `useDynamicRowHeight` cache. |
+| rowProps | Object as PropType<Record<string |  | Extra props passed to the row slot as `props`. |
+| style | Object CSSProperties |  | Inline styles; the list fills the height defined here. |
+| tag | String TagNames | div | Root element tag. |
 
-### Slots & Events
-- **Slots:**
-  - _(none)_
-- **Events:**
-  - _(none)_
+### Slots
+- `default`: Optional content rendered after the virtualized rows.
+- `row`: Render a single row. Receives index, style, ariaAttributes, and props.
+
+### Events
+- _(none)_
+
+### Methods
+- `element`: Root HTML element when mounted, otherwise null.
+- `scrollToRow`: Scroll so the given row index is visible.
 
 ### Demos
 #### Usage

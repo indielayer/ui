@@ -2,7 +2,7 @@
 
 > Vue 3 and Tailwind CSS component library for fast web apps. Documentation: https://indielayer.com
 
-Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Use the links below for per-component docs and demos. For a single large context file, see the Optional section.
+Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Prefer the markdown links below for API detail without loading the SPA. HTML docs remain at https://indielayer.com/component/<name>. For a single large context file, see the Optional section.
 
 ## Getting started
 
@@ -13,53 +13,53 @@ Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Us
 
 ## Components
 
-- [Accordion](https://indielayer.com/component/accordion): Accordion is a component that allows you to collapse and expand content.
-- [Alert](https://indielayer.com/component/alert): Alerts are used to communicate a state that affects a system, feature or page.
-- [Avatar](https://indielayer.com/component/avatar): Avatars are used to represent a user.
-- [Badge](https://indielayer.com/component/badge): Badges are used to display a small amount of information.
-- [Breadcrumbs](https://indielayer.com/component/breadcrumbs): Breadcrumbs are used to indicate the current page\
-- [Button](https://indielayer.com/component/button): Buttons allow users to perform actions and make choices with a single click. They are commonly used for submitting forms, opening dialogs or menus, and executing commands. Buttons can be customized with different styles, sizes, and icons to fit various use cases.
-- [Card](https://indielayer.com/component/card): Cards are used to display content in an organized manner.
-- [Carousel](https://indielayer.com/component/carousel): A carousel is a rotating set of images.
-- [Checkbox](https://indielayer.com/component/checkbox): Checkboxes enable users to select one or multiple options from a list. They are ideal for toggling settings or making selections where more than one choice is allowed. Each checkbox can be checked or unchecked independently.
-- [Container](https://indielayer.com/component/container): Containers provide a flexible layout element for grouping and organizing content. They help structure pages by controlling width, alignment, and spacing, ensuring consistent presentation across different sections.
-- [Datepicker](https://indielayer.com/component/datepicker): The datepicker component is used to select a date or time.
-- [Divider](https://indielayer.com/component/divider): Dividers are used to separate content.
-- [Drawer](https://indielayer.com/component/drawer): Drawers slide in from the edge of the screen to present navigation, options, or additional content without disrupting the main view. They are ideal for menus, filters, or contextual panels.
-- [Empty](https://indielayer.com/component/empty): Empty states communicate when there is no content to show. Use them in tables, lists, and panels with a title, description, optional icon, and actions.
-- [Form](https://indielayer.com/component/form): Forms provide a structured way to collect and validate user input, such as text, selections, and files. They support features like validation, grouping, and submission handling, making it easy to build interactive and accessible data entry interfaces.
-- [FormGroup](https://indielayer.com/component/formGroup): Form groups organize related form elements together, providing structure and shared validation. They help group checkboxes, radio buttons, or inputs that belong to the same logical section.
-- [Icon](https://indielayer.com/component/icon): Icons visually represent actions and concepts. Register SVG paths in a global map, then reference them by name on XIcon.
-- [Image](https://indielayer.com/component/image): Loads a remote image after preloading. Use a background on the wrapper for a visible placeholder until load completes.
-- [InfiniteLoader](https://indielayer.com/component/infiniteLoader): InfiniteLoader is a component that allows you to load data on demand as users scroll through a list.
-- [Input](https://indielayer.com/component/input): This is a text input component that allows users to enter and edit text.
-- [Input Group](https://indielayer.com/component/inputGroup): Input groups combine multiple inline fields (Input, Textarea, Select, Datepicker, Button) into one control with a shared label and footer.
-- [Link](https://indielayer.com/component/link): Links are used to navigate to a different page.
-- [Loader](https://indielayer.com/component/loader): Loader component is used to show a loading state.
-- [Menu](https://indielayer.com/component/menu): Menus are used to display a list of options.
-- [Modal](https://indielayer.com/component/modal): Modals are used to display content on top of the current page.
-- [Notifications](https://indielayer.com/component/notifications): Notifications provide timely feedback or alerts to users, such as success messages, warnings, or errors. They help keep users informed about important events or actions.
-- [Pagination](https://indielayer.com/component/pagination): Pagination divides large sets of content into manageable pages, allowing users to navigate through items efficiently. It is commonly used in tables, lists, and search results to improve usability and performance.
-- [Popover](https://indielayer.com/component/popover): Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.
-- [Progress](https://indielayer.com/component/progress): Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.
-- [QR Code](https://indielayer.com/component/qrCode): The QR Code component is used to generate a QR code.
-- [Radio](https://indielayer.com/component/radio): Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.
-- [Scroll](https://indielayer.com/component/scroll): The Scroll component enhances scrolling experiences by adding visual cues, such as inner shadows, to indicate additional content. It is useful for horizontally or vertically scrolling lists and containers.
-- [Select](https://indielayer.com/component/select): Selects allow the user to select one or more options from a set.
-- [Skeleton](https://indielayer.com/component/skeleton): Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.
-- [Slider](https://indielayer.com/component/slider): Sliders allow users to select a numeric value or range by dragging a handle along a track. They are ideal for adjusting settings such as volume, brightness, or price filters.
-- [Spacer](https://indielayer.com/component/spacer): Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.
-- [Spinner](https://indielayer.com/component/spinner): Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.
-- [Stepper](https://indielayer.com/component/stepper): Multi-step wizard with declarative steps, named panel slots, programmatic next/prev navigation, validation hooks, and optional sidebar summaries.
-- [Table](https://indielayer.com/component/table): Tables display tabular data with single- or multi-column sorting, selection, expandable rows, and virtual lists.
-- [Tabs](https://indielayer.com/component/tabs): Tabs are used to navigate through a set of views.
-- [Tag](https://indielayer.com/component/tag): Tags are compact elements used to display brief information, such as categories, statuses, or labels. They help organize content and provide quick context or filtering options within lists and interfaces.
-- [Textarea](https://indielayer.com/component/textarea): Textareas provide a multi-line input field for users to enter longer text, such as comments, descriptions, or messages. They support resizing and can be customized for different use cases.
-- [Toggle](https://indielayer.com/component/toggle): Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.
-- [Tooltip](https://indielayer.com/component/tooltip): Tooltips display contextual help on hover. Use XToggleTip for a compact info-icon pattern beside labels.
-- [Upload](https://indielayer.com/component/upload): Upload is a component that allows you to upload files.
-- [VirtualGrid](https://indielayer.com/component/virtualGrid): VirtualGrid is a component that allows you to render a grid of items in a virtualized way. It is a high-performance component that is used to render large grids of items.
-- [VirtualList](https://indielayer.com/component/virtualList): VirtualList is a component that allows you to render a list of items in a virtualized way. It is a high-performance component that is used to render large lists of items.
+- [Accordion](https://indielayer.com/md/component/accordion.md): Collapsible panels for showing and hiding related content. Use x-accordion with x-accordion-item when space is limited and users need progressive disclosure.
+- [Alert](https://indielayer.com/md/component/alert.md): Inline notices for system, feature, or page status—success, warning, error, or info. Use alerts when the message should stay visible until addressed.
+- [Avatar](https://indielayer.com/md/component/avatar.md): Displays a user's photo, initials, or icon in a compact frame. Use avatars in lists, headers, and comments to identify people at a glance.
+- [Badge](https://indielayer.com/md/component/badge.md): Small status indicators that overlay or sit beside another element—counts, labels, or presence dots. Use badges to draw attention without interrupting the layout.
+- [Breadcrumbs](https://indielayer.com/md/component/breadcrumbs.md): Shows the current page's place in a navigational hierarchy. Use breadcrumbs for deep page trees so users can jump back to parent sections.
+- [Button](https://indielayer.com/md/component/button.md): Clickable controls for primary actions—submit, open dialogs, or run commands. Customize style, size, and icons; group related actions with x-button-group.
+- [Card](https://indielayer.com/md/component/card.md): A bordered content container for grouping related information, media, and actions. Use cards in grids and dashboards when each block should stand alone.
+- [Carousel](https://indielayer.com/md/component/carousel.md): A sliding viewport for cycling through images or content panels. Use carousels for galleries and featured items when horizontal space is limited.
+- [Checkbox](https://indielayer.com/md/component/checkbox.md): Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active.
+- [Container](https://indielayer.com/md/component/container.md): Layout wrapper that constrains content width and alignment for consistent page structure. Use containers to center and pad main content across breakpoints.
+- [Datepicker](https://indielayer.com/md/component/datepicker.md): Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it for forms that need calendar or datetime selection with Indielayer look and feel.
+- [Divider](https://indielayer.com/md/component/divider.md): A horizontal or vertical rule that separates sections of content. Use dividers in lists, toolbars, and layouts to create clear visual breaks.
+- [Drawer](https://indielayer.com/md/component/drawer.md): Panels that slide in from the screen edge for navigation, filters, or extra content. Use drawers when side context should overlay without leaving the page.
+- [Empty](https://indielayer.com/md/component/empty.md): Empty states communicate when there is no content to show. Use them in tables, lists, and panels with a title, description, optional icon, and actions.
+- [Form](https://indielayer.com/md/component/form.md): Structured form wrapper for collecting and validating user input. Use x-form to group fields, run validation, and handle submit in one place.
+- [FormGroup](https://indielayer.com/md/component/formGroup.md): Groups related fields with a shared label and validation context. Use form groups for checkboxes, radios, or inputs that belong to one logical section.
+- [Icon](https://indielayer.com/md/component/icon.md): Icons visually represent actions and concepts. Register SVG paths in a global map, then reference them by name on XIcon.
+- [Image](https://indielayer.com/md/component/image.md): Loads a remote image after preloading. Use a background on the wrapper for a visible placeholder until load completes.
+- [InfiniteLoader](https://indielayer.com/md/component/infiniteLoader.md): Loads more list items as the user scrolls near the end of a container. Use InfiniteLoader for feeds and catalogs that grow on demand.
+- [Input](https://indielayer.com/md/component/input.md): Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data.
+- [Input Group](https://indielayer.com/md/component/inputGroup.md): Input groups combine multiple inline fields (Input, Textarea, Select, Datepicker, Button) into one control with a shared label and footer.
+- [Link](https://indielayer.com/md/component/link.md): Styled anchor for navigating to another page or external URL. Use x-link when you need consistent link styling, external indicators, and accessibility.
+- [Loader](https://indielayer.com/md/component/loader.md): Full-area loading overlay that blocks interaction while content or an action completes. Use Loader when the whole region should wait before continuing.
+- [Menu](https://indielayer.com/md/component/menu.md): Dropdown list of actionable items triggered from a button or other control. Use x-menu with x-menu-item for contextual actions and navigation.
+- [Modal](https://indielayer.com/md/component/modal.md): Dialog overlay that focuses attention on a task or message above the current page. Use modals for confirmations, forms, and details that need temporary focus.
+- [Notifications](https://indielayer.com/md/component/notifications.md): Toast-style feedback for success, warning, or error after an action. Use notifications for transient messages that should not block the page.
+- [Pagination](https://indielayer.com/md/component/pagination.md): Controls for moving through large result sets page by page. Use pagination with tables, lists, and search results to keep each view manageable.
+- [Popover](https://indielayer.com/md/component/popover.md): Floating panel anchored to a trigger for extra content or actions. Use popovers for menus and contextual UI without leaving the current view.
+- [Progress](https://indielayer.com/md/component/progress.md): Bar that shows how far a task or process has completed. Use progress for uploads, multi-step jobs, and determinate loading states.
+- [QR Code](https://indielayer.com/md/component/qrCode.md): Renders a QR code from a string or URL for scanning with mobile devices. Use it for share links, payments, and quick machine-readable payloads.
+- [Radio](https://indielayer.com/md/component/radio.md): Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.
+- [Scroll](https://indielayer.com/md/component/scroll.md): Scroll container with optional edge shadows that hint at more content. Use Scroll for overflow lists and panels that scroll vertically or horizontally.
+- [Select](https://indielayer.com/md/component/select.md): Dropdown for choosing one or more options from a predefined list. Use Select for enums, filters, and form fields where free text is not needed.
+- [Skeleton](https://indielayer.com/md/component/skeleton.md): Placeholder shapes that mirror content layout while data loads. Use skeletons to reduce layout shift and improve perceived loading performance.
+- [Slider](https://indielayer.com/md/component/slider.md): Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings.
+- [Spacer](https://indielayer.com/md/component/spacer.md): Flex-friendly gap that expands or shrinks between siblings without extra margin or padding. Use spacers to push items apart in toolbars and rows.
+- [Spinner](https://indielayer.com/md/component/spinner.md): Animated indicator that a background process is still running. Use spinners for indeterminate loading when completion percentage is unknown.
+- [Stepper](https://indielayer.com/md/component/stepper.md): Multi-step wizard with declarative steps, named panel slots, programmatic next/prev navigation, validation hooks, and optional sidebar summaries.
+- [Table](https://indielayer.com/md/component/table.md): Tables display tabular data with single- or multi-column sorting, selection, expandable rows, and virtual lists.
+- [Tabs](https://indielayer.com/md/component/tabs.md): Tabbed navigation that switches between related views in the same region. Use x-tab-group with x-tab when content shares context but not space.
+- [Tag](https://indielayer.com/md/component/tag.md): Compact labels for categories, statuses, or filters. Use tags in lists and chip groups when a short keyword should stand out.
+- [Textarea](https://indielayer.com/md/component/textarea.md): Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough.
+- [Toggle](https://indielayer.com/md/component/toggle.md): Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible.
+- [Tooltip](https://indielayer.com/md/component/tooltip.md): Tooltips display contextual help on hover. Use XToggleTip for a compact info-icon pattern beside labels.
+- [Upload](https://indielayer.com/md/component/upload.md): File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters.
+- [VirtualGrid](https://indielayer.com/md/component/virtualGrid.md): Renders only visible cells of a large grid for better scroll performance. Use VirtualGrid when a dense grid would be too heavy to mount all at once.
+- [VirtualList](https://indielayer.com/md/component/virtualList.md): Renders only visible rows of a long list for better scroll performance. Use VirtualList for feeds and catalogs with thousands of items.
 
 ## Repository
 

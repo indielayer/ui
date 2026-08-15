@@ -18,11 +18,21 @@ export const useInteractive = (
 }
 
 useInteractive.props = () => ({
-  disabled: Boolean,
-  loading: Boolean,
-  loadingLabel: String,
+  disabled: {
+    type: Boolean,
+    description: 'Disables interaction and applies disabled styling.',
+  },
+  loading: {
+    type: Boolean,
+    description: 'Shows a loading indicator and blocks interaction.',
+  },
+  loadingLabel: {
+    type: String,
+    description: 'Accessible label announced while loading.',
+  },
   loadingStatus: {
     type: String as PropType<LoaderStatus>,
     default: 'active',
+    description: 'Loader visual status (for example active or indeterminate).',
   },
 } as const)

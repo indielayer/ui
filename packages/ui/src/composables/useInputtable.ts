@@ -201,27 +201,83 @@ useInputtable.emits = (withListeners = true): string[] => {
     ['update:modelValue']
 }
 
+useInputtable.emitDocs = (withListeners = true): Record<string, string> => {
+  const docs: Record<string, string> = {
+    'update:modelValue': 'Emitted when the bound value changes (v-model).',
+  }
+
+  if (withListeners) {
+    docs.blur = 'Emitted when the field loses focus.'
+    docs.focus = 'Emitted when the field receives focus.'
+    docs.input = 'Emitted on native input events.'
+    docs.change = 'Emitted when the value is committed (change).'
+  }
+
+  return docs
+}
+
+useInputtable.methodDocs = (): Record<string, string> => ({
+  focus: 'Focus the underlying control.',
+  blur: 'Remove focus from the underlying control.',
+  reset: 'Reset the field value and validation state.',
+  validate: 'Run validation rules and return whether the field is valid.',
+  setError: 'Set an external error message on the field.',
+})
+
 useInputtable.props = () => ({
   modelValue: {
     type: [String, Number, Boolean, Object, Array] as PropType<string | number | boolean | object | any[] | undefined>,
     default: undefined,
+    description: 'Bound value (v-model).',
   },
-  id: String,
-  name: String,
-  readonly: Boolean,
-  required: Boolean,
+  id: {
+    type: String,
+    description: 'Native id attribute for the input element.',
+  },
+  name: {
+    type: String,
+    description: 'Native name attribute for form submission.',
+  },
+  readonly: {
+    type: Boolean,
+    description: 'Makes the field read-only without disabling it.',
+  },
+  required: {
+    type: Boolean,
+    description: 'Marks the field as required for validation.',
+  },
   validateOnInput: {
     type: Boolean,
     default: true,
+    description: 'Runs validation on each input event when true.',
   },
-  label: String,
-  helper: String,
-  error: String,
-  hideFooter: Boolean,
+  label: {
+    type: String,
+    description: 'Visible label text for the field.',
+  },
+  helper: {
+    type: String,
+    description: 'Helper text shown below the field.',
+  },
+  error: {
+    type: String,
+    description: 'External error message; overrides rule errors when set.',
+  },
+  hideFooter: {
+    type: Boolean,
+    description: 'Hides the footer area (helper / error).',
+  },
   rules: {
     type: Array,
     default: () => [],
+    description: 'Validation rule functions or rule descriptors.',
   },
-  tooltip: String,
-  skipFormRegistry: Boolean,
+  tooltip: {
+    type: String,
+    description: 'Optional tooltip text next to the label.',
+  },
+  skipFormRegistry: {
+    type: Boolean,
+    description: 'Skips registering this field with a parent x-form.',
+  },
 } as const)

@@ -6,16 +6,16 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Progress'
-const description = 'Progress indicators visually communicate the completion status of a task or process, such as file uploads or data loading. They help users understand how much work remains.'
+const description = 'Bar that shows how far a task or process has completed. Use progress for uploads, multi-step jobs, and determinate loading states.'
 const components = [XProgress]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }]

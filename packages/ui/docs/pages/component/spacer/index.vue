@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Spacer'
-const description = 'Spacers create adjustable gaps between elements within flex layouts, helping to control spacing and alignment without using margin or padding directly.'
+const description = 'Flex-friendly gap that expands or shrinks between siblings without extra margin or padding. Use spacers to push items apart in toolbars and rows.'
 const components = [XSpacer]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

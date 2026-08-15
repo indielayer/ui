@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Skeleton'
-const description = 'Skeletons provide placeholder elements that mimic the layout of content while data is loading. They improve perceived performance by giving users a visual cue that content is being fetched.'
+const description = 'Placeholder shapes that mirror content layout while data loads. Use skeletons to reduce layout shift and improve perceived loading performance.'
 const components = [XSkeleton]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

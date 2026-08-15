@@ -15,7 +15,7 @@ This will launch the official Indielayer UI project scaffolding tool, with promp
 ## Features
 
 - 50+ accessible, customizable UI components
-- Tailwind CSS v3 preset and theme integration
+- Tailwind CSS v4 theme tokens (`@indielayer/ui/tailwind.css`)
 - Vue 3 and Nuxt 3 support
 - Tree-shakable: import only what you need
 - Dark mode support
@@ -139,7 +139,7 @@ app.use(UI, {
 
 ### Colors
 
-Override CSS variables or Tailwind `@theme` tokens. See the [Colors](/colors) guide on the docs site.
+Override CSS variables or Tailwind `@theme` tokens. See the [Colors](https://indielayer.com/colors) guide on the docs site.
 
 ### Icons
 

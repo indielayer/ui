@@ -2,12 +2,13 @@
 import { optionalBooleanProp } from '../../common/props'
 
 const scrollProps = {
-  shadow: optionalBooleanProp(),
-  horizontal: optionalBooleanProp(),
-  mousewheel: optionalBooleanProp(),
+  shadow: optionalBooleanProp('Shows edge shadows when more content can be scrolled.'),
+  horizontal: optionalBooleanProp('Scrolls horizontally instead of vertically.'),
+  mousewheel: optionalBooleanProp('Maps vertical mouse wheel to horizontal scroll when `horizontal` is set.'),
   scrollbar: {
     type: Boolean,
     default: true,
+    description: 'Shows the native scrollbar. Set false to hide it.',
   },
 }
 
@@ -16,7 +17,17 @@ export type ScrollProps = ExtractPublicPropTypes<typeof scrollProps>
 type InternalClasses = 'wrapper'
 export interface ScrollTheme extends ThemeComponent<ScrollProps, InternalClasses> {}
 
-export default { name: 'XScroll' }
+export default {
+  name: 'XScroll',
+  docs: {
+    slots: {
+      default: 'Scrollable content.',
+    },
+    methods: {
+      scrollEl: 'Ref to the inner scrollable element.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

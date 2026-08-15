@@ -42,4 +42,4 @@ $ pnpm build
 
 Contributors using Cursor or other coding agents should read [AGENTS.md](../AGENTS.md) at the repo root. Project rules live in `.cursor/rules/`; workflows for new components, themes, docs, and releases are in `.cursor/skills/`.
 
-The docs site publishes [llms.txt](https://indielayer.com/llms.txt) and [llms-full.txt](https://indielayer.com/llms-full.txt) for LLM-friendly navigation; regenerate both with `cd packages/ui && pnpm gen:llms` after adding component documentation.
+The docs site publishes [llms.txt](https://indielayer.com/llms.txt), [llms-full.txt](https://indielayer.com/llms-full.txt), and per-component markdown under `/md/component/` for LLM-friendly navigation; regenerate with `cd packages/ui && pnpm gen:llms` after adding component documentation. Docs HTML is prerendered with `vite-ssg` via `pnpm build:docs`.

@@ -29,6 +29,7 @@ useDocMeta({
 
 const headers = [
   { text: 'Name', value: 'name' },
+  { text: 'Description', value: 'description' },
   { text: 'Type', value: 'type' },
   { text: 'Default', value: 'default' },
   { text: 'Values', value: 'validator' },
@@ -40,10 +41,25 @@ const headersSimple = [
   { text: 'Description', value: 'description' },
 ]
 
+function mapDocEntries(source: Record<string, unknown> | undefined) {
+  if (!source || typeof source !== 'object') return []
+
+  return Object.keys(source).map((name) => {
+    const value = source[name]
+    const description = typeof value === 'string'
+      ? value
+      : (value && typeof value === 'object' && 'description' in value
+        ? String((value as { description?: unknown; }).description || '')
+        : '')
+
+    return { name, description }
+  })
+}
+
 const componentsProperties = computed(() => {
   if (!props.components) return null
   const components = Array.isArray(props.components) ? props.components : [props.components]
-  const properties = {}
+  const properties: Record<string, Record<string, unknown[]>> = {}
 
   components.forEach((comp: any) => {
     const componentName = comp.name.slice(1)
@@ -71,37 +87,66 @@ const componentsProperties = computed(() => {
       ...comp.props,
     }
 
+    properties[componentName] = properties[componentName] || {}
+
     if (Object.keys(allProps).length > 0) {
       const mappedProps = Object.keys(allProps).map((key) => {
-        const propFrom = allProps[key].type ?? allProps[key]
-        let propDefault = allProps[key].default
+        const propDef = allProps[key]
+        const propFrom = propDef?.type ?? propDef
+        let propDefault = propDef?.default
         let propType = []
 
         if (Array.isArray(propFrom)) {
           propType = propFrom.map((type) => type.name)
         } else {
           propType = [propFrom.name]
-          if (propFrom.name === 'Boolean' && !propDefault) propDefault = false
+          if (propFrom.name === 'Boolean' && propDefault === undefined) propDefault = false
         }
 
         return {
           name: key,
+          description: typeof propDef?.description === 'string' ? propDef.description : '',
           default: propDefault,
-          required: allProps[key].required,
+          required: propDef?.required,
           validator: allValidators[key],
           type: propType,
         }
       })
 
-      properties[componentName] = { props: mappedProps, ...properties[componentName] }
+      properties[componentName].props = mappedProps
     }
 
-    ['methods', 'slots'].forEach((property) => {
-      if (comp[property]) properties[componentName][property] = Object.keys(comp[property]).map((k) => ({ name: k }))
-    })
+    const docs = comp.docs || {}
+    const slotDocs = mapDocEntries(docs.slots)
+    const methodDocs = mapDocEntries(docs.methods)
+    const emitDocs = docs.emits || {}
 
-    if (comp['emits']) properties[componentName]['emits'] = Array.isArray(comp['emits']) ? comp['emits'].map((k) => ({ name: k })) : Object.keys(comp['emits']).map((k) => ({ name: k }))
-    if (comp['expose']) properties[componentName]['methods'] = comp['expose'].map((k) => ({ name: k }))
+    if (slotDocs.length > 0) {
+      properties[componentName].slots = slotDocs
+    } else if (comp.slots) {
+      properties[componentName].slots = Object.keys(comp.slots).map((k) => ({ name: k, description: '' }))
+    }
+
+    if (comp.emits) {
+      const emitNames = Array.isArray(comp.emits) ? comp.emits : Object.keys(comp.emits)
+
+      properties[componentName].emits = emitNames.map((name: string) => ({
+        name,
+        description: typeof emitDocs[name] === 'string'
+          ? emitDocs[name]
+          : (emitDocs[name]?.description || ''),
+      }))
+    } else if (Object.keys(emitDocs).length > 0) {
+      properties[componentName].emits = mapDocEntries(emitDocs)
+    }
+
+    if (methodDocs.length > 0) {
+      properties[componentName].methods = methodDocs
+    } else if (comp.expose) {
+      properties[componentName].methods = comp.expose.map((k: string) => ({ name: k, description: '' }))
+    } else if (comp.methods) {
+      properties[componentName].methods = Object.keys(comp.methods).map((k) => ({ name: k, description: '' }))
+    }
   })
 
   return properties
@@ -112,19 +157,24 @@ const nextTo = computed(() => (props.next ? `/component/${props.next}` : null))
 </script>
 
 <template>
-  <div class="document-page w-full">
-    <div class="text-4xl font-semibold">
-      {{ title }}
-      <x-tooltip>
-        <x-link :href="`${github}/index.vue`" target="_blank" color="#94a3b8">
-          <x-icon icon="edit" size="sm" />
-        </x-link>
-        <template #tooltip>
-          Edit on <span class="text-gray-300">GitHub</span>
-        </template>
-      </x-tooltip>
+  <div class="document-page docs-container w-full">
+    <div class="flex items-start justify-between gap-4">
+      <div class="min-w-0">
+        <h1 class="text-4xl font-semibold">
+          {{ title }}
+          <x-tooltip>
+            <x-link :href="`${github}/index.vue`" target="_blank" color="#94a3b8">
+              <x-icon icon="edit" size="sm" />
+            </x-link>
+            <template #tooltip>
+              Edit on <span class="text-gray-300">GitHub</span>
+            </template>
+          </x-tooltip>
+        </h1>
+        <div class="text-lg my-2 text-gray-500 dark:text-gray-400">{{ description }}</div>
+      </div>
+      <docs-copy-page class="mt-1"/>
     </div>
-    <div class="text-lg my-2 text-gray-500 dark:text-gray-400">{{ description }}</div>
     <div class="mt-6 space-y-12">
       <slot></slot>
 
@@ -171,6 +221,9 @@ const nextTo = computed(() => (props.next ? `/component/${props.next}` : null))
                 >
                   <template #item-name="{ item }">
                     <div class="text-primary-500">{{ item.name }}</div>
+                  </template>
+                  <template #item-description="{ item }">
+                    <div class="text-secondary-600 dark:text-secondary-400">{{ item.description }}</div>
                   </template>
                   <template #item-type="{ item }">
                     <div v-for="t in item.type" :key="t">{{ t }}</div>

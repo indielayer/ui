@@ -1,27 +1,38 @@
 <script lang="ts">
 const drawerPosition = ['left', 'right', 'top', 'bottom'] as const
 const drawerProps = {
-  modelValue: Boolean,
+  modelValue: {
+    type: Boolean,
+    description: 'Open state (v-model).',
+  },
   position: {
     type: String as PropType<DrawerPosition>,
     default: 'left',
+    description: 'Edge the drawer attaches to (left, right, top, bottom).',
   },
   teleportTo: {
     type: [String, Object] as PropType<string | HTMLElement>,
     default: 'body',
+    description: 'Teleport target when the drawer is detached (overlay mode).',
   },
   width: {
     type: [String, Number],
     default: 220,
+    description: 'Panel width in pixels when position is left or right.',
   },
   height: {
     type: [String, Number],
     default: 320,
+    description: 'Panel height in pixels when position is top or bottom.',
   },
-  breakpoint: [String, Number],
+  breakpoint: {
+    type: [String, Number],
+    description: 'Below this viewport size the drawer becomes an overlay. Tailwind key or pixel width.',
+  },
   backdrop: {
     type: Boolean,
     default: true,
+    description: 'Shows a dimmed backdrop behind the drawer when detached.',
   },
 }
 
@@ -36,6 +47,20 @@ export default {
   inheritAttrs: false,
   validators: {
     position: drawerPosition,
+  },
+  docs: {
+    slots: {
+      default: 'Main drawer body (scrollable).',
+      header: 'Content above the scrollable body.',
+      footer: 'Content below the scrollable body.',
+    },
+    emits: {
+      'update:modelValue': 'Emitted when open state changes (v-model).',
+    },
+    methods: {
+      open: 'Open the drawer.',
+      close: 'Close the drawer.',
+    },
   },
 }
 </script>

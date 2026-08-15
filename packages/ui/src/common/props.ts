@@ -15,20 +15,21 @@ import type { Prop } from 'vue'
  * Plain `Boolean` props are cast to `false` when absent in Vue 3.
  * @see https://vuejs.org/guide/components/props.html#boolean-casting
  */
-export function optionalBooleanProp(): Prop<boolean | undefined> {
+export function optionalBooleanProp(description?: string): Prop<boolean | undefined> {
   return {
     type: Boolean,
     default: undefined,
-  }
+    ...(description ? { description } : {}),
+  } as Prop<boolean | undefined>
 }
 
 /** Shared variant booleans for Button and ButtonGroup. */
 export const variantBooleanProps = () => ({
-  outlined: optionalBooleanProp(),
-  rounded: optionalBooleanProp(),
-  glow: optionalBooleanProp(),
-  ghost: optionalBooleanProp(),
-  light: optionalBooleanProp(),
-  flat: optionalBooleanProp(),
-  block: optionalBooleanProp(),
+  outlined: optionalBooleanProp('Outline style with a transparent fill.'),
+  rounded: optionalBooleanProp('Fully rounded corners (pill shape).'),
+  glow: optionalBooleanProp('Soft colored glow behind the control.'),
+  ghost: optionalBooleanProp('Minimal style with no background until hover.'),
+  light: optionalBooleanProp('Tinted background using the color at low opacity.'),
+  flat: optionalBooleanProp('Removes elevation and border emphasis.'),
+  block: optionalBooleanProp('Stretches to the full width of the parent.'),
 })

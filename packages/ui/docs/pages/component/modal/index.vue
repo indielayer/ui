@@ -6,16 +6,16 @@ import ComposedDemoCode from './composed.vue?raw'
 import ComposedDemo from './composed.vue'
 
 const title = 'Modal'
-const description = 'Modals are used to display content on top of the current page.'
+const description = 'Dialog overlay that focuses attention on a task or message above the current page. Use modals for confirmations, forms, and details that need temporary focus.'
 const components = [XModal]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Composed',
-  description: '',
+  description: 'Modal with header, body, and footer slots.',
   code: ComposedDemoCode,
   component: ComposedDemo,
 }]

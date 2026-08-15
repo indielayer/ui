@@ -1,10 +1,11 @@
 /**
  * Generates public/llms.txt and public/llms-full.txt for the docs site (https://llmstxt.org/).
+ * Also writes public/md/component/<slug>.md per-component markdown for agents.
  * Reads docs/search/components.json (from gen:search).
  */
 const fs = require('fs')
 const path = require('path')
-const { main: generateLlmsFull } = require('./gen-llms-full.cjs')
+const { main: generateLlmsFull, writeComponentMarkdownFiles } = require('./gen-llms-full.cjs')
 
 const DOCS_BASE = 'https://indielayer.com'
 const COMPONENTS_JSON = path.join(__dirname, '../docs/search/components.json')
@@ -24,7 +25,8 @@ function main() {
   const componentLines = components
     .sort((a, b) => a.name.localeCompare(b.name))
     .map((c) => {
-      const url = `${DOCS_BASE}${c.url}`
+      const slug = c.url.replace('/component/', '')
+      const url = `${DOCS_BASE}/md/component/${slug}.md`
       const desc = escapeMarkdown(c.description)
       return `- [${c.name}](${url}): ${desc}`
     })
@@ -34,7 +36,7 @@ function main() {
 
 > Vue 3 and Tailwind CSS component library for fast web apps. Documentation: ${DOCS_BASE}
 
-Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Use the links below for per-component docs and demos. For a single large context file, see the Optional section.
+Indielayer UI provides accessible, themeable components for Vue 3 and Nuxt 3. Prefer the markdown links below for API detail without loading the SPA. HTML docs remain at ${DOCS_BASE}/component/<name>. For a single large context file, see the Optional section.
 
 ## Getting started
 
@@ -60,6 +62,7 @@ ${componentLines}
 
   fs.writeFileSync(OUTPUT, content)
   console.log(`llms.txt written (${components.length} components)`)
+  writeComponentMarkdownFiles(components)
   generateLlmsFull()
 }
 

@@ -8,21 +8,21 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Toggle'
-const description = 'Toggles provide a simple switch interface for enabling or disabling a setting, or switching between two mutually exclusive states. They are ideal for binary options such as on/off, active/inactive, or show/hide.'
+const description = 'Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible.'
 const components = [XToggle]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]

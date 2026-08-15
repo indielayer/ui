@@ -5,57 +5,93 @@ const tableProps = {
   headers: {
     type: Array as PropType<TableHeader[]>,
     default: () => [],
+    description: 'Column definitions (text, value, sortable, align, width, etc.).',
   },
   items: {
     type: Array,
     default: () => [],
+    description: 'Row data array. Cell values resolve from each header `value` path.',
   },
   sort: {
     type: Array as PropType<string[]>,
     default: () => [],
+    description: 'Active sort entries as `column,-1|1` (use with `v-model:sort`).',
   },
-  sortMultiple: optionalBooleanProp(),
-  loading: Boolean,
-  loadingSkeleton: Boolean,
+  sortMultiple: optionalBooleanProp('Allow sorting by multiple columns at once.'),
+  loading: {
+    type: Boolean,
+    description: 'Shows loading rows (skeletons) and a spinner overlay.',
+  },
+  loadingSkeleton: {
+    type: Boolean,
+    description: 'When set, loading rows use skeleton placeholders.',
+  },
   loadingLines: {
     type: [Number, String],
     default: 3,
+    description: 'Number of skeleton rows shown while loading.',
   },
-  error: Boolean,
-  dense: optionalBooleanProp(),
-  fixed: optionalBooleanProp(),
-  striped: optionalBooleanProp(),
-  pointer: optionalBooleanProp(),
+  error: {
+    type: Boolean,
+    description: 'Shows the error slot instead of rows.',
+  },
+  dense: optionalBooleanProp('Compact cell padding.'),
+  fixed: optionalBooleanProp('Fixed table layout for consistent column widths.'),
+  striped: optionalBooleanProp('Alternating row background colors.'),
+  pointer: optionalBooleanProp('Pointer cursor on rows (also set when `toFn` or `hrefFn` is used).'),
   scrollable: {
     type: Boolean,
     default: true,
+    description: 'Enables horizontal overflow scrolling for wide tables.',
   },
   stickyHeader: {
     type: Boolean,
     default: true,
+    description: 'Keeps the header row sticky while scrolling.',
   },
-  expandable: optionalBooleanProp(),
-  virtualList: optionalBooleanProp(),
-  virtualListOffsetTop: Number,
-  virtualListOffsetBottom: Number,
+  expandable: optionalBooleanProp('Adds an expand control and `expanded-row` slot per row.'),
+  virtualList: optionalBooleanProp('Virtualizes rows for large datasets.'),
+  virtualListOffsetTop: {
+    type: Number,
+    description: 'Top spacer offset (px) when using virtual list.',
+  },
+  virtualListOffsetBottom: {
+    type: Number,
+    description: 'Bottom spacer offset (px) when using virtual list.',
+  },
   virtualListItemHeight: {
     type: Number,
     default: 54,
+    description: 'Fixed row height (px) for virtual list measurement.',
   },
   virtualListOverscan: {
     type: Number,
     default: 10,
+    description: 'Extra rows rendered above/below the viewport when virtualized.',
   },
-  keyProp: String,
-  selectable: optionalBooleanProp(),
-  singleSelect: optionalBooleanProp(),
+  keyProp: {
+    type: String,
+    description: 'Item property used as the stable row key (falls back to index).',
+  },
+  selectable: optionalBooleanProp('Enables row selection (`v-model:selected`).'),
+  singleSelect: optionalBooleanProp('Select only one row at a time.'),
   autoClearSelected: {
     type: Boolean,
     default: true,
+    description: 'Clears selection entries that no longer exist in `items`.',
   },
-  toFn: Function as PropType<(item: unknown) => string | Record<string, unknown> | undefined>,
-  hrefFn: Function as PropType<(item: unknown) => string>,
-  hrefTarget: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
+  toFn: {
+    type: Function as PropType<(item: unknown) => string | Record<string, unknown> | undefined>,
+    description: 'Returns a Vue Router location to make each cell a link.',
+  },
+  hrefFn: {
+    type: Function as PropType<(item: unknown) => string>,
+    description: 'Returns an href to make each cell an anchor.',
+  },
+  hrefTarget: {
+    type: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
+    description: 'Target for links created by `hrefFn`.',
+  },
 }
 
 export type TableHeader = {
@@ -75,7 +111,28 @@ export type TableProps = ExtractPublicPropTypes<typeof tableProps>
 type InternalClasses = 'wrapper' | 'table' | 'loadingWrapper'
 export interface TableTheme extends ThemeComponent<TableProps, InternalClasses> {}
 
-export default { name: 'XTable' }
+export default {
+  name: 'XTable',
+  docs: {
+    slots: {
+      title: 'Optional title above the table.',
+      actions: 'Optional actions above the table.',
+      'header-[column]': 'Header cell content for a column (`header-{value}`).',
+      'item-[column]': 'Cell content for a column (`item-{value}`).',
+      'loading-[column]': 'Loading cell content for a column (`loading-{value}`).',
+      'footer-[column]': 'Footer cell content for a column (`footer-{value}`).',
+      footer: 'Custom footer (`tfoot`); overrides per-column footer slots when provided.',
+      empty: 'Content when there are no items.',
+      error: 'Content when `error` is true.',
+      'expanded-row': 'Expanded content for a row when `expandable` is set.',
+    },
+    emits: {
+      'update:sort': 'Emitted when sort changes (`v-model:sort`).',
+      'update:selected': 'Emitted when selection changes (`v-model:selected`).',
+      'click-row': 'Emitted when a row is clicked; payload is `(item, index)`.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts" generic="T">

@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Menu'
-const description = 'Menus are used to display a list of options.'
+const description = 'Dropdown list of actionable items triggered from a button or other control. Use x-menu with x-menu-item for contextual actions and navigation.'
 const components = [XMenu, XMenuItem]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

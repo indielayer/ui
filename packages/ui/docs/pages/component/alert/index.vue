@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Alert'
-const description = 'Alerts are used to communicate a state that affects a system, feature or page.'
+const description = 'Inline notices for system, feature, or page status—success, warning, error, or info. Use alerts when the message should stay visible until addressed.'
 const components = [XAlert]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

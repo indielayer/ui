@@ -10,7 +10,10 @@ alwaysApply: false
 - Demo SFCs (`usage.vue`, `variants.vue`, …) are imported into `index.vue`, not routed directly
 - Demos use kebab-case components: `<x-button>`, `<x-divider>`
 - Import components from `@indielayer/ui`; use `?raw` imports for code preview snippets
-- Wire `back` / `next` to adjacent component folder names (lowercase)
+- Wire `back` / `next` to adjacent component folder names (preserve casing)
 - Wrap content in `<document-page>` — see `docs/pages/component/button/index.vue`
-- After adding docs: `cd packages/ui && pnpm gen:search && pnpm gen:llms` (writes `llms.txt` and `llms-full.txt`)
+- Page `description` should be a factual 1–2 sentence blurb; fill every demo `description`
+- Component API copy lives in the SFC: prop `description` fields + `docs: { slots, emits, methods }` on the default export (see `Button.vue`); DocumentPage and `pnpm gen:llms` consume them
+- After adding docs: `cd packages/ui && pnpm gen:search && pnpm gen:llms && pnpm gen:sitemap` (writes `llms.txt`, `llms-full.txt`, and `public/md/component/*.md`)
 - After editing docs: `pnpm eslint --cache --fix --ext .js,.ts,.vue packages/ui/docs` — CI runs `pnpm lint:ui` (includes `docs/`)
+- Docs production build uses `vite-ssg` (`pnpm build:docs`) so routes are prerendered for crawlers

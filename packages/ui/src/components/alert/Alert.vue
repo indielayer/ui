@@ -4,12 +4,18 @@ import { optionalBooleanProp } from '../../common/props'
 const alertType = ['info', 'success', 'error', 'warning'] as const
 const alertProps = {
   ...useColors.props(),
-  type: String as PropType<AlertType>,
-  glow: optionalBooleanProp(),
-  light: optionalBooleanProp(),
-  outlined: optionalBooleanProp(),
-  removable: optionalBooleanProp(),
-  closeLabel: String,
+  type: {
+    type: String as PropType<AlertType>,
+    description: 'Semantic alert type (info, success, error, warning). Controls the default icon.',
+  },
+  glow: optionalBooleanProp('Soft colored glow behind the alert.'),
+  light: optionalBooleanProp('Tinted background using the color at low opacity.'),
+  outlined: optionalBooleanProp('Outline style with a transparent fill.'),
+  removable: optionalBooleanProp('Shows a close control that emits `remove`.'),
+  closeLabel: {
+    type: String,
+    description: 'Accessible label for the remove button.',
+  },
 }
 
 export type AlertType = typeof alertType[number]
@@ -22,6 +28,16 @@ export default {
   name: 'XAlert',
   validators: {
     type: alertType,
+  },
+  docs: {
+    slots: {
+      default: 'Alert message content.',
+      icon: 'Custom icon; overrides the type-based icon.',
+      removeIcon: 'Custom icon for the remove button.',
+    },
+    emits: {
+      remove: 'Emitted when the remove button is clicked.',
+    },
   },
 }
 </script>

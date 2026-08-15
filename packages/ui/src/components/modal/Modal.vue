@@ -5,46 +5,92 @@ const modalProps = {
   size: {
     type: String as PropType<ModalSize>,
     default: 'lg',
+    description: 'Dialog width preset (xs, sm, md, lg, xl, full).',
   },
   position: {
     type: String as PropType<ModalPosition>,
     default: 'center',
+    description: 'Vertical placement of the dialog (top, center, bottom).',
   },
-  modelValue: Boolean,
-  showClose: Boolean,
+  modelValue: {
+    type: Boolean,
+    description: 'Open state (v-model).',
+  },
+  showClose: {
+    type: Boolean,
+    description: 'Shows a close button in the corner.',
+  },
   backdrop: {
     type: Boolean,
     default: true,
+    description: 'Shows a dimmed backdrop behind the dialog.',
   },
   hasActions: {
     type: Boolean,
     default: true,
+    description: 'Renders the default actions footer region when no footer slot is used.',
   },
   hasHeader: {
     type: Boolean,
     default: true,
+    description: 'Renders the default header region when no header slot is used.',
   },
-  title: String,
-  description: String,
-  label: String,
-  loading: Boolean,
-  loadingText: String,
-  fluid: Boolean,
+  title: {
+    type: String,
+    description: 'Header title text.',
+  },
+  description: {
+    type: String,
+    description: 'Body description shown above the default slot.',
+  },
+  label: {
+    type: String,
+    description: 'Small label above the title in the header.',
+  },
+  loading: {
+    type: Boolean,
+    description: 'Loading state for the modal (theme/visual).',
+  },
+  loadingText: {
+    type: String,
+    description: 'Text shown while loading.',
+  },
+  fluid: {
+    type: Boolean,
+    description: 'Stretches the dialog to fill available width within its size.',
+  },
 
   // form props
-  isForm: Boolean,
-  formDisabled: Boolean,
-  formDescription: String,
-  formTitle: String,
+  isForm: {
+    type: Boolean,
+    description: 'Wraps content in x-form and enables form submit handling.',
+  },
+  formDisabled: {
+    type: Boolean,
+    description: 'Disables the inner form when `isForm` is set.',
+  },
+  formDescription: {
+    type: String,
+    description: 'Description passed to the inner form when `isForm` is set.',
+  },
+  formTitle: {
+    type: String,
+    description: 'Title passed to the inner form when `isForm` is set.',
+  },
   formAutoValidate: {
     type: Boolean,
     default: true,
+    description: 'Auto-validate the inner form on submit when `isForm` is set.',
   },
   formErrors: {
     type: [Array, Object] as PropType<FormError[] | FormError>,
     default: () => ([]),
+    description: 'External form errors passed to the inner form when `isForm` is set.',
   },
-  persistent: Boolean,
+  persistent: {
+    type: Boolean,
+    description: 'Prevents closing on Escape or backdrop click.',
+  },
 }
 
 export type ModalSize = typeof modalSize[number]
@@ -62,6 +108,28 @@ export default {
   validators: {
     size: modalSize,
     position: modalPosition,
+  },
+  docs: {
+    slots: {
+      default: 'Main modal body content.',
+      image: 'Optional media above the header.',
+      header: 'Replaces the default header region.',
+      'header-content': 'Custom header content inside the default header layout.',
+      footer: 'Replaces the default actions footer.',
+      actions: 'Custom actions row inside the default footer.',
+      'cancel-action': 'Cancel / dismiss control in the actions row.',
+      'tertiary-action': 'Tertiary action control in the actions row.',
+      'secondary-action': 'Secondary action control in the actions row.',
+      'primary-action': 'Primary action control in the actions row.',
+    },
+    emits: {
+      'update:modelValue': 'Emitted when open state changes (v-model).',
+      submit: 'Emitted when the inner form submits. Payload is the validation result.',
+    },
+    methods: {
+      open: 'Open the modal.',
+      close: 'Close the modal.',
+    },
   },
 }
 </script>
@@ -112,6 +180,13 @@ watch(() => props.modelValue, checkVisibility, { immediate: true })
 
 async function checkVisibility() {
   const val = props.modelValue
+
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
+    value.value = val
+    visible.value = val
+
+    return
+  }
 
   if (val) {
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth

@@ -3,21 +3,34 @@ const formProps = {
   autoValidate: {
     type: Boolean,
     default: true,
+    description: 'Runs validation on all registered fields before emitting submit.',
   },
   autoFocus: {
     type: Boolean,
     default: true,
+    description: 'Focuses the first registered field when the form mounts.',
   },
-  disabled: Boolean,
+  disabled: {
+    type: Boolean,
+    description: 'Disables all fields inside the form fieldset.',
+  },
   errors: {
     type: [Array, Object] as PropType<FormError[] | FormError>,
     default: () => ([]),
+    description: 'External field errors (`field` + `msg`) applied to registered inputs.',
   },
-  title: String,
-  description: String,
+  title: {
+    type: String,
+    description: 'Optional title shown in the default header.',
+  },
+  description: {
+    type: String,
+    description: 'Optional description shown under the title in the default header.',
+  },
   hasFooter: {
     type: Boolean,
     default: true,
+    description: 'Renders the footer slot area for form actions.',
   },
 }
 
@@ -46,6 +59,22 @@ export interface FormTheme extends ThemeComponent<FormProps, InternalClasses> {}
 
 export default {
   name: 'XForm',
+  docs: {
+    slots: {
+      default: 'Form fields and content inside the fieldset.',
+      header: 'Custom header; overrides the default title/description block.',
+      footer: 'Custom footer; wraps primary and secondary actions by default.',
+      'primary-action': 'Primary action control in the default footer.',
+      'secondary-action': 'Secondary action control in the default footer.',
+    },
+    emits: {
+      submit: 'Emitted on form submit with whether validation passed.',
+    },
+    methods: {
+      validate: 'Validate all registered fields; focuses the first invalid field.',
+      submit: 'Programmatically submit the form (runs auto-validate when enabled).',
+    },
+  },
 }
 </script>
 

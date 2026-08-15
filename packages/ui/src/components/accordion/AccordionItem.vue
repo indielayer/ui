@@ -6,17 +6,26 @@ const accordionItemProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
-  disabled: Boolean,
-  expanded: optionalBooleanProp(),
+  disabled: {
+    type: Boolean,
+    description: 'Prevents expanding and collapsing.',
+  },
+  expanded: optionalBooleanProp('Whether the item content starts expanded.'),
   showIcon: {
     type: Boolean,
     default: true,
+    description: 'Shows the expand/collapse icon.',
   },
-  icon: String,
+  icon: {
+    type: String,
+    description: 'Custom expand/collapse icon name. Falls back to a chevron.',
+  },
   iconAlign: {
     type: String as PropType<AccordionItemAlign>,
     default: 'right',
+    description: 'Icon placement relative to the header (left or right).',
   },
 }
 
@@ -34,6 +43,22 @@ export default {
   name: 'XAccordionItem',
   validators: {
     iconAlign: accordionItemAlign,
+  },
+  docs: {
+    slots: {
+      default: 'Header label. Slot props: expand, collapsed.',
+      summary: 'Optional summary below the header. Slot props: expand, collapsed.',
+      content: 'Collapsible body. Slot props: expand, collapsed.',
+    },
+    emits: {
+      expand: 'Emitted when expand() is called from a slot.',
+      change: 'Emitted when expanded state changes. Payload is the new expanded boolean.',
+    },
+    methods: {
+      toggle: 'Toggle expanded state when not disabled.',
+      open: 'Expand the item. Pass false to skip animation.',
+      close: 'Collapse the item. Pass false to skip animation.',
+    },
   },
 }
 </script>

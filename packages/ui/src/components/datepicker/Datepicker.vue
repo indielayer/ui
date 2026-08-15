@@ -1,122 +1,420 @@
 <script lang="ts">
+const VDP_DESC = 'Passed through to @vuepic/vue-datepicker.'
+
 const vueDatepickerProps = {
-  multiCalendars: { type: [Boolean, Number, String, Object] as PropType<VueDatePickerProps['multiCalendars']>, default: undefined },
-  modelValue: { type: [String, Date, Array, Object, Number] as PropType<ModelValue>, default: null },
-  modelType: { type: String as PropType<VueDatePickerProps['modelType']>, default: null },
-  position: { type: String as PropType<VueDatePickerProps['position']>, default: 'center' },
-  dark: { type: Boolean as PropType<boolean>, default: false },
+  multiCalendars: {
+    type: [Boolean, Number, String, Object] as PropType<VueDatePickerProps['multiCalendars']>, default: undefined,
+    description: VDP_DESC,
+  },
+  modelValue: {
+    type: [String, Date, Array, Object, Number] as PropType<ModelValue>, default: null,
+    description: VDP_DESC,
+  },
+  modelType: {
+    type: String as PropType<VueDatePickerProps['modelType']>, default: null,
+    description: VDP_DESC,
+  },
+  position: {
+    type: String as PropType<VueDatePickerProps['position']>, default: 'center',
+    description: VDP_DESC,
+  },
+  dark: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
   format: {
     type: [String, Function] as PropType<VueDatePickerProps['format']>,
     default: () => null,
+    description: VDP_DESC,
   },
-  autoPosition: { type: Boolean as PropType<boolean>, default: true },
-  altPosition: { type: Function as PropType<VueDatePickerProps['altPosition']>, default: null },
-  transitions: { type: [Boolean, Object] as PropType<boolean | Partial<VueDatePickerProps['transitions']>>, default: true },
-  formatLocale: { type: Object as PropType<Locale>, default: null },
-  utc: { type: [Boolean, String] as PropType<boolean | 'preserve'>, default: false },
-  ariaLabels: { type: Object as PropType<Partial<VueDatePickerProps['ariaLabels']>>, default: () => ({}) },
-  offset: { type: [Number, String] as PropType<number | string>, default: 10 },
-  hideNavigation: { type: Array as PropType<VueDatePickerProps['hideNavigation']>, default: () => [] },
-  timezone: { type: [String, Object] as PropType<VueDatePickerProps['timezone']>, default: null },
-  vertical: { type: Boolean as PropType<boolean>, default: false },
-  disableMonthYearSelect: { type: Boolean as PropType<boolean>, default: false },
-  disableYearSelect: { type: Boolean as PropType<boolean>, default: false },
-  dayClass: { type: Function as PropType<(date: Date) => string>, default: null },
-  yearRange: { type: Array as PropType<number[]>, default: () => [1900, 2100] },
-  enableTimePicker: { type: Boolean as PropType<boolean>, default: true },
-  autoApply: { type: Boolean as PropType<boolean>, default: false },
-  disabledDates: { type: [Array, Function] as PropType<VueDatePickerProps['disabledDates']>, default: () => [] },
-  monthNameFormat: { type: String as PropType<'long' | 'short'>, default: 'short' },
-  startDate: { type: [Date, String] as PropType<string | Date>, default: null },
-  startTime: { type: [Object, Array] as PropType<VueDatePickerProps['startTime']>, default: null },
-  hideOffsetDates: { type: Boolean as PropType<boolean>, default: false },
-  noToday: { type: Boolean as PropType<boolean>, default: false },
-  disabledWeekDays: { type: Array as PropType<string[] | number[]>, default: () => [] },
-  allowedDates: { type: Array as PropType<string[] | Date[]>, default: null },
-  nowButtonLabel: { type: String as PropType<string>, default: 'Now' },
-  markers: { type: Array as PropType<VueDatePickerProps['markers']>, default: () => [] },
-  escClose: { type: Boolean as PropType<boolean>, default: true },
-  spaceConfirm: { type: Boolean as PropType<boolean>, default: true },
-  monthChangeOnArrows: { type: Boolean as PropType<boolean>, default: true },
-  presetDates: { type: Array as PropType<VueDatePickerProps['presetDates']>, default: () => [] },
-  flow: { type: Array as PropType<VueDatePickerProps['flow']>, default: () => [] },
-  partialFlow: { type: Boolean as PropType<boolean>, default: false },
-  preventMinMaxNavigation: { type: Boolean as PropType<boolean>, default: false },
-  reverseYears: { type: Boolean as PropType<boolean>, default: false },
-  weekPicker: { type: Boolean as PropType<boolean>, default: false },
-  filters: { type: Object as PropType<Partial<VueDatePickerProps['filters']>>, default: () => ({}) },
-  arrowNavigation: { type: Boolean as PropType<boolean>, default: false },
+  autoPosition: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  altPosition: {
+    type: Function as PropType<VueDatePickerProps['altPosition']>, default: null,
+    description: VDP_DESC,
+  },
+  transitions: {
+    type: [Boolean, Object] as PropType<boolean | Partial<VueDatePickerProps['transitions']>>, default: true,
+    description: VDP_DESC,
+  },
+  formatLocale: {
+    type: Object as PropType<Locale>, default: null,
+    description: VDP_DESC,
+  },
+  utc: {
+    type: [Boolean, String] as PropType<boolean | 'preserve'>, default: false,
+    description: VDP_DESC,
+  },
+  ariaLabels: {
+    type: Object as PropType<Partial<VueDatePickerProps['ariaLabels']>>, default: () => ({}),
+    description: VDP_DESC,
+  },
+  offset: {
+    type: [Number, String] as PropType<number | string>, default: 10,
+    description: VDP_DESC,
+  },
+  hideNavigation: {
+    type: Array as PropType<VueDatePickerProps['hideNavigation']>, default: () => [],
+    description: VDP_DESC,
+  },
+  timezone: {
+    type: [String, Object] as PropType<VueDatePickerProps['timezone']>, default: null,
+    description: VDP_DESC,
+  },
+  vertical: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  disableMonthYearSelect: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  disableYearSelect: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  dayClass: {
+    type: Function as PropType<(date: Date) => string>, default: null,
+    description: VDP_DESC,
+  },
+  yearRange: {
+    type: Array as PropType<number[]>, default: () => [1900, 2100],
+    description: VDP_DESC,
+  },
+  enableTimePicker: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  autoApply: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  disabledDates: {
+    type: [Array, Function] as PropType<VueDatePickerProps['disabledDates']>, default: () => [],
+    description: VDP_DESC,
+  },
+  monthNameFormat: {
+    type: String as PropType<'long' | 'short'>, default: 'short',
+    description: VDP_DESC,
+  },
+  startDate: {
+    type: [Date, String] as PropType<string | Date>, default: null,
+    description: VDP_DESC,
+  },
+  startTime: {
+    type: [Object, Array] as PropType<VueDatePickerProps['startTime']>, default: null,
+    description: VDP_DESC,
+  },
+  hideOffsetDates: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  noToday: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  disabledWeekDays: {
+    type: Array as PropType<string[] | number[]>, default: () => [],
+    description: VDP_DESC,
+  },
+  allowedDates: {
+    type: Array as PropType<string[] | Date[]>, default: null,
+    description: VDP_DESC,
+  },
+  nowButtonLabel: {
+    type: String as PropType<string>, default: 'Now',
+    description: VDP_DESC,
+  },
+  markers: {
+    type: Array as PropType<VueDatePickerProps['markers']>, default: () => [],
+    description: VDP_DESC,
+  },
+  escClose: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  spaceConfirm: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  monthChangeOnArrows: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  presetDates: {
+    type: Array as PropType<VueDatePickerProps['presetDates']>, default: () => [],
+    description: VDP_DESC,
+  },
+  flow: {
+    type: Array as PropType<VueDatePickerProps['flow']>, default: () => [],
+    description: VDP_DESC,
+  },
+  partialFlow: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  preventMinMaxNavigation: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  reverseYears: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  weekPicker: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  filters: {
+    type: Object as PropType<Partial<VueDatePickerProps['filters']>>, default: () => ({}),
+    description: VDP_DESC,
+  },
+  arrowNavigation: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
   highlight: {
     type: [Function, Object] as PropType<VueDatePickerProps['highlight']>,
     default: null,
+    description: VDP_DESC,
   },
-  teleport: { type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: null },
-  teleportCenter: { type: Boolean as PropType<boolean>, default: false },
-  locale: { type: String as PropType<string>, default: 'en-Us' },
-  weekNumName: { type: String as PropType<string>, default: 'W' },
-  weekStart: { type: [Number, String] as PropType<VueDatePickerProps['weekStart']>, default: 1 },
+  teleport: {
+    type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: null,
+    description: VDP_DESC,
+  },
+  teleportCenter: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  locale: {
+    type: String as PropType<string>, default: 'en-Us',
+    description: VDP_DESC,
+  },
+  weekNumName: {
+    type: String as PropType<string>, default: 'W',
+    description: VDP_DESC,
+  },
+  weekStart: {
+    type: [Number, String] as PropType<VueDatePickerProps['weekStart']>, default: 1,
+    description: VDP_DESC,
+  },
   weekNumbers: {
     type: [String, Function, Object] as PropType<VueDatePickerProps['weekNumbers']>,
     default: null,
+    description: VDP_DESC,
   },
-  monthChangeOnScroll: { type: [Boolean, String] as PropType<boolean | 'inverse'>, default: true },
+  monthChangeOnScroll: {
+    type: [Boolean, String] as PropType<boolean | 'inverse'>, default: true,
+    description: VDP_DESC,
+  },
   dayNames: {
     type: [Function, Array] as PropType<((lang: string, weekStart: number) => string[]) | string[]>,
     default: null,
+    description: VDP_DESC,
   },
-  monthPicker: { type: Boolean as PropType<boolean>, default: false },
-  customProps: { type: Object as PropType<Record<string, unknown>>, default: null },
-  yearPicker: { type: Boolean as PropType<boolean>, default: false },
-  modelAuto: { type: Boolean as PropType<boolean>, default: false },
-  selectText: { type: String as PropType<string>, default: 'Select' },
-  cancelText: { type: String as PropType<string>, default: 'Cancel' },
+  monthPicker: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  customProps: {
+    type: Object as PropType<Record<string, unknown>>, default: null,
+    description: VDP_DESC,
+  },
+  yearPicker: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  modelAuto: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  selectText: {
+    type: String as PropType<string>, default: 'Select',
+    description: VDP_DESC,
+  },
+  cancelText: {
+    type: String as PropType<string>, default: 'Cancel',
+    description: VDP_DESC,
+  },
   previewFormat: {
     type: [String, Function] as PropType<VueDatePickerProps['previewFormat']>,
     default: () => '',
+    description: VDP_DESC,
   },
-  multiDates: { type: Boolean as PropType<boolean>, default: false },
-  ignoreTimeValidation: { type: Boolean as PropType<boolean>, default: false },
-  minDate: { type: [Date, String] as PropType<Date | string>, default: null },
-  maxDate: { type: [Date, String] as PropType<Date | string>, default: null },
-  minTime: { type: Object as PropType<Partial<TimeModel>>, default: null },
-  maxTime: { type: Object as PropType<Partial<TimeModel>>, default: null },
-  placeholder: { type: String as PropType<string>, default: '' },
-  hideInputIcon: { type: Boolean as PropType<boolean>, default: false },
-  clearable: { type: Boolean as PropType<boolean>, default: false },
-  alwaysClearable: { type: Boolean as PropType<boolean>, default: false },
-  state: { type: Boolean as PropType<VueDatePickerProps['state']>, default: null },
-  required: { type: Boolean as PropType<boolean>, default: false },
-  autocomplete: { type: String as PropType<string>, default: 'off' },
-  timePicker: { type: Boolean as PropType<boolean>, default: false },
-  enableSeconds: { type: Boolean as PropType<boolean>, default: false },
-  is24: { type: Boolean as PropType<boolean>, default: true },
-  noHoursOverlay: { type: Boolean as PropType<boolean>, default: false },
-  noMinutesOverlay: { type: Boolean as PropType<boolean>, default: false },
-  noSecondsOverlay: { type: Boolean as PropType<boolean>, default: false },
-  hoursGridIncrement: { type: [String, Number] as PropType<string | number>, default: 1 },
-  minutesGridIncrement: { type: [String, Number] as PropType<string | number>, default: 5 },
-  secondsGridIncrement: { type: [String, Number] as PropType<string | number>, default: 5 },
-  hoursIncrement: { type: [Number, String] as PropType<number | string>, default: 1 },
-  minutesIncrement: { type: [Number, String] as PropType<number | string>, default: 1 },
-  secondsIncrement: { type: [Number, String] as PropType<number | string>, default: 1 },
-  range: { type: [Boolean, Object] as PropType<VueDatePickerProps['range']>, default: false },
-  uid: { type: String as PropType<string>, default: null },
-  inline: { type: [Boolean, Object] as PropType<VueDatePickerProps['inline']>, default: false },
-  textInput: { type: [Boolean, Object] as PropType<VueDatePickerProps['textInput']>, default: false },
-  noDisabledRange: { type: Boolean as PropType<boolean>, default: false },
-  sixWeeks: { type: [Boolean, String] as PropType<VueDatePickerProps['sixWeeks']>, default: false },
-  actionRow: { type: Object as PropType<Partial<any>>, default: () => ({}) },
-  focusStartDate: { type: Boolean as PropType<boolean>, default: false },
-  disabledTimes: { type: [Function, Array] as PropType<VueDatePickerProps['disabledTimes']>, default: undefined },
-  showLastInRange: { type: Boolean as PropType<boolean>, default: true },
-  timePickerInline: { type: Boolean as PropType<boolean>, default: false },
-  calendar: { type: Function as PropType<VueDatePickerProps['calendar']>, default: null },
-  config: { type: Object as PropType<Partial<VueDatePickerProps['config']>>, default: undefined },
-  quarterPicker: { type: Boolean as PropType<boolean>, default: false },
-  yearFirst: { type: Boolean as PropType<boolean>, default: false },
-  onInternalModelChange: { type: [Function, Object] as PropType<(...args: any[]) => void>, default: null },
-  enableMinutes: { type: Boolean as PropType<boolean>, default: true },
-  ui: { type: Object as PropType<Partial<VueDatePickerProps['ui']>>, default: () => ({}) },
+  multiDates: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  ignoreTimeValidation: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  minDate: {
+    type: [Date, String] as PropType<Date | string>, default: null,
+    description: VDP_DESC,
+  },
+  maxDate: {
+    type: [Date, String] as PropType<Date | string>, default: null,
+    description: VDP_DESC,
+  },
+  minTime: {
+    type: Object as PropType<Partial<TimeModel>>, default: null,
+    description: VDP_DESC,
+  },
+  maxTime: {
+    type: Object as PropType<Partial<TimeModel>>, default: null,
+    description: VDP_DESC,
+  },
+  placeholder: {
+    type: String as PropType<string>, default: '',
+    description: VDP_DESC,
+  },
+  hideInputIcon: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  clearable: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  alwaysClearable: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  state: {
+    type: Boolean as PropType<VueDatePickerProps['state']>, default: null,
+    description: VDP_DESC,
+  },
+  required: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  autocomplete: {
+    type: String as PropType<string>, default: 'off',
+    description: VDP_DESC,
+  },
+  timePicker: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  enableSeconds: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  is24: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  noHoursOverlay: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  noMinutesOverlay: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  noSecondsOverlay: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  hoursGridIncrement: {
+    type: [String, Number] as PropType<string | number>, default: 1,
+    description: VDP_DESC,
+  },
+  minutesGridIncrement: {
+    type: [String, Number] as PropType<string | number>, default: 5,
+    description: VDP_DESC,
+  },
+  secondsGridIncrement: {
+    type: [String, Number] as PropType<string | number>, default: 5,
+    description: VDP_DESC,
+  },
+  hoursIncrement: {
+    type: [Number, String] as PropType<number | string>, default: 1,
+    description: VDP_DESC,
+  },
+  minutesIncrement: {
+    type: [Number, String] as PropType<number | string>, default: 1,
+    description: VDP_DESC,
+  },
+  secondsIncrement: {
+    type: [Number, String] as PropType<number | string>, default: 1,
+    description: VDP_DESC,
+  },
+  range: {
+    type: [Boolean, Object] as PropType<VueDatePickerProps['range']>, default: false,
+    description: VDP_DESC,
+  },
+  uid: {
+    type: String as PropType<string>, default: null,
+    description: VDP_DESC,
+  },
+  inline: {
+    type: [Boolean, Object] as PropType<VueDatePickerProps['inline']>, default: false,
+    description: VDP_DESC,
+  },
+  textInput: {
+    type: [Boolean, Object] as PropType<VueDatePickerProps['textInput']>, default: false,
+    description: VDP_DESC,
+  },
+  noDisabledRange: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  sixWeeks: {
+    type: [Boolean, String] as PropType<VueDatePickerProps['sixWeeks']>, default: false,
+    description: VDP_DESC,
+  },
+  actionRow: {
+    type: Object as PropType<Partial<any>>, default: () => ({}),
+    description: VDP_DESC,
+  },
+  focusStartDate: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  disabledTimes: {
+    type: [Function, Array] as PropType<VueDatePickerProps['disabledTimes']>, default: undefined,
+    description: VDP_DESC,
+  },
+  showLastInRange: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  timePickerInline: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  calendar: {
+    type: Function as PropType<VueDatePickerProps['calendar']>, default: null,
+    description: VDP_DESC,
+  },
+  config: {
+    type: Object as PropType<Partial<VueDatePickerProps['config']>>, default: undefined,
+    description: VDP_DESC,
+  },
+  quarterPicker: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  yearFirst: {
+    type: Boolean as PropType<boolean>, default: false,
+    description: VDP_DESC,
+  },
+  onInternalModelChange: {
+    type: [Function, Object] as PropType<(...args: any[]) => void>, default: null,
+    description: VDP_DESC,
+  },
+  enableMinutes: {
+    type: Boolean as PropType<boolean>, default: true,
+    description: VDP_DESC,
+  },
+  ui: {
+    type: Object as PropType<Partial<VueDatePickerProps['ui']>>, default: () => ({}),
+    description: VDP_DESC,
+  },
 }
 
 const datepickerProps = {
@@ -134,6 +432,19 @@ export interface DatepickerTheme extends ThemeComponent<DatepickerProps, Interna
 
 export default {
   name: 'XDatepicker',
+  docs: {
+    slots: {
+      'dp-input': 'Custom input trigger; receives value, onEnter, and onTab from vue-datepicker.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      focus: 'Focus the datepicker input.',
+      blur: 'Remove focus from the datepicker input.',
+      validate: 'Run validation on the underlying input.',
+    },
+  },
 }
 </script>
 
@@ -224,7 +535,7 @@ function validate() {
   inputRef.value?.validate()
 }
 
-const htmlNode = document?.querySelector('html')
+const htmlNode = typeof document !== 'undefined' ? document.querySelector('html') : null
 const dark = ref(htmlNode?.classList.contains('dark') ?? false)
 
 useMutationObserver(htmlNode, (mutations) => {

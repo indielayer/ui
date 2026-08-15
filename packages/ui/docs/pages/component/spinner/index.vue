@@ -6,16 +6,16 @@ import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 
 const title = 'Spinner'
-const description = 'Spinners visually indicate that a background process or operation is ongoing, such as loading data or submitting a form. They help manage user expectations by signaling that the system is working.'
+const description = 'Animated indicator that a background process is still running. Use spinners for indeterminate loading when completion percentage is unknown.'
 const components = [XSpinner]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }]

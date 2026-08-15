@@ -8,21 +8,21 @@ import VerticalDemoCode from './vertical.vue?raw'
 import VerticalDemo from './vertical.vue'
 
 const title = 'Divider'
-const description = 'Dividers are used to separate content.'
+const description = 'A horizontal or vertical rule that separates sections of content. Use dividers in lists, toolbars, and layouts to create clear visual breaks.'
 const components = [XDivider]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic horizontal divider between content.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Label',
-  description: '',
+  description: 'Divider with a centered or inline label.',
   code: LabelDemoCode,
   component: LabelDemo,
 }, {
   name: 'Vertical',
-  description: '',
+  description: 'Vertical divider for side-by-side layouts.',
   code: VerticalDemoCode,
   component: VerticalDemo,
 }]

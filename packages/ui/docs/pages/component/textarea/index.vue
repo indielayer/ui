@@ -8,21 +8,21 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Textarea'
-const description = 'Textareas provide a multi-line input field for users to enter longer text, such as comments, descriptions, or messages. They support resizing and can be customized for different use cases.'
+const description = 'Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough.'
 const components = [XTextarea]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]

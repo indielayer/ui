@@ -9,23 +9,36 @@ const badgeProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
   position: {
     type: String as PropType<BadgePosition>,
     default: 'top',
+    description: 'Vertical placement of the badge relative to the content (top, bottom).',
   },
   align: {
     type: String as PropType<BadgeAlign>,
     default: 'right',
+    description: 'Horizontal placement of the badge relative to the content (left, right).',
   },
-  offsetX: [Number, String],
-  offsetY: [Number, String],
-  animated: optionalBooleanProp(),
-  outlined: optionalBooleanProp(),
-  icon: String,
+  offsetX: {
+    type: [Number, String],
+    description: 'Horizontal offset in pixels from the aligned edge.',
+  },
+  offsetY: {
+    type: [Number, String],
+    description: 'Vertical offset in pixels from the positioned edge.',
+  },
+  animated: optionalBooleanProp('Adds a ping animation around the badge.'),
+  outlined: optionalBooleanProp('Adds a border around the badge.'),
+  icon: {
+    type: String,
+    description: 'Icon name for the badge indicator. Prefer the content slot for custom content.',
+  },
   show: {
     type: Boolean,
     default: true,
+    description: 'Controls whether the badge indicator is visible.',
   },
 }
 
@@ -42,6 +55,12 @@ export default {
     ...useCommon.validators(),
     position: badgePosition,
     align: badgeAlign,
+  },
+  docs: {
+    slots: {
+      default: 'Content the badge is attached to.',
+      content: 'Badge label or custom indicator content.',
+    },
   },
 }
 </script>

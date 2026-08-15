@@ -10,26 +10,26 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Select'
-const description = 'Selects allow the user to select one or more options from a set.'
+const description = 'Dropdown for choosing one or more options from a predefined list. Use Select for enums, filters, and form fields where free text is not needed.'
 const components = [XSelect]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Multiple',
-  description: '',
+  description: 'Selecting more than one option at once.',
   code: MultipleDemoCode,
   component: MultipleDemo,
 }, {
   name: 'Size',
-  description: '',
+  description: 'Size options from xs to lg.',
   code: SizeDemoCode,
   component: SizeDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]

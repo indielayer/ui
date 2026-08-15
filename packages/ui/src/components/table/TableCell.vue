@@ -9,18 +9,32 @@ const tableCellProps = {
   textAlign: {
     type: String as PropType<TableCellTextAlign>,
     validator: (value: string) => validators.textAlign.includes(value as any),
+    description: 'Horizontal text alignment.',
   },
-  truncate: optionalBooleanProp(),
-  dense: optionalBooleanProp(),
-  width: [String, Number],
+  truncate: optionalBooleanProp('Truncates overflowing cell content with an ellipsis.'),
+  dense: optionalBooleanProp('Compact cell padding.'),
+  width: {
+    type: [String, Number],
+    description: 'Fixed cell width (number is treated as px).',
+  },
   verticalAlign: {
     type: String as PropType<TableCellVerticalAlign>,
     default: 'middle',
     validator: (value: string) => validators.verticalAlign.includes(value as any),
+    description: 'Vertical alignment of cell content.',
   },
-  to: [String, Object],
-  href: String,
-  target: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; wraps cell content in a router-link.',
+  },
+  href: {
+    type: String,
+    description: 'Anchor href; wraps cell content in a link.',
+  },
+  target: {
+    type: String as PropType<'_blank' | '_self' | '_parent' | '_top'>,
+    description: 'Link target when `href` or `to` is set.',
+  },
 }
 
 export type TableCellTextAlign = typeof validators.textAlign[number]
@@ -33,6 +47,11 @@ export interface TableCellTheme extends ThemeComponent<TableCellProps, InternalC
 export default {
   name: 'XTableCell',
   validators,
+  docs: {
+    slots: {
+      default: 'Cell content.',
+    },
+  },
 }
 </script>
 

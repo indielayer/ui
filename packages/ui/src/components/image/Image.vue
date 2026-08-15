@@ -1,6 +1,9 @@
 <script lang="ts">
 const imageProps = {
-  src: String,
+  src: {
+    type: String,
+    description: 'Image URL. Shows a transparent placeholder until the image loads.',
+  },
 }
 
 export type ImageProps = ExtractPublicPropTypes<typeof imageProps>
@@ -8,7 +11,10 @@ export type ImageProps = ExtractPublicPropTypes<typeof imageProps>
 type InternalClasses = 'wrapper'
 export interface ImageTheme extends ThemeComponent<ImageProps, InternalClasses> {}
 
-export default { name: 'XImage' }
+export default {
+  name: 'XImage',
+  docs: {},
+}
 </script>
 
 <script setup lang="ts">

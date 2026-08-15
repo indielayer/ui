@@ -6,16 +6,16 @@ import HorizontalDemoCode from './horizontal.vue?raw'
 import HorizontalDemo from './horizontal.vue'
 
 const title = 'Scroll'
-const description = 'The Scroll component enhances scrolling experiences by adding visual cues, such as inner shadows, to indicate additional content. It is useful for horizontally or vertically scrolling lists and containers.'
+const description = 'Scroll container with optional edge shadows that hint at more content. Use Scroll for overflow lists and panels that scroll vertically or horizontally.'
 const components = [XScroll]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Vertical scroll with edge shadow cues.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Horizontal',
-  description: '',
+  description: 'Horizontal scroll with edge shadow cues.',
   code: HorizontalDemoCode,
   component: HorizontalDemo,
 }]

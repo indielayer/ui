@@ -3,17 +3,36 @@ import { optionalBooleanProp } from '../../common/props'
 
 const labelProps = {
   ...useCommon.props(),
-  label: String,
-  disabled: Boolean,
-  required: Boolean,
-  block: optionalBooleanProp(),
-  isInsideForm: Boolean,
-  isInsideInputGroup: Boolean,
+  label: {
+    type: String,
+    description: 'Visible label text.',
+  },
+  disabled: {
+    type: Boolean,
+    description: 'Applies disabled styling to the label.',
+  },
+  required: {
+    type: Boolean,
+    description: 'Marks the label as required for form fields.',
+  },
+  block: optionalBooleanProp('Stretches to the full width of the parent.'),
+  isInsideForm: {
+    type: Boolean,
+    description: 'Indicates the label is rendered inside a form layout.',
+  },
+  isInsideInputGroup: {
+    type: Boolean,
+    description: 'Indicates the label is rendered inside an input group.',
+  },
   tag: {
     type: String,
     default: 'label',
+    description: 'Root element tag. Use `fieldset` for grouped controls.',
   },
-  tooltip: String,
+  tooltip: {
+    type: String,
+    description: 'Tooltip text shown next to the label via a toggle tip.',
+  },
 }
 
 export type LabelProps = ExtractPublicPropTypes<typeof labelProps>
@@ -25,6 +44,11 @@ export default {
   name: 'XLabel',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Labeled control or content.',
+    },
   },
 }
 </script>

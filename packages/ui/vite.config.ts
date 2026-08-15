@@ -36,6 +36,20 @@ export default defineConfig(({ command, mode }) => {
         outDir: 'dist',
         emptyOutDir: true,
       },
+      ssgOptions: {
+        script: 'async',
+        formatting: false,
+        beastiesOptions: false,
+        dirStyle: 'nested',
+        includedRoutes(paths: string[]) {
+          return paths.filter((path) => {
+            if (path.includes(':') || path.includes('*')) return false
+            if (path === '/play') return false
+
+            return true
+          })
+        },
+      },
     }
   }
 

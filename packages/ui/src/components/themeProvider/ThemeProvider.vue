@@ -1,18 +1,33 @@
 <script lang="ts">
-export default { name: 'XThemeProvider' }
+import type { PropType } from 'vue'
+import type { UITheme } from '../../theme'
+
+const themeProviderProps = {
+  theme: {
+    type: Object as PropType<UITheme>,
+    description: 'Theme object provided to descendant components.',
+  },
+}
+
+export default {
+  name: 'XThemeProvider',
+  docs: {
+    slots: {
+      default: 'Content that receives the provided theme.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">
-import { watchEffect, ref, inject, provide, type PropType, unref } from 'vue'
+import { watchEffect, ref, inject, provide, unref } from 'vue'
 import { injectThemeKey } from '../../composables/keys'
-import { injectThemeStyles, type UITheme } from '../../theme'
+import { injectThemeStyles } from '../../theme'
 
-const props = defineProps({
-  theme: Object as PropType<UITheme>,
-})
+const props = defineProps(themeProviderProps)
 
 const initialTheme = inject(injectThemeKey, {})
-const theme = ref<UITheme>(props.theme || unref(initialTheme) || {})
+const theme = ref(props.theme || unref(initialTheme) || {})
 
 provide(injectThemeKey, theme)
 

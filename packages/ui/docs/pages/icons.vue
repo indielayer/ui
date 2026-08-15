@@ -44,8 +44,8 @@ const iconExample2 = `<template>
 
 <template>
   <div class="docs-container">
-    <h2 class="text-4xl font-semibold">Icons</h2>
-    <h1 class="text-lg my-2 text-gray-500 dark:text-gray-400">Building your own SVG icon library from multiple open source libraries</h1>
+    <h1 class="text-4xl font-semibold">Icons</h1>
+    <p class="text-lg my-2 text-gray-500 dark:text-gray-400">Building your own SVG icon library from multiple open source libraries</p>
     <x-divider class="mt-4 mb-8"/>
 
     <p class="text-xl mt-8 my-4">SVG Icon Libraries</p>

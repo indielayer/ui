@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Slider'
-const description = 'Sliders allow users to select a numeric value or range by dragging a handle along a track. They are ideal for adjusting settings such as volume, brightness, or price filters.'
+const description = 'Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings.'
 const components = [XSlider]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

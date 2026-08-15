@@ -4,23 +4,35 @@ import { optionalBooleanProp } from '../../common/props'
 const menuProps = {
   ...useCommon.props(),
   ...useColors.props('secondary'),
-  items: Array as PropType<MenuArrayItem[]>,
+  items: {
+    type: Array as PropType<MenuArrayItem[]>,
+    description: 'Menu tree. Each item may nest `items`, links, icons, and dividers.',
+  },
   collapsible: {
     type: Boolean,
     default: true,
+    description: 'Allows nested groups to collapse when they have child items.',
   },
-  collapseIcon: String,
-  expanded: optionalBooleanProp(),
-  disabled: Boolean,
+  collapseIcon: {
+    type: String,
+    description: 'Default icon for collapsible group headers.',
+  },
+  expanded: optionalBooleanProp('Default expanded state for collapsible groups.'),
+  disabled: {
+    type: Boolean,
+    description: 'Disables all menu items.',
+  },
   rounded: {
     type: Boolean,
     default: true,
+    description: 'Applies rounded corners to menu items.',
   },
   filled: {
     type: Boolean,
     default: true,
+    description: 'Filled item backgrounds (vs. minimal text-only look).',
   },
-  minimal: optionalBooleanProp(),
+  minimal: optionalBooleanProp('Hides item labels; icons-only layout.'),
 }
 
 export type MenuArrayItem = {
@@ -59,6 +71,12 @@ export default {
   name: 'XMenu',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    emits: {
+      expand: 'Emitted when a nested group expands or a linked item becomes active.',
+      'item-click': 'Emitted when a menu item is clicked.',
+    },
   },
 }
 </script>

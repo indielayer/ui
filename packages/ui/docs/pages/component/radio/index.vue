@@ -18,7 +18,7 @@ const description = 'Radios allow the user to select one option from a set. Use 
 const components = [XRadio, XRadioButton]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
@@ -38,12 +38,12 @@ const demos = [{
   component: RadioButtonFormGroupDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }, {
   name: 'Size',
-  description: '',
+  description: 'Size options from xs to lg.',
   code: SizeDemoCode,
   component: SizeDemo,
 }]

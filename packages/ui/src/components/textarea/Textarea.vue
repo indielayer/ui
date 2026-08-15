@@ -8,22 +8,39 @@ const textareaProps = {
   dir: {
     type: String,
     default: 'ltr',
+    description: 'Text direction for the textarea (`ltr` or `rtl`).',
   },
   rows: {
     type: [Number, String],
     default: 2,
+    description: 'Visible number of text lines.',
   },
-  max: [Number, String],
-  maxlength: [Number, String],
-  min: [Number, String],
-  minlength: [Number, String],
-  placeholder: String,
-  adjustToText: optionalBooleanProp(),
-  preventEnter: optionalBooleanProp(),
-  block: optionalBooleanProp(),
-  resizable: optionalBooleanProp(),
-  showCounter: optionalBooleanProp(),
-  clearable: optionalBooleanProp(),
+  max: {
+    type: [Number, String],
+    description: 'Native `max` attribute when applicable.',
+  },
+  maxlength: {
+    type: [Number, String],
+    description: 'Maximum character length for the value.',
+  },
+  min: {
+    type: [Number, String],
+    description: 'Native `min` attribute when applicable.',
+  },
+  minlength: {
+    type: [Number, String],
+    description: 'Minimum character length for the value.',
+  },
+  placeholder: {
+    type: String,
+    description: 'Placeholder text shown when the value is empty.',
+  },
+  adjustToText: optionalBooleanProp('Auto-grows the height to fit the content.'),
+  preventEnter: optionalBooleanProp('Prevents the Enter key from inserting a newline.'),
+  block: optionalBooleanProp('Stretches to the full width of the parent.'),
+  resizable: optionalBooleanProp('Allows the user to resize the textarea.'),
+  showCounter: optionalBooleanProp('Shows a character counter in the footer.'),
+  clearable: optionalBooleanProp('Shows a clear button when the value is not empty.'),
 }
 
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
@@ -37,6 +54,18 @@ export default {
   name: 'XTextarea',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      prefix: 'Content before the textarea (left adornment).',
+      suffix: 'Content after the textarea (right adornment).',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

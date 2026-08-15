@@ -117,10 +117,13 @@ export function useDynamicRowHeight({
     }
   }
 
-  const resizeObserver = new ResizeObserver(resizeObserverCallback)
+  const resizeObserver =
+    typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(resizeObserverCallback)
+      : null
 
   function cleanup() {
-    resizeObserver.disconnect()
+    resizeObserver?.disconnect()
   }
 
   if (getCurrentInstance()) {
@@ -128,6 +131,10 @@ export function useDynamicRowHeight({
   }
 
   const observeRowElements = (elements: Element[] | NodeListOf<Element>) => {
+    if (!resizeObserver) {
+      return () => {}
+    }
+
     const elementsArray = Array.isArray(elements)
       ? elements
       : Array.from(elements)

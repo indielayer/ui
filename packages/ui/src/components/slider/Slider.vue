@@ -6,14 +6,17 @@ const sliderProps = {
   min: {
     type: [Number, String],
     default: 0,
+    description: 'Minimum value of the range.',
   },
   max: {
     type: [Number, String],
     default: 100,
+    description: 'Maximum value of the range.',
   },
   step: {
     type: [Number, String],
     default: 1,
+    description: 'Increment between selectable values.',
   },
 }
 
@@ -26,6 +29,18 @@ export default {
   name: 'XSlider',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      prefix: 'Content before the track (`value`).',
+      suffix: 'Content after the track (`value`).',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

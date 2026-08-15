@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Tabs'
-const description = 'Tabs are used to navigate through a set of views.'
+const description = 'Tabbed navigation that switches between related views in the same region. Use x-tab-group with x-tab when content shares context but not space.'
 const components = [XTabGroup, XTab]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

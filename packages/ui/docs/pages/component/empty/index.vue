@@ -12,17 +12,17 @@ const description = 'Empty states communicate when there is no content to show. 
 const components = [XEmpty]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Title, description, and optional icon for empty content.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Actions',
-  description: '',
+  description: 'Empty state with call-to-action buttons.',
   code: ActionsDemoCode,
   component: ActionsDemo,
 }, {
   name: 'Bordered',
-  description: '',
+  description: 'Empty state inside a bordered container.',
   code: BorderedDemoCode,
   component: BorderedDemo,
 }]

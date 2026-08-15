@@ -6,7 +6,10 @@ const radioButtonProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  value: [String, Number],
+  value: {
+    type: [String, Number],
+    description: 'Value emitted when this option is selected (v-model / form-group).',
+  },
   ...variantBooleanProps(),
 }
 
@@ -20,6 +23,17 @@ export default {
   name: 'XRadioButton',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Button label; falls back to the `label` prop.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(false),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

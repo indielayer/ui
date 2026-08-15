@@ -32,8 +32,14 @@ jobs:
       - name: Linting
         run: pnpm run lint:ui
 
-      - name: Unit tests
-        run: pnpm run test
+      - name: Typecheck
+        run: pnpm run typecheck
 
-      - name: Build documentation
+      - name: Unit tests
+        run: pnpm run test:ci
+
+      - name: Build documentation (vite-ssg)
         run: pnpm run build:docs
+
+      - name: Smoke-check prerendered docs
+        run: bash .scripts/docs-ssg-smoke.sh

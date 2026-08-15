@@ -1,4 +1,26 @@
 User-agent: *
 Allow: /
 
+# LLM discovery (https://llmstxt.org/)
+# https://indielayer.com/llms.txt
+# https://indielayer.com/llms-full.txt
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
 Sitemap: https://indielayer.com/sitemap.xml

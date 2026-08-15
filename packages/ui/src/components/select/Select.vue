@@ -6,34 +6,52 @@ const selectProps = {
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  placeholder: String,
-  options: Array as PropType<SelectOption[]>,
-  multiple: optionalBooleanProp(),
-  multipleCheckbox: optionalBooleanProp(),
-  truncate: optionalBooleanProp(),
-  flat: optionalBooleanProp(),
-  native: optionalBooleanProp(),
-  filterable: optionalBooleanProp(),
-  clearable: optionalBooleanProp(),
+  placeholder: {
+    type: String,
+    description: 'Placeholder shown when no option is selected.',
+  },
+  options: {
+    type: Array as PropType<SelectOption[]>,
+    description: 'Available options (`value`, `label`, optional prefix/suffix/disabled).',
+  },
+  multiple: optionalBooleanProp('Allows selecting more than one option.'),
+  multipleCheckbox: optionalBooleanProp('Multiple selection with checkbox-style items.'),
+  truncate: optionalBooleanProp('Truncates selected labels when space is limited.'),
+  flat: optionalBooleanProp('Removes elevation and border emphasis on the trigger.'),
+  native: optionalBooleanProp('Renders a native HTML select instead of the custom popover.'),
+  filterable: optionalBooleanProp('Shows a filter input inside the options list.'),
+  clearable: optionalBooleanProp('Shows a clear control when a value is selected.'),
   filterPlaceholder: {
     type: String,
     default: 'Filter by...',
+    description: 'Placeholder for the filter input when `filterable` is enabled.',
   },
-  filterablePrefix: optionalBooleanProp(),
-  filterableSuffix: optionalBooleanProp(),
-  hideSelectedOptionSlots: optionalBooleanProp(),
-  virtualList: optionalBooleanProp(),
-  virtualListOffsetTop: Number,
-  virtualListOffsetBottom: Number,
+  filterablePrefix: optionalBooleanProp('Includes option prefixes when filtering.'),
+  filterableSuffix: optionalBooleanProp('Includes option suffixes when filtering.'),
+  hideSelectedOptionSlots: optionalBooleanProp('Hides prefix/suffix slots on the selected value display.'),
+  virtualList: optionalBooleanProp('Virtualizes the options list for large datasets.'),
+  virtualListOffsetTop: {
+    type: Number,
+    description: 'Extra top offset (px) for the virtual list viewport.',
+  },
+  virtualListOffsetBottom: {
+    type: Number,
+    description: 'Extra bottom offset (px) for the virtual list viewport.',
+  },
   virtualListItemHeight: {
     type: Number,
     default: 33,
+    description: 'Estimated row height (px) used by the virtual list.',
   },
   virtualListOverscan: {
     type: Number,
     default: 10,
+    description: 'Extra rows rendered above/below the visible virtual list window.',
   },
-  placement: String as PropType<PopoverPlacement>,
+  placement: {
+    type: String as PropType<PopoverPlacement>,
+    description: 'Popover placement for the options menu.',
+  },
 }
 
 export type SelectOption = {
@@ -61,6 +79,25 @@ export default {
   name: 'XSelect',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      prefix: 'Prefix content for an option or the selected value (`item`).',
+      suffix: 'Suffix content for an option or the selected value (`item`).',
+      label: 'Custom label content for an option (`item`).',
+      input: 'Custom trigger content (popover, selected value, disabled, label).',
+      'content-header': 'Content above the options list (default includes the filter).',
+      'content-footer': 'Content below the options list.',
+      icon: 'Custom chevron/icon on the trigger.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+      open: 'Emitted when the options popover opens.',
+      close: 'Emitted when the options popover closes.',
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Popover'
-const description = 'Popovers display additional information or interactive content in a floating overlay, anchored to a trigger element. They are useful for tooltips, menus, or contextual actions without navigating away from the current view.'
+const description = 'Floating panel anchored to a trigger for extra content or actions. Use popovers for menus and contextual UI without leaving the current view.'
 const components = [XPopover, XPopoverContainer]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

@@ -6,8 +6,11 @@ const radioProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  value: [String, Number],
-  glow: optionalBooleanProp(),
+  value: {
+    type: [String, Number],
+    description: 'Value emitted when this option is selected (v-model / form-group).',
+  },
+  glow: optionalBooleanProp('Soft colored glow behind the control.'),
 }
 
 export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
@@ -20,6 +23,17 @@ export default {
   name: 'XRadio',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Optional content shown below the label.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(false),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

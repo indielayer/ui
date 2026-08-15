@@ -6,11 +6,13 @@ const iconProps = {
   icon: {
     type: String,
     required: true,
+    description: 'Icon name from the injected icon set, or raw SVG path markup.',
   },
-  filled: optionalBooleanProp(),
+  filled: optionalBooleanProp('Renders a filled icon instead of an outline stroke.'),
   viewBox: {
     type: String,
     default: '0 0 24 24',
+    description: 'SVG viewBox when rendering path markup.',
   },
 }
 
@@ -26,6 +28,7 @@ export default {
   validators: {
     ...useCommon.validators(),
   },
+  docs: {},
 }
 </script>
 

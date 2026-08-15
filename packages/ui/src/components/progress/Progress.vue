@@ -7,13 +7,15 @@ const progressProps = {
     type: [Number, String],
     default: 0,
     validator: (value: number) => value >= 0 && value <= 100,
+    description: 'Fill amount from 0 to 100.',
   },
-  gradient: optionalBooleanProp(),
+  gradient: optionalBooleanProp('Uses a gradient fill instead of a solid color.'),
   animate: {
     type: Boolean,
     default: true,
+    description: 'Animates width changes when the percentage updates.',
   },
-  thick: optionalBooleanProp(),
+  thick: optionalBooleanProp('Increases the bar thickness.'),
 }
 
 export type ProgressProps = ExtractPublicPropTypes<typeof progressProps>
@@ -21,7 +23,10 @@ export type ProgressProps = ExtractPublicPropTypes<typeof progressProps>
 type InternalClasses = 'wrapper' | 'list' | 'item'
 export interface ProgressTheme extends ThemeComponent<ProgressProps, InternalClasses> {}
 
-export default { name: 'XProgress' }
+export default {
+  name: 'XProgress',
+  docs: {},
+}
 </script>
 
 <script setup lang="ts">

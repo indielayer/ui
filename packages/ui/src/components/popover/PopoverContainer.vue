@@ -3,6 +3,7 @@ const popoverContainerProps = {
   tag: {
     default: 'div',
     type: String,
+    description: 'Root element tag.',
   },
 }
 
@@ -11,7 +12,14 @@ export type PopoverContainerProps = ExtractPublicPropTypes<typeof popoverContain
 type InternalClasses = 'wrapper'
 export interface PopoverContainerTheme extends ThemeComponent<PopoverContainerProps, InternalClasses> {}
 
-export default { name: 'XPopoverContainer' }
+export default {
+  name: 'XPopoverContainer',
+  docs: {
+    slots: {
+      default: 'Styled container content for popover panels.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

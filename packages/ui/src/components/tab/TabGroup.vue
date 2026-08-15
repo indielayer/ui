@@ -9,21 +9,30 @@ const validators = {
 const tabGroupProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
-  modelValue: [String, Number],
+  modelValue: {
+    type: [String, Number],
+    description: 'Active tab value (v-model).',
+  },
   variant: {
     type: String as PropType<'line' | 'block' | 'compact'>,
     default: 'line',
+    description: 'Visual style of the tab list (line, block, or compact).',
   },
   align: {
     type: String as PropType<'left' | 'center' | 'right'>,
     default: 'left',
+    description: 'Horizontal alignment of tabs in the list.',
   },
-  ghost: optionalBooleanProp(),
-  grow: optionalBooleanProp(),
-  exact: Boolean,
+  ghost: optionalBooleanProp('Subtle styling with less background emphasis.'),
+  grow: optionalBooleanProp('Stretches tabs to fill the list width.'),
+  exact: {
+    type: Boolean,
+    description: 'Default exact route matching for linked tabs.',
+  },
   fullWidth: {
     type: Boolean,
     default: true,
+    description: 'Stretches the tab list to the container width.',
   },
 }
 
@@ -52,6 +61,14 @@ export interface TabGroupTheme extends ThemeComponent<TabGroupProps, InternalCla
 export default {
   name: 'XTabGroup',
   validators,
+  docs: {
+    slots: {
+      default: 'Tab triggers (typically x-tab children).',
+    },
+    emits: {
+      'update:modelValue': 'Emitted when the active tab changes (v-model).',
+    },
+  },
 }
 </script>
 

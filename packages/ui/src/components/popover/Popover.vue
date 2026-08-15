@@ -7,53 +7,106 @@ export type PopoverPlacement = Placement
 export type PopoverTriggerEvent = TriggerEvent
 
 const popoverProps = {
-  disabled: Boolean,
-  positioningDisabled: Boolean,
+  disabled: {
+    type: Boolean,
+    description: 'Disables showing the popover.',
+  },
+  positioningDisabled: {
+    type: Boolean,
+    description: 'Keeps the popover in the DOM flow without floating positioning.',
+  },
   placement: {
     type: String as PropType<PopoverPlacement>,
     default: 'bottom-start',
+    description: 'Preferred placement relative to the trigger.',
   },
   delay: {
     type: [String, Number, Object] as PropType<string | number | { show: number; hide: number; }>,
     default: 0,
+    description: 'Show/hide delay in ms, or `{ show, hide }`.',
   },
-  distance: [Number, String],
-  skidding: [Number, String],
+  distance: {
+    type: [Number, String],
+    description: 'Offset along the placement axis in pixels.',
+  },
+  skidding: {
+    type: [Number, String],
+    description: 'Offset along the trigger edge in pixels.',
+  },
   triggers: {
     type: Array as PropType<Array<PopoverTriggerEvent>>,
     default: () => ['click'],
+    description: 'Events that toggle the popover (for example click, hover, focus).',
   },
   hideArrow: {
     type: Boolean,
     default: true,
+    description: 'Hides the popover arrow.',
   },
-  showTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
-  hideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
-  popperTriggers: Array as PropType<Array<PopoverTriggerEvent>>,
-  popperShowTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
-  popperHideTriggers: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+  showTriggers: {
+    type: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+    description: 'Events that show the popover, or a function deriving them from `triggers`.',
+  },
+  hideTriggers: {
+    type: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+    description: 'Events that hide the popover, or a function deriving them from `triggers`.',
+  },
+  popperTriggers: {
+    type: Array as PropType<Array<PopoverTriggerEvent>>,
+    description: 'Events on the popover content that keep it open.',
+  },
+  popperShowTriggers: {
+    type: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+    description: 'Events on the content that show the popover.',
+  },
+  popperHideTriggers: {
+    type: [Array, Function] as PropType<Array<PopoverTriggerEvent> | ((triggers: Array<PopoverTriggerEvent>) => Array<PopoverTriggerEvent>)>,
+    description: 'Events on the content that hide the popover.',
+  },
   container: {
     type: [String, Object, Boolean],
     default: 'body',
+    description: 'Element that contains the floating popover DOM.',
   },
-  boundary: [String, Object],
+  boundary: {
+    type: [String, Object],
+    description: 'Overflow boundary used for flip/shift positioning.',
+  },
   strategy: {
     type: String as PropType<'absolute' | 'fixed'>,
     default: 'absolute',
+    description: 'CSS position strategy for the floating element.',
   },
   autoHide: {
     type: [Boolean, Function] as PropType<boolean | ((event: Event) => boolean)>,
     default: true,
+    description: 'Hides on outside click, or a predicate deciding whether to hide.',
   },
-  shown: Boolean,
+  shown: {
+    type: Boolean,
+    description: 'Controlled open state.',
+  },
   handleResize: {
     type: Boolean,
     default: true,
+    description: 'Repositions when the popover content size changes.',
   },
-  instantMove: Boolean,
-  eagerMount: Boolean,
-  popperClass: [String, Array, Object],
-  computeTransformOrigin: Boolean,
+  instantMove: {
+    type: Boolean,
+    description: 'Skips transition when the popover moves between placements.',
+  },
+  eagerMount: {
+    type: Boolean,
+    description: 'Mounts popover content immediately instead of on first open.',
+  },
+  popperClass: {
+    type: [String, Array, Object],
+    description: 'Extra class(es) on the floating popover element.',
+  },
+  computeTransformOrigin: {
+    type: Boolean,
+    description: 'Computes transform-origin for scale transitions.',
+  },
 }
 
 export type PopoverProps = ExtractPublicPropTypes<typeof popoverProps>
@@ -64,6 +117,28 @@ export interface PopoverTheme extends ThemeComponent<PopoverProps, InternalClass
 export default {
   name: 'XPopover',
   validators,
+  docs: {
+    slots: {
+      default: 'Trigger element.',
+      content: 'Popover panel content.',
+    },
+    emits: {
+      show: 'Emitted when the popover starts opening.',
+      hide: 'Emitted when the popover starts closing.',
+      'update:shown': 'Emitted when open state changes.',
+      'apply-show': 'Emitted after the show transition is applied.',
+      'apply-hide': 'Emitted after the hide transition is applied.',
+      'close-group': 'Emitted when a popover group close is requested.',
+      'close-directive': 'Emitted when closed via the close directive.',
+      'auto-hide': 'Emitted when auto-hide closes the popover.',
+      resize: 'Emitted when popover content is resized.',
+    },
+    methods: {
+      show: 'Show the popover.',
+      hide: 'Hide the popover.',
+      toggle: 'Toggle open state.',
+    },
+  },
 }
 </script>
 

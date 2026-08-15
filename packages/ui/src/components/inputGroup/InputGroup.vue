@@ -9,7 +9,7 @@ const inputGroupProps = {
   ...useCommon.props(),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  block: optionalBooleanProp(),
+  block: optionalBooleanProp('Stretches the group to the full width of the parent.'),
 }
 
 export type InputGroupProps = ExtractPublicPropTypes<typeof inputGroupProps>
@@ -42,6 +42,17 @@ export default {
   name: 'XInputGroup',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Grouped controls (inputs, buttons, or other adornments).',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
   },
 }
 </script>

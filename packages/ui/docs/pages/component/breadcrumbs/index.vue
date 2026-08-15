@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Breadcrumbs'
-const description = 'Breadcrumbs are used to indicate the current page\'s location within a navigational hierarchy.'
+const description = 'Shows the current page\'s place in a navigational hierarchy. Use breadcrumbs for deep page trees so users can jump back to parent sections.'
 const components = [XBreadcrumbs]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

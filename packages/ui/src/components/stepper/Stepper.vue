@@ -10,39 +10,69 @@ const validators = {
 const stepperProps = {
   ...useCommon.props(),
   ...useColors.props('primary'),
-  modelValue: [String, Number],
+  modelValue: {
+    type: [String, Number],
+    description: 'Active step value (`v-model`).',
+  },
   steps: {
     type: Array as PropType<StepperStep[]>,
     default: () => [],
+    description: 'Step definitions (value, title, optional, completed, error, etc.).',
   },
-  validate: Function as PropType<() => boolean>,
-  beforeChange: Function as PropType<(to: string | number, from: string | number) => boolean | Promise<boolean>>,
+  validate: {
+    type: Function as PropType<() => boolean>,
+    description: 'Runs before leaving the current step; return false to block navigation.',
+  },
+  beforeChange: {
+    type: Function as PropType<(to: string | number, from: string | number) => boolean | Promise<boolean>>,
+    description: 'Async guard before changing steps; return false to cancel.',
+  },
   variant: {
     type: String as PropType<StepperVariant>,
     default: 'line',
+    description: 'Indicator style: line or dot.',
   },
   orientation: {
     type: String as PropType<StepperOrientation>,
     default: 'vertical',
+    description: 'Layout direction: vertical (sidebar) or horizontal.',
   },
   labelPlacement: {
     type: String as PropType<StepperLabelPlacement>,
     default: 'end',
+    description: 'Where labels sit relative to indicators in horizontal mode.',
   },
   linear: {
     type: Boolean,
     default: true,
+    description: 'Require prior steps to be completed before navigating ahead.',
   },
   interactive: {
     type: Boolean,
     default: true,
+    description: 'Allow clicking step indicators to navigate.',
   },
-  editable: optionalBooleanProp(),
-  disabled: Boolean,
-  loading: Boolean,
-  iconComplete: String,
-  iconError: String,
-  iconEdit: String,
+  editable: optionalBooleanProp('Allow revisiting completed steps (shows edit icon).'),
+  disabled: {
+    type: Boolean,
+    description: 'Disables all step navigation.',
+  },
+  loading: {
+    type: Boolean,
+    description: 'Blocks navigation while an async step action runs.',
+  },
+  iconComplete: {
+    type: String,
+    description: 'Icon for completed steps.',
+  },
+  iconError: {
+    type: String,
+    description: 'Icon for steps in an error state.',
+  },
+  iconEdit: {
+    type: String,
+    description: 'Icon for editable completed steps.',
+  },
 }
 
 export type StepperStepStatus = 'upcoming' | 'active' | 'complete' | 'error'
@@ -105,6 +135,24 @@ export interface StepperTheme extends ThemeComponent<StepperProps, InternalClass
 export default {
   name: 'XStepper',
   validators,
+  docs: {
+    slots: {
+      'content-prefix': 'Content rendered above the active step panel.',
+      '[stepValue]': 'Panel content for a step; slot name matches `step.value`.',
+      'summary-[stepValue]': 'Sidebar summary for a completed step (vertical orientation).',
+    },
+    emits: {
+      'update:modelValue': 'Active step value (`v-model`).',
+      change: 'Emitted when the active step changes; payload is `(value, index)`.',
+      'step-complete': 'Emitted when a step is marked complete via `next()`; payload is `(value, index)`.',
+    },
+    methods: {
+      next: 'Advance to the next step after validation.',
+      prev: 'Go to the previous step.',
+      goTo: 'Navigate to a step by value or index when allowed.',
+      reset: 'Clear completion state and return to the first step.',
+    },
+  },
 }
 </script>
 

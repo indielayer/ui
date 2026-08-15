@@ -6,11 +6,15 @@ const linkProps = {
   tag: {
     type: String,
     default: 'a',
+    description: 'Root element tag. Becomes a router-link when `to` is set.',
   },
-  to: [String, Object],
-  shadow: optionalBooleanProp(),
-  external: optionalBooleanProp(),
-  underline: optionalBooleanProp(),
+  to: {
+    type: [String, Object],
+    description: 'Vue Router location; renders as a link when set.',
+  },
+  shadow: optionalBooleanProp('Inset shadow highlight under the link text.'),
+  external: optionalBooleanProp('Appends an external-link icon after the label.'),
+  underline: optionalBooleanProp('Underlines the link text.'),
 }
 
 export type LinkProps = ExtractPublicPropTypes<typeof linkProps>
@@ -18,7 +22,14 @@ export type LinkProps = ExtractPublicPropTypes<typeof linkProps>
 type InternalClasses = 'wrapper'
 export interface LinkTheme extends ThemeComponent<LinkProps, InternalClasses> {}
 
-export default { name: 'XLink' }
+export default {
+  name: 'XLink',
+  docs: {
+    slots: {
+      default: 'Link label and content.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

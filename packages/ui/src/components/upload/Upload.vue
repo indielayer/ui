@@ -8,28 +8,46 @@ const validators = {
 const uploadProps = {
   ...useInteractive.props(),
   ...useInputtable.props(),
-  placeholder: String,
-  accept: String,
-  multiple: optionalBooleanProp(),
-  maxFiles: [Number, String],
-  maxFileSize: [Number, String],
+  placeholder: {
+    type: String,
+    description: 'Text shown in the default drop zone.',
+  },
+  accept: {
+    type: String,
+    description: 'Accepted file types (native `accept` attribute).',
+  },
+  multiple: optionalBooleanProp('Allows selecting more than one file.'),
+  maxFiles: {
+    type: [Number, String],
+    description: 'Maximum number of files allowed.',
+  },
+  maxFileSize: {
+    type: [Number, String],
+    description: 'Maximum file size in bytes.',
+  },
   variant: {
     type: String as PropType<UploadVariant>,
     default: 'box',
+    description: 'Visual variant of the upload control.',
   },
-
-  // URL to submit data to.
-  action: String,
-  // Additional HTTP headers
-  headers: Object as PropType<Record<string, string>>,
+  action: {
+    type: String,
+    description: 'URL to upload files to; enables remote upload mode when set.',
+  },
+  headers: {
+    type: Object as PropType<Record<string, string>>,
+    description: 'Additional HTTP headers sent with the upload request.',
+  },
   method: {
     type: String as PropType<'POST' | 'PUT'>,
     default: 'POST',
+    description: 'HTTP method used when uploading to `action`.',
   },
-  withCredentials: optionalBooleanProp(),
+  withCredentials: optionalBooleanProp('Sends cookies/credentials with the upload request.'),
   fileFormDataName: {
     type: String,
     default: 'file',
+    description: 'FormData field name for each uploaded file.',
   },
 }
 
@@ -50,6 +68,21 @@ export interface UploadTheme extends ThemeComponent<UploadProps, InternalClasses
 export default {
   name: 'XUpload',
   validators,
+  docs: {
+    slots: {
+      box: 'Custom drop zone UI (`is-over` when dragging files).',
+      files: 'Custom file list (`files` upload state array).',
+      removeIcon: 'Icon for the remove-file control.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(),
+      upload: 'Emitted when a file finishes uploading (remote mode).',
+      remove: 'Emitted when a file is removed from the list.',
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+    },
+  },
 }
 </script>
 

@@ -94,5 +94,6 @@ useColors.props = (defaultColor?: string) => ({
   color: {
     type: String,
     default: defaultColor,
+    description: 'Theme or CSS color used for the control accents.',
   },
 } as const)

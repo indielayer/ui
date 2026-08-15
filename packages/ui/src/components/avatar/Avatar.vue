@@ -7,12 +7,22 @@ const avatarProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag.',
   },
-  name: String,
-  alt: String,
-  image: String,
-  outlined: optionalBooleanProp(),
-  rounded: optionalBooleanProp(),
+  name: {
+    type: String,
+    description: 'Display name used to derive initials when no image is loaded.',
+  },
+  alt: {
+    type: String,
+    description: 'Alt text for the image when `image` is set.',
+  },
+  image: {
+    type: String,
+    description: 'Image URL. Falls back to initials or the avatar icon if unloadable.',
+  },
+  outlined: optionalBooleanProp('Outline style with a transparent fill.'),
+  rounded: optionalBooleanProp('Fully rounded corners (circle).'),
 }
 
 export type AvatarProps = ExtractPublicPropTypes<typeof avatarProps>
@@ -24,6 +34,11 @@ export interface AvatarTheme extends ThemeComponent<AvatarProps, InternalClasses
 export default {
   name: 'XAvatar',
   validators: useCommon.validators(),
+  docs: {
+    slots: {
+      avatarIcon: 'Fallback icon when no name or image is available.',
+    },
+  },
 }
 </script>
 

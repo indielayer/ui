@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Link'
-const description = 'Links are used to navigate to a different page.'
+const description = 'Styled anchor for navigating to another page or external URL. Use x-link when you need consistent link styling, external indicators, and accessibility.'
 const components = [XLink]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

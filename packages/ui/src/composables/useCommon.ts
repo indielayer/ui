@@ -13,6 +13,7 @@ useCommon.props = () => ({
     type: String as PropType<Size>,
     default: 'md',
     validator: (value: string) => validators.size.includes(value),
+    description: 'Control size. One of xs, sm, md, lg, xl.',
   },
 } as const)
 

@@ -4,13 +4,20 @@ import { emptyIcon } from '../../common/icons'
 
 const emptyProps = {
   ...useCommon.props(),
-  title: String,
-  description: String,
+  title: {
+    type: String,
+    description: 'Primary empty-state heading.',
+  },
+  description: {
+    type: String,
+    description: 'Supporting text shown below the title.',
+  },
   icon: {
     type: String,
     default: emptyIcon,
+    description: 'Icon name shown above the title.',
   },
-  bordered: optionalBooleanProp(),
+  bordered: optionalBooleanProp('Adds a border around the empty state.'),
 }
 
 export type EmptyProps = ExtractPublicPropTypes<typeof emptyProps>
@@ -22,6 +29,14 @@ export default {
   name: 'XEmpty',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      icon: 'Custom icon; overrides the `icon` prop.',
+      title: 'Custom title content; overrides the `title` prop.',
+      description: 'Custom description content; overrides the `description` prop.',
+      actions: 'Action controls shown below the description.',
+    },
   },
 }
 </script>

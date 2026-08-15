@@ -22,7 +22,9 @@ export default {
       show: false,
     }
   },
-  created() {
+  mounted() {
+    if (import.meta.env.SSR || typeof localStorage === 'undefined') return
+
     try {
       if (!localStorage.getItem('cookie-gotit')) this.show = true
     } catch (e) {

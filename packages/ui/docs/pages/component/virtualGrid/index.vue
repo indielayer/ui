@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'VirtualGrid'
-const description = 'VirtualGrid is a component that allows you to render a grid of items in a virtualized way. It is a high-performance component that is used to render large grids of items.'
+const description = 'Renders only visible cells of a large grid for better scroll performance. Use VirtualGrid when a dense grid would be too heavy to mount all at once.'
 const components = [XVirtualGrid]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

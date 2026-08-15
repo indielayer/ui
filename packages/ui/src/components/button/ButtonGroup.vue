@@ -10,6 +10,7 @@ const buttonGroupProps = {
   tag: {
     type: String,
     default: 'div',
+    description: 'Root element tag for the group wrapper.',
   },
 }
 
@@ -31,6 +32,11 @@ export default {
   name: 'XButtonGroup',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Grouped buttons (typically x-button children).',
+    },
   },
 }
 </script>

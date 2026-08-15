@@ -6,9 +6,15 @@ const checkboxProps = {
   ...useColors.props('primary'),
   ...useInteractive.props(),
   ...useInputtable.props(),
-  value: [String, Number],
-  indeterminate: Boolean,
-  glow: optionalBooleanProp(),
+  value: {
+    type: [String, Number],
+    description: 'Value used when the checkbox is inside an x-form-group (array selection).',
+  },
+  indeterminate: {
+    type: Boolean,
+    description: 'Shows an indeterminate (mixed) check state.',
+  },
+  glow: optionalBooleanProp('Soft colored glow behind the control.'),
 }
 
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
@@ -21,6 +27,19 @@ export default {
   name: 'XCheckbox',
   validators: {
     ...useCommon.validators(),
+  },
+  docs: {
+    slots: {
+      default: 'Label content when the `label` prop is not set.',
+      icon: 'Custom checked-state icon.',
+    },
+    emits: {
+      ...useInputtable.emitDocs(false),
+    },
+    methods: {
+      ...useInputtable.methodDocs(),
+      toggle: 'Toggle the checked state (no-op when disabled, loading, or readonly).',
+    },
   },
 }
 </script>

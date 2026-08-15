@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Loader'
-const description = 'Loader component is used to show a loading state.'
+const description = 'Full-area loading overlay that blocks interaction while content or an action completes. Use Loader when the whole region should wait before continuing.'
 const components = [XLoader]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

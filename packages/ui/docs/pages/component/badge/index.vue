@@ -4,11 +4,11 @@ import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
 
 const title = 'Badge'
-const description = 'Badges are used to display a small amount of information.'
+const description = 'Small status indicators that overlay or sit beside another element—counts, labels, or presence dots. Use badges to draw attention without interrupting the layout.'
 const components = [XBadge]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

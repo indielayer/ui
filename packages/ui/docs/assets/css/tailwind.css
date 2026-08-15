@@ -2,7 +2,7 @@
 @import url("https://1.www.s81c.com/common/carbon/plex/sans.css");
 @import url("https://1.www.s81c.com/common/carbon/plex/mono.css");
 
-@import "tailwindcss";
+@import "tailwindcss/index.css";
 @import "../../../exports/tailwind.css";
 
 @source "../../../index.html";
@@ -12,6 +12,12 @@
 html,
 body {
   height: 100%;
+}
+
+html.dark,
+html.dark body {
+  background-color: var(--color-gray-900, #111827);
+  color-scheme: dark;
 }
 
 @layer base {

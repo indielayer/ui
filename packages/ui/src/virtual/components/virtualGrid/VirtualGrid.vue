@@ -1,22 +1,116 @@
 <script lang="ts">
+const virtualGridProps = {
+  cellProps: {
+    type: Object as PropType<Record<string, unknown>>,
+    description: 'Extra props passed to the cell slot as `props`.',
+  },
+  class: {
+    type: String,
+    description: 'CSS class name on the root element.',
+  },
+  columnCount: {
+    type: Number,
+    required: true,
+    description: 'Total number of columns in the grid.',
+  },
+  columnWidth: {
+    type: [Number, String, Function] as PropType<
+    number | string | ((index: number, cellProps: Record<string, unknown>) => number)
+    >,
+    required: true,
+    description: 'Column width as px, percent string, or a function of index.',
+  },
+  defaultHeight: {
+    type: Number,
+    default: 0,
+    description: 'Initial grid height before measure; important for SSR.',
+  },
+  defaultWidth: {
+    type: Number,
+    default: 0,
+    description: 'Initial grid width before measure; important for SSR.',
+  },
+  dir: {
+    type: String as PropType<'ltr' | 'rtl' | 'auto'>,
+    description: 'Text directionality for cell layout (ltr, rtl, or auto).',
+  },
+  onCellsRendered: {
+    type: Function as PropType<(
+      visibleCells: {
+        columnStartIndex: number;
+        columnStopIndex: number;
+        rowStartIndex: number;
+        rowStopIndex: number;
+      },
+      allCells: {
+        columnStartIndex: number;
+        columnStopIndex: number;
+        rowStartIndex: number;
+        rowStopIndex: number;
+      }
+    ) => void>,
+    description: 'Called when the visible or overscan cell range changes.',
+  },
+  onResize: {
+    type: Function as PropType<(
+      size: { height: number; width: number; },
+      prevSize: { height: number; width: number; }
+    ) => void>,
+    description: 'Called when the grid root resizes.',
+  },
+  overscanCount: {
+    type: Number,
+    default: 3,
+    description: 'Extra rows/columns rendered outside the visible area.',
+  },
+  rowCount: {
+    type: Number,
+    required: true,
+    description: 'Total number of rows in the grid.',
+  },
+  rowHeight: {
+    type: [Number, String, Function] as PropType<
+    number | string | ((index: number, cellProps: Record<string, unknown>) => number)
+    >,
+    required: true,
+    description: 'Row height as px, percent string, or a function of index.',
+  },
+  style: {
+    type: Object as PropType<CSSProperties>,
+    description: 'Inline styles; the grid fills the size defined here.',
+  },
+  tag: {
+    type: String as PropType<TagNames>,
+    default: 'div',
+    description: 'Root element tag.',
+  },
+}
+
 export default {
   name: 'XVirtualGrid',
+  docs: {
+    slots: {
+      cell: 'Render a single cell. Receives columnIndex, rowIndex, style, ariaAttributes, and props.',
+      default: 'Optional content rendered after the virtualized cells.',
+    },
+    methods: {
+      scrollToCell: 'Scroll so the given cell (row and column) is visible.',
+      scrollToColumn: 'Scroll so the given column index is visible.',
+      scrollToRow: 'Scroll so the given row index is visible.',
+      element: 'Root HTML element when mounted, otherwise null.',
+    },
+  },
 }
 </script>
 
 <script setup lang="ts">
-import { computed, ref, watch, type CSSProperties } from 'vue'
+import { computed, ref, watch, type CSSProperties, type PropType } from 'vue'
 import { useIsRtl } from '../../core/useIsRtl'
 import { useVirtualizer } from '../../core/useVirtualizer'
-import type { Align } from '../../types'
+import type { Align, TagNames } from '../../types'
 import type { VirtualGridProps, VirtualGridImperativeAPI } from './types'
 
-const props = withDefaults(defineProps<VirtualGridProps>(), {
-  defaultHeight: 0,
-  defaultWidth: 0,
-  overscanCount: 3,
-  tag: 'div',
-})
+const props = defineProps(virtualGridProps) as unknown as VirtualGridProps
 
 const element = ref<HTMLDivElement | null>(null)
 
@@ -42,7 +136,7 @@ const {
   itemProps: cellProps.value,
   itemSize: props.columnWidth,
   onResize: props.onResize,
-  overscanCount: props.overscanCount,
+  overscanCount: props.overscanCount ?? 3,
 })
 
 const {
@@ -62,7 +156,7 @@ const {
   itemProps: cellProps.value,
   itemSize: props.rowHeight,
   onResize: props.onResize,
-  overscanCount: props.overscanCount,
+  overscanCount: props.overscanCount ?? 3,
 })
 
 // Expose imperative API

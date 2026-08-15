@@ -1,5 +1,12 @@
 <script lang="ts">
-export default { name: 'XPopoverContentBoundary' }
+export default {
+  name: 'XPopoverContentBoundary',
+  docs: {
+    slots: {
+      default: 'Popover content isolated from parent ButtonGroup provide/inject.',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

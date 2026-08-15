@@ -6,14 +6,18 @@ const validators = {
 }
 
 const tableRowProps = {
-  pointer: optionalBooleanProp(),
-  striped: optionalBooleanProp(),
-  selected: Boolean,
-  singleSelect: optionalBooleanProp(),
+  pointer: optionalBooleanProp('Pointer cursor on the row.'),
+  striped: optionalBooleanProp('Applies striped row styling.'),
+  selected: {
+    type: Boolean,
+    description: 'Marks the row as selected.',
+  },
+  singleSelect: optionalBooleanProp('Single-select styling for the selected row.'),
   verticalAlign: {
     type: String as PropType<'baseline' | 'bottom' | 'middle' | 'text-bottom' | 'text-top' | 'top'>,
     default: 'top',
     validator: (value: string) => validators.verticalAlign.includes(value),
+    description: 'Vertical alignment for cells in the row.',
   },
 }
 
@@ -22,7 +26,15 @@ export type TableRowProps = ExtractPublicPropTypes<typeof tableRowProps>
 type InternalClasses = 'row'
 export interface TableRowTheme extends ThemeComponent<TableRowProps, InternalClasses> {}
 
-export default { name: 'XTableRow', validators }
+export default {
+  name: 'XTableRow',
+  validators,
+  docs: {
+    slots: {
+      default: 'Row cells (`x-table-cell` children).',
+    },
+  },
+}
 </script>
 
 <script setup lang="ts">

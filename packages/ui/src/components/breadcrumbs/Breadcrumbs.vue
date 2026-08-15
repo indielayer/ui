@@ -3,14 +3,21 @@ import { optionalBooleanProp } from '../../common/props'
 
 const breadcrumbsProps = {
   ...useColors.props(),
-  items: Array as PropType<BreadcrumbsItem[]>,
+  items: {
+    type: Array as PropType<BreadcrumbsItem[]>,
+    description: 'Breadcrumb items with label and optional to, href, icon, and style overrides.',
+  },
   separator: {
     type: String,
     default: '/',
+    description: 'Text separator between items when `icon` is not set.',
   },
-  icon: String,
-  shadow: optionalBooleanProp(),
-  underline: optionalBooleanProp(),
+  icon: {
+    type: String,
+    description: 'Icon name used as the separator between items.',
+  },
+  shadow: optionalBooleanProp('Applies the link shadow style to items.'),
+  underline: optionalBooleanProp('Underlines item links.'),
 }
 
 export type BreadcrumbsItem = {
@@ -27,7 +34,10 @@ export type BreadcrumbsProps = ExtractPublicPropTypes<typeof breadcrumbsProps>
 type InternalClasses = 'wrapper' | 'item' | 'separator'
 export interface BreadcrumbsTheme extends ThemeComponent<BreadcrumbsProps, InternalClasses> {}
 
-export default { name: 'XBreadcrumbs' }
+export default {
+  name: 'XBreadcrumbs',
+  docs: {},
+}
 </script>
 
 <script setup lang="ts">

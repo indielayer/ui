@@ -10,26 +10,26 @@ import SizeDemoCode from './size.vue?raw'
 import SizeDemo from './size.vue'
 
 const title = 'Input'
-const description = 'This is a text input component that allows users to enter and edit text.'
+const description = 'Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data.'
 const components = [XInput]
 const demos = [{
   name: 'Usage',
-  description: '',
+  description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
 }, {
   name: 'Variants',
-  description: '',
+  description: 'Color and style variants.',
   code: VariantsDemoCode,
   component: VariantsDemo,
 }, {
   name: 'Size',
-  description: '',
+  description: 'Size options from xs to lg.',
   code: SizeDemoCode,
   component: SizeDemo,
 }, {
   name: 'States',
-  description: '',
+  description: 'Disabled, loading, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
 }]
