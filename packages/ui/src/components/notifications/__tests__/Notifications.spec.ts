@@ -1,9 +1,10 @@
 import { describe, it, expect, afterEach } from 'vitest'
 import { mount, type VueWrapper } from '@vue/test-utils'
-import Notifications from '../Notifications.vue'
+import type { ComponentPublicInstance } from 'vue'
+import Notifications, { type NotificationInjection } from '../Notifications.vue'
 
 describe('Notifications', () => {
-  let wrapper: VueWrapper
+  let wrapper: VueWrapper<ComponentPublicInstance & NotificationInjection>
 
   afterEach(() => {
     wrapper?.unmount()
