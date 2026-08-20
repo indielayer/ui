@@ -1,5 +1,20 @@
 # @indielayer/ui
 
+## 2.1.0
+
+### Minor Changes
+
+- feat(button): add tooltip and tooltipPosition props ([`52e5125`](https://github.com/indielayer/ui/commit/52e5125ce150bd38ce13341d7e7847b6c50a721f))
+- feat(tabs): add compact variant and tooltip support ([`4931f7b`](https://github.com/indielayer/ui/commit/4931f7b02cc2b48300d707d145c96cd21f1595f3))
+
+### Patch Changes
+
+- fix(theme): use color-scheme for native date/time icons in .dark ([`5295c09`](https://github.com/indielayer/ui/commit/5295c092a74b72d92343cf05e7ecc878c09d01c6))
+- fix(datepicker): keep theme CSS vars on the teleported menu ([`1411412`](https://github.com/indielayer/ui/commit/141141231efb873c06cae7815cb105e4b0866668))
+- fix(tabs): shadow overflow on remove ([`999b3a0`](https://github.com/indielayer/ui/commit/999b3a02deb735ebfaebfff5ae6f5bef8e039931))
+- fix(notifications): keep offset padding from blocking clicks underneath ([`5ab5077`](https://github.com/indielayer/ui/commit/5ab5077d4a2073f78d5a7f9d21ea2f32897f9687))
+- fix(upload): support HTML accept MIME wildcards like image/\* ([`12c31ac`](https://github.com/indielayer/ui/commit/12c31ac9d877e2acf178542007a37c7d85e8683f))
+
 ## 2.0.0
 
 ### Major Changes
