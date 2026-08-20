@@ -62,7 +62,7 @@
     "test": "pnpm test:unit",
     "test:ci": "vitest run --environment jsdom",
     "test:unit": "vitest --environment jsdom",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
+    "typecheck": "pnpm generate && vue-tsc --noEmit -p tsconfig.vitest.json --composite false"
   },
   "peerDependencies": {
     "tailwindcss": "^4.0.0",

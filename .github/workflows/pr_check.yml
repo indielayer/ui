@@ -29,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --ignore-scripts
 
+      - name: Generate version
+        run: cd packages/ui && pnpm generate
+
       - name: Linting
         run: pnpm run lint:ui
 
