@@ -1,0 +1,5311 @@
+<SYSTEM>This is the full developer documentation for Indielayer UI.</SYSTEM>
+
+# Indielayer UI Library — Full Reference
+
+---
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Customization](#customization)
+- [Icons](#icons)
+- [Components](#components)
+  - [Accordion](#accordion)
+  - [Alert](#alert)
+  - [Avatar](#avatar)
+  - [Badge](#badge)
+  - [Breadcrumbs](#breadcrumbs)
+  - [Button](#button)
+  - [Card](#card)
+  - [Carousel](#carousel)
+  - [Checkbox](#checkbox)
+  - [Container](#container)
+  - [Datepicker](#datepicker)
+  - [Divider](#divider)
+  - [Drawer](#drawer)
+  - [Empty](#empty)
+  - [Form](#form)
+  - [FormGroup](#form-group)
+  - [Icon](#icon)
+  - [Image](#image)
+  - [InfiniteLoader](#infinite-loader)
+  - [Input](#input)
+  - [Input Group](#input-group)
+  - [Link](#link)
+  - [Loader](#loader)
+  - [Menu](#menu)
+  - [Modal](#modal)
+  - [Notifications](#notifications)
+  - [Pagination](#pagination)
+  - [Popover](#popover)
+  - [Progress](#progress)
+  - [QR Code](#qr-code)
+  - [Radio](#radio)
+  - [Scroll](#scroll)
+  - [Select](#select)
+  - [Skeleton](#skeleton)
+  - [Slider](#slider)
+  - [Spacer](#spacer)
+  - [Spinner](#spinner)
+  - [Stepper](#stepper)
+  - [Table](#table)
+  - [Tabs](#tabs)
+  - [Tag](#tag)
+  - [Textarea](#textarea)
+  - [Toggle](#toggle)
+  - [Tooltip](#tooltip)
+  - [Upload](#upload)
+  - [VirtualGrid](#virtual-grid)
+  - [VirtualList](#virtual-list)
+
+
+## Quick Start
+
+Indielayer UI is a Tailwind CSS UI component library for Vue.js 3 and Nuxt.js 3. Build and prototype fast web applications with a modern, accessible component set.
+
+To quickly scaffold a new project, run:
+
+```bash
+pnpm create @indielayer/ui
+```
+
+This will launch the official Indielayer UI project scaffolding tool, with prompts for features like TypeScript, Vue 3, or Nuxt 3.
+
+---
+
+## Features
+
+- 50+ accessible, customizable UI components
+- Tailwind CSS v4 theme tokens (`@indielayer/ui/tailwind.css`)
+- Vue 3 and Nuxt 3 support
+- Tree-shakable: import only what you need
+- Dark mode support
+- TypeScript support
+- Easy theming and icon customization
+- First-class documentation and demos
+
+---
+
+## Installation
+
+### 1. Install via package manager
+
+```bash
+npm install @indielayer/ui
+# or
+yarn add @indielayer/ui
+# or
+pnpm add @indielayer/ui
+```
+
+### 2. Setup Tailwind CSS v4
+
+Indielayer UI requires Tailwind CSS v4 (Safari 16.4+, Chrome 111+, Firefox 128+). See the [Tailwind v4 Vite guide](https://tailwindcss.com/docs/installation/using-vite).
+
+Import theme tokens in your app stylesheet (`src/assets/tailwind.css`):
+
+```css
+@import "tailwindcss";
+@import "@indielayer/ui/tailwind.css";
+
+@source "../../index.html";
+@source "../**/*.{vue,js,ts}";
+@source "../../node_modules/@indielayer/ui/{lib,src}/**/*";
+
+@theme {
+  --color-primary-500: var(--color-emerald-500);
+  --color-secondary-500: var(--color-slate-500);
+}
+```
+
+Use `@tailwindcss/postcss` in Vite (`css.postcss.plugins`) or Nuxt (`postcss.plugins`). The `tailwind.preset.js` export was removed in v2; see the [upgrade guide](https://tailwindcss.com/docs/upgrade-guide).
+
+---
+
+## Usage
+
+### Load the UI in your project
+
+#### Vue 3
+
+```js
+import { createApp } from 'vue'
+import UI, { BaseTheme } from '@indielayer/ui'
+
+const app = createApp(App)
+app.use(UI, {
+  theme: BaseTheme,
+})
+```
+
+#### Nuxt 3
+
+Install peer dependencies:
+
+```bash
+npm install @indielayer/ui @vueuse/core floating-vue @vuepic/vue-datepicker -D
+```
+
+Add the module to `nuxt.config.ts`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@indielayer/ui/nuxt'],
+})
+```
+
+### Import components
+
+```vue
+<script setup>
+import { XButton } from '@indielayer/ui'
+</script>
+
+<template>
+  <x-button color="primary">Click me</x-button>
+</template>
+```
+
+---
+
+## Configuration
+
+### Theme
+
+Pass a theme object when installing the plugin:
+
+```js
+import UI, { BaseTheme, CarbonTheme } from '@indielayer/ui'
+
+app.use(UI, { theme: CarbonTheme })
+```
+
+### Component defaults
+
+Override default prop values globally:
+
+```js
+app.use(UI, {
+  theme: BaseTheme,
+  defaults: {
+    Button: { size: 'sm', color: 'primary' },
+    Input: { size: 'md' },
+  },
+})
+```
+
+---
+
+## Customization
+
+### Colors
+
+Override CSS variables or Tailwind `@theme` tokens. See the [Colors](https://indielayer.com/colors) guide on the docs site.
+
+### Icons
+
+Register SVG paths globally:
+
+```js
+import UI, { BaseTheme } from '@indielayer/ui'
+import { registerIcons } from '@indielayer/ui'
+
+registerIcons({
+  myIcon: '<path d="..." />',
+})
+
+app.use(UI, { theme: BaseTheme })
+```
+
+---
+
+## Icons
+
+Indielayer UI ships with a default icon set. Use `icon`, `icon-left`, or `icon-right` props on components such as Button, or render `<x-icon icon="name" />`.
+
+### Recommended SVG Icon Libraries
+- [Icônes](https://icones.js.org/)
+- [Hero Icons](https://heroicons.com/) (MIT)
+- [Tabler Icons](https://tabler-icons.io/) (MIT)
+- [Feather Icons](https://feathericons.com/) (MIT)
+
+# Components Full Reference
+
+## Accordion
+Collapsible panels for showing and hiding related content. Use x-accordion with x-accordion-item when space is limited and users need progressive disclosure.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | Boolean |  | Disables all accordion items when set. |
+| expanded | Boolean |  | Default expanded state passed to child items. |
+| icon | String |  | Default expand/collapse icon name for child items. |
+| iconAlign | String AccordionItemAlign |  | Default icon alignment for child items (left or right). |
+| showIcon | Boolean | true | Shows the expand/collapse icon on child items. |
+| tag | String | div | Root element tag. |
+
+### Slots
+- `default`: Accordion items (typically x-accordion-item children).
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+function onChange(expanded: boolean) {
+  console.log(expanded)
+}
+</script>
+
+<template>
+  <div class="space-y-8">
+    <x-accordion>
+      <x-accordion-item @change="onChange">
+        Hey
+        <template #content>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti veritatis unde natus esse minima, quibusdam nesciunt atque id assumenda inventore numquam vel consectetur est illum ratione perferendis optio architecto sapiente fuga et commodi harum ea? Error doloribus illum tempora obcaecati quam voluptatum cumque magnam nemo, perspiciatis quas mollitia. Aliquid nulla corrupti sit mollitia dolor sequi nobis eveniet cumque cupiditate perspiciatis magnam laudantium in ducimus fuga quaerat, ipsam assumenda consequatur obcaecati atque? Sint asperiores labore quidem minima modi odio autem rerum eligendi, quisquam incidunt quae enim eos vitae dolores praesentium debitis, consequatur fuga hic nostrum, dolorem dicta quod ea assumenda. Expedita.
+        </template>
+      </x-accordion-item>
+
+      <x-accordion-item expanded>
+        <template #default="{ collapsed }">
+          This is collapsed: {{ collapsed }} (click me to {{ collapsed ? 'expand' : 'collapse' }})
+        </template>
+        <template #content>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti veritatis unde natus esse minima, quibusdam nesciunt atque id assumenda inventore numquam vel consectetur est illum ratione perferendis optio architecto sapiente fuga et commodi harum ea? Error doloribus illum tempora obcaecati quam voluptatum cumque magnam nemo, perspiciatis quas mollitia. Aliquid nulla corrupti sit mollitia dolor sequi nobis eveniet cumque cupiditate perspiciatis magnam laudantium in ducimus fuga quaerat, ipsam assumenda consequatur obcaecati atque? Sint asperiores labore quidem minima modi odio autem rerum eligendi, quisquam incidunt quae enim eos vitae dolores praesentium debitis, consequatur fuga hic nostrum, dolorem dicta quod ea assumenda. Expedita.
+        </template>
+      </x-accordion-item>
+    </x-accordion>
+
+    <x-accordion icon-align="left">
+      <x-accordion-item>
+        Left side icon
+        <template #content>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est, rem.
+        </template>
+      </x-accordion-item>
+    </x-accordion>
+  </div>
+</template>
+```
+---
+## Alert
+Inline notices for system, feature, or page status—success, warning, error, or info. Use alerts when the message should stay visible until addressed.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| closeLabel | String |  | Accessible label for the remove button. |
+| color | String |  | Theme or CSS color used for the control accents. |
+| glow | Boolean |  | Soft colored glow behind the alert. |
+| light | Boolean |  | Tinted background using the color at low opacity. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| removable | Boolean |  | Shows a close control that emits `remove`. |
+| type | String AlertType |  | Semantic alert type (info, success, error, warning). Controls the default icon. |
+
+### Slots
+- `default`: Alert message content.
+- `icon`: Custom icon; overrides the type-based icon.
+- `removeIcon`: Custom icon for the remove button.
+
+### Events
+- `remove`: Emitted when the remove button is clicked.
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid gap-4">
+    <x-alert>Default</x-alert>
+    <x-alert color="primary" outlined>Outlined</x-alert>
+    <x-alert color="sky" type="info" light removable>Hello</x-alert>
+    <x-alert color="error" outlined type="error" light>Error</x-alert>
+    <x-alert color="warning" light type="warning" removable>Warning</x-alert>
+    <x-alert
+      color="emerald"
+      type="success"
+      glow
+      light
+      removable
+      outlined
+    >Success</x-alert>
+    <x-alert color="emerald" type="success">Success</x-alert>
+  </div>
+</template>
+```
+---
+## Avatar
+Displays a user's photo, initials, or icon in a compact frame. Use avatars in lists, headers, and comments to identify people at a glance.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| alt | String |  | Alt text for the image when `image` is set. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| image | String |  | Image URL. Falls back to initials or the avatar icon if unloadable. |
+| name | String |  | Display name used to derive initials when no image is loaded. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| rounded | Boolean |  | Fully rounded corners (circle). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | div | Root element tag. |
+
+### Slots
+- `avatarIcon`: Fallback icon when no name or image is available.
+- `default`
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="space-x-2">
+    <x-avatar name="John Smith" rounded />
+    <x-avatar name="Andrew Colt" />
+    <x-badge color="green" outlined position="bottom">
+      <x-avatar rounded name="Janet" image="https://gravatar.com/avatar/aa99b351245441b8ca95d54a52d2998c" />
+    </x-badge>
+  </div>
+</template>
+```
+
+#### Size
+```vue
+<template>
+  <div class="space-x-2">
+    <x-avatar size="xs" />
+    <x-avatar size="sm" />
+    <x-avatar />
+    <x-avatar size="lg" />
+    <x-avatar size="xl" />
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<template>
+  <div class="space-x-2">
+    <x-avatar name="John Smith" color="slate" />
+    <x-avatar rounded />
+    <x-avatar name="John Smith" color="orange" rounded outlined />
+    <x-avatar name="John Smith" color="sky" outlined />
+  </div>
+</template>
+```
+---
+## Badge
+Small status indicators that overlay or sit beside another element—counts, labels, or presence dots. Use badges to draw attention without interrupting the layout.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| align | String BadgeAlign | right | Horizontal placement of the badge relative to the content (left, right). |
+| animated | Boolean |  | Adds a ping animation around the badge. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| icon | String |  | Icon name for the badge indicator. Prefer the content slot for custom content. |
+| offsetX | [Number, String] |  | Horizontal offset in pixels from the aligned edge. |
+| offsetY | [Number, String] |  | Vertical offset in pixels from the positioned edge. |
+| outlined | Boolean |  | Adds a border around the badge. |
+| position | String BadgePosition | top | Vertical placement of the badge relative to the content (top, bottom). |
+| show | Boolean | true | Controls whether the badge indicator is visible. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | div | Root element tag. |
+
+### Slots
+- `content`: Badge label or custom indicator content.
+- `default`: Content the badge is attached to.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <x-badge color="pink" outlined size="lg" animated>
+      <x-button color="pink" outlined light size="xl">Notifications</x-button>
+    </x-badge>
+
+    <x-badge
+      color="pink"
+      outlined
+      animated
+      offset-x="-12"
+      offset-y="-10"
+    >
+      Text Example
+    </x-badge>
+
+    <x-badge color="indigo" position="top" align="right">
+      <x-button color="indigo" outlined light>Updates</x-button>
+      <template #content>
+        22323
+      </template>
+    </x-badge>
+
+    <x-badge class="mx-2" align="left">
+      <x-avatar name="John Smith" rounded />
+      <template #content>
+        7
+      </template>
+    </x-badge>
+    <x-badge color="green" class="mx-2" outlined position="bottom">
+      <x-avatar rounded />
+    </x-badge>
+    <x-badge
+      color="green"
+      class="mx-2"
+      outlined
+      position="bottom"
+      align="left"
+    >
+      <x-avatar name="John Smith" rounded />
+    </x-badge>
+    <x-badge color="green" class="mx-2" size="xl" outlined>
+      <x-avatar rounded size="xl" />
+    </x-badge>
+
+    <x-badge color="green" class="mx-2" outlined>
+      <x-avatar name="John Smith" rounded />
+    </x-badge>
+  </div>
+</template>
+```
+---
+## Breadcrumbs
+Shows the current page's place in a navigational hierarchy. Use breadcrumbs for deep page trees so users can jump back to parent sections.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String |  | Theme or CSS color used for the control accents. |
+| icon | String |  | Icon name used as the separator between items. |
+| items | Array BreadcrumbsItem[] |  | Breadcrumb items with label and optional to, href, icon, and style overrides. |
+| separator | String | / | Text separator between items when `icon` is not set. |
+| shadow | Boolean |  | Applies the link shadow style to items. |
+| underline | Boolean |  | Underlines item links. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+const simple = [
+  { to: '#', label: 'Breadcrumb item 1' },
+  { to: '#', label: 'Breadcrumb item 2' },
+  { to: '#', label: 'Breadcrumb item 3' },
+  { to: '#', label: 'Breadcrumb item 4' },
+]
+const breadcrumbs = [
+  { to: '#', label: 'Breadcrumb item 1', icon: 'smile' },
+  { to: '#', label: 'Breadcrumb item 2', color: 'purple', shadow: true },
+  { to: '#', label: 'Breadcrumb item 3', icon: 'twitter', color: 'yellow' },
+  { to: '#', label: 'Breadcrumb item 4' },
+]
+</script>
+
+<template>
+  <x-breadcrumbs :items="simple" color="primary" />
+  <x-breadcrumbs :items="breadcrumbs" color="primary" />
+</template>
+```
+---
+## Button
+Clickable controls for primary actions—submit, open dialogs, or run commands. Customize style, size, and icons; group related actions with x-button-group.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| block | Boolean |  | Stretches to the full width of the parent. |
+| color | String |  | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| flat | Boolean |  | Removes elevation and border emphasis. |
+| ghost | Boolean |  | Minimal style with no background until hover. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| icon | String |  | Shortcut for `iconLeft`. |
+| iconLeft | String |  | Icon name shown before the label. |
+| iconRight | String |  | Icon name shown after the label. |
+| light | Boolean |  | Tinted background using the color at low opacity. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| rounded | Boolean |  | Fully rounded corners (pill shape). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | button | Root element tag. Becomes a router-link when `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
+| tooltip | String |  | Tooltip text shown on hover. Prefer the tooltip slot for custom content. |
+| tooltipPosition | String TooltipPosition | top | Tooltip placement relative to the button. |
+| type | String | button | Native button type when `tag` is `button` (button, submit, reset). |
+
+### Slots
+- `default`: Button label and content.
+- `tooltip`: Custom tooltip content; overrides the `tooltip` prop.
+
+### Events
+- _(none)_
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <x-button>Default</x-button>
+    <x-button color="primary" icon-right="star">Submit</x-button>
+    <x-button color="primary" light>Light</x-button>
+    <x-button color="primary" ghost>Ghost</x-button>
+    <x-button color="primary" outlined>Outlined</x-button>
+    <x-button color="primary" loading loading-label="Uploading..">Loading</x-button>
+    <x-button color="primary" rounded>filled Rounded</x-button>
+    <x-button color="primary" light outlined>light + outlined</x-button>
+  </div>
+</template>
+```
+
+#### Button Group
+```vue
+<template>
+  <div class="grid md:grid-cols-4 gap-4">
+    <x-button-group>
+      <x-button >Cancel</x-button>
+      <x-button color="primary">Save</x-button>
+    </x-button-group>
+    <x-button-group color="primary" light outlined>
+      <x-button>left</x-button>
+      <x-button>middle</x-button>
+      <x-button>right</x-button>
+    </x-button-group>
+    <x-button-group color="primary" light outlined>
+      <x-button icon="edit" tooltip="Edit" />
+      <x-button icon="code" tooltip="Code" />
+      <x-button icon="smile" tooltip="Smile" />
+    </x-button-group>
+    <x-button-group color="indigo" outlined disabled>
+      <x-button>left</x-button>
+      <x-button>middle</x-button>
+    </x-button-group>
+  </div>
+</template>
+```
+
+#### Icons
+```vue
+<template>
+  <div class="space-x-4">
+    <x-button icon="smile"/>
+    <x-button icon="heart" />
+    <x-button icon="heart">Label</x-button>
+    <x-button icon-right="heart">Label</x-button>
+    <x-button icon="star" icon-right="smile"/>
+  </div>
+</template>
+```
+
+#### Size
+```vue
+<template>
+  <div class="space-x-4">
+    <x-button size="xs">xs</x-button>
+    <x-button size="sm">sm</x-button>
+    <x-button>md</x-button>
+    <x-button size="lg">lg</x-button>
+    <x-button size="xl">xl</x-button>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<template>
+  <div class="space-x-4">
+    <x-button disabled>Disabled</x-button>
+    <x-button loading>Disabled</x-button>
+  </div>
+</template>
+```
+
+#### Tooltip
+```vue
+<template>
+  <div class="flex flex-wrap items-center gap-4">
+    <x-button icon="check" tooltip="Save your changes" />
+    <x-button ghost icon="smile" tooltip="More options" />
+    <x-button icon="heart" tooltip="Favorite" tooltip-position="bottom" />
+    <x-button tooltip="Delete this item" tooltip-position="right">
+      Delete
+    </x-button>
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<template>
+  <div class="grid md:grid-cols-3 gap-4">
+    <x-button color="#F46262" light>Custom color</x-button>
+    <x-button color="primary" light glow>It's glowing</x-button>
+    <x-button color="pink" outlined light glow>Glow</x-button>
+  </div>
+</template>
+```
+---
+## Card
+A bordered content container for grouping related information, media, and actions. Use cards in grids and dashboards when each block should stand alone.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| flat | Boolean |  | Removes elevation and border emphasis. |
+| tag | String | div | Root element tag. |
+
+### Slots
+- `default`: Card content.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="space-y-4">
+    <x-card class="p-4">I'm a normal card</x-card>
+    <x-card class="p-4" flat>I'm a flat card</x-card>
+  </div>
+</template>
+```
+---
+## Carousel
+A sliding viewport for cycling through images or content panels. Use carousels for galleries and featured items when horizontal space is limited.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| autoplay | Boolean |  | Advances slides automatically. |
+| classDots | [Array, String] |  | Extra class(es) on the default dots container. |
+| delay | Number | 5000 | Autoplay interval in milliseconds. |
+| effect | String CarouselEffect | slide | Transition effect between slides. |
+| showDots | Boolean | true | Shows pagination dots under the slides. |
+
+### Slots
+- `default`: Slides (typically x-carousel-slide). Slot props: to, next, prev, current, total.
+- `dots`: Custom pagination dots. Slot props: to, next, prev, current, total.
+
+### Events
+- `update`: Emitted when the current slide index changes.
+
+### Methods
+- `next`: Go to the next slide (wraps to the first).
+- `prev`: Go to the previous slide (wraps to the last).
+- `to`: Go to a slide by zero-based index.
+
+### Demos
+#### Usage
+```vue
+<template>
+  <x-carousel class="!h-80 rounded-md" class-dots="!justify-start pl-10">
+    <x-carousel-slide>
+      <img src="../../../assets/images/photo2.jpeg" alt="" />
+    </x-carousel-slide>
+    <x-carousel-slide>
+      <img src="../../../assets/images/photo1.jpeg" alt="" />
+    </x-carousel-slide>
+  </x-carousel>
+</template>
+```
+---
+## Checkbox
+Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| indeterminate | Boolean |  | Shows an indeterminate (mixed) check state. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| value | [String, Number] |  | Value used when the checkbox is inside an x-form-group (array selection). |
+
+### Slots
+- `default`: Label content when the `label` prop is not set.
+- `icon`: Custom checked-state icon.
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `toggle`: Toggle the checked state (no-op when disabled, loading, or readonly).
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const checked = ref(true)
+</script>
+
+<template>
+  <x-checkbox v-model="checked" label="Checkbox label" color="primary" />
+</template>
+```
+
+#### Size
+```vue
+<template>
+  <div class="space-x-4">
+    <x-checkbox size="xs">xs</x-checkbox>
+    <x-checkbox size="sm">sm</x-checkbox>
+    <x-checkbox>md</x-checkbox>
+    <x-checkbox size="lg">lg</x-checkbox>
+    <x-checkbox size="xl">xl</x-checkbox>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-checkbox disabled label="Disabled" />
+    <x-checkbox helper="Helper text">Helper</x-checkbox>
+    <x-checkbox loading>Loading</x-checkbox>
+    <x-checkbox indeterminate>Indeterminate</x-checkbox>
+    <x-checkbox error="Invalid input">Error</x-checkbox>
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<template>
+  <div class="space-x-4">
+    <x-checkbox glow color="emerald" label="Glow" />
+    <x-checkbox glow color="rose" label="Do you agree?" />
+    <x-checkbox glow color="amber" label="Maybe not?" />
+    <x-checkbox glow color="sky" label="All the T&C? Really?" />
+  </div>
+</template>
+```
+---
+## Container
+Layout wrapper that constrains content width and alignment for consistent page structure. Use containers to center and pad main content across breakpoints.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| fluid | Boolean | false | Removes max-width constraints so the container spans the full parent width. |
+| tag | String | div | Root element tag. |
+
+### Slots
+- `default`: Container content.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <x-container>Contained content</x-container>
+</template>
+```
+---
+## Datepicker
+Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it for forms that need calendar or datetime selection with Indielayer look and feel.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| actionRow | Object Partial<any> | [] | Passed through to @vuepic/vue-datepicker. |
+| allowedDates | Array string[]  \|  Date[] | null | Passed through to @vuepic/vue-datepicker. |
+| altPosition | Function VueDatePickerProps['altPosition'] | null | Passed through to @vuepic/vue-datepicker. |
+| alwaysClearable | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| ariaLabels | Object Partial<VueDatePickerProps['ariaLabels']> | [] | Passed through to @vuepic/vue-datepicker. |
+| arrowNavigation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| autoApply | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| autoPosition | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| autocomplete | String string | off | Passed through to @vuepic/vue-datepicker. |
+| calendar | Function VueDatePickerProps['calendar'] | null | Passed through to @vuepic/vue-datepicker. |
+| cancelText | String string | Cancel | Passed through to @vuepic/vue-datepicker. |
+| clearable | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| config | Object Partial<VueDatePickerProps['config']> |  | Passed through to @vuepic/vue-datepicker. |
+| customProps | Object as PropType<Record<string | null | Passed through to @vuepic/vue-datepicker. |
+| dark | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| dayClass | Function (date: Date) = string> | null | Passed through to @vuepic/vue-datepicker. |
+| dayNames | [Function, Array] | null | Passed through to @vuepic/vue-datepicker. |
+| disableMonthYearSelect | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| disableYearSelect | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| disabledDates | [Array, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| disabledTimes | [Function, Array] |  | Passed through to @vuepic/vue-datepicker. |
+| disabledWeekDays | Array string[]  \|  number[] | [] | Passed through to @vuepic/vue-datepicker. |
+| enableMinutes | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| enableSeconds | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| enableTimePicker | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| error | String |  | External error message; overrides rule errors when set. |
+| escClose | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| filters | Object Partial<VueDatePickerProps['filters']> | [] | Passed through to @vuepic/vue-datepicker. |
+| flow | Array VueDatePickerProps['flow'] | [] | Passed through to @vuepic/vue-datepicker. |
+| focusStartDate | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| format | [String, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| formatLocale | Object Locale | null | Passed through to @vuepic/vue-datepicker. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| hideInputIcon | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| hideNavigation | Array VueDatePickerProps['hideNavigation'] | [] | Passed through to @vuepic/vue-datepicker. |
+| hideOffsetDates | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| highlight | [Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| hoursGridIncrement | [String, Number] | 1 | Passed through to @vuepic/vue-datepicker. |
+| hoursIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| id | String |  | Native id attribute for the input element. |
+| ignoreTimeValidation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| inline | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| is24 | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| locale | String string | en-Us | Passed through to @vuepic/vue-datepicker. |
+| markers | Array VueDatePickerProps['markers'] | [] | Passed through to @vuepic/vue-datepicker. |
+| maxDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| maxTime | Object Partial<TimeModel> | null | Passed through to @vuepic/vue-datepicker. |
+| minDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| minTime | Object Partial<TimeModel> | null | Passed through to @vuepic/vue-datepicker. |
+| minutesGridIncrement | [String, Number] | 5 | Passed through to @vuepic/vue-datepicker. |
+| minutesIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| modelAuto | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| modelType | String VueDatePickerProps['modelType'] | null | Passed through to @vuepic/vue-datepicker. |
+| modelValue | [String, Date, Array, Object, Number] | null | Passed through to @vuepic/vue-datepicker. |
+| monthChangeOnArrows | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| monthChangeOnScroll | [Boolean, String] | true | Passed through to @vuepic/vue-datepicker. |
+| monthNameFormat | String 'long'  \|  'short' | short | Passed through to @vuepic/vue-datepicker. |
+| monthPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| multiCalendars | [Boolean, Number, String, Object] |  | Passed through to @vuepic/vue-datepicker. |
+| multiDates | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| name | String |  | Native name attribute for form submission. |
+| noDisabledRange | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noHoursOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noMinutesOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noSecondsOverlay | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| noToday | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| nowButtonLabel | String string | Now | Passed through to @vuepic/vue-datepicker. |
+| offset | [Number, String] | 10 | Passed through to @vuepic/vue-datepicker. |
+| onInternalModelChange | [Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| partialFlow | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| placeholder | String string |  | Passed through to @vuepic/vue-datepicker. |
+| position | String VueDatePickerProps['position'] | center | Passed through to @vuepic/vue-datepicker. |
+| presetDates | Array VueDatePickerProps['presetDates'] | [] | Passed through to @vuepic/vue-datepicker. |
+| preventMinMaxNavigation | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| previewFormat | [String, Function] | [] | Passed through to @vuepic/vue-datepicker. |
+| quarterPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| range | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| reverseYears | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| secondsGridIncrement | [String, Number] | 5 | Passed through to @vuepic/vue-datepicker. |
+| secondsIncrement | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| selectText | String string | Select | Passed through to @vuepic/vue-datepicker. |
+| showLastInRange | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| sixWeeks | [Boolean, String] | false | Passed through to @vuepic/vue-datepicker. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| spaceConfirm | Boolean boolean | true | Passed through to @vuepic/vue-datepicker. |
+| startDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
+| startTime | [Object, Array] | null | Passed through to @vuepic/vue-datepicker. |
+| state | Boolean VueDatePickerProps['state'] | null | Passed through to @vuepic/vue-datepicker. |
+| teleport | [String, Boolean, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| teleportCenter | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| textInput | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
+| timePicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| timePickerInline | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| timezone | [String, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| transitions | [Boolean, Object] | true | Passed through to @vuepic/vue-datepicker. |
+| ui | Object Partial<VueDatePickerProps['ui']> | [] | Passed through to @vuepic/vue-datepicker. |
+| uid | String string | null | Passed through to @vuepic/vue-datepicker. |
+| utc | [Boolean, String] | false | Passed through to @vuepic/vue-datepicker. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| vertical | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| weekNumName | String string | W | Passed through to @vuepic/vue-datepicker. |
+| weekNumbers | [String, Function, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| weekPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| weekStart | [Number, String] | 1 | Passed through to @vuepic/vue-datepicker. |
+| yearFirst | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| yearPicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
+| yearRange | Array number[] | [] | Passed through to @vuepic/vue-datepicker. |
+
+### Slots
+- `dp-input`: Custom input trigger; receives value, onEnter, and onTab from vue-datepicker.
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the datepicker input.
+- `focus`: Focus the datepicker input.
+- `validate`: Run validation on the underlying input.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const date = ref()
+const startDate = new Date()
+const endDate = new Date(new Date().setDate(startDate.getDate() + 7))
+
+date.value = [startDate, endDate]
+</script>
+
+<template>
+  <x-datepicker
+    v-model="date"
+    label="Date"
+    tooltip="Use it to pick a date"
+    clearable
+    text-input
+    multi-calendars
+    time-picker-inline
+    range
+  />
+</template>
+```
+---
+## Divider
+A horizontal or vertical rule that separates sections of content. Use dividers in lists, toolbars, and layouts to create clear visual breaks.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| label | String |  | Optional text shown between the divider lines. |
+| vertical | Boolean |  | Renders the divider vertically instead of horizontally. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio, nulla.</p>
+    <x-divider class="my-2" />
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, impedit?</p>
+  </div>
+</template>
+```
+
+#### Label
+```vue
+<template>
+  <div class="text-center">
+    <p class="text-2xl">Top</p>
+    <x-divider class="my-2" label="OR" />
+    <p class="text-2xl">Bottom</p>
+  </div>
+  <div class="text-center flex items-center mt-10">
+    <p class="text-2xl w-full">Left</p>
+    <x-divider class="mx-2 h-28" vertical label="OR" />
+    <p class="text-2xl w-full">Right</p>
+  </div>
+</template>
+```
+
+#### Vertical
+```vue
+<template>
+  <div class="flex items-center justify-center h-28">
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio, nulla.</p>
+    <x-divider class="mx-4" vertical />
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, impedit?</p>
+  </div>
+</template>
+```
+---
+## Drawer
+Panels that slide in from the screen edge for navigation, filters, or extra content. Use drawers when side context should overlay without leaving the page.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| backdrop | Boolean | true | Shows a dimmed backdrop behind the drawer when detached. |
+| breakpoint | [String, Number] |  | Below this viewport size the drawer becomes an overlay. Tailwind key or pixel width. |
+| height | [String, Number] | 320 | Panel height in pixels when position is top or bottom. |
+| modelValue | Boolean |  | Open state (v-model). |
+| position | String DrawerPosition | left | Edge the drawer attaches to (left, right, top, bottom). |
+| teleportTo | [String, Object] | body | Teleport target when the drawer is detached (overlay mode). |
+| width | [String, Number] | 220 | Panel width in pixels when position is left or right. |
+
+### Slots
+- `default`: Main drawer body (scrollable).
+- `footer`: Content below the scrollable body.
+- `header`: Content above the scrollable body.
+
+### Events
+- `update:modelValue`: Emitted when open state changes (v-model).
+
+### Methods
+- `close`: Close the drawer.
+- `open`: Open the drawer.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const el = ref(null)
+const top = ref(false)
+const left = ref(false)
+const right = ref(false)
+const bottom = ref(false)
+const contained = ref(false)
+const breakpoint = ref(false)
+</script>
+
+<template>
+  <div>
+    <div class="space-x-4">
+      <x-button @click="left = !left">Toggle left</x-button>
+      <x-button @click="right = !right">Toggle right</x-button>
+      <x-button @click="bottom = !bottom">Toggle bottom</x-button>
+      <x-button @click="top = !top">Toggle top</x-button>
+    </div>
+    <x-drawer v-model="left">
+      <template #header>
+        <div class="border-b p-4 text-lg font-semibold">Header</div>
+      </template>
+      menu
+      <template #footer>
+        <div class="border-t p-4">
+          <x-button color="pink" block light>Sign out</x-button>
+        </div>
+      </template>
+    </x-drawer>
+    <x-drawer v-model="right" position="right" width="100">
+      content
+    </x-drawer>
+    <x-drawer v-model="bottom" position="bottom">
+      content
+    </x-drawer>
+    <x-drawer v-model="top" position="top">
+      content
+    </x-drawer>
+  </div>
+
+  <x-button class="mt-10" @click="breakpoint = !breakpoint">Toggle drawer with breakpoint</x-button>
+  <x-drawer v-model="breakpoint" position="left" breakpoint="md">
+    <div class="border p-4 my-2">
+      I'm only a drawer on mobile
+    </div>
+  </x-drawer>
+
+  <x-button class="mt-10" @click="contained = !contained">Toggle contained</x-button>
+  <div id="container" ref="el" class="relative h-96 overflow-hidden bg-slate-50 dark:bg-slate-800 border rounded-md my-2">
+    <x-drawer v-model="contained" position="left" teleport-to="#container">
+      drawer inside #container
+    </x-drawer>
+  </div>
+</template>
+```
+---
+## Empty
+Empty states communicate when there is no content to show. Use them in tables, lists, and panels with a title, description, optional icon, and actions.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| bordered | Boolean |  | Adds a border around the empty state. |
+| description | String |  | Supporting text shown below the title. |
+| icon | String | emptyIcon | Icon name shown above the title. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| title | String |  | Primary empty-state heading. |
+
+### Slots
+- `actions`: Action controls shown below the description.
+- `default`
+- `description`: Custom description content; overrides the `description` prop.
+- `icon`: Custom icon; overrides the `icon` prop.
+- `title`: Custom title content; overrides the `title` prop.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <x-empty
+    title="No items yet"
+    description="Get started by creating your first item."
+  />
+</template>
+```
+
+#### Actions
+```vue
+<template>
+  <x-empty
+    title="No results found"
+    description="Try adjusting your filters or search terms."
+  >
+    <template #actions>
+      <x-button color="primary">Clear filters</x-button>
+      <x-button ghost>Learn more</x-button>
+    </template>
+  </x-empty>
+</template>
+```
+
+#### Bordered
+```vue
+<template>
+  <x-empty
+    bordered
+    title="Nothing here"
+    description="This area is empty. Add content to get started."
+  />
+</template>
+```
+---
+## Form
+Structured form wrapper for collecting and validating user input. Use x-form to group fields, run validation, and handle submit in one place.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| autoFocus | Boolean | true | Focuses the first registered field when the form mounts. |
+| autoValidate | Boolean | true | Runs validation on all registered fields before emitting submit. |
+| description | String |  | Optional description shown under the title in the default header. |
+| disabled | Boolean |  | Disables all fields inside the form fieldset. |
+| errors | [Array, Object] | [] | External field errors (`field` + `msg`) applied to registered inputs. |
+| hasFooter | Boolean | true | Renders the footer slot area for form actions. |
+| title | String |  | Optional title shown in the default header. |
+
+### Slots
+- `default`: Form fields and content inside the fieldset.
+- `footer`: Custom footer; wraps primary and secondary actions by default.
+- `header`: Custom header; overrides the default title/description block.
+- `primary-action`: Primary action control in the default footer.
+- `secondary-action`: Secondary action control in the default footer.
+
+### Events
+- `submit`: Emitted on form submit with whether validation passed.
+
+### Methods
+- `submit`: Programmatically submit the form (runs auto-validate when enabled).
+- `validate`: Validate all registered fields; focuses the first invalid field.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { useNotifications, type SelectOption } from '@indielayer/ui'
+import { ref } from 'vue'
+
+const notifications = useNotifications()
+
+const email = ref('')
+const password = ref('')
+const description = ref('')
+const checked = ref()
+const selected = ref()
+const country = ref('')
+const countries: SelectOption[] = [
+  { label: 'United States', value: 'us' },
+  { label: 'Canada', value: 'ca' },
+  { label: 'Mexico', value: 'mx' },
+]
+const countryCode = ref('')
+const phoneNumber = ref('')
+const countryCodes: SelectOption[] = [
+  { label: '+1', value: '+1' },
+  { label: '+44', value: '+44' },
+  { label: '+351', value: '+351' },
+  { label: '+49', value: '+49' },
+]
+const agree = ref(false)
+const rules = {
+  isEmail: (v: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+  isRequired: (v: string) => {
+    if (Array.isArray(v)) return !!v.length || 'Field is required'
+
+    return !!v  || 'Field is required'
+  },
+  phoneComplete: (values: unknown) => {
+    if (!Array.isArray(values)) return 'Country code and phone number are required'
+
+    if (values.every((v) => !!v)) return true
+
+    return 'Country code and phone number are required'
+  },
+}
+const range = ref([])
+
+function onSubmit(isValid: string) {
+  if (isValid) notifications?.success('Valid! Sumitted.')
+  else notifications?.error('Invalid! Form has errors')
+}
+</script>
+
+<template>
+  <x-form title="Edit user information" description="Almost all fields are required" @submit="onSubmit">
+    <x-input
+      v-model="email"
+      :rules="[rules.isRequired, rules.isEmail]"
+      name="email"
+      label="Email"
+      required
+      placeholder="Enter your email"
+      tooltip="We will never share your email with anyone"
+    />
+    <x-input
+      v-model="password"
+      type="password"
+      :rules="[rules.isRequired]"
+      name="password"
+      label="Password"
+      placeholder="Enter your password"
+      helper="Must be between 8 and 10 characters"
+    />
+    <x-textarea
+      v-model="description"
+      name="description"
+      label="Description"
+      placeholder="Description"
+    />
+
+    <x-form-group v-model="selected" label="Group of checkboxes" :rules="[rules.isRequired]">
+      <x-checkbox value="a" label="Lorem ipsum dolor" />
+      <x-checkbox value="b" label="Second option" />
+    </x-form-group>
+
+    <x-form-group v-model="checked" label="Group of radio buttons" :rules="[rules.isRequired]">
+      <x-radio name="inputName" value="a" label="Option A" />
+      <x-radio name="inputName" value="b" label="Option B" />
+    </x-form-group>
+
+    <x-select
+      v-model="country"
+      :rules="[rules.isRequired]"
+      :options="countries"
+      filterable
+      name="country"
+      placeholder="Select another country"
+      label="Country"
+    />
+
+    <x-input-group
+      label="Phone number"
+      helper="Select a country code and enter your local number"
+      :rules="[rules.phoneComplete]"
+      required
+    >
+      <x-select
+        v-model="countryCode"
+        :options="countryCodes"
+        name="countryCode"
+        placeholder="Code"
+        class="!w-28"
+      />
+      <x-input
+        v-model="phoneNumber"
+        type="number"
+        name="phoneNumber"
+        placeholder="5550000"
+      />
+    </x-input-group>
+
+    <x-datepicker
+      v-model="range"
+      :rules="[rules.isRequired]"
+      label="Select a date"
+      helper="Pick a date"
+      tooltip="Use it to pick a date"
+      range
+      multi-calendars
+      disable-year-select
+      :enable-time-picker="false"
+    />
+
+    <x-checkbox
+      v-model="agree"
+      :rules="[rules.isRequired]"
+      name="agree"
+      label="Agree with all the terms"
+      helper="Have you read them?"
+    />
+
+    <template #secondary-action>
+      <x-button ghost>Cancel</x-button>
+    </template>
+    <template #primary-action>
+      <x-button color="primary" type="submit">Submit</x-button>
+    </template>
+  </x-form>
+</template>
+```
+---
+## FormGroup
+Groups related fields with a shared label and validation context. Use form groups for checkboxes, radios, or inputs that belong to one logical section.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| vertical | Boolean | false | Stacks child controls vertically instead of in a row. |
+
+### Slots
+- `default`: Grouped inputs (radios, checkboxes, radio buttons, etc.).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+import { ref } from 'vue'
+
+const notifications = useNotifications()
+
+const selected = ref(['a'])
+const checked = ref()
+
+const rules = {
+  isRequired: (v: string) => {
+    if (Array.isArray(v)) return !!v.length || 'Field is required'
+
+    return !!v  || 'Field is required'
+  },
+}
+
+function onSubmit(isValid: string) {
+  if (isValid) notifications?.success('Valid! Sumitted.')
+  else notifications?.error('Invalid! Form has errors')
+}
+</script>
+
+<template>
+  <x-form title="Form with form groups" @submit="onSubmit">
+    <x-form-group
+      v-model="selected"
+      label="Group of checkboxes"
+      helper="Helper text"
+      tooltip="Tooltip text"
+      :rules="[rules.isRequired]"
+      vertical
+    >
+      <x-checkbox name="selectgroup" value="a" label="Lorem ipsum dolor" />
+      <x-checkbox name="selectgroup" value="b" label="Second option" />
+    </x-form-group>
+
+    <x-form-group v-model="checked" label="Group of radio buttons" helper="Helper text" :rules="[rules.isRequired]">
+      <x-radio name="radiogroup" value="a" label="Option A" />
+      <x-radio name="radiogroup" value="b" label="Option B" />
+    </x-form-group>
+
+    <template #primary-action>
+      <x-button color="primary" type="submit">Submit</x-button>
+    </template>
+  </x-form>
+</template>
+```
+---
+## Icon
+Icons visually represent actions and concepts. Register SVG paths in a global map, then reference them by name on XIcon.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| filled | Boolean |  | Renders a filled icon instead of an outline stroke. |
+| icon | String |  | Icon name from the injected icon set, or raw SVG path markup. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| viewBox | String | 0 0 24 24 | SVG viewBox when rendering path markup. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import docsIcons from '../../../icons'
+
+const query = ref('')
+
+const iconNames = computed(() =>
+  Object.keys(docsIcons).sort().filter((name) =>
+    name.toLowerCase().includes(query.value.trim().toLowerCase()),
+  ),
+)
+</script>
+
+<template>
+  <div class="space-y-6 max-w-3xl">
+    <p class="text-sm text-secondary-600 dark:text-secondary-400">
+      Icons below are loaded from
+      <code class="text-xs bg-secondary-100 dark:bg-secondary-800 px-1 py-0.5 rounded">packages/ui/docs/icons.ts</code>
+      and passed to <code class="text-xs bg-secondary-100 dark:bg-secondary-800 px-1 py-0.5 rounded">app.use(UI, { icons })</code>
+      in the docs app. See the
+      <x-link to="/icons" color="primary">Icons guide</x-link>
+      to build your own set.
+    </p>
+
+    <x-input
+      v-model="query"
+      label="Filter icons"
+      placeholder="Search by name…"
+      clearable
+      class="max-w-xs"
+    />
+
+    <div
+      v-if="iconNames.length"
+      class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-2"
+    >
+      <div
+        v-for="name in iconNames"
+        :key="name"
+        class="flex flex-col items-center gap-1.5 p-3 rounded-md border border-secondary-200 dark:border-secondary-700 bg-secondary-50/50 dark:bg-secondary-900/30"
+        :title="name"
+      >
+        <x-icon :icon="name" size="lg" class="text-secondary-800 dark:text-secondary-200" />
+        <span class="text-[10px] leading-tight text-secondary-500 dark:text-secondary-400 truncate w-full text-center">
+          {{ name }}
+        </span>
+      </div>
+    </div>
+
+    <p v-else class="text-sm text-secondary-500">
+      No icons match “{{ query }}”.
+    </p>
+  </div>
+</template>
+```
+
+#### Formats
+```vue
+<template>
+  <div class="space-y-8 max-w-2xl">
+    <section class="space-y-3">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Registry key
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        Reference a name from your icons map.
+      </p>
+      <div class="flex items-center gap-3">
+        <x-icon icon="github" size="lg" />
+        <code class="text-xs">icon="github"</code>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Full SVG string
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        Paste a complete <code class="text-xs">&lt;svg&gt;</code> element; attributes are applied automatically.
+      </p>
+      <div class="flex items-center gap-3">
+        <x-icon icon="fullsvg" size="lg" class="text-amber-500" />
+        <code class="text-xs">icon="fullsvg"</code>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Raw path markup
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        Pass path/polyline markup directly when the icon is not in the registry.
+      </p>
+      <div class="flex items-center gap-3">
+        <x-icon icon="<polyline points=&quot;20 6 9 17 4 12&quot;></polyline>" size="lg" class="text-primary-500" />
+        <code class="text-xs truncate max-w-[14rem]">&lt;polyline …&gt;</code>
+      </div>
+    </section>
+
+    <section class="space-y-3">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Filled icons (object config)
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        Use <code class="text-xs">{ icon, filled, viewBox }</code> in the registry for multi-color or filled shapes.
+      </p>
+      <div class="flex flex-wrap items-center gap-6">
+        <div class="flex items-center gap-2">
+          <x-icon icon="vue" size="lg" />
+          <span class="text-xs text-secondary-500">vue</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <x-icon icon="nuxt" size="lg" />
+          <span class="text-xs text-secondary-500">nuxt</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <x-icon icon="play" size="lg" class="text-primary-600" />
+          <span class="text-xs text-secondary-500">play</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<template>
+  <x-icon icon="smile" class="text-primary-500" />
+  <x-icon icon="smile" class="text-amber-500" />
+
+  <x-divider class="my-4"/>
+
+  <div class="space-x-4">
+    <x-icon icon="smile" size="xs"/>
+    <x-icon icon="smile" size="sm"/>
+    <x-icon icon="smile"/>
+    <x-icon icon="smile" size="lg"/>
+    <x-icon icon="smile" size="xl"/>
+  </div>
+</template>
+```
+---
+## Image
+Loads a remote image after preloading. Use a background on the wrapper for a visible placeholder until load completes.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| src | String |  | Image URL. Shows a transparent placeholder until the image loads. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="inline-block rounded-lg overflow-hidden bg-secondary-200 dark:bg-secondary-800">
+    <x-image
+      src="https://picsum.photos/id/237/400/300"
+      alt="Golden retriever sitting on a path"
+      class="block w-full max-w-sm h-auto object-cover"
+      width="400"
+      height="300"
+    />
+  </div>
+</template>
+```
+
+#### Sizing
+```vue
+<template>
+  <div class="flex flex-wrap items-end gap-6">
+    <div class="text-center space-y-2">
+      <div class="rounded-md overflow-hidden bg-secondary-200 dark:bg-secondary-800">
+        <x-image
+          src="https://picsum.photos/id/106/120/120"
+          alt="Thumbnail"
+          class="block object-cover"
+          width="120"
+          height="120"
+        />
+      </div>
+      <span class="text-xs text-secondary-500">120 × 120</span>
+    </div>
+
+    <div class="text-center space-y-2">
+      <div class="rounded-md overflow-hidden bg-secondary-200 dark:bg-secondary-800">
+        <x-image
+          src="https://picsum.photos/id/106/200/150"
+          alt="Card image"
+          class="block object-cover"
+          width="200"
+          height="150"
+        />
+      </div>
+      <span class="text-xs text-secondary-500">200 × 150</span>
+    </div>
+
+    <div class="text-center space-y-2">
+      <div class="rounded-md overflow-hidden bg-secondary-200 dark:bg-secondary-800">
+        <x-image
+          src="https://picsum.photos/id/106/320/180"
+          alt="Wide banner"
+          class="block object-cover w-80 max-w-full"
+          width="320"
+          height="180"
+        />
+      </div>
+      <span class="text-xs text-secondary-500">320 × 180</span>
+    </div>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+const validSrc = 'https://picsum.photos/id/64/360/240'
+const brokenSrc = 'https://invalid.example/image.jpg'
+</script>
+
+<template>
+  <div class="grid gap-8 sm:grid-cols-2 max-w-2xl">
+    <section class="space-y-2">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Loading
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        A neutral background on the wrapper shows while the URL loads. The component swaps in
+        <code class="text-xs">src</code> after <code class="text-xs">onload</code>.
+      </p>
+      <div class="rounded-lg overflow-hidden bg-secondary-200 dark:bg-secondary-800 w-[360px] max-w-full h-60">
+        <x-image
+          :src="validSrc"
+          alt="Portrait loaded from remote URL"
+          class="block w-full h-full object-cover"
+          width="360"
+          height="240"
+        />
+      </div>
+    </section>
+
+    <section class="space-y-2">
+      <p class="text-sm font-medium text-secondary-700 dark:text-secondary-300">
+        Failed load
+      </p>
+      <p class="text-sm text-secondary-600 dark:text-secondary-400">
+        When the request fails, the image keeps a minimal fallback and the wrapper background remains visible.
+      </p>
+      <div class="rounded-lg overflow-hidden bg-secondary-200 dark:bg-secondary-800 w-[360px] max-w-full h-60 flex items-center justify-center">
+        <x-image
+          :src="brokenSrc"
+          alt="Image failed to load"
+          class="block w-full h-full object-cover"
+          width="360"
+          height="240"
+        />
+      </div>
+    </section>
+  </div>
+</template>
+```
+---
+## InfiniteLoader
+Loads more list items as the user scrolls near the end of a container. Use InfiniteLoader for feeds and catalogs that grow on demand.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| isRowLoaded | Function (index: number) = boolean> |  | Returns whether the row at the given index is already loaded. |
+| loadMoreRows | Function as PropType<(startIndex: number |  | Loads more rows for the given index range; resolve when finished. |
+| minimumBatchSize | Number |  | Minimum rows to request per load (default 10). Batches HTTP fetches. |
+| rowCount | Number |  | Total row count; may be an upper bound if the true size is unknown. |
+| threshold | Number |  | Prefetch when the user scrolls within this many rows of unloaded data (default 15). |
+
+### Slots
+- `default`: Render prop slot; receives `onRowsRendered` to wire into a virtual list.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+
+// Infinite loader example
+const infiniteItems = ref<string[]>([])
+const hasMoreData = ref(true)
+const isLoading = ref(false)
+const highestLoadedIndex = ref(-1)
+const apiCursor = ref<string | null>(null) // Cursor from last API call
+
+// Track the actual loaded count
+const loadedCount = computed(() => {
+  return infiniteItems.value.filter((item) => item !== undefined).length
+})
+
+const isRowLoaded = (index: number) => {
+  // If loading, pretend ALL rows are loaded to prevent useInfiniteLoader
+  // from marking new rows as pending while a request is in progress
+  if (isLoading.value) {
+    return true
+  }
+
+  // The last row is the loading indicator when we have more data
+  const isLoadingRow = hasMoreData.value && index === infiniteItems.value.length
+
+  if (isLoadingRow) {
+    return false // Not loaded yet, trigger loading
+  }
+
+  return infiniteItems.value[index] !== undefined
+}
+
+// Helper to get item or loading indicator
+const getItem = (index: number) => {
+  // If this is the loading indicator row
+  if (hasMoreData.value && index === infiniteItems.value.length) {
+    return isLoading.value ? '⏳ Loading more...' : '↓ Scroll for more'
+  }
+
+  return infiniteItems.value[index]
+}
+
+const loadMoreRows = async (startIndex: number, stopIndex: number) => {
+  // Block all new requests if one is already in progress
+  if (isLoading.value) {
+    console.log(`[loadMoreRows] Already loading, rejecting request for ${startIndex}-${stopIndex}`)
+
+    return
+  }
+
+  isLoading.value = true
+  const currentLength = infiniteItems.value.length
+
+  console.log(`[loadMoreRows] Loading batch of 50 items, cursor: ${apiCursor.value}, current items: ${currentLength}`)
+
+  try {
+    // Simulate API call with cursor
+    // In real implementation: const response = await fetch(`/api/items?cursor=${apiCursor.value}&limit=50`);
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // In a real implementation, you'd use the cursor and response data:
+    // const response = await fetch(`/api/items?cursor=${apiCursor.value}&limit=50`);
+    // const { items, nextCursor, hasMore } = await response.json();
+    // apiCursor.value = nextCursor;
+    // hasMoreData.value = hasMore;
+    //
+    // Then append the items from the API:
+    // const newItems = [...infiniteItems.value, ...items];
+    // infiniteItems.value = newItems;
+
+    // Simulate API response: generate 50 items
+    const batchSize = 50
+    const itemsToAdd = []
+
+    for (let i = 0; i < batchSize; i++) {
+      const itemIndex = currentLength + i
+
+      itemsToAdd.push(`Item ${itemIndex + 1}`)
+      if (itemIndex > highestLoadedIndex.value) {
+        highestLoadedIndex.value = itemIndex
+      }
+    }
+
+    // Simulate updating cursor based on response
+    apiCursor.value = `cursor_after_${currentLength + batchSize - 1}`
+
+    // Append all new items at once
+    infiniteItems.value = [...infiniteItems.value, ...itemsToAdd]
+
+    console.log(`[loadMoreRows] Loaded ${batchSize} items, total: ${infiniteItems.value.length}, cursor: ${apiCursor.value}`)
+
+    // Check if we've reached the limit (simulate end of data)
+    if (infiniteItems.value.length >= 500) {
+      hasMoreData.value = false
+      console.log('[loadMoreRows] Reached limit, no more data to load')
+    }
+  } catch (error) {
+    console.error('[loadMoreRows] Error loading items:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const infiniteRowCount = computed(() => {
+  const itemsLength = infiniteItems.value.length
+
+  if (!hasMoreData.value) {
+    // No more data, show only loaded items
+    return itemsLength
+  }
+
+  // Show loaded items + 1 loading indicator row
+  return itemsLength + 1
+})
+
+// Load first batch of items on mount or when switching to infinite tab
+const loadInitialItems = async () => {
+  if (infiniteItems.value.length === 0) {
+    await loadMoreRows(0, 49) // Indices are ignored, always loads 50 items
+  }
+}
+
+onMounted(() => {
+  loadInitialItems()
+})
+</script>
+
+<template>
+  <p class="mb-2 text-sm text-gray-600 dark:text-gray-400">
+    Loaded {{ loadedCount }} of {{ infiniteRowCount }} items
+    <span v-if="isLoading" class="text-gray-500 dark:text-gray-300"> (Loading...)</span>
+  </p>
+  <x-infinite-loader
+    :is-row-loaded="isRowLoaded"
+    :load-more-rows="loadMoreRows"
+    :row-count="infiniteRowCount"
+    :minimum-batch-size="50"
+    :threshold="10"
+  >
+    <template #default="{ onRowsRendered }">
+      <x-virtual-list
+        :row-count="infiniteRowCount"
+        :row-height="50"
+        class="h-96 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
+        :on-rows-rendered="onRowsRendered"
+      >
+        <template #row="{ index, style }">
+          <div
+            :style="style"
+            :class="[
+              'flex h-12 items-center justify-center border-b border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200',
+              index === infiniteItems.length && hasMoreData
+                ? 'bg-gray-50 text-gray-500 dark:bg-gray-900 dark:text-gray-400'
+                : '',
+            ]"
+          >
+            {{ getItem(index) }}
+          </div>
+        </template>
+      </x-virtual-list>
+    </template>
+  </x-infinite-loader>
+</template>
+```
+
+#### Composable
+```vue
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { useInfiniteLoader } from '@indielayer/ui'
+
+// Infinite loader example
+const infiniteItems = ref<string[]>([])
+const hasMoreData = ref(true)
+const isLoading = ref(false)
+const highestLoadedIndex = ref(-1)
+const apiCursor = ref<string | null>(null) // Cursor from last API call
+
+// Track the actual loaded count
+const loadedCount = computed(() => {
+  return infiniteItems.value.filter((item) => item !== undefined).length
+})
+
+const isRowLoaded = (index: number) => {
+  // If loading, pretend ALL rows are loaded to prevent useInfiniteLoader
+  // from marking new rows as pending while a request is in progress
+  if (isLoading.value) {
+    return true
+  }
+
+  // The last row is the loading indicator when we have more data
+  const isLoadingRow = hasMoreData.value && index === infiniteItems.value.length
+
+  if (isLoadingRow) {
+    return false // Not loaded yet, trigger loading
+  }
+
+  return infiniteItems.value[index] !== undefined
+}
+
+// Helper to get item or loading indicator
+const getItem = (index: number) => {
+  // If this is the loading indicator row
+  if (hasMoreData.value && index === infiniteItems.value.length) {
+    return isLoading.value ? '⏳ Loading more...' : '↓ Scroll for more'
+  }
+
+  return infiniteItems.value[index]
+}
+
+const loadMoreRows = async (startIndex: number, stopIndex: number) => {
+  // Block all new requests if one is already in progress
+  if (isLoading.value) {
+    console.log(`[loadMoreRows] Already loading, rejecting request for ${startIndex}-${stopIndex}`)
+
+    return
+  }
+
+  isLoading.value = true
+  const currentLength = infiniteItems.value.length
+
+  console.log(`[loadMoreRows] Loading batch of 50 items, cursor: ${apiCursor.value}, current items: ${currentLength}`)
+
+  try {
+    // Simulate API call with cursor
+    // In real implementation: const response = await fetch(`/api/items?cursor=${apiCursor.value}&limit=50`);
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    // In a real implementation, you'd use the cursor and response data:
+    // const response = await fetch(`/api/items?cursor=${apiCursor.value}&limit=50`);
+    // const { items, nextCursor, hasMore } = await response.json();
+    // apiCursor.value = nextCursor;
+    // hasMoreData.value = hasMore;
+    //
+    // Then append the items from the API:
+    // const newItems = [...infiniteItems.value, ...items];
+    // infiniteItems.value = newItems;
+
+    // Simulate API response: generate 50 items
+    const batchSize = 50
+    const itemsToAdd = []
+
+    for (let i = 0; i < batchSize; i++) {
+      const itemIndex = currentLength + i
+
+      itemsToAdd.push(`Item ${itemIndex + 1}`)
+      if (itemIndex > highestLoadedIndex.value) {
+        highestLoadedIndex.value = itemIndex
+      }
+    }
+
+    // Simulate updating cursor based on response
+    apiCursor.value = `cursor_after_${currentLength + batchSize - 1}`
+
+    // Append all new items at once
+    infiniteItems.value = [...infiniteItems.value, ...itemsToAdd]
+
+    console.log(`[loadMoreRows] Loaded ${batchSize} items, total: ${infiniteItems.value.length}, cursor: ${apiCursor.value}`)
+
+    // Check if we've reached the limit (simulate end of data)
+    if (infiniteItems.value.length >= 500) {
+      hasMoreData.value = false
+      console.log('[loadMoreRows] Reached limit, no more data to load')
+    }
+  } catch (error) {
+    console.error('[loadMoreRows] Error loading items:', error)
+  } finally {
+    isLoading.value = false
+  }
+}
+
+const infiniteRowCount = computed(() => {
+  const itemsLength = infiniteItems.value.length
+
+  if (!hasMoreData.value) {
+    // No more data, show only loaded items
+    return itemsLength
+  }
+
+  // Show loaded items + 1 loading indicator row
+  return itemsLength + 1
+})
+
+const { onRowsRendered } = useInfiniteLoader(
+  computed(() => {
+    const rc = infiniteRowCount.value
+
+    console.log(`[useInfiniteLoader] Props updated - rowCount: ${rc}, loaded: ${loadedCount.value}`)
+
+    return {
+      isRowLoaded,
+      loadMoreRows,
+      rowCount: rc,
+      minimumBatchSize: 50, // Load 50 items per batch
+      threshold: 10, // Start loading when within 10 rows of needing data
+    }
+  }),
+)
+
+// Load first batch of items on mount or when switching to infinite tab
+const loadInitialItems = async () => {
+  if (infiniteItems.value.length === 0) {
+    await loadMoreRows(0, 49) // Indices are ignored, always loads 50 items
+  }
+}
+
+onMounted(() => {
+  loadInitialItems()
+})
+</script>
+
+<template>
+  <p class="mb-2 text-sm text-gray-600 dark:text-gray-400">
+    Loaded {{ loadedCount }} of {{ infiniteRowCount }} items
+    <span v-if="isLoading" class="text-gray-500 dark:text-gray-300"> (Loading...)</span>
+  </p>
+  <x-virtual-list
+    :row-count="infiniteRowCount"
+    :row-height="50"
+    class="h-96 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
+    :on-rows-rendered="onRowsRendered"
+  >
+    <template #row="{ index, style }">
+      <div
+        :style="style"
+        :class="[
+          'flex h-12 items-center justify-center border-b border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200',
+          index === infiniteItems.length && hasMoreData
+            ? 'bg-gray-50 text-gray-500 dark:bg-gray-900 dark:text-gray-400'
+            : '',
+        ]"
+      >
+        {{ getItem(index) }}
+      </div>
+    </template>
+  </x-virtual-list>
+</template>
+```
+---
+## Input
+Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| block | Boolean |  | Stretches to the full width of the parent. |
+| clearable | Boolean |  | Shows a clear button when the value is not empty. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| dir | String 'ltr'  \|  'rtl' | ltr | Text direction for the native input (`ltr` or `rtl`). |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| icon | String |  | Shortcut for `iconLeft`. |
+| iconLeft | String |  | Icon name shown before the input value. |
+| iconRight | String |  | Icon name shown after the input value. |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] |  | Native `max` attribute (typically for number inputs). |
+| maxlength | [Number, String] |  | Maximum character length for the input value. |
+| min | [Number, String] |  | Native `min` attribute (typically for number inputs). |
+| minlength | [Number, String] |  | Minimum character length for the input value. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Placeholder text shown when the value is empty. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| showCounter | Boolean |  | Shows a character counter in the footer. |
+| showPasswordToggle | Boolean | true | Shows a visibility toggle when `type` is `password`. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| step | [Number, String] |  | Native `step` attribute for numeric inputs. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| type | String | text | Native input type (text, password, email, number, etc.). |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- `default`
+- `prefix`: Content before the input (left adornment).
+- `suffix`: Content after the input (right adornment).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const name = ref('John')
+const title = ref('')
+</script>
+
+<template>
+  <div class="grid gap-6">
+    <x-input
+      v-model="name"
+      label="Name"
+      name="name"
+      placeholder="Placeholder"
+      helper="Helper text here"
+      tooltip="Tooltip here"
+      clearable
+    />
+
+    <x-input
+      v-model="title"
+      label="Title with character counter"
+      name="title"
+      maxlength="50"
+      show-counter
+      helper="Character counter is displayed"
+      placeholder="Enter a title (max 50 characters)"
+    />
+  </div>
+</template>
+```
+
+#### Size
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const other = ref('Sample text')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+    <x-input v-model="other" size="xs"/>
+    <x-input v-model="other" size="sm"/>
+    <x-input v-model="other" size="md"/>
+    <x-input v-model="other" size="lg"/>
+    <x-input v-model="other" size="xl"/>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const name = ref('not a valid input')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-input disabled label="Disabled"/>
+    <x-input value="readonly" readonly label="Read only"/>
+    <x-input v-model="name" label="Error" error="Invalid input" />
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const password = ref('secret')
+const other = ref('I have an icon')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-input
+      v-model="password"
+      label="Password input"
+      type="password"
+      show-password-toggle
+    />
+    <x-input v-model="other" label="Input with icon" icon-left="smile"/>
+    <x-input v-model="other" label="Icon on the right" icon-right="smile" />
+    <x-input
+      v-model="other"
+      icon="smile"
+      label="Icon and suffix slot"
+      class="md:col-span-3"
+      clearable
+    >
+      <template #suffix>
+        <span class="text-secondary-400 text-xs">min</span>
+      </template>
+    </x-input>
+  </div>
+</template>
+```
+---
+## Input Group
+Input groups combine multiple inline fields (Input, Textarea, Select, Datepicker, Button) into one control with a shared label and footer.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| block | Boolean |  | Stretches the group to the full width of the parent. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- `default`: Grouped controls (inputs, buttons, or other adornments).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const country = ref('+1')
+const phone = ref('')
+</script>
+
+<template>
+  <div class="grid gap-6">
+    <x-input-group label="Phone number" helper="Country code and local number">
+      <x-input v-model="country" placeholder="+1" class="!w-24" />
+      <x-input v-model="phone" placeholder="555-0000" />
+    </x-input-group>
+
+    <x-input-group label="Search" helper="Helper text here">
+      <x-input v-model="phone" placeholder="Search…" />
+      <x-button color="primary">Go</x-button>
+    </x-input-group>
+  </div>
+</template>
+```
+
+#### Mixed
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const unit = ref('km')
+const distance = ref('')
+
+const unitOptions = [
+  { value: 'km', label: 'km' },
+  { value: 'mi', label: 'mi' },
+]
+</script>
+
+<template>
+  <x-input-group label="Distance">
+    <x-select v-model="unit" :options="unitOptions" class="!w-28" />
+    <x-input v-model="distance" placeholder="0" type="number" />
+  </x-input-group>
+</template>
+```
+
+#### Validation
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const start = ref('')
+const end = ref('')
+
+const rules = {
+  required: (values: unknown) => {
+    if (!Array.isArray(values)) return 'Both dates are required'
+
+    if (values.length >= 2 && values.every((v) => !!v)) return true
+
+    return 'Both dates are required'
+  },
+}
+</script>
+
+<template>
+  <x-form @submit="() => {}">
+    <div class="flex">
+      <x-input-group
+        label="Date range"
+        helper="Select date and time"
+        :rules="[rules.required]"
+      >
+        <x-datepicker
+          v-model="start"
+          teleport="body"
+          placeholder="Date"
+          :enable-time-picker="false"
+        />
+        <x-input v-model="end" type="time" placeholder="Time" />
+      </x-input-group>
+    </div>
+
+    <x-button type="submit" color="primary">Submit</x-button>
+  </x-form>
+</template>
+```
+---
+## Link
+Styled anchor for navigating to another page or external URL. Use x-link when you need consistent link styling, external indicators, and accessibility.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| external | Boolean |  | Appends an external-link icon after the label. |
+| shadow | Boolean |  | Inset shadow highlight under the link text. |
+| tag | String | a | Root element tag. Becomes a router-link when `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
+| underline | Boolean |  | Underlines the link text. |
+
+### Slots
+- `default`: Link label and content.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div>
+    If you don't have an account yet, you can <x-link color="primary">contact our customer success team</x-link> to get started with Indielayer UI, get a <x-link shadow color="pink" external>product demo</x-link>, or request a specific sales inquiry.
+  </div>
+  <div class="mt-4 space-x-2">
+    <x-link to="/component/link">Simple link</x-link>
+    <x-link to="link" underline>Underline</x-link>
+    <x-link to="link" color="orange">Colorfull</x-link>
+    <x-link to="link" shadow color="primary">Shadow</x-link>
+    <x-link href="https://github.com/indielayer/ui" target="_blank" external>External link</x-link>
+  </div>
+</template>
+```
+---
+## Loader
+Full-area loading overlay that blocks interaction while content or an action completes. Use Loader when the whole region should wait before continuing.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| icon | String |  | Custom spinner icon when status is `active`. |
+| label | String |  | Optional text shown next to the status icon. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| status | String LoaderStatus | active | Visual status (active spinner, success, or error). Values: active, success, error. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid gap-4">
+    <x-loader label="Loading" status="active"/>
+    <x-loader label="Failed to load" status="error"/>
+    <x-loader label="Loaded" status="success"/>
+  </div>
+</template>
+```
+---
+## Menu
+Dropdown list of actionable items triggered from a button or other control. Use x-menu with x-menu-item for contextual actions and navigation.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| collapseIcon | String |  | Default icon for collapsible group headers. |
+| collapsible | Boolean | true | Allows nested groups to collapse when they have child items. |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables all menu items. |
+| expanded | Boolean |  | Default expanded state for collapsible groups. |
+| filled | Boolean | true | Filled item backgrounds (vs. minimal text-only look). |
+| items | Array MenuArrayItem[] |  | Menu tree. Each item may nest `items`, links, icons, and dividers. |
+| minimal | Boolean |  | Hides item labels; icons-only layout. |
+| rounded | Boolean | true | Applies rounded corners to menu items. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+
+### Slots
+- `default`
+
+### Events
+- `expand`: Emitted when a nested group expands or a linked item becomes active.
+- `item-click`: Emitted when a menu item is clicked.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import type { MenuArrayItem } from '@indielayer/ui'
+
+const menu1 = [{
+  label: 'Open',
+  active: false,
+  value: 'a',
+  disabled: true,
+}, {
+  label: 'Close',
+  active: false,
+  value: 'b',
+}, {
+  divider: true,
+}, {
+  label: 'Sign out',
+  color: 'error',
+  active: false,
+  value: 'c',
+}]
+const menu2: MenuArrayItem[] = [{
+  label: 'Menu item 1',
+  value: '',
+  target: '_blank',
+  icon: 'smile',
+  href: 'https://indielayer.com',
+  prefix: '👉',
+  suffix: '👈',
+}, {
+  to: 'menu',
+  label: 'Menu item 2',
+  value: '',
+  icon: 'smile',
+  exact: true,
+}, {
+  label: 'Menu item 3',
+  value: '',
+  exact: true,
+  icon: 'smile',
+  items: [{
+    label: 'derp',
+  }],
+}, {
+  divider: true,
+}, {
+  label: 'Sub-menu (non-collapsible)',
+  loading: false,
+  collapsible: false,
+  items: [{
+    label: 'Option',
+    value: '',
+    icon: 'smile',
+  }, {
+    label: 'Links (sub-menu collapsible)',
+    value: '',
+    items: [{
+      to: 'menu',
+      label: 'Link to \'menu\'',
+      value: '',
+    }],
+  }],
+}, {
+  label: 'Last menu item',
+  value: '',
+  icon: 'heart',
+  exact: true,
+  onClick: () => {},
+  disabled: false,
+}]
+</script>
+
+<template>
+  <x-menu :items="menu1" />
+  <x-divider class="my-8"/>
+  <x-menu :items="menu2" />
+</template>
+```
+---
+## Modal
+Dialog overlay that focuses attention on a task or message above the current page. Use modals for confirmations, forms, and details that need temporary focus.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| backdrop | Boolean | true | Shows a dimmed backdrop behind the dialog. |
+| description | String |  | Body description shown above the default slot. |
+| fluid | Boolean |  | Stretches the dialog to fill available width within its size. |
+| formAutoValidate | Boolean | true | Auto-validate the inner form on submit when `isForm` is set. |
+| formDescription | String |  | Description passed to the inner form when `isForm` is set. |
+| formDisabled | Boolean |  | Disables the inner form when `isForm` is set. |
+| formErrors | [Array, Object] | [] | External form errors passed to the inner form when `isForm` is set. |
+| formTitle | String |  | Title passed to the inner form when `isForm` is set. |
+| hasActions | Boolean | true | Renders the default actions footer region when no footer slot is used. |
+| hasHeader | Boolean | true | Renders the default header region when no header slot is used. |
+| label | String |  | Small label above the title in the header. |
+| loading | Boolean |  | Loading state for the modal (theme/visual). |
+| loadingText | String |  | Text shown while loading. |
+| modelValue | Boolean |  | Open state (v-model). |
+| persistent | Boolean |  | Prevents closing on Escape or backdrop click. |
+| position | String ModalPosition | center | Vertical placement of the dialog (top, center, bottom). |
+| showClose | Boolean |  | Shows a close button in the corner. |
+| size | String ModalSize | lg | Dialog width preset (xs, sm, md, lg, xl, full). |
+| title | String |  | Header title text. |
+
+### Slots
+- `actions`: Custom actions row inside the default footer.
+- `cancel-action`: Cancel / dismiss control in the actions row.
+- `default`: Main modal body content.
+- `footer`: Replaces the default actions footer.
+- `header`: Replaces the default header region.
+- `header-content`: Custom header content inside the default header layout.
+- `image`: Optional media above the header.
+- `primary-action`: Primary action control in the actions row.
+- `secondary-action`: Secondary action control in the actions row.
+- `tertiary-action`: Tertiary action control in the actions row.
+
+### Events
+- `submit`: Emitted when the inner form submits. Payload is the validation result.
+- `update:modelValue`: Emitted when open state changes (v-model).
+
+### Methods
+- `close`: Close the modal.
+- `open`: Open the modal.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const show = ref(false)
+const show1 = ref(false)
+const show2 = ref(false)
+const show3 = ref(false)
+</script>
+
+<template>
+  <x-modal
+    v-model="show"
+    title="Header"
+    show-close
+    backdrop
+    size="sm"
+  >
+    <template #image>
+      <x-image src="https://images.unsplash.com/photo-1543352634-99a5d50ae78e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1742&q=80" alt=""/>
+    </template>
+
+    <div>
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
+    </div>
+
+    <template #actions>
+      <div class="text-right space-x-4">
+        <x-button tabindex="-1" @click="show = false">Cancel</x-button>
+        <x-button color="success">Confirm</x-button>
+      </div>
+    </template>
+  </x-modal>
+
+  <x-modal
+    v-model="show1"
+    backdrop
+    :has-actions="false"
+    :has-header="false"
+    show-close
+    persistent
+  >
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
+  </x-modal>
+
+  <x-modal v-model="show2" backdrop title="Title">
+
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
+
+    <template #actions>
+      <x-button @click="show2 = false">Cancel</x-button>
+      <x-button color="success">Confirm</x-button>
+    </template>
+  </x-modal>
+
+  <x-modal v-model="show3" show-close :has-actions="false" title="Modal Title">
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
+  </x-modal>
+
+  <x-button class="mr-2" @click="show = true">complete</x-button>
+  <x-button class="mr-2" @click="show1 = true">persistent</x-button>
+  <x-button class="mr-2" @click="show2 = true">title & footer</x-button>
+  <x-button class="mr-2" @click="show3 = true">title & content</x-button>
+</template>
+```
+
+#### Composed
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useNotifications } from '@indielayer/ui'
+
+const show = ref(false)
+
+const notifications = useNotifications()
+
+const email = ref('')
+const password = ref('')
+const description = ref('')
+const datetime = ref('')
+
+const selected = ref()
+const options = [
+  { value: 'us', label: 'USA' },
+  { value: 'u', label: 'United Kingdom' },
+]
+
+const rules = {
+  isEmail: (v: string) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+  isRequired: (v: string) => !!v  || 'Field is required',
+}
+
+function onSubmit(isValid: boolean) {
+  if (isValid) notifications?.success('Valid! Sumitted.')
+  else notifications?.error('Invalid! Form has errors')
+}
+</script>
+
+<template>
+  <x-modal
+    v-model="show"
+    show-close
+    backdrop
+    is-form
+    size="full"
+    title="Modal title"
+    label="Modal label"
+    description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, fugit."
+    @submit="onSubmit"
+  >
+    <x-input
+      v-model="email"
+      :rules="[rules.isRequired, rules.isEmail]"
+      name="email"
+      label="Email"
+      placeholder="Enter your email"
+    />
+    <x-input
+      v-model="password"
+      type="password"
+      :rules="[rules.isRequired]"
+      name="password"
+      label="Password"
+      placeholder="Enter your password"
+      helper="Must be between 8 and 10 characters"
+    />
+    <x-textarea
+      v-model="description"
+      name="description"
+      label="Description"
+      placeholder="Description"
+      hide-footer
+    />
+    <x-select
+      v-model="selected"
+      filterable
+      :options="options"
+      label="Country"
+      :rules="[rules.isRequired]"
+    />
+
+    <x-datepicker v-model="datetime" label="Start date" :rules="[rules.isRequired]"/>
+
+    <!-- <template #tertiary-action>
+      <x-button color="gray" size="lg">Tertiary</x-button>
+    </template> -->
+    <template #secondary-action>
+      <x-button ghost tabindex="-1" @click="show = false">Cancel</x-button>
+    </template>
+    <template #primary-action>
+      <x-button color="primary" type="submit">Confirm</x-button>
+    </template>
+  </x-modal>
+
+  <x-button class="mr-2" @click="show = true">Modal as a XForm</x-button>
+</template>
+```
+---
+## Notifications
+Toast-style feedback for success, warning, or error after an action. Use notifications for transient messages that should not block the page.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| align | String NotificationsAlign | right | Horizontal placement of the toast stack (left or right). |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| injectKey | [Symbol, String] | injectNotificationKey | Provide/inject key for notification helpers (log, info, success, warn, error). |
+| offset | [String, Number] | 0 | Extra inset from the viewport edge in pixels. |
+| pauseOnHover | Boolean | true | Pauses the dismiss timer while the pointer hovers a notification. |
+| position | String NotificationsPosition | bottom | Vertical placement of the toast stack (top or bottom). |
+| removable | Boolean | true | Shows a dismiss control on each notification by default. |
+| timeout | Number | 3500 | Default auto-dismiss delay in milliseconds. Set 0 to keep until removed. |
+
+### Slots
+- `default`: App content that can inject notification helpers.
+
+### Events
+- _(none)_
+
+### Methods
+- `error`: Show an error-styled notification.
+- `info`: Show an info-styled notification.
+- `log`: Show a plain notification.
+- `success`: Show a success-styled notification.
+- `warn`: Show a warning-styled notification.
+- `warning`: Alias of `warn`.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+
+const notification = useNotifications()
+
+const log = () => {notification?.log('Default notification.')}
+const info = () => {notification?.info('Starwars is a movie.')}
+const error = () => {notification?.error('Disk is full!')}
+const warn = () => {notification?.warn('Disk is almost full.')}
+const success = () => {notification?.success('File saved!')}
+const custom = () => {
+  notification?.info({
+    timeout: 0,
+    title: 'Notification title',
+    message: 'Subtitle text goes here.',
+    iconColor: 'primary',
+    align: 'right',
+    position: 'bottom',
+    action: {
+      label: 'Hello',
+      onClick: () => {
+        console.log('Hello!')
+      },
+    },
+  })
+}
+const custom2 = () => {
+  notification?.info({
+    timeout: 0,
+    title: 'Notification title',
+    message: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem accusamus quisquam deleniti error possimus ipsa, fugit maiores. Fuga, non ab id odit praesentium earum optio tempore veniam, eligendi deleniti culpa neque aliquam blanditiis distinctio perferendis delectus ut aut. Sapiente repellendus culpa magnam ullam placeat et sunt laborum minus inventore. Cupiditate, totam soluta. Numquam placeat illum provident culpa corporis quis exercitationem, praesentium dicta quisquam quaerat voluptatem soluta dignissimos, enim dolores, saepe ullam. Dolorem, quo porro officiis aspernatur odit neque at minima totam eius! Cum aliquid repudiandae molestias, dolore accusantium qui ratione iusto, consequatur mollitia quaerat at ipsa voluptatibus quia minima? Nobis?',
+    iconColor: 'primary',
+    align: 'right',
+    position: 'top',
+    action: {
+      label: 'Hello',
+      color: 'pink',
+      onClick: () => {
+        console.log('Hello!')
+      },
+    },
+  })
+}
+</script>
+
+<template>
+  <div class="space-x-4">
+    <x-button @click="log">Log</x-button>
+    <x-button @click="info">Info</x-button>
+    <x-button @click="error">Error</x-button>
+    <x-button @click="warn">Warn</x-button>
+    <x-button @click="success">Success</x-button>
+    <x-button @click="custom">Custom</x-button>
+    <x-button @click="custom2">Custom2</x-button>
+  </div>
+</template>
+```
+---
+## Pagination
+Controls for moving through large result sets page by page. Use pagination with tables, lists, and search results to keep each view manageable.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| links | Boolean |  | Renders page buttons as links (`?page=` query). |
+| modelValue | Number | 1 | Current page (v-model). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| totalPages | Number | 1 | Total number of pages. |
+| variant | String PaginationVariant | simple | Layout style (simple, quick, or dots). |
+
+### Slots
+- _(none)_
+
+### Events
+- `update:modelValue`: Emitted when the current page changes (v-model).
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const totalPages = 10
+const page = ref(1)
+</script>
+
+<template>
+  <div class="space-y-10">
+    <x-pagination v-model="page" :total-pages="totalPages" variant="quick" />
+    <x-pagination v-model="page" :total-pages="totalPages" />
+    <x-pagination v-model="page" :total-pages="totalPages" variant="dots" />
+    <div>
+      <p class="font-bold mb-2">Pagination with links (?page) query string</p>
+      <x-pagination v-model="page" :total-pages="totalPages" links />
+    </div>
+  </div>
+</template>
+```
+---
+## Popover
+Floating panel anchored to a trigger for extra content or actions. Use popovers for menus and contextual UI without leaving the current view.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| autoHide | [Boolean, Function] | true | Hides on outside click, or a predicate deciding whether to hide. |
+| boundary | [String, Object] |  | Overflow boundary used for flip/shift positioning. |
+| computeTransformOrigin | Boolean |  | Computes transform-origin for scale transitions. |
+| container | [String, Object, Boolean] | body | Element that contains the floating popover DOM. |
+| delay | [String, Number, Object] | 0 | Show/hide delay in ms, or `{ show, hide }`. |
+| disabled | Boolean |  | Disables showing the popover. |
+| distance | [Number, String] |  | Offset along the placement axis in pixels. |
+| eagerMount | Boolean |  | Mounts popover content immediately instead of on first open. |
+| handleResize | Boolean | true | Repositions when the popover content size changes. |
+| hideArrow | Boolean | true | Hides the popover arrow. |
+| hideTriggers | [Array, Function] |  | Events that hide the popover, or a function deriving them from `triggers`. |
+| instantMove | Boolean |  | Skips transition when the popover moves between placements. |
+| placement | String PopoverPlacement | bottom-start | Preferred placement relative to the trigger. |
+| popperClass | [String, Array, Object] |  | Extra class(es) on the floating popover element. |
+| popperHideTriggers | [Array, Function] |  | Events on the content that hide the popover. |
+| popperShowTriggers | [Array, Function] |  | Events on the content that show the popover. |
+| popperTriggers | Array Array<PopoverTriggerEvent> |  | Events on the popover content that keep it open. |
+| positioningDisabled | Boolean |  | Keeps the popover in the DOM flow without floating positioning. |
+| showTriggers | [Array, Function] |  | Events that show the popover, or a function deriving them from `triggers`. |
+| shown | Boolean |  | Controlled open state. |
+| skidding | [Number, String] |  | Offset along the trigger edge in pixels. |
+| strategy | String 'absolute'  \|  'fixed' | absolute | CSS position strategy for the floating element. |
+| triggers | Array Array<PopoverTriggerEvent> | [] | Events that toggle the popover (for example click, hover, focus). |
+
+### Slots
+- `content`: Popover panel content.
+- `default`: Trigger element.
+
+### Events
+- `apply-hide`: Emitted after the hide transition is applied.
+- `apply-show`: Emitted after the show transition is applied.
+- `auto-hide`: Emitted when auto-hide closes the popover.
+- `close-directive`: Emitted when closed via the close directive.
+- `close-group`: Emitted when a popover group close is requested.
+- `hide`: Emitted when the popover starts closing.
+- `resize`: Emitted when popover content is resized.
+- `show`: Emitted when the popover starts opening.
+- `update:shown`: Emitted when open state changes.
+
+### Methods
+- `hide`: Hide the popover.
+- `show`: Show the popover.
+- `toggle`: Toggle open state.
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid gap-4">
+    <x-popover placement="top-start">
+      <x-button>Click me to open popover</x-button>
+      <template #content>
+        <x-popover-container class="p-2">
+          example
+        </x-popover-container>
+      </template>
+    </x-popover>
+
+    <x-popover>
+      <x-avatar class="cursor-pointer shadow relative" name="John Smith" />
+      <template #content>
+        <x-popover-container class="p-2">
+          another one
+        </x-popover-container>
+      </template>
+    </x-popover>
+
+    <x-button-group>
+      <x-button icon="plus" tooltip="Add New">Add New</x-button>
+      <x-popover>
+        <x-button icon="chevron-down" tooltip="More Options"/>
+        <template #content>
+          <x-popover-container class="p-2">
+            <x-button>Option 1</x-button>
+            <x-button>Option 2</x-button>
+            <x-button>Option 3</x-button>
+          </x-popover-container>
+        </template>
+      </x-popover>
+    </x-button-group>
+  </div>
+</template>
+```
+---
+## Progress
+Bar that shows how far a task or process has completed. Use progress for uploads, multi-step jobs, and determinate loading states.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| animate | Boolean | true | Animates width changes when the percentage updates. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| gradient | Boolean |  | Uses a gradient fill instead of a solid color. |
+| percentage | [Number, String] | 0 | Fill amount from 0 to 100. |
+| thick | Boolean |  | Increases the bar thickness. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="grid grid-cols-3 gap-4">
+    <x-progress :percentage="10" color="amber"/>
+    <x-progress :percentage="50" color="primary"/>
+    <x-progress :percentage="100" color="success"/>
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+const percentage = ref(0)
+
+onMounted(() => {
+  const interval = setInterval(() => {
+    percentage.value += 5
+    if (percentage.value >= 100) clearTimeout(interval)
+  }, 100)
+})
+</script>
+
+<template>
+  <div class="grid grid-cols-3 gap-4">
+    <x-progress :percentage="percentage" gradient color="sky" />
+    <x-progress :percentage="percentage" color="rose" />
+  </div>
+</template>
+```
+---
+## QR Code
+Renders a QR code from a string or URL for scanning with mobile devices. Use it for share links, payments, and quick machine-readable payloads.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| backgroundColor | String | #fff | Background color behind the modules. |
+| color | String | #000 | Foreground module color. |
+| errorCorrectionLevel | String | M | Error correction level (L, M, Q, or H). Values: L, M, Q, H. |
+| size | [String, Number] | 100 | Rendered size of the QR canvas in pixels. |
+| value | String |  | Text or URL encoded in the QR code. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const value = ref('https://indielayer.com')
+const selected = ref('M')
+const options = [
+  { value: 'L', label: 'Low' },
+  { value: 'M', label: 'Medium' },
+  { value: 'Q', label: 'Quartile' },
+  { value: 'H', label: 'High' },
+]
+</script>
+
+<template>
+  <div class="grid grid-cols-2 gap-4 mb-2">
+    <x-input v-model="value" label="QR Code Value"/>
+    <x-select v-model="selected" native :options="options" label="Error correction"/>
+  </div>
+  <x-qr-code :value="value" size="140" :error-correction-level="selected"/>
+</template>
+```
+---
+## Radio
+Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow behind the control. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| value | [String, Number] |  | Value emitted when this option is selected (v-model / form-group). |
+
+### Slots
+- `default`: Optional content shown below the label.
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const selected = ref('a')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+    <x-radio v-model="selected" name="inputName" value="a" label="Option A" />
+    <x-radio v-model="selected" name="inputName" value="b" label="Option B" />
+    <x-radio v-model="selected" name="inputName" value="c" label="Option C" />
+    <x-radio v-model="selected" name="inputName" value="d" label="Option D" />
+  </div>
+</template>
+```
+
+#### Payment Method
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('a')
+</script>
+
+<template>
+  <div class="max-w-md space-y-1">
+    <x-radio
+      v-model="selected"
+      value="a"
+      label="Credit card"
+      class="border p-3 rounded w-full"
+      :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': selected === 'a' }"
+    >
+      <div class="text-gray-400 font-light text-sm">VISA · · · · 2592</div>
+    </x-radio>
+    <x-radio
+      v-model="selected"
+      value="b"
+      label="Bank account"
+      class="border p-3 rounded w-full"
+      :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': selected === 'b' }"
+    >
+      <div class="text-gray-400 font-light text-sm">Santander · · · · 1580</div>
+    </x-radio>
+  </div>
+</template>
+```
+
+#### Radio Button Form Group
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const plan = ref('pro')
+</script>
+
+<template>
+  <x-form-group v-model="plan" label="Billing plan">
+    <x-radio-button
+      size="sm"
+      value="starter"
+      label="Starter"
+      color="primary"
+    />
+    <x-radio-button
+      size="sm"
+      value="pro"
+      label="Pro"
+      color="primary"
+    />
+    <x-radio-button
+      size="sm"
+      value="team"
+      label="Team"
+      color="primary"
+    />
+  </x-form-group>
+</template>
+```
+
+#### Radio Button
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('monthly')
+</script>
+
+<template>
+  <div class="inline-flex gap-2">
+    <x-radio-button
+      v-model="selected"
+      value="monthly"
+      label="Monthly"
+      color="primary"
+      light
+      outlined
+    />
+    <x-radio-button
+      v-model="selected"
+      value="yearly"
+      label="Yearly"
+      color="primary"
+      light
+      outlined
+    />
+  </div>
+</template>
+```
+
+#### Size
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('a')
+</script>
+
+<template>
+  <div class="grid grid-cols-4 gap-4">
+    <x-radio v-model="selected" size="xs" value="a" label="Option A" />
+    <x-radio v-model="selected" size="sm" value="b" label="Option B" />
+    <x-radio v-model="selected" size="md" value="c" label="Option C" />
+    <x-radio v-model="selected" size="lg" value="d" label="Option D" />
+    <x-radio v-model="selected" size="xl" value="e" label="Option E" />
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('a')
+</script>
+
+<template>
+  <div class="grid grid-cols-4 gap-4">
+    <x-radio v-model="selected" disabled value="a" label="Disabled" />
+    <x-radio v-model="selected" loading value="b" label="Loading" />
+    <x-radio v-model="selected" error="Invalid input" value="a" label="Error" />
+  </div>
+</template>
+```
+---
+## Scroll
+Scroll container with optional edge shadows that hint at more content. Use Scroll for overflow lists and panels that scroll vertically or horizontally.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| horizontal | Boolean |  | Scrolls horizontally instead of vertically. |
+| mousewheel | Boolean |  | Maps vertical mouse wheel to horizontal scroll when `horizontal` is set. |
+| scrollbar | Boolean | true | Shows the native scrollbar. Set false to hide it. |
+| shadow | Boolean |  | Shows edge shadows when more content can be scrolled. |
+
+### Slots
+- `default`: Scrollable content.
+
+### Events
+- _(none)_
+
+### Methods
+- `scrollEl`: Ref to the inner scrollable element.
+
+### Demos
+#### Usage
+```vue
+<template>
+  <x-scroll class="h-20">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, quod fuga deleniti eaque sit nemo, labore, quisquam est esse quidem corrupti quia illo totam. Dicta laborum hic cupiditate distinctio quas totam sed sunt sint mollitia nostrum, provident quasi quam, suscipit atque rem ut saepe quae! In ipsum, minus non deleniti quasi temporibus qui autem voluptates! Architecto iusto unde placeat mollitia doloremque amet vel necessitatibus sapiente ipsa tenetur temporibus quidem perferendis sunt, quibusdam porro minima error impedit! Voluptatum ratione porro praesentium est veniam commodi, veritatis nemo voluptates atque iste, neque illum nesciunt aspernatur reprehenderit. Deleniti, aspernatur iusto accusamus nulla quos magni.
+  </x-scroll>
+</template>
+```
+
+#### Horizontal
+```vue
+<template>
+  <x-scroll horizontal>
+    <div class="w-screen">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, quod fuga deleniti eaque sit nemo, labore, quisquam est esse quidem corrupti quia illo totam. Dicta laborum hic cupiditate distinctio quas totam sed sunt sint mollitia nostrum, provident quasi quam, suscipit atque rem ut saepe quae! In ipsum, minus non deleniti quasi temporibus qui autem voluptates! Architecto iusto unde placeat mollitia doloremque amet vel necessitatibus sapiente ipsa tenetur temporibus quidem perferendis sunt, quibusdam porro minima error impedit! Voluptatum ratione porro praesentium est veniam commodi, veritatis nemo voluptates atque iste, neque illum nesciunt aspernatur reprehenderit. Deleniti, aspernatur iusto accusamus nulla quos magni.
+    </div>
+  </x-scroll>
+
+  <div class="text-lg mt-10">Horizontal scroll with Mousewheel</div>
+  <x-scroll horizontal mousewheel>
+    <div class="w-screen">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam, quod fuga deleniti eaque sit nemo, labore, quisquam est esse quidem corrupti quia illo totam. Dicta laborum hic cupiditate distinctio quas totam sed sunt sint mollitia nostrum, provident quasi quam, suscipit atque rem ut saepe quae! In ipsum, minus non deleniti quasi temporibus qui autem voluptates! Architecto iusto unde placeat mollitia doloremque amet vel necessitatibus sapiente ipsa tenetur temporibus quidem perferendis sunt, quibusdam porro minima error impedit! Voluptatum ratione porro praesentium est veniam commodi, veritatis nemo voluptates atque iste, neque illum nesciunt aspernatur reprehenderit. Deleniti, aspernatur iusto accusamus nulla quos magni.
+    </div>
+  </x-scroll>
+</template>
+```
+---
+## Select
+Dropdown for choosing one or more options from a predefined list. Use Select for enums, filters, and form fields where free text is not needed.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| clearable | Boolean |  | Shows a clear control when a value is selected. |
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| filterPlaceholder | String | Filter by... | Placeholder for the filter input when `filterable` is enabled. |
+| filterable | Boolean |  | Shows a filter input inside the options list. |
+| filterablePrefix | Boolean |  | Includes option prefixes when filtering. |
+| filterableSuffix | Boolean |  | Includes option suffixes when filtering. |
+| flat | Boolean |  | Removes elevation and border emphasis on the trigger. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| hideSelectedOptionSlots | Boolean |  | Hides prefix/suffix slots on the selected value display. |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| multiple | Boolean |  | Allows selecting more than one option. |
+| multipleCheckbox | Boolean |  | Multiple selection with checkbox-style items. |
+| name | String |  | Native name attribute for form submission. |
+| native | Boolean |  | Renders a native HTML select instead of the custom popover. |
+| options | Array SelectOption[] |  | Available options (`value`, `label`, optional prefix/suffix/disabled). |
+| placeholder | String |  | Placeholder shown when no option is selected. |
+| placement | String PopoverPlacement |  | Popover placement for the options menu. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| truncate | Boolean |  | Truncates selected labels when space is limited. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| virtualList | Boolean |  | Virtualizes the options list for large datasets. |
+| virtualListItemHeight | Number | 33 | Estimated row height (px) used by the virtual list. |
+| virtualListOffsetBottom | Number |  | Extra bottom offset (px) for the virtual list viewport. |
+| virtualListOffsetTop | Number |  | Extra top offset (px) for the virtual list viewport. |
+| virtualListOverscan | Number | 10 | Extra rows rendered above/below the visible virtual list window. |
+
+### Slots
+- `content-footer`: Content below the options list.
+- `content-header`: Content above the options list (default includes the filter).
+- `icon`: Custom chevron/icon on the trigger.
+- `input`: Custom trigger content (popover, selected value, disabled, label).
+- `label`: Custom label content for an option (`item`).
+- `prefix`: Prefix content for an option or the selected value (`item`).
+- `suffix`: Suffix content for an option or the selected value (`item`).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `close`: Emitted when the options popover closes.
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `open`: Emitted when the options popover opens.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { SelectOption } from '@indielayer/ui'
+
+const selected = ref<string>()
+const selected2 = ref<string>()
+const options = ref<SelectOption[]>([
+  { value: 'A', label: 'Option A' },
+  { value: 'B', label: 'Option B' },
+  { value: 'C', label: 'Option C' },
+])
+
+// function to generate
+function genOptions(x: number) {
+  const options: SelectOption[] = []
+
+  for (let i = 0; i < x; i++) {
+    options.push({ value: i.toString(), label: 'Option ' + i, prefix: 'bg-green-500', suffix: 'dude' + i.toString() })
+  }
+
+  return options
+}
+
+const options2 = ref<SelectOption[]>(genOptions(1000))
+</script>
+
+<template>
+  <div class="grid md:grid-cols-3 gap-4">
+    <x-select
+      v-model="selected"
+      label="Simple native select"
+      placeholder="Placeholder"
+      :options="options"
+      helper="Helper text"
+      tooltip="Tooltip here"
+      native
+    />
+    <x-select
+      v-model="selected2"
+      label="Filterable - virtual list"
+      placeholder="Placeholder"
+      filterable
+      filterable-prefix
+      filterable-suffix
+      clearable
+      virtual-list
+      :virtual-list-item-height="33"
+      :options="options2"
+    >
+      <template #prefix="{ item }">
+        <div class="w-2 h-2 shrink-0 rounded-full text-xs" :class="item.prefix"></div>
+      </template>
+      <template #suffix="{ item }">
+        <span class="text-secondary-400 text-xs font-mono">#{{ item.suffix }}</span>
+      </template>
+    </x-select>
+    <x-select
+      v-model="selected"
+      label="Custom input"
+      :options="options"
+      helper="Helper text"
+      tooltip="Tooltip here"
+    >
+      <template #input="{ popover, label, disabled }">
+        <button
+          type="button"
+          class="w-full text-left border rounded-md px-3 py-2"
+          :disabled="disabled"
+          @click="popover?.show()"
+        >{{ label || 'Select an option' }}</button>
+      </template>
+    </x-select>
+  </div>
+</template>
+```
+
+#### Multiple
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selectedMultiple = ref<string[]>(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'NON EXISTING'])
+
+const options = ref([
+  { value: 'A', label: 'Option lorem ipsum lorem ipsum', color: 'bg-red-500' },
+  { value: 'B', label: 'Option B ipsum', color: 'bg-orange-500' },
+  { value: 'C', label: 'Option C lorem ipsum', color: 'bg-amber-500' },
+  { value: 'D', label: 'D', color: 'bg-yellow-500' },
+  { value: 'E', label: 'E ipsum', color: 'bg-lime-500' },
+  { value: 'F', label: 'Option F', color: 'bg-green-500' },
+  { value: 'G', label: 'Option lorem ipsum qoiwjdoqiwjdoqiwjdoqiwjdoi', color: 'bg-emerald-500' },
+  { value: 'H', label: 'Option H', color: 'bg-teal-500' },
+  { value: 'I', label: 'lorem ipsum dolo', color: 'bg-cyan-500' },
+  { value: 'J', label: 'Option J', color: 'bg-sky-500' },
+  { value: 'K', label: 'Option K', color: 'bg-blue-500' },
+  { value: 'L', label: 'consectetur adipi', color: 'bg-indigo-500' },
+  { value: 'M', label: 'Option M', color: 'bg-violet-500' },
+])
+
+const optionsWithColors = options.value.map((option) => {
+  return {
+    ...option,
+    prefix: option.color,
+  }
+})
+</script>
+
+<template>
+  <div class="grid md:grid-cols-2 gap-4">
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select"
+      placeholder="Multiple"
+      :options="options"
+      filterable
+      multiple
+    />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select - truncate"
+      placeholder="Multiple"
+      :options="options"
+      multiple
+      truncate
+      clearable
+    />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select - checkbox"
+      placeholder="Multiple"
+      :options="options"
+      multiple-checkbox
+      filterable
+    />
+    <x-select
+      v-model="selectedMultiple"
+      label="Multi select - checkbox - prefix items"
+      placeholder="Multiple"
+      :options="optionsWithColors"
+      multiple-checkbox
+      filterable
+      clearable
+    >
+      <template #prefix="{ item }">
+        <div class="w-2 h-2 rounded-full" :class="item.prefix"></div>
+      </template>
+      <template #tag-prefix="{ item }">
+        <div class="w-2 h-2 shrink-0 rounded-full" :class="item.prefix"></div>
+      </template>
+    </x-select>
+  </div>
+</template>
+```
+
+#### Size
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref<string>()
+const options = ref([
+  { value: 'A', label: 'Option A' },
+  { value: 'B', label: 'Option B' },
+])
+</script>
+
+<template>
+  <div class="grid md:grid-cols-5 gap-4">
+    <x-select v-model="selected" :options="options" placeholder="xs" size="xs" />
+    <x-select v-model="selected" :options="options" placeholder="sm" size="sm" />
+    <x-select v-model="selected" :options="options" placeholder="md"/>
+    <x-select v-model="selected" :options="options" placeholder="lg" size="lg" />
+    <x-select v-model="selected" :options="options" placeholder="xl" size="xl" />
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const selected = ref('A')
+const options = ref([
+  { value: 'A', label: 'Option A' },
+  { value: 'B', label: 'Option B' },
+])
+</script>
+
+<template>
+  <div class="grid md:grid-cols-4 gap-4">
+    <x-select v-model="selected" label="Disabled" disabled :options="options"/>
+    <x-select v-model="selected" label="Read Only" readonly :options="options"/>
+    <x-select v-model="selected" label="Loading" loading :options="options"/>
+    <x-select v-model="selected" label="Error" error="Invalid input" :options="options"/>
+  </div>
+</template>
+```
+---
+## Skeleton
+Placeholder shapes that mirror content layout while data loads. Use skeletons to reduce layout shift and improve perceived loading performance.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| shape | String SkeletonShape | line | Placeholder shape (line or circle). |
+| tag | String | div | Root element tag. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="flex">
+    <x-skeleton class="w-14 h-14 rounded-full shrink-0 mr-2"/>
+    <div class="w-full">
+      <x-skeleton/>
+      <x-skeleton class="mt-2"/>
+    </div>
+  </div>
+  <x-skeleton class="w-full h-20 mt-2"/>
+</template>
+```
+---
+## Slider
+Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] | 100 | Maximum value of the range. |
+| min | [Number, String] | 0 | Minimum value of the range. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| step | [Number, String] | 1 | Increment between selectable values. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- `default`
+- `prefix`: Content before the track (`value`).
+- `suffix`: Content after the track (`value`).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const value = ref(30)
+</script>
+
+<template>
+  <x-slider v-model="value" label="Slider 1">
+    <template #prefix="ctx">
+      <div class="w-12">{{ ctx.value }}%</div>
+    </template>
+  </x-slider>
+  <x-slider v-model="value" label="Slider 2" helper="Slide me" class="mt-10"/>
+</template>
+```
+---
+## Spacer
+Flex-friendly gap that expands or shrinks between siblings without extra margin or padding. Use spacers to push items apart in toolbars and rows.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| _(none)_ | | | |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="flex items-center border p-4 rounded-md space-x-4">
+    <div>Hi!</div>
+    <x-spacer/>
+    <div>Am I spaced enough?</div>
+    <x-button>Yes!</x-button>
+  </div>
+</template>
+```
+---
+## Spinner
+Animated indicator that a background process is still running. Use spinners for indeterminate loading when completion percentage is unknown.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| icon | String | <g stroke-width=0><path fill=currentColor d=M12 | SVG markup or icon name used for the spinner. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+
+### Slots
+- _(none)_
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <x-spinner/>
+</template>
+```
+
+#### Variants
+```vue
+<template>
+  <div class="flex items-center gap-4">
+    <x-spinner size="xs" />
+    <x-spinner size="sm" />
+    <x-spinner />
+    <x-spinner size="lg" />
+    <x-spinner size="xl" />
+  </div>
+</template>
+```
+---
+## Stepper
+Multi-step wizard with declarative steps, named panel slots, programmatic next/prev navigation, validation hooks, and optional sidebar summaries.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| beforeChange | Function as PropType<(to: string  \|  number |  | Async guard before changing steps; return false to cancel. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables all step navigation. |
+| editable | Boolean |  | Allow revisiting completed steps (shows edit icon). |
+| iconComplete | String |  | Icon for completed steps. |
+| iconEdit | String |  | Icon for editable completed steps. |
+| iconError | String |  | Icon for steps in an error state. |
+| interactive | Boolean | true | Allow clicking step indicators to navigate. |
+| labelPlacement | String StepperLabelPlacement | end | Where labels sit relative to indicators in horizontal mode. |
+| linear | Boolean | true | Require prior steps to be completed before navigating ahead. |
+| loading | Boolean |  | Blocks navigation while an async step action runs. |
+| modelValue | [String, Number] |  | Active step value (`v-model`). |
+| orientation | String StepperOrientation | vertical | Layout direction: vertical (sidebar) or horizontal. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| steps | Array StepperStep[] | [] | Step definitions (value, title, optional, completed, error, etc.). |
+| validate | Function () = boolean> |  | Runs before leaving the current step; return false to block navigation. |
+| variant | String StepperVariant | line | Indicator style: line or dot. |
+
+### Slots
+- `[stepValue]`: Panel content for a step; slot name matches `step.value`.
+- `content-prefix`: Content rendered above the active step panel.
+- `default`
+- `summary-[stepValue]`: Sidebar summary for a completed step (vertical orientation).
+
+### Events
+- `change`: Emitted when the active step changes; payload is `(value, index)`.
+- `step-complete`: Emitted when a step is marked complete via `next()`; payload is `(value, index)`.
+- `update:modelValue`: Active step value (`v-model`).
+
+### Methods
+- `goTo`: Navigate to a step by value or index when allowed.
+- `next`: Advance to the next step after validation.
+- `prev`: Go to the previous step.
+- `reset`: Clear completion state and return to the first step.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const stepperRef = ref()
+const active = ref('details')
+const steps = [
+  { value: 'details', title: 'Details' },
+  { value: 'settings', title: 'Settings', optional: true },
+  { value: 'review', title: 'Review' },
+]
+</script>
+
+<template>
+  <div class="max-w-2xl">
+    <x-stepper
+      ref="stepperRef"
+      v-model="active"
+      :steps="steps"
+      orientation="horizontal"
+      label-placement="bottom"
+      class="min-h-[10rem]"
+    >
+      <template #details>
+        <p class="text-sm font-medium text-secondary-800 dark:text-secondary-200 mb-1">
+          Basic information
+        </p>
+        <p class="text-sm text-secondary-600 dark:text-secondary-400">
+          Enter your project details here.
+        </p>
+      </template>
+      <template #settings>
+        <p class="text-sm font-medium text-secondary-800 dark:text-secondary-200 mb-1">
+          Optional preferences
+        </p>
+        <p class="text-sm text-secondary-600 dark:text-secondary-400">
+          Configure optional settings, or skip ahead with Next.
+        </p>
+      </template>
+      <template #review>
+        <p class="text-sm font-medium text-secondary-800 dark:text-secondary-200 mb-1">
+          Confirm and finish
+        </p>
+        <p class="text-sm text-secondary-600 dark:text-secondary-400">
+          Review everything before submitting.
+        </p>
+      </template>
+    </x-stepper>
+
+    <div class="flex justify-end gap-2 mt-4">
+      <x-button
+        ghost
+        :disabled="stepperRef?.isFirst"
+        @click="stepperRef?.prev()"
+      >
+        Previous
+      </x-button>
+      <x-button
+        :disabled="stepperRef?.isLast"
+        @click="stepperRef?.next()"
+      >
+        Next
+      </x-button>
+    </div>
+  </div>
+</template>
+```
+
+#### Wizard
+```vue
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+import { computed, ref } from 'vue'
+
+const notifications = useNotifications()
+const formRef = ref<{ validate: () => boolean; } | null>(null)
+const stepperRef = ref()
+
+const active = ref('account')
+const saving = ref(false)
+
+const firstName = ref('')
+const lastName = ref('')
+const phone = ref('')
+
+const rules = {
+  isRequired: (v: string) => !!v || 'Required',
+  isEmail: (v: string) => /^\S+@\S+\.\S+$/.test(v) || 'Invalid email',
+}
+
+async function beforeContactNext() {
+  saving.value = true
+  await new Promise((r) => setTimeout(r, 600))
+  saving.value = false
+}
+
+const steps = computed(() => [
+  { value: 'account', title: 'Account', description: 'Required' },
+  { value: 'contact', title: 'Contact', description: 'Optional', optional: true, beforeNext: beforeContactNext },
+  { value: 'confirm', title: 'Confirm' },
+])
+
+const accountSummary = computed(() => {
+  if (!firstName.value && !lastName.value) return ''
+
+  return [firstName.value, lastName.value].filter(Boolean).join(' ')
+})
+
+function onSubmit(isValid: boolean) {
+  if (isValid) notifications?.success('Submitted')
+  else notifications?.error('Fix form errors')
+}
+
+async function onPrimaryClick() {
+  if (stepperRef.value?.isLast) {
+    if (formRef.value?.validate()) onSubmit(true)
+
+    return
+  }
+
+  await stepperRef.value?.next()
+}
+</script>
+
+<template>
+  <x-form ref="formRef" class="max-w-3xl" @submit="onSubmit">
+    <x-stepper
+      ref="stepperRef"
+      v-model="active"
+      :steps="steps"
+      :validate="() => formRef?.validate() ?? true"
+      :loading="saving"
+      linear
+      class="min-h-[16rem]"
+    >
+      <template #account="{ next }">
+        <div class="grid gap-4 max-w-lg">
+          <x-input v-model="firstName" label="First name" :rules="[rules.isRequired]" />
+          <x-input v-model="lastName" label="Last name" :rules="[rules.isRequired]" />
+        </div>
+        <div class="mt-6 flex justify-end">
+          <x-button @click="next">Continue</x-button>
+        </div>
+      </template>
+
+      <template #summary-account>
+        <span v-if="accountSummary">{{ accountSummary }}</span>
+      </template>
+
+      <template #contact="{ next, prev }">
+        <x-input v-model="phone" class="max-w-xs" label="Phone" helper="Optional" />
+        <div class="mt-6 flex justify-between">
+          <x-button ghost @click="prev">Back</x-button>
+          <x-button :loading="saving" @click="next">Continue</x-button>
+        </div>
+      </template>
+
+      <template #summary-contact>
+        <span v-if="phone">{{ phone }}</span>
+      </template>
+
+      <template #confirm="{ prev }">
+        <dl class="text-sm grid gap-2 max-w-md">
+          <div class="flex justify-between gap-4">
+            <dt class="text-secondary-500">Name</dt>
+            <dd>{{ accountSummary || '—' }}</dd>
+          </div>
+          <div class="flex justify-between gap-4">
+            <dt class="text-secondary-500">Phone</dt>
+            <dd>{{ phone || '—' }}</dd>
+          </div>
+        </dl>
+        <div class="mt-6 flex justify-between">
+          <x-button ghost @click="prev">Back</x-button>
+        </div>
+      </template>
+    </x-stepper>
+
+    <div class="flex justify-end gap-2 mt-4 pt-4 border-t border-secondary-200 dark:border-secondary-700">
+      <x-button
+        ghost
+        :disabled="stepperRef?.isFirst"
+        @click="stepperRef?.prev()"
+      >
+        Previous
+      </x-button>
+      <x-button
+        :loading="saving"
+        :type="stepperRef?.isLast ? 'submit' : 'button'"
+        @click="onPrimaryClick"
+      >
+        {{ stepperRef?.isLast ? 'Submit' : 'Next' }}
+      </x-button>
+    </div>
+  </x-form>
+</template>
+```
+---
+## Table
+Tables display tabular data with single- or multi-column sorting, selection, expandable rows, and virtual lists.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| autoClearSelected | Boolean | true | Clears selection entries that no longer exist in `items`. |
+| dense | Boolean |  | Compact cell padding. |
+| error | Boolean |  | Shows the error slot instead of rows. |
+| expandable | Boolean |  | Adds an expand control and `expanded-row` slot per row. |
+| fixed | Boolean |  | Fixed table layout for consistent column widths. |
+| headers | Array TableHeader[] | [] | Column definitions (text, value, sortable, align, width, etc.). |
+| hrefFn | Function (item: unknown) = string> |  | Returns an href to make each cell an anchor. |
+| hrefTarget | String '_blank'  \|  '_self'  \|  '_parent'  \|  '_top' |  | Target for links created by `hrefFn`. |
+| items | Array | [] | Row data array. Cell values resolve from each header `value` path. |
+| keyProp | String |  | Item property used as the stable row key (falls back to index). |
+| loading | Boolean |  | Shows loading rows (skeletons) and a spinner overlay. |
+| loadingLines | [Number, String] | 3 | Number of skeleton rows shown while loading. |
+| loadingSkeleton | Boolean |  | When set, loading rows use skeleton placeholders. |
+| pointer | Boolean |  | Pointer cursor on rows (also set when `toFn` or `hrefFn` is used). |
+| scrollable | Boolean | true | Enables horizontal overflow scrolling for wide tables. |
+| selectable | Boolean |  | Enables row selection (`v-model:selected`). |
+| singleSelect | Boolean |  | Select only one row at a time. |
+| sort | Array string[] | [] | Active sort entries as `column,-1\|1` (use with `v-model:sort`). |
+| sortMultiple | Boolean |  | Allow sorting by multiple columns at once. |
+| stickyHeader | Boolean | true | Keeps the header row sticky while scrolling. |
+| striped | Boolean |  | Alternating row background colors. |
+| toFn | Function (item: unknown) = string  \|  Record<string |  | Returns a Vue Router location to make each cell a link. |
+| virtualList | Boolean |  | Virtualizes rows for large datasets. |
+| virtualListItemHeight | Number | 54 | Fixed row height (px) for virtual list measurement. |
+| virtualListOffsetBottom | Number |  | Bottom spacer offset (px) when using virtual list. |
+| virtualListOffsetTop | Number |  | Top spacer offset (px) when using virtual list. |
+| virtualListOverscan | Number | 10 | Extra rows rendered above/below the viewport when virtualized. |
+
+### Slots
+- `actions`: Optional actions above the table.
+- `default`
+- `empty`: Content when there are no items.
+- `error`: Content when `error` is true.
+- `expanded-row`: Expanded content for a row when `expandable` is set.
+- `footer`: Custom footer (`tfoot`); overrides per-column footer slots when provided.
+- `footer-[column]`: Footer cell content for a column (`footer-{value}`).
+- `header-[column]`: Header cell content for a column (`header-{value}`).
+- `item-[column]`: Cell content for a column (`item-{value}`).
+- `loading-[column]`: Loading cell content for a column (`loading-{value}`).
+- `title`: Optional title above the table.
+
+### Events
+- `click-row`: Emitted when a row is clicked; payload is `(item, index)`.
+- `update:selected`: Emitted when selection changes (`v-model:selected`).
+- `update:sort`: Emitted when sort changes (`v-model:sort`).
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { useNotifications, type TableHeader } from '@indielayer/ui'
+import { computed, ref } from 'vue'
+
+const notifications = useNotifications()
+
+const headers: TableHeader[] = [
+  { text: '#', value: 'id', sortable: true, align: 'center' },
+  { text: 'Title', value: 'title' },
+  { text: 'Description', value: 'description', truncate: true, width: 400 },
+  { text: 'Published', value: 'published', sortable: true, tooltip: 'Published date', align: 'center' },
+  { text: 'Status', value: 'status' },
+]
+
+type Book = {
+  id: number;
+  title: string;
+  description: string;
+  published: number;
+  status: string;
+}
+
+const items = ref<Book[]>([{
+  id: 1,
+  title: 'Book of Magic',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 1000,
+  status: 'Tag label',
+}, {
+  id: 2,
+  title: 'Another book',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 5000,
+  status: 'Tag label',
+}, {
+  id: 3,
+  title: 'Clever cove',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 3000,
+  status: 'Tag label',
+}])
+
+const sort = ref([])
+
+function formatDate(val: any) {
+  return (new Date(val)).toISOString()
+}
+
+const itemsSorted = computed<Book[]>(() => {
+  const ite = items.value.slice(0)
+
+  return ite.sort((a: any, b: any) => {
+    for (const s of sort.value) {
+      const [key, asc] = (s as string).split(',')
+
+      if (a[key] > b[key]) return asc === '-1' ? -1 : 1
+      if (a[key] < b[key]) return asc === '-1' ? 1 : -1
+    }
+
+    return 0
+  })
+})
+</script>
+
+<template>
+  <div class="grid gap-4">
+    <x-card>
+      <x-table
+        v-model:sort="sort"
+        expandable
+        :headers="headers"
+        :items="itemsSorted"
+      >
+        <template #expanded-row="{ item }">
+          {{ item }}
+        </template>
+
+        <template #item-published="{ item }">
+          {{ formatDate(item.published) }}
+        </template>
+
+        <template #item-status="{ item }">
+          <x-tag size="xs" color="primary" rounded>{{ item.status }}</x-tag>
+        </template>
+
+        <template #footer>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="text-center py-2">
+                <p class="text-sm text-gray-500 font-medium">
+                  Footer content
+                </p>
+              </td>
+            </tr>
+          </tfoot>
+        </template>
+      </x-table>
+    </x-card>
+
+    <x-card>
+      <x-table
+        v-model:sort="sort"
+        key-prop="id"
+        dense
+        pointer
+        striped
+        :headers="headers"
+        :items="itemsSorted"
+        @click-row="(event, index) => { notifications?.log(event); }"
+      >
+        <template #item-published="{ item }">
+          {{ formatDate(item.published) }}
+        </template>
+      </x-table>
+    </x-card>
+  </div>
+</template>
+```
+
+#### Selectable
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { type TableHeader } from '@indielayer/ui'
+
+const headers: TableHeader[] = [
+  { text: '#', value: 'id' },
+  { text: 'Title', value: 'title' },
+  { text: 'Description', value: 'description', truncate: true, width: 400 },
+  { text: 'Published', value: 'published', align: 'center' },
+  { text: 'Status', value: 'status' },
+]
+
+type Book = {
+  id: number;
+  title: string;
+  description: string;
+  published: number;
+  status: string;
+}
+
+const items = ref<Book[]>([{
+  id: 1,
+  title: 'Book of Magic',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 1000,
+  status: 'Tag label',
+}, {
+  id: 2,
+  title: 'Another book',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 5000,
+  status: 'Tag label',
+}, {
+  id: 3,
+  title: 'Clever cove',
+  description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+  published: Date.now() - 3000,
+  status: 'Tag label',
+}])
+
+const selected = ref<number[]>([])
+const singleSelected = ref<number>(2)
+</script>
+
+<template>
+  <div class="grid gap-4">
+    <x-card>
+      <x-table
+        v-model:selected="selected"
+        selectable
+        :headers="headers"
+        :items="items"
+        @click-row="(item) => console.log('Row clicked:', item)"
+      />
+    </x-card>
+    <x-card>
+      <x-table
+        v-model:selected="singleSelected"
+        key-prop="id"
+        selectable
+        pointer
+        single-select
+        :headers="headers"
+        :items="items"
+      />
+    </x-card>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { type TableHeader } from '@indielayer/ui'
+import { ref } from 'vue'
+
+const headers: TableHeader[] = [
+  { text: '#', value: 'id', sortable: true, align: 'center' },
+  { text: 'Title', value: 'title' },
+  { text: 'Description', value: 'description' },
+  { text: 'Published', value: 'published', sortable: true },
+  { text: 'Status', value: 'status' },
+]
+
+const items = ref([])
+</script>
+
+<template>
+  <x-table :headers="headers" :items="items">
+    <template #empty>
+      <div class="p-4">
+        <x-empty
+          bordered
+          title="No data"
+          description="There are no rows to display."
+        />
+      </div>
+    </template>
+  </x-table>
+
+  <x-table :headers="headers" :items="items" loading/>
+</template>
+```
+
+#### Virtual
+```vue
+<script setup lang="ts">
+import { type TableHeader } from '@indielayer/ui'
+import { computed, ref } from 'vue'
+
+const headers: TableHeader[] = [
+  { text: '#', value: 'id', sortable: true, align: 'center', width: 50 },
+  { text: 'Title', value: 'title', width: 120, truncate: true },
+  { text: 'Description', value: 'description', width: 240, truncate: true },
+  { text: 'Published', value: 'published', width: 140, truncate: true },
+  { text: 'Status', value: 'status' },
+  { value: 'action', align: 'right' },
+]
+
+const sort = ref([])
+const itemsSorted = computed<any[]>(() => {
+  const ite = items.value.slice(0)
+
+  return ite.sort((a: any, b: any) => {
+    for (const s of sort.value) {
+      const [key, asc] = (s as string).split(',')
+
+      if (a[key] > b[key]) return asc === '-1' ? -1 : 1
+      if (a[key] < b[key]) return asc === '-1' ? 1 : -1
+    }
+
+    return 0
+  })
+})
+
+function generateItems(x: number) {
+  return Array.from({ length: x }, (_, i) => ({
+    id: i + 1,
+    title: `Book ${i + 1}`,
+    description: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Saepe, velit.',
+    published: Date.now() - x * i,
+    status: 'Tag label',
+  }))
+}
+
+const items = ref(generateItems(1000))
+const selected = ref<number[]>([])
+</script>
+
+<template>
+  <x-card>
+    <x-table
+      v-model:sort="sort"
+      v-model:selected="selected"
+      :headers="headers"
+      :items="itemsSorted"
+      class="!h-80"
+      fixed
+      virtual-list
+      :to-fn="(item: any) => `/books/${item.id}`"
+      :virtual-list-item-height="44"
+      selectable
+    >
+      <template #item-action="{ item }">
+        <x-button
+          icon="x"
+          light
+          outlined
+          color="error"
+          size="xs"
+          @click.stop.prevent="items = items.filter((i) => i.id !== item.id)"
+        />
+      </template>
+    </x-table>
+  </x-card>
+</template>
+```
+---
+## Tabs
+Tabbed navigation that switches between related views in the same region. Use x-tab-group with x-tab when content shares context but not space.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| align | String 'left'  \|  'center'  \|  'right' | left | Horizontal alignment of tabs in the list. |
+| color | String | primary | Theme or CSS color used for the control accents. |
+| exact | Boolean |  | Default exact route matching for linked tabs. |
+| fullWidth | Boolean | true | Stretches the tab list to the container width. |
+| ghost | Boolean |  | Subtle styling with less background emphasis. |
+| grow | Boolean |  | Stretches tabs to fill the list width. |
+| modelValue | [String, Number] |  | Active tab value (v-model). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| variant | String 'line'  \|  'block'  \|  'compact' | line | Visual style of the tab list (line, block, or compact). |
+
+### Slots
+- `default`: Tab triggers (typically x-tab children).
+
+### Events
+- `update:modelValue`: Emitted when the active tab changes (v-model).
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const tab = ref('a')
+const linkTab = ref(null)
+const metric = ref('unique')
+const view = ref('grid')
+</script>
+
+<template>
+  <x-tab-group v-model="tab" class="pb-10" variant="line" :full-width="false">
+    <x-tab value="a" label="Tab A" icon="smile">
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="line"
+    grow
+  >
+    <x-tab value="a" label="Tab A">
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+  <x-tab-group v-model="tab" class="pb-10" variant="line" ghost>
+    <x-tab value="a" label="Tab A">
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="block"
+    grow
+  >
+    <x-tab value="a" label="Tab A">
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="block"
+    grow
+    :full-width="false"
+  >
+    <x-tab value="a" label="Tab A" removable>
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B" icon="smile">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="block"
+    :full-width="false"
+    ghost
+  >
+    <x-tab value="a" label="Tab A">
+      content a
+    </x-tab>
+    <x-tab value="b" label="Tab B">
+      content b
+    </x-tab>
+    <x-tab value="c" label="Tab c">
+      content c
+    </x-tab>
+    <x-tab value="d" label="Tab d">
+      content d
+    </x-tab>
+    <x-tab value="e" label="Tab e">
+      content e
+    </x-tab>
+  </x-tab-group>
+
+  <p>Compact</p>
+  <div class="flex gap-4 items-start">
+    <x-tab-group
+      v-model="metric"
+      color="indigo"
+      class="pb-10"
+      variant="compact"
+    >
+      <x-tab value="unique" label="Unique" />
+      <x-tab value="total" label="Total" />
+    </x-tab-group>
+
+    <x-tab-group
+      v-model="view"
+      color="indigo"
+      class="pb-10"
+      size="md"
+      variant="compact"
+    >
+      <x-tab value="grid" icon="sun" tooltip="Grid view" />
+      <x-tab value="list" icon="moon" tooltip="List view" />
+    </x-tab-group>
+  </div>
+
+  <p>Automatic link as value</p>
+  <x-tab-group v-model="linkTab" class="pb-10" exact>
+    <x-tab to="/component/tabs" label="Tabs link">
+      content a
+    </x-tab>
+    <x-tab to="/component/slider" label="Tabs link B">
+      content b
+    </x-tab>
+  </x-tab-group>
+</template>
+```
+---
+## Tag
+Compact labels for categories, statuses, or filters. Use tags in lists and chip groups when a short keyword should stand out.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | secondary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables the remove control and applies disabled styling. |
+| filled | Boolean |  | Filled style using the theme color. |
+| outlined | Boolean |  | Outline style with a transparent fill. |
+| removable | Boolean |  | Shows a remove control that emits `remove`. |
+| rounded | Boolean |  | Fully rounded corners (pill shape). |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| tag | String | span | Root element tag. Becomes an anchor or router-link when `href` or `to` is set. |
+| to | [String, Object] |  | Vue Router location; renders as a link when set. |
+
+### Slots
+- `default`: Tag label and content.
+- `prefix`: Content shown before the label.
+
+### Events
+- `remove`: Emitted when the remove icon is clicked.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { useNotifications } from '@indielayer/ui'
+
+const notifications = useNotifications()
+</script>
+
+<template>
+  <div class="space-x-2 space-y-2">
+    <x-tag color="primary" to="/">Hello</x-tag>
+    <x-tag color="purple">Hello</x-tag>
+    <x-tag
+      color="green"
+      size="sm"
+      filled
+      rounded
+      outlined
+    >Hello</x-tag>
+    <x-tag color="red">Hello</x-tag>
+    <x-tag color="amber">Amber</x-tag>
+    <x-tag outlined>I'm a tag</x-tag>
+    <x-tag rounded outlined color="pink">I'm a tag</x-tag>
+    <x-tag color="pink">I'm a tag</x-tag>
+    <x-tag removable size="xs" @remove="notifications?.log('remove me')">I'm a xs tag</x-tag>
+    <x-tag removable size="sm" @remove="notifications?.log('remove me')">I'm a sm tag</x-tag>
+    <x-tag removable disabled @remove="notifications?.log('remove me')">I'm a md tag</x-tag>
+    <x-tag removable size="lg" @remove="notifications?.log('remove me')">I'm a lg tag</x-tag>
+    <x-tag removable size="xl" @remove="notifications?.log('remove me')">I'm a xl tag</x-tag>
+
+    <div class="flex flex-col max-w-xs gap-y-1">
+      <div>
+        <x-tag outlined>
+          I'm a veeeeeeeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+
+      <div>
+        <x-tag outlined>
+          <template #prefix>
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          </template>
+          I'm a veeeeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+
+      <div>
+        <x-tag removable outlined>
+          <template #prefix>
+            <div class="w-2 h-2 rounded-full bg-green-500"></div>
+          </template>
+          I'm a veeeeeeeeeeeeeeeeeeery long tag
+        </x-tag>
+      </div>
+    </div>
+  </div>
+</template>
+```
+---
+## Textarea
+Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| adjustToText | Boolean |  | Auto-grows the height to fit the content. |
+| block | Boolean |  | Stretches to the full width of the parent. |
+| clearable | Boolean |  | Shows a clear button when the value is not empty. |
+| dir | String | ltr | Text direction for the textarea (`ltr` or `rtl`). |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] |  | Native `max` attribute when applicable. |
+| maxlength | [Number, String] |  | Maximum character length for the value. |
+| min | [Number, String] |  | Native `min` attribute when applicable. |
+| minlength | [Number, String] |  | Minimum character length for the value. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Placeholder text shown when the value is empty. |
+| preventEnter | Boolean |  | Prevents the Enter key from inserting a newline. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| resizable | Boolean |  | Allows the user to resize the textarea. |
+| rows | [Number, String] | 2 | Visible number of text lines. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| showCounter | Boolean |  | Shows a character counter in the footer. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- `default`
+- `prefix`: Content before the textarea (left adornment).
+- `suffix`: Content after the textarea (right adornment).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const multiline = ref('')
+const comment = ref('')
+</script>
+
+<template>
+  <div class="grid gap-6">
+    <div class="grid grid-cols-2 gap-4">
+      <x-textarea
+        v-model="multiline"
+        label="Normal textarea"
+        helper="Helper text"
+        resizable
+        placeholder="Placeholder"
+        tooltip="Tooltip here"
+        clearable
+      />
+      <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text clearable />
+    </div>
+
+    <x-textarea
+      v-model="comment"
+      label="Comment with character counter"
+      maxlength="200"
+      show-counter
+      helper="Maximum 200 characters"
+      placeholder="Enter your comment"
+      rows="4"
+    />
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const name = ref('invalid input')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-textarea disabled label="Disabled"/>
+    <x-textarea readonly label="Read only"/>
+    <x-textarea v-model="name" label="Error" error="Invalid input" />
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const sizes = ref('Text size')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-textarea v-model="sizes" label="xs" size="xs" />
+    <x-textarea v-model="sizes" label="sm" size="sm" />
+    <x-textarea v-model="sizes" label="md" />
+    <x-textarea v-model="sizes" label="lg" size="lg" />
+    <x-textarea v-model="sizes" label="xl" size="xl" />
+  </div>
+</template>
+```
+---
+## Toggle
+Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| color | String | primary | Theme or CSS color used for the control accents. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| glow | Boolean |  | Soft colored glow when the toggle is on. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- _(none)_
+
+### Events
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const checked = ref(true)
+</script>
+
+<template>
+  <div class="grid grid-cols-2 gap-4">
+    <x-toggle v-model="checked" label="Primary" />
+    <x-toggle v-model="checked" color="sky" label="Sky" />
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const checked = ref(true)
+</script>
+
+<template>
+  <div class="grid grid-cols-4 gap-4">
+    <x-toggle disabled label="Disabled" />
+    <x-toggle v-model="checked" loading label="Loading" color="blue"/>
+    <x-toggle error="Invalid input" label="Error"/>
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const checked = ref(false)
+</script>
+
+<template>
+  <div class="flex items-center space-x-4">
+    <x-toggle v-model="checked" size="xs" label="xs"/>
+    <x-toggle v-model="checked" size="sm" label="sm"/>
+    <x-toggle v-model="checked" label="md"/>
+    <x-toggle v-model="checked" size="lg" label="lg"/>
+    <x-toggle v-model="checked" size="xl" label="xl"/>
+  </div>
+</template>
+```
+---
+## Tooltip
+Tooltips display contextual help on hover. Use XToggleTip for a compact info-icon pattern beside labels.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| disabled | Boolean |  | Disables showing the tooltip. |
+| position | String TooltipPosition | bottom | Preferred placement relative to the trigger (top, bottom, left, right). |
+| tag | String | div | Root element tag wrapping the trigger. |
+| tooltip | String |  | Tooltip text shown on hover. Prefer the tooltip slot for custom content. |
+
+### Slots
+- `default`: Trigger content the tooltip is attached to.
+- `tooltip`: Custom tooltip content; overrides the `tooltip` prop.
+
+### Events
+- _(none)_
+
+### Demos
+#### Usage
+```vue
+<template>
+  <div class="flex flex-wrap items-center gap-4">
+    <x-tooltip tooltip="Save your changes">
+      <x-button icon="check" aria-label="Save" />
+    </x-tooltip>
+
+    <x-tooltip tooltip="More options">
+      <x-button ghost icon="smile" aria-label="More options" />
+    </x-tooltip>
+  </div>
+</template>
+```
+
+#### Content
+```vue
+<template>
+  <x-tooltip position="bottom">
+    <x-button color="primary">Hover for details</x-button>
+    <template #tooltip>
+      <div class="font-semibold text-white mb-1">Export report</div>
+      <div class="text-secondary-300 text-xs leading-relaxed max-w-[14rem]">
+        Download a CSV snapshot of the current filters. Large exports may take a few seconds.
+      </div>
+    </template>
+  </x-tooltip>
+</template>
+```
+
+#### Placement
+```vue
+<script setup lang="ts">
+const placements = ['top', 'bottom', 'left', 'right'] as const
+</script>
+
+<template>
+  <div class="flex flex-wrap items-center justify-center gap-6 py-6 px-4 max-w-md rounded-lg bg-secondary-50 dark:bg-secondary-900/50">
+    <x-tooltip
+      v-for="placement in placements"
+      :key="placement"
+      :position="placement"
+      :tooltip="`Tooltip on ${placement}`"
+    >
+      <x-button outlined class="capitalize min-w-[5rem]">
+        {{ placement }}
+      </x-button>
+    </x-tooltip>
+  </div>
+</template>
+```
+
+#### States
+```vue
+<template>
+  <x-tooltip tooltip="You cannot perform this action" disabled>
+    <x-button disabled>Unavailable</x-button>
+  </x-tooltip>
+</template>
+```
+
+#### Toggle Tip
+```vue
+<template>
+  <div class="flex items-center gap-2">
+    <span class="text-sm text-secondary-800 dark:text-secondary-200">API rate limit</span>
+    <x-toggle-tip content="Requests are capped at 1,000 per hour. Upgrade your plan to raise the limit." />
+  </div>
+</template>
+```
+---
+## Upload
+File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| accept | String |  | Accepted file types (native `accept` attribute). |
+| action | String |  | URL to upload files to; enables remote upload mode when set. |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| error | String |  | External error message; overrides rule errors when set. |
+| fileFormDataName | String | file | FormData field name for each uploaded file. |
+| headers | Object as PropType<Record<string |  | Additional HTTP headers sent with the upload request. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| maxFileSize | [Number, String] |  | Maximum file size in bytes. |
+| maxFiles | [Number, String] |  | Maximum number of files allowed. |
+| method | String 'POST'  \|  'PUT' | POST | HTTP method used when uploading to `action`. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| multiple | Boolean |  | Allows selecting more than one file. |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Text shown in the default drop zone. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+| variant | String UploadVariant | box | Visual variant of the upload control. |
+| withCredentials | Boolean |  | Sends cookies/credentials with the upload request. |
+
+### Slots
+- `box`: Custom drop zone UI (`is-over` when dragging files).
+- `default`
+- `files`: Custom file list (`files` upload state array).
+- `removeIcon`: Icon for the remove-file control.
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `remove`: Emitted when a file is removed from the list.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+- `upload`: Emitted when a file finishes uploading (remote mode).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useNotifications, XUpload, type UploadFile } from '@indielayer/ui'
+
+const notifications = useNotifications()
+
+const imageFiles = ref<UploadFile[]>([])
+const jsonFile = ref<UploadFile[]>([])
+
+const rules = {
+  isRequired: (v: string) => {
+    if (Array.isArray(v)) return !!v.length || 'Field is required'
+
+    return !!v  || 'Field is required'
+  },
+  isValidUpload: (v: UploadFile[]) => {
+    if (!v || !v.length) return 'Field is required'
+    if (v.some((file) => file.error)) return 'File upload has errors.'
+
+    return v.every((file) => file.completed) || 'File upload is not completed.'
+  },
+}
+
+const previewImg = ref<string>()
+
+function onChangeImage(event: Event) {
+  const target = event.target as HTMLInputElement
+  const files = target.files as FileList
+
+  if (!files || files.length === 0) return
+
+  const file = files[0]
+
+  // set preview image
+  const reader = new FileReader()
+
+  reader.onload = (e) => {
+    previewImg.value = reader.result as string
+  }
+
+  reader.readAsDataURL(file)
+}
+
+function onUploadComplete(response: any) {
+  console.log('onUploadComplete', response)
+}
+
+const jsonFileOutput = ref<string>()
+
+function onChangeJSON(event: Event) {
+  const target = event.target as HTMLInputElement
+  const files = target.files as FileList
+
+  if (!files || files.length === 0) return
+
+  const fileReader = new FileReader()
+
+  fileReader.onloadend = (e) => {
+    try {
+      jsonFileOutput.value = fileReader.result?.toString() || ''
+    } catch (error) {
+      notifications?.error('Invalid file!')
+    }
+  }
+
+  fileReader.readAsText(files[0])
+}
+
+function onSubmit(isValid: boolean) {
+  if (!isValid) return
+
+  notifications?.success('Valid! Submitted.')
+}
+
+const uploadRef = ref<InstanceType<typeof XUpload>>()
+
+function reset() {
+  uploadRef.value?.reset()
+  previewImg.value = undefined
+}
+
+const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
+</script>
+
+<template>
+  <div >
+    <x-form @submit="onSubmit">
+      <div class="grid md:grid-cols-2 gap-2 mb-4">
+        <div>
+          <x-upload
+            ref="uploadRef"
+            v-model="imageFiles"
+            :action="action"
+            method="POST"
+            :with-credentials="false"
+            :rules="[rules.isValidUpload]"
+            placeholder="Upload game title cover image"
+            accept="image/*"
+            max-file-size="2000000"
+            label="Cover Image"
+            tooltip="Title cover image should be 16:9 aspect ratio and max 2MB"
+            helper="Title cover image should be 16:9 aspect ratio and max 2MB"
+            @upload="onUploadComplete"
+            @change="onChangeImage"
+          />
+          <x-button size="sm" outlined ghost @click="reset">Reset input</x-button>
+        </div>
+        <x-upload
+          v-model="jsonFile"
+          placeholder="Upload your json file"
+          label="JSON File"
+          accept=".json"
+          :rules="[rules.isRequired]"
+          helper="JSON file"
+          @change="onChangeJSON"
+        />
+      </div>
+      <x-divider class="my-4"/>
+      <x-button type="submit">Submit</x-button>
+    </x-form>
+    <div v-if="previewImg">
+      <h2>Preview Image</h2>
+      <img :src="previewImg" alt="preview" class="max-w-lg max-h-96" />
+    </div>
+  </div>
+</template>
+```
+---
+## VirtualGrid
+Renders only visible cells of a large grid for better scroll performance. Use VirtualGrid when a dense grid would be too heavy to mount all at once.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| cellProps | Object as PropType<Record<string |  | Extra props passed to the cell slot as `props`. |
+| class | String |  | CSS class name on the root element. |
+| columnCount | Number |  | Total number of columns in the grid. |
+| columnWidth | [Number, String, Function] |  | Column width as px, percent string, or a function of index. |
+| defaultHeight | Number | 0 | Initial grid height before measure; important for SSR. |
+| defaultWidth | Number | 0 | Initial grid width before measure; important for SSR. |
+| dir | String 'ltr'  \|  'rtl'  \|  'auto' |  | Text directionality for cell layout (ltr, rtl, or auto). |
+| onCellsRendered | Function as PropType<(       visibleCells: {         columnStartIndex: number;         columnStopIndex: number;         rowStartIndex: number;         rowStopIndex: number; |  | Called when the visible or overscan cell range changes. |
+| onResize | Function as PropType<(       size: { height: number; width: number; |  | Called when the grid root resizes. |
+| overscanCount | Number | 3 | Extra rows/columns rendered outside the visible area. |
+| rowCount | Number |  | Total number of rows in the grid. |
+| rowHeight | [Number, String, Function] |  | Row height as px, percent string, or a function of index. |
+| style | Object CSSProperties |  | Inline styles; the grid fills the size defined here. |
+| tag | String TagNames | div | Root element tag. |
+
+### Slots
+- `cell`: Render a single cell. Receives columnIndex, rowIndex, style, ariaAttributes, and props.
+- `default`: Optional content rendered after the virtualized cells.
+
+### Events
+- _(none)_
+
+### Methods
+- `element`: Root HTML element when mounted, otherwise null.
+- `scrollToCell`: Scroll so the given cell (row and column) is visible.
+- `scrollToColumn`: Scroll so the given column index is visible.
+- `scrollToRow`: Scroll so the given row index is visible.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+const gridRowCount = 1000
+const gridColumnCount = 1000
+</script>
+
+<template>
+  <x-virtual-grid
+    :row-count="gridRowCount"
+    :column-count="gridColumnCount"
+    :row-height="48"
+    :column-width="100"
+    class="h-96 w-full rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
+  >
+    <template #cell="{ rowIndex, columnIndex, style }">
+      <div
+        :style="style"
+        class="flex h-12 items-center justify-center border border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200"
+      >
+        R{{ rowIndex }}, C{{ columnIndex }}
+      </div>
+    </template>
+  </x-virtual-grid>
+</template>
+```
+---
+## VirtualList
+Renders only visible rows of a long list for better scroll performance. Use VirtualList for feeds and catalogs with thousands of items.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| class | String |  | CSS class name on the root element. |
+| defaultHeight | Number | 0 | Initial list height before measure; important for SSR. |
+| onResize | Function as PropType<(       size: { height: number; width: number; |  | Called when the list root resizes. |
+| onRowsRendered | Function as PropType<(       visibleRows: { startIndex: number; stopIndex: number; |  | Called when the visible or overscan row range changes. |
+| overscanCount | Number | 3 | Extra rows rendered outside the visible area to reduce scroll flicker. |
+| rowCount | Number |  | Total number of rows in the list. |
+| rowHeight | [Number, String, Function, Object] |  | Row height as px, percent string, function, or `useDynamicRowHeight` cache. |
+| rowProps | Object as PropType<Record<string |  | Extra props passed to the row slot as `props`. |
+| style | Object CSSProperties |  | Inline styles; the list fills the height defined here. |
+| tag | String TagNames | div | Root element tag. |
+
+### Slots
+- `default`: Optional content rendered after the virtualized rows.
+- `row`: Render a single row. Receives index, style, ariaAttributes, and props.
+
+### Events
+- _(none)_
+
+### Methods
+- `element`: Root HTML element when mounted, otherwise null.
+- `scrollToRow`: Scroll so the given row index is visible.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+const listItems = Array.from({ length: 10000 }, (_, i) => `Item ${i + 1}`)
+</script>
+
+<template>
+  <x-virtual-list
+    :row-count="listItems.length"
+    :row-height="48"
+    class="h-96 rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
+  >
+    <template #row="{ index, style }">
+      <div
+        :style="style"
+        class="flex h-12 items-center justify-center border-b border-gray-200 text-gray-800 dark:border-gray-700 dark:text-gray-200"
+      >
+        {{ listItems[index] }}
+      </div>
+    </template>
+  </x-virtual-list>
+</template>
+```
+
+#### DynamicHeight
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { XVirtualList, useDynamicRowHeight } from '@indielayer/ui'
+
+const loremTexts = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+  'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.',
+  'Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+  'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.',
+  'Sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.',
+  'Ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.',
+  'Lorem ipsum dolor sit amet.',
+  'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
+]
+
+const items = Array.from({ length: 1000 }, (_, i) => ({
+  id: i,
+  text: loremTexts[i % loremTexts.length],
+}))
+
+const collapsedRows = ref<Set<number>>(new Set())
+
+const toggleRow = (index: number) => {
+  const newSet = new Set(collapsedRows.value)
+
+  if (newSet.has(index)) {
+    newSet.delete(index)
+  } else {
+    newSet.add(index)
+  }
+  collapsedRows.value = newSet
+}
+
+const isRowCollapsed = (index: number) => {
+  return collapsedRows.value.has(index)
+}
+
+const getText = (index: number) => {
+  return items[index].text
+}
+
+const rowHeight = useDynamicRowHeight({
+  defaultRowHeight: 50,
+})
+</script>
+
+<template>
+  <x-virtual-list
+    :row-count="items.length"
+    :row-height="rowHeight"
+    class="h-[500px] rounded-md border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-950"
+  >
+    <template #row="{ index, style }">
+      <div
+        :style="style"
+        :class="[
+          'flex cursor-pointer items-start gap-2 border-b border-gray-200 px-4 py-3 transition-colors dark:border-gray-700',
+          index % 2 === 0 ? 'bg-white dark:bg-gray-950' : 'bg-gray-50 dark:bg-gray-900',
+          'hover:bg-gray-100 dark:hover:bg-gray-800',
+          isRowCollapsed(index) ? 'overflow-hidden text-ellipsis whitespace-nowrap' : '',
+        ]"
+        @click="toggleRow(index)"
+      >
+        <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center text-sm">
+          {{ isRowCollapsed(index) ? '➕' : '➖' }}
+        </span>
+        <span class="flex-1 leading-normal text-gray-800 dark:text-gray-200">
+          <strong class="mr-2 text-gray-700 dark:text-gray-300">{{ index }}:</strong>{{ getText(index) }}
+        </span>
+      </div>
+    </template>
+  </x-virtual-list>
+</template>
+```
+---
