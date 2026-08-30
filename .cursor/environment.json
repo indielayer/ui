@@ -1,0 +1,11 @@
+{
+  "name": "Indielayer UI",
+  "install": "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm install 24 && nvm alias default 24 && export PATH=\"$NVM_BIN:$PATH\" && corepack enable && corepack prepare pnpm@11.1.3 --activate && pnpm install --frozen-lockfile && pnpm --dir packages/ui generate",
+  "terminals": [
+    {
+      "name": "ui-dev",
+      "command": "export NVM_DIR=\"$HOME/.nvm\" && . \"$NVM_DIR/nvm.sh\" && nvm use 24 && export PATH=\"$NVM_BIN:$PATH\" && pnpm --dir packages/ui exec vite dev --mode docs --host 0.0.0.0 --port 5173"
+    }
+  ],
+  "ports": [5173]
+}
