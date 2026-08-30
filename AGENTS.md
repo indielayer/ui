@@ -7,6 +7,20 @@ Vue 3 component library (`@indielayer/ui`) in a pnpm monorepo. Primary package: 
 - Node.js 24+
 - pnpm 11+ (use `pnpm`, not npm/yarn)
 
+## Cursor Cloud specific instructions
+
+The Cloud Agent environment (`.cursor/environment.json`) is provisioned by the base
+image's `nvm` with Node 24 installed. `.cursor/environment.json` activates Node 24 for
+the `install` step and the `ui-dev` terminal (the docs dev server on port `5173`).
+
+Ad-hoc shells default to the exec-daemon's Node 22, which shadows `nvm` in `PATH`. Before
+running any `pnpm` command manually (lint, typecheck, tests, build), activate Node 24 and
+put it ahead of the exec-daemon in `PATH`:
+
+```bash
+export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" && nvm use 24 && export PATH="$NVM_BIN:$PATH"
+```
+
 ## Commands
 
 From the repo root:
