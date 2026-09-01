@@ -274,24 +274,24 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
   top: 0;
   left: 0;
   outline: none;
+}
 
-  &.v-popper__popper--hidden {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.15s, visibility 0.15s;
-    pointer-events: none;
-  }
+.v-popper__popper.v-popper__popper--hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s, visibility 0.15s;
+  pointer-events: none;
+}
 
-  &.v-popper__popper--shown {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.15s;
-  }
+.v-popper__popper.v-popper__popper--shown {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.15s;
+}
 
-  &.v-popper__popper--skip-transition,
-  &.v-popper__popper.v-popper__popper--skip-transition > .v-popper__wrapper {
-    transition: none !important;
-  }
+.v-popper__popper.v-popper__popper--skip-transition,
+.v-popper__popper.v-popper__popper--skip-transition > .v-popper__wrapper {
+  transition: none !important;
 }
 
 .v-popper__backdrop {
