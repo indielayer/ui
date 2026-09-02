@@ -8,6 +8,7 @@ Single-line text field for entering and editing short values. Use x-input in for
 | color | String | primary | Theme or CSS color used for the control accents. |
 | dir | String 'ltr'  \|  'rtl' | ltr | Text direction for the native input (`ltr` or `rtl`). |
 | disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| enterkeyhint | String 'enter'  \|  'done'  \|  'go'  \|  'next'  \|  'previous'  \|  'search'  \|  'send' |  | Native `enterkeyhint` for the virtual keyboard action key. |
 | error | String |  | External error message; overrides rule errors when set. |
 | helper | String |  | Helper text shown below the field. |
 | hideFooter | Boolean |  | Hides the footer area (helper / error). |
@@ -15,6 +16,7 @@ Single-line text field for entering and editing short values. Use x-input in for
 | iconLeft | String |  | Icon name shown before the input value. |
 | iconRight | String |  | Icon name shown after the input value. |
 | id | String |  | Native id attribute for the input element. |
+| inputmode | String 'none'  \|  'text'  \|  'decimal'  \|  'numeric'  \|  'tel'  \|  'search'  \|  'email'  \|  'url' |  | Native `inputmode` hint for virtual keyboards. |
 | label | String |  | Visible label text for the field. |
 | loading | Boolean |  | Shows a loading indicator and blocks interaction. |
 | loadingLabel | String |  | Accessible label announced while loading. |
@@ -64,6 +66,7 @@ Single-line text field for entering and editing short values. Use x-input in for
 import { ref } from 'vue'
 const name = ref('John')
 const title = ref('')
+const amount = ref('')
 </script>
 
 <template>
@@ -86,6 +89,15 @@ const title = ref('')
       show-counter
       helper="Character counter is displayed"
       placeholder="Enter a title (max 50 characters)"
+    />
+
+    <x-input
+      v-model="amount"
+      label="Amount"
+      inputmode="decimal"
+      enterkeyhint="done"
+      helper="Virtual keyboard uses decimal inputmode"
+      placeholder="0.00"
     />
   </div>
 </template>

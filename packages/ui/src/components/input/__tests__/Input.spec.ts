@@ -35,4 +35,21 @@ describe('Input', () => {
     expect(wrapper.findAllComponents({ name: 'XIcon' }).length).toBeGreaterThan(0)
     expect(wrapper.find('input').classes().join(' ')).toContain('!pl-16')
   })
+
+  it('forwards inputmode and enterkeyhint to the native input', () => {
+    const wrapper = mount(Input, {
+      props: {
+        inputmode: 'decimal',
+        enterkeyhint: 'done',
+      },
+      global: {
+        components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+      },
+    })
+
+    const input = wrapper.find('input')
+
+    expect(input.attributes('inputmode')).toBe('decimal')
+    expect(input.attributes('enterkeyhint')).toBe('done')
+  })
 })

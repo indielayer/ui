@@ -53,6 +53,14 @@ const inputProps = {
     default: 'text',
     description: 'Native input type (text, password, email, number, etc.).',
   },
+  inputmode: {
+    type: String as PropType<'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'>,
+    description: 'Native `inputmode` hint for virtual keyboards.',
+  },
+  enterkeyhint: {
+    type: String as PropType<'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send'>,
+    description: 'Native `enterkeyhint` for the virtual keyboard action key.',
+  },
   step: {
     type: [Number, String],
     description: 'Native `step` attribute for numeric inputs.',
@@ -290,6 +298,8 @@ defineExpose({ focus, blur, reset, validate, setError })
         :placeholder="placeholder"
         :readonly="readonly"
         :type="currentType"
+        :inputmode="inputmode"
+        :enterkeyhint="enterkeyhint"
         :value="typeof modelValue !== 'undefined' ? modelValue : ''"
         v-bind="dataAttrs"
         v-on="inputListeners"

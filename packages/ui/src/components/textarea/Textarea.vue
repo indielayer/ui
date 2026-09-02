@@ -35,6 +35,14 @@ const textareaProps = {
     type: String,
     description: 'Placeholder text shown when the value is empty.',
   },
+  inputmode: {
+    type: String as PropType<'none' | 'text' | 'decimal' | 'numeric' | 'tel' | 'search' | 'email' | 'url'>,
+    description: 'Native `inputmode` hint for virtual keyboards.',
+  },
+  enterkeyhint: {
+    type: String as PropType<'enter' | 'done' | 'go' | 'next' | 'previous' | 'search' | 'send'>,
+    description: 'Native `enterkeyhint` for the virtual keyboard action key.',
+  },
   adjustToText: optionalBooleanProp('Auto-grows the height to fit the content.'),
   preventEnter: optionalBooleanProp('Prevents the Enter key from inserting a newline.'),
   block: optionalBooleanProp('Stretches to the full width of the parent.'),
@@ -71,7 +79,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject, watch, type ExtractPublicPropTypes, type Ref, useAttrs, computed, useSlots } from 'vue'
+import { ref, inject, watch, type ExtractPublicPropTypes, type PropType, type Ref, useAttrs, computed, useSlots } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -255,6 +263,8 @@ defineExpose({ focus, blur, reset, validate, setError })
         :name="name"
         :placeholder="placeholder"
         :readonly="readonly"
+        :inputmode="inputmode"
+        :enterkeyhint="enterkeyhint"
         :value="isEmpty(modelValue) ? '' : String(modelValue)"
         v-bind="dataAttrs"
         v-on="inputListeners"

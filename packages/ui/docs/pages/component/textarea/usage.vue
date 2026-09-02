@@ -28,6 +28,7 @@ const comment = ref('')
       helper="Maximum 200 characters"
       placeholder="Enter your comment"
       rows="4"
+      enterkeyhint="send"
     />
   </div>
 </template>
