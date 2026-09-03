@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "pnpm build:docs",
   "outputDirectory": "packages/ui/dist",
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --prod=false",
   "trailingSlash": false,
   "cleanUrls": true,
   "rewrites": [

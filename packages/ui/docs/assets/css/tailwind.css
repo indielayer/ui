@@ -10,8 +10,14 @@
 @source "../../../src/**/*.{vue,js,ts,jsx,tsx}";
 
 html,
-body {
+body,
+#app {
   height: 100%;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
 }
 
 html.dark,

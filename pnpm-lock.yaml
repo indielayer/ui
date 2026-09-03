@@ -33,6 +33,9 @@ importers:
       simple-git-hooks:
         specifier: ^2.9.0
         version: 2.9.0
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
       tsx:
         specifier: ^4.8.1
         version: 4.22.3
