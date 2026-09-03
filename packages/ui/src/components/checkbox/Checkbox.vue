@@ -25,6 +25,7 @@ export interface CheckboxTheme extends ThemeComponent<CheckboxProps, InternalCla
 
 export default {
   name: 'XCheckbox',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -49,6 +50,7 @@ import { ref, unref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
@@ -58,6 +60,8 @@ import XSpinner from '../spinner/Spinner.vue'
 const props = defineProps(checkboxProps)
 
 const emit = defineEmits(useInputtable.emits(false))
+
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLElement | null>(null)
 const checked = ref(false)
@@ -140,8 +144,10 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
 
 <template>
   <label
-    :style="styles"
+    v-bind="fallthrough.wrapperAttrs"
+    :style="[fallthrough.wrapperStyle, styles]"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -153,6 +159,7 @@ defineExpose({ focus, blur, toggle, reset, validate, setError })
       @keypress.prevent.stop.space="toggle"
     >
       <input
+        v-bind="fallthrough.nativeAttrs"
         :id="id"
         v-model="checked"
         :name="name"
