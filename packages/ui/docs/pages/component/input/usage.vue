@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 const name = ref('John')
 const title = ref('')
+const amount = ref('')
 </script>
 
 <template>
@@ -24,6 +25,15 @@ const title = ref('')
       show-counter
       helper="Character counter is displayed"
       placeholder="Enter a title (max 50 characters)"
+    />
+
+    <x-input
+      v-model="amount"
+      label="Amount"
+      inputmode="decimal"
+      enterkeyhint="done"
+      helper="Virtual keyboard uses decimal inputmode"
+      placeholder="0.00"
     />
   </div>
 </template>

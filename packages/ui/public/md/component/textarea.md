@@ -8,10 +8,12 @@ Multi-line text field for longer content such as comments and descriptions. Use 
 | clearable | Boolean |  | Shows a clear button when the value is not empty. |
 | dir | String | ltr | Text direction for the textarea (`ltr` or `rtl`). |
 | disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| enterkeyhint | String 'enter'  \|  'done'  \|  'go'  \|  'next'  \|  'previous'  \|  'search'  \|  'send' |  | Native `enterkeyhint` for the virtual keyboard action key. |
 | error | String |  | External error message; overrides rule errors when set. |
 | helper | String |  | Helper text shown below the field. |
 | hideFooter | Boolean |  | Hides the footer area (helper / error). |
 | id | String |  | Native id attribute for the input element. |
+| inputmode | String 'none'  \|  'text'  \|  'decimal'  \|  'numeric'  \|  'tel'  \|  'search'  \|  'email'  \|  'url' |  | Native `inputmode` hint for virtual keyboards. |
 | label | String |  | Visible label text for the field. |
 | loading | Boolean |  | Shows a loading indicator and blocks interaction. |
 | loadingLabel | String |  | Accessible label announced while loading. |
@@ -87,6 +89,7 @@ const comment = ref('')
       helper="Maximum 200 characters"
       placeholder="Enter your comment"
       rows="4"
+      enterkeyhint="send"
     />
   </div>
 </template>
