@@ -100,69 +100,67 @@ defineExpose({ scrollEl: scrollEl as Ref<HTMLElement | null> })
 </template>
 
 <style module>
-.scrollwrap {
-  &::before,
-  &::after {
-    content: "";
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-    transition: box-shadow 0.2s;
-  }
+.scrollwrap::before,
+.scrollwrap::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+  transition: box-shadow 0.2s;
+}
 
-  &.horizontal::before,
-  &.horizontal::after {
-    top: 0;
-    bottom: 0;
-    width: 20px;
-  }
+.scrollwrap.horizontal::before,
+.scrollwrap.horizontal::after {
+  top: 0;
+  bottom: 0;
+  width: 20px;
+}
 
-  &.vertical::before,
-  &.vertical::after {
-    right: 0;
-    left: 0;
-    height: 20px;
-  }
+.scrollwrap.vertical::before,
+.scrollwrap.vertical::after {
+  right: 0;
+  left: 0;
+  height: 20px;
+}
 
-  &.horizontal::before {
-    left: 0;
-  }
+.scrollwrap.horizontal::before {
+  left: 0;
+}
 
-  &.horizontal::after {
-    right: 0;
-  }
+.scrollwrap.horizontal::after {
+  right: 0;
+}
 
-  &.vertical::before {
-    top: 0;
-  }
+.scrollwrap.vertical::before {
+  top: 0;
+}
 
-  &.vertical::after {
-    bottom: 0;
-  }
+.scrollwrap.vertical::after {
+  bottom: 0;
+}
 
-  &.shadow-left::before {
-    box-shadow: inset 12px 0 10px -10px rgb(0 0 0 / 7%);
-  }
+.scrollwrap.shadow-left::before {
+  box-shadow: inset 12px 0 10px -10px rgb(0 0 0 / 7%);
+}
 
-  &.shadow-right::after {
-    box-shadow: inset -12px 0 10px -10px rgb(0 0 0 / 7%);
-  }
+.scrollwrap.shadow-right::after {
+  box-shadow: inset -12px 0 10px -10px rgb(0 0 0 / 7%);
+}
 
-  &.shadow-top::before {
-    box-shadow: inset 0 12px 10px -10px rgb(0 0 0 / 7%);
-  }
+.scrollwrap.shadow-top::before {
+  box-shadow: inset 0 12px 10px -10px rgb(0 0 0 / 7%);
+}
 
-  &.shadow-bottom::after {
-    box-shadow: inset 0 -12px 10px -10px rgb(0 0 0 / 7%);
-  }
+.scrollwrap.shadow-bottom::after {
+  box-shadow: inset 0 -12px 10px -10px rgb(0 0 0 / 7%);
 }
 
 .hidescroll {
   -ms-overflow-style: auto;
   scrollbar-width: none;
+}
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
+.hidescroll::-webkit-scrollbar {
+  display: none;
 }
 </style>
