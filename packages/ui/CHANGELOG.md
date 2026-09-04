@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 2.1.1
+
+### Patch Changes
+
+- fix(input): add inputmode and enterkeyhint to input and textarea ([#146](https://github.com/indielayer/ui/pull/146)) ([`ea06bbf`](https://github.com/indielayer/ui/commit/ea06bbf9703927d9368a53d6eb266aa13280c620))
+- fix(popover): flatten nested CSS selectors
+
+  Popover and Scroll SFC styles used nested `&` rules that postcss without tailwindcss/nesting does not compile, which left floating poppers at opacity 0. Flatten selectors so styles work in TW4 apps and the lib build.
+  ([#145](https://github.com/indielayer/ui/pull/145)) ([`f9f7de2`](https://github.com/indielayer/ui/commit/f9f7de2a2c01ea235d85ab3a8fc28a04d2c2142a))
+
 ## 2.1.0
 
 ### Minor Changes
