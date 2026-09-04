@@ -16,6 +16,7 @@ export interface ToggleTheme extends ThemeComponent<ToggleProps, InternalClasses
 
 export default {
   name: 'XToggle',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -36,6 +37,7 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import { useInteractive } from '../../composables/useInteractive'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
@@ -44,6 +46,8 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(toggleProps)
 
 const emit = defineEmits(useInputtable.emits(false))
+
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLElement | null>(null)
 
@@ -73,12 +77,15 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <label
+    v-bind="fallthrough.wrapperAttrs"
     class="inline-block"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
       disabled ? 'cursor-not-allowed' : 'cursor-pointer'
     ]"
+    :style="fallthrough.wrapperStyle"
   >
     <div class="flex items-center">
       <div
@@ -93,6 +100,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       >
         <div :class="classes.buttonWrapper">
           <input
+            v-bind="fallthrough.nativeAttrs"
             :id="id"
             ref="elRef"
             v-model="checked"

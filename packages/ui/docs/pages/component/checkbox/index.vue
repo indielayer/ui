@@ -2,6 +2,8 @@
 import { XCheckbox } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import NativeAttrsDemoCode from './native-attrs.vue?raw'
+import NativeAttrsDemo from './native-attrs.vue'
 import VariantsDemoCode from './variants.vue?raw'
 import VariantsDemo from './variants.vue'
 import SizeDemoCode from './size.vue?raw'
@@ -10,7 +12,7 @@ import StatesDemoCode from './states.vue?raw'
 import StatesDemo from './states.vue'
 
 const title = 'Checkbox'
-const description = 'Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active.'
+const description = 'Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active. Undeclared HTML attributes are forwarded to the native checkbox; class and style apply to the wrapper label.'
 const components = [XCheckbox]
 const demos = [{
   name: 'Usage',
@@ -32,6 +34,11 @@ const demos = [{
   description: 'Disabled, indeterminate, and other interactive states.',
   code: StatesDemoCode,
   component: StatesDemo,
+}, {
+  name: 'Native attrs',
+  description: 'aria-label and data-testid on the hidden checkbox; class on the label.',
+  code: NativeAttrsDemoCode,
+  component: NativeAttrsDemo,
 }]
 const back = 'button'
 const next = 'form'

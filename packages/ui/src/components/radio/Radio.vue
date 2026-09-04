@@ -21,6 +21,7 @@ export interface RadioTheme extends ThemeComponent<RadioProps, InternalClasses, 
 
 export default {
   name: 'XRadio',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -45,6 +46,7 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
@@ -52,6 +54,8 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(radioProps)
 
 const emit = defineEmits(useInputtable.emits(false))
+
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLElement | null>(null)
 
@@ -104,12 +108,14 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <label
+    v-bind="fallthrough.wrapperAttrs"
     ref="elRef"
     tabindex="0"
     :aria-selected="selected ? 'true' : 'false'"
     :aria-disabled="(disabled || loading) ? 'true' : undefined"
-    :style="styles"
+    :style="[fallthrough.wrapperStyle, styles]"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -120,6 +126,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :class="{ 'cursor-not-allowed': disabled }"
     >
       <input
+        v-bind="fallthrough.nativeAttrs"
         :id="id"
         v-model="selected"
         :name="name"

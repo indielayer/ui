@@ -78,6 +78,7 @@ export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, 
 
 export default {
   name: 'XInput',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -97,13 +98,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject, computed, type PropType, type ExtractPublicPropTypes, watch, useAttrs, useSlots } from 'vue'
+import { ref, inject, computed, type PropType, type ExtractPublicPropTypes, watch, useSlots } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import type { Size } from '../../composables/useCommon'
 import { injectInputGroupKey } from '../../composables/keys'
 import { closeIcon, eyeIcon, eyeVisibleIcon } from '../../common/icons'
@@ -128,14 +130,7 @@ const inputGroup = inject(injectInputGroupKey, {
 
 const emit = defineEmits(useInputtable.emits())
 
-const attrs = useAttrs()
-const dataAttrs = computed(() => {
-  return Object.keys(attrs).reduce((acc, key) => {
-    if (key.startsWith('data-')) acc[key] = attrs[key]
-
-    return acc
-  }, {} as Record<string, any>)
-})
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLInputElement | null>(null)
 const currentType = ref(props.type)
@@ -246,7 +241,8 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <x-label
-    :style="styles"
+    v-bind="fallthrough.wrapperAttrs"
+    :style="[fallthrough.wrapperStyle, styles]"
     :block="resolvedProps.block"
     :disabled="isDisabled"
     :required="required"
@@ -254,6 +250,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     :is-inside-input-group="isInsideInputGroup"
     :label="computedLabel"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -276,6 +273,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
 
       <input
+        v-bind="fallthrough.nativeAttrs"
         :id="id"
         ref="elRef"
         :class="[
@@ -301,7 +299,6 @@ defineExpose({ focus, blur, reset, validate, setError })
         :inputmode="inputmode"
         :enterkeyhint="enterkeyhint"
         :value="typeof modelValue !== 'undefined' ? modelValue : ''"
-        v-bind="dataAttrs"
         v-on="inputListeners"
         @change="onChange"
       />
