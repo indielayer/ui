@@ -24,7 +24,7 @@ const features = [
 </script>
 
 <template>
-  <section class="docs-features -mx-4 lg:-mx-8 px-4 lg:px-8 mb-10">
+  <section class="docs-features mb-10">
     <div class="docs-container">
       <div class="text-overline text-primary-600 dark:text-primary-400 mb-3">Why Indielayer UI</div>
       <h2 class="text-h3 mb-8 text-gray-900 dark:text-white">Everything you need to ship faster</h2>

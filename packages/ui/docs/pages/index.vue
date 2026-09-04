@@ -28,7 +28,7 @@ const tailwindSetupSnippet = `/* src/assets/tailwind.css */
   <docs-hero />
   <docs-features />
 
-  <div class="docs-container">
+  <div class="docs-container mb-8">
     <section id="installation">
       <h2 class="text-h3 mb-2">Getting started</h2>
       <p class="text-gray-500 dark:text-gray-400 mb-8">

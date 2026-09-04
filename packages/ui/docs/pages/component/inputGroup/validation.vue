@@ -16,7 +16,7 @@ const rules = {
 </script>
 
 <template>
-  <x-form @submit="() => {}">
+  <x-form :auto-focus="false" @submit="() => {}">
     <div class="flex">
       <x-input-group
         label="Date range"

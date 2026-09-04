@@ -81,7 +81,7 @@ function scrollToInstallation() {
 </script>
 
 <template>
-  <section class="docs-hero relative mb-6 -mt-2 -mx-4 lg:-mx-8 px-4 lg:px-8">
+  <section class="docs-hero relative mb-6 -mt-2">
     <div class="docs-container grid lg:grid-cols-2 gap-10 lg:gap-8 items-center pb-10 lg:pb-14">
       <div class="min-w-0">
         <div class="flex items-center gap-4 mb-8">
