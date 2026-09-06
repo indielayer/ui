@@ -1,6 +1,6 @@
 ---
 name: component-theme
-description: Edit or add component theme classes and styles for base and carbon variants. Use when changing component appearance, Tailwind classes, theme tokens, Divider/Button themes, or files matching *.theme.ts.
+description: Edit or add component theme classes and styles for shipped theme variants (base, carbon). Use when changing component appearance, Tailwind classes, theme tokens, Divider/Button themes, or files matching *.theme.ts. To add a new shipped theme pack, use the add-theme skill.
 disable-model-invocation: true
 ---
 
@@ -8,10 +8,9 @@ disable-model-invocation: true
 
 ## Files
 
-For component `<Name>`:
+For component `<Name>`, one file per shipped theme id (currently `base`, `carbon`):
 
-- `theme/<Name>.base.theme.ts`
-- `theme/<Name>.carbon.theme.ts`
+- `theme/<Name>.<id>.theme.ts`
 
 Import `*Theme` from `../<Name>.vue`.
 
@@ -29,16 +28,13 @@ export default theme
 
 ## Register
 
-Export in both:
+Export in every `packages/ui/src/themes/<id>/components.ts` (currently `base`, `carbon`).
 
-- `packages/ui/src/themes/base/components.ts`
-- `packages/ui/src/themes/carbon/components.ts`
-
-Key must match the theme name used in `useTheme('<Name>', ...)`.
+Key must match the name used in `useTheme('<Name>', ...)`.
 
 ## Sync variants
 
-When changing layout, states, or tokens in one variant, apply the same logical change to the other unless the carbon design intentionally differs.
+When changing layout, states, or tokens in one variant, apply the same logical change to the others unless a design is intentionally different.
 
 Reference: `packages/ui/src/components/button/theme/Button.base.theme.ts`
 

@@ -13,7 +13,7 @@ alwaysApply: false
 - Sub-components live in the same folder with their own theme files
 - Register every new public `X*` component (including sub-components and `src/virtual/`) in:
   1. `src/components/index.ts` (or `src/virtual/index.ts`)
-  2. `src/themes/base/components.ts` and `src/themes/carbon/components.ts` (themed components only)
+  2. Every `src/themes/<id>/components.ts` (themed components only; currently `base`, `carbon`)
   3. `packages/ui/volar.d.ts` — add to `GlobalComponents` in alphabetical order:
 
 ```ts
