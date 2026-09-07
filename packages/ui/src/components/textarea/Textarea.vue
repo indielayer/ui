@@ -60,6 +60,7 @@ export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalCla
 
 export default {
   name: 'XTextarea',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -79,7 +80,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject, watch, type ExtractPublicPropTypes, type PropType, type Ref, useAttrs, computed, useSlots } from 'vue'
+import { ref, inject, watch, type ExtractPublicPropTypes, type PropType, type Ref, computed, useSlots } from 'vue'
 import { useResizeObserver, useEventListener } from '@vueuse/core'
 import { useCSS } from '../../composables/useCSS'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -87,6 +88,7 @@ import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import type { Size } from '../../composables/useCommon'
 import { injectInputGroupKey } from '../../composables/keys'
 
@@ -110,14 +112,7 @@ const inputGroup = inject(injectInputGroupKey, {
 
 const emit = defineEmits(useInputtable.emits())
 
-const attrs = useAttrs()
-const dataAttrs = computed(() => {
-  return Object.keys(attrs).reduce((acc, key) => {
-    if (key.startsWith('data-')) acc[key] = attrs[key]
-
-    return acc
-  }, {} as Record<string, any>)
-})
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLTextAreaElement | null>(null)
 
@@ -217,7 +212,8 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <x-label
-    :style="styles"
+    v-bind="fallthrough.wrapperAttrs"
+    :style="[fallthrough.wrapperStyle, styles]"
     :block="block"
     :disabled="isDisabled"
     :required="required"
@@ -225,6 +221,7 @@ defineExpose({ focus, blur, reset, validate, setError })
     :is-inside-input-group="isInsideInputGroup"
     :label="computedLabel"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -241,6 +238,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       </div>
 
       <textarea
+        v-bind="fallthrough.nativeAttrs"
         :id="id"
         ref="elRef"
         class=""
@@ -266,7 +264,6 @@ defineExpose({ focus, blur, reset, validate, setError })
         :inputmode="inputmode"
         :enterkeyhint="enterkeyhint"
         :value="isEmpty(modelValue) ? '' : String(modelValue)"
-        v-bind="dataAttrs"
         v-on="inputListeners"
         @keydown.enter="onEnter"
         @input="onInput"

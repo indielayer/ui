@@ -67,6 +67,7 @@ export interface UploadTheme extends ThemeComponent<UploadProps, InternalClasses
 
 export default {
   name: 'XUpload',
+  inheritAttrs: false,
   validators,
   docs: {
     slots: {
@@ -92,6 +93,7 @@ import { useDropZone } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { uploadIcon, closeIcon, fileIcon } from '../../common/icons'
 import { isFileAccepted } from './fileAccept'
@@ -104,6 +106,8 @@ import XIcon from '../icon/Icon.vue'
 const props = defineProps(uploadProps)
 
 const emit = defineEmits([...useInputtable.emits(), 'upload', 'remove'])
+
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLInputElement | null>(null)
 
@@ -337,7 +341,10 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <div
+    v-bind="fallthrough.wrapperAttrs"
+    :style="fallthrough.wrapperStyle"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -352,6 +359,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       :tooltip="tooltip"
     >
       <input
+        v-bind="fallthrough.nativeAttrs"
         :id="id"
         ref="elRef"
         type="file"

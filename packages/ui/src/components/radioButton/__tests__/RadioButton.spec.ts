@@ -1,5 +1,5 @@
 import { defineComponent, ref } from 'vue'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import RadioButton from '../RadioButton.vue'
 import FormGroup from '../../formGroup/FormGroup.vue'
@@ -16,6 +16,35 @@ describe('RadioButton', () => {
     await wrapper.trigger('click')
 
     expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['a'])
+  })
+
+  it('forwards undeclared HTML attributes to the native radio input', () => {
+    const wrapper = mount(RadioButton, {
+      props: {
+        value: 'a',
+      },
+      attrs: {
+        'data-testid': 'option-a',
+      },
+    })
+
+    expect(wrapper.find('input[type="radio"]').attributes('data-testid')).toBe('option-a')
+  })
+
+  it('invokes undeclared click listeners on the wrapper label', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(RadioButton, {
+      props: {
+        value: 'a',
+      },
+      attrs: {
+        onClick,
+      },
+    })
+
+    await wrapper.trigger('click')
+
+    expect(onClick).toHaveBeenCalled()
   })
 
   it('acts as grouped options inside FormGroup', async () => {

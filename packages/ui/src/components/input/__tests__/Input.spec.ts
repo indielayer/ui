@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { h } from 'vue'
 import { mount } from '@vue/test-utils'
 import Input from '../Input.vue'
@@ -51,5 +51,62 @@ describe('Input', () => {
 
     expect(input.attributes('inputmode')).toBe('decimal')
     expect(input.attributes('enterkeyhint')).toBe('done')
+  })
+
+  it('forwards undeclared HTML attributes to the native input', () => {
+    const wrapper = mount(Input, {
+      attrs: {
+        autocomplete: 'email',
+        'aria-label': 'Work email',
+        'data-testid': 'email-input',
+      },
+      global: {
+        components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+      },
+    })
+
+    const input = wrapper.find('input')
+    const label = wrapper.find('label')
+
+    expect(input.attributes('autocomplete')).toBe('email')
+    expect(input.attributes('aria-label')).toBe('Work email')
+    expect(input.attributes('data-testid')).toBe('email-input')
+    expect(label.attributes('data-testid')).toBeUndefined()
+  })
+
+  it('applies class and style fallthrough to the wrapper, not the native input', () => {
+    const wrapper = mount(Input, {
+      attrs: {
+        class: 'wrapper-class',
+        style: { marginTop: '8px' },
+      },
+      global: {
+        components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+      },
+    })
+
+    expect(wrapper.find('label').classes()).toContain('wrapper-class')
+    expect(wrapper.find('input').classes()).not.toContain('wrapper-class')
+    expect((wrapper.find('label').element as HTMLElement).style.marginTop).toBe('8px')
+  })
+
+  it('keeps undeclared click listeners on the wrapper', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(Input, {
+      props: {
+        clearable: true,
+        modelValue: 'value',
+      },
+      attrs: {
+        onClick,
+      },
+      global: {
+        components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+      },
+    })
+
+    await wrapper.find('[class*="cursor-pointer"]').trigger('click')
+
+    expect(onClick).toHaveBeenCalled()
   })
 })

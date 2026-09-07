@@ -21,6 +21,7 @@ export interface RadioButtonTheme extends ThemeComponent<RadioButtonProps, Inter
 
 export default {
   name: 'XRadioButton',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -45,9 +46,18 @@ import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 
 const props = defineProps(radioButtonProps)
 const emit = defineEmits(useInputtable.emits(false))
+
+const fallthrough = useFallthroughNativeAttrs()
+
+const labelWrapperAttrs = computed(() => {
+  const { onClick, ...rest } = fallthrough.value.wrapperAttrs as Record<string, unknown> & { onClick?: unknown; }
+
+  return rest
+})
 
 const elRef = ref<HTMLElement | null>(null)
 
@@ -85,6 +95,15 @@ function select() {
   formGroup.setValue(props.value as any)
 }
 
+function onLabelClick(event: MouseEvent) {
+  select()
+
+  const handler = fallthrough.value.wrapperAttrs.onClick
+
+  if (typeof handler === 'function') handler(event)
+  else if (Array.isArray(handler)) handler.forEach((fn) => { if (typeof fn === 'function') fn(event) })
+}
+
 const { styles, classes, className } = useTheme('RadioButton', {}, props, {
   selected,
   isInsideFormGroup,
@@ -95,21 +114,24 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <label
+    v-bind="labelWrapperAttrs"
     ref="elRef"
     tabindex="0"
     :aria-pressed="selected ? 'true' : 'false'"
     :aria-disabled="(disabled || loading) ? 'true' : undefined"
-    :style="styles"
+    :style="[fallthrough.wrapperStyle, styles]"
     :class="[
+      fallthrough.wrapperClass,
       className,
       $style['btn'],
       isInsideFormGroup ? $style['btn--grouped'] : '',
       classes.wrapper,
     ]"
-    @click="select"
+    @click="onLabelClick"
     @keypress.prevent.stop.space="select"
   >
     <input
+      v-bind="fallthrough.nativeAttrs"
       v-model="selected"
       :name="name"
       :required="required"

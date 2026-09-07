@@ -2,6 +2,8 @@
 import { XRadio, XRadioButton } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import NativeAttrsDemoCode from './native-attrs.vue?raw'
+import NativeAttrsDemo from './native-attrs.vue'
 import PaymentMethodDemoCode from './payment-method.vue?raw'
 import PaymentMethodDemo from './payment-method.vue'
 import RadioButtonDemoCode from './radio-button.vue?raw'
@@ -14,7 +16,7 @@ import SizeDemoCode from './size.vue?raw'
 import SizeDemo from './size.vue'
 
 const title = 'Radio'
-const description = 'Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.'
+const description = 'Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control. Undeclared HTML attributes are forwarded to the native radio input; class and style apply to the wrapper label.'
 const components = [XRadio, XRadioButton]
 const demos = [{
   name: 'Usage',
@@ -46,6 +48,11 @@ const demos = [{
   description: 'Size options from xs to lg.',
   code: SizeDemoCode,
   component: SizeDemo,
+}, {
+  name: 'Native attrs',
+  description: 'Native radio attrs on x-radio and x-radio-button; wrapper class on each label.',
+  code: NativeAttrsDemoCode,
+  component: NativeAttrsDemo,
 }]
 const back = 'input'
 const next = 'select'

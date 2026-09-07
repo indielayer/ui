@@ -27,6 +27,7 @@ export interface SliderTheme extends ThemeComponent<SliderProps, InternalClasses
 
 export default {
   name: 'XSlider',
+  inheritAttrs: false,
   validators: {
     ...useCommon.validators(),
   },
@@ -51,6 +52,7 @@ import { useCommon } from '../../composables/useCommon'
 import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
+import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XLabel from '../label/Label.vue'
@@ -59,6 +61,8 @@ import XInputFooter from '../inputFooter/InputFooter.vue'
 const props = defineProps(sliderProps)
 
 const emit = defineEmits(useInputtable.emits())
+
+const fallthrough = useFallthroughNativeAttrs()
 
 const elRef = ref<HTMLElement | null>(null)
 const value = ref<number>(Number(props.modelValue ?? 0))
@@ -95,13 +99,15 @@ defineExpose({ focus, blur, reset, validate, setError })
 
 <template>
   <x-label
-    :style="styles"
+    v-bind="fallthrough.wrapperAttrs"
+    :style="[fallthrough.wrapperStyle, styles]"
     :disabled="disabled"
     :required="required"
     :is-inside-form="isInsideForm"
     :is-inside-input-group="isInsideInputGroup"
     :label="label"
     :class="[
+      fallthrough.wrapperClass,
       className,
       classes.wrapper,
     ]"
@@ -111,6 +117,7 @@ defineExpose({ focus, blur, reset, validate, setError })
       <slot name="prefix" :value="value"></slot>
       <div class="relative flex items-center flex-1">
         <input
+          v-bind="fallthrough.nativeAttrs"
           :id="id"
           ref="elRef"
           type="range"
