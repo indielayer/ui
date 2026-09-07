@@ -13,8 +13,21 @@ const theme: ModalTheme = {
       return classes
     },
 
+    modalWrapper: ({ props }) => {
+      const classes = [
+        'flex justify-center h-dvh',
+        'px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:p-8',
+      ]
+
+      if (props.position === 'top') classes.push('items-start')
+      else if (props.position === 'bottom') classes.push('items-end')
+      else classes.push('items-end sm:items-center')
+
+      return classes
+    },
+
     modal: ({ props, data }) => {
-      const classes = ['relative flex flex-col z-10 bg-secondary-200 dark:bg-secondary-900 shadow-lg transform transition-all overflow-hidden max-h-full w-full']
+      const classes = ['relative flex flex-col z-10 bg-secondary-200 dark:bg-secondary-900 shadow-lg transform transition-all overflow-hidden max-h-full w-full min-h-0']
 
       if (data.visible) classes.push('ease-out duration-200 opacity-100 translate-y-0 sm:scale-100')
       else classes.push('ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95')
