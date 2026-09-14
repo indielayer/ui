@@ -1,5 +1,22 @@
 # @indielayer/ui
 
+## 2.1.1
+
+### Patch Changes
+
+- fix(input): add inputmode and enterkeyhint to input and textarea ([#146](https://github.com/indielayer/ui/pull/146)) ([`ea06bbf`](https://github.com/indielayer/ui/commit/ea06bbf9703927d9368a53d6eb266aa13280c620))
+- fix(popover): flatten nested CSS selectors
+
+  Popover and Scroll SFC styles used nested `&` rules that postcss without tailwindcss/nesting does not compile, which left floating poppers at opacity 0. Flatten selectors so styles work in TW4 apps and the lib build.
+  ([#145](https://github.com/indielayer/ui/pull/145)) ([`f9f7de2`](https://github.com/indielayer/ui/commit/f9f7de2a2c01ea235d85ab3a8fc28a04d2c2142a))
+
+- fix(input): forward undeclared HTML attributes to native form controls
+
+  Input, Textarea, Slider, Upload, Checkbox, Radio, RadioButton, and Toggle now bind leftover attributes (`autocomplete`, `aria-*`, `data-*`, `capture`, etc.) to their native input. `class`, `style`, and undeclared event listeners stay on the field wrapper.
+  ([#148](https://github.com/indielayer/ui/pull/148)) ([`33d5a47`](https://github.com/indielayer/ui/commit/33d5a47687e09cb3490dced7df850953cc2a2f5c))
+
+- fix(modal): use dvh and safe-area padding on iOS ([#149](https://github.com/indielayer/ui/pull/149)) ([`d956f15`](https://github.com/indielayer/ui/commit/d956f1537be031e7c6262fb65f52f5260ac1a645))
+
 ## 2.1.0
 
 ### Minor Changes
