@@ -114,12 +114,12 @@ const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
   color: var(--x-avatar-text);
   background-color: var(--x-avatar-bg);
   border-color: var(--x-avatar-border);
+}
 
-  :global(.dark) &,
-  &:global(.dark) {
-    color: var(--x-avatar-dark-text, var(--x-avatar-text));
-    background-color: var(--x-avatar-dark-bg, var(--x-avatar-bg));
-    border-color: var(--x-avatar-dark-border, var(--x-avatar-border));
-  }
+:global(.dark) .avatar,
+.avatar:global(.dark) {
+  color: var(--x-avatar-dark-text, var(--x-avatar-text));
+  background-color: var(--x-avatar-dark-bg, var(--x-avatar-bg));
+  border-color: var(--x-avatar-dark-border, var(--x-avatar-border));
 }
 </style>
