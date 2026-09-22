@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 2.1.2
+
+### Patch Changes
+
+- fix(avatar): flatten css dark mode ([#150](https://github.com/indielayer/ui/pull/150)) ([`e909f96`](https://github.com/indielayer/ui/commit/e909f968e53d697645e1c1a3508bba9e0b5995c3))
+
 ## 2.1.1
 
 ### Patch Changes
