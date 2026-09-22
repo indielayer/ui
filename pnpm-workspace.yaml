@@ -19,6 +19,5 @@ allowBuilds:
   simple-git-hooks: true
   vue-demi: true
 publishBranch: main
-dude: true
 shamefullyHoist: true
 shellEmulator: true

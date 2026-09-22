@@ -1,18 +1,19 @@
 ---
-description: Component theme files (base and carbon variants)
+description: Component theme files (shipped variants: base, carbon)
 globs: packages/ui/**/*.theme.ts
 alwaysApply: false
 ---
 
 # Themes
 
-- Every styled component needs **both** `*.base.theme.ts` and `*.carbon.theme.ts`
+- Every styled component needs a `*.<id>.theme.ts` for each shipped theme (currently `base`, `carbon`)
 - Import `*Theme` type from the sibling `.vue` file
 - `classes` keys map to template slots/elements; use function form `({ props, slots, data }) => [...]`
 - `styles` uses `colors.getPalette()`, `css()`, and CSS variables — follow `Button.base.theme.ts`
-- Export default theme object; register in `themes/base/components.ts` and `themes/carbon/components.ts` with matching key name
-- Global theme entries: `packages/ui/src/themes/base/index.ts`, `carbon/index.ts` (`classPrefix: 'x-'`)
+- Export default theme object; register in every `themes/<id>/components.ts` with matching key name
+- Global theme entries: `packages/ui/src/themes/<id>/index.ts` (`classPrefix: 'x-'`)
+- New shipped theme pack: `.cursor/skills/add-theme/SKILL.md`
 
-When changing one theme variant, check whether the other variant needs the same logical change.
+When changing one theme variant, check whether the others need the same logical change.
 
 Reference: `packages/ui/src/components/button/theme/Button.base.theme.ts`

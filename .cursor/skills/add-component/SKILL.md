@@ -12,15 +12,14 @@ Create `packages/ui/src/components/<name>/`:
 
 - `<Name>.vue` — plain `<script lang="ts">` for props/types/`name: 'X<Name>'`, `<script setup>` for logic
 - `index.ts` — `export { default as X<Name> }` and prop/theme types
-- `theme/<Name>.base.theme.ts` and `theme/<Name>.carbon.theme.ts`
+- `theme/<Name>.<id>.theme.ts` for every shipped theme (`base`, `carbon`)
 - `__tests__/<Name>.spec.ts`
 
 ## Register
 
 1. `packages/ui/src/components/index.ts` (or `src/virtual/index.ts`)
-2. `packages/ui/src/themes/base/components.ts`
-3. `packages/ui/src/themes/carbon/components.ts`
-4. `packages/ui/volar.d.ts` — add `X<Name>` to `GlobalComponents` (alphabetical):
+2. Every `packages/ui/src/themes/<id>/components.ts` (currently `base`, `carbon`)
+3. `packages/ui/volar.d.ts` — add `X<Name>` to `GlobalComponents` (alphabetical):
 
 ```ts
 XRadioButton: typeof import('@indielayer/ui')['XRadioButton']
