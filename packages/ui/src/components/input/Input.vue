@@ -180,21 +180,25 @@ const rightIconCount = computed(() => {
 const hasLeftAdornment = computed(() => hasLeftIcon.value || hasPrefixSlot.value)
 const hasRightAdornment = computed(() => hasSuffixSlot.value || rightIconCount.value > 0)
 
+const computedSize = computed((): Size => inputGroup.groupProps?.size ?? resolvedProps.value.size)
+
 const leftPaddingClass = computed(() => {
   const units = (hasLeftIcon.value ? 1 : 0) + (hasPrefixSlot.value ? 1 : 0)
+  const xs = computedSize.value === 'xs'
 
-  if (units >= 2) return '!pl-16'
-  if (units === 1) return '!pl-10'
+  if (units >= 2) return xs ? '!pl-12' : '!pl-16'
+  if (units === 1) return xs ? '!pl-7' : '!pl-10'
 
   return ''
 })
 
 const rightPaddingClass = computed(() => {
   const units = rightIconCount.value + (hasSuffixSlot.value ? 1 : 0)
+  const xs = computedSize.value === 'xs'
 
-  if (units >= 3) return '!pr-24'
-  if (units === 2) return '!pr-16'
-  if (units === 1) return '!pr-10'
+  if (units >= 3) return xs ? '!pr-16' : '!pr-24'
+  if (units === 2) return xs ? '!pr-12' : '!pr-16'
+  if (units === 1) return xs ? '!pr-7' : '!pr-10'
 
   return ''
 })
@@ -213,8 +217,6 @@ const {
   validate,
   setError,
 } = useInputtable(props, { focus, emit })
-
-const computedSize = computed((): Size => inputGroup.groupProps?.size ?? resolvedProps.value.size)
 const isDisabled = computed(() => props.disabled || !!inputGroup.groupProps?.disabled)
 const computedLabel = computed(() => (hideLabelInternal.value ? undefined : props.label))
 
@@ -308,7 +310,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         :class="[classes.adornment, classes.adornmentEnd]"
       >
         <div v-if="hasSuffixSlot" :class="classes.adornmentSlot">
-          <slot name="suffix" ></slot>
+          <slot name="suffix"></slot>
         </div>
         <x-icon
           v-if="showClearIcon"

@@ -36,6 +36,24 @@ describe('Input', () => {
     expect(wrapper.find('input').classes().join(' ')).toContain('!pl-16')
   })
 
+  it('scales left adornment padding by size', () => {
+    const global = {
+      components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+    }
+
+    const xs = mount(Input, {
+      props: { iconLeft: 'smile', size: 'xs' },
+      global,
+    })
+    const md = mount(Input, {
+      props: { iconLeft: 'smile', size: 'md' },
+      global,
+    })
+
+    expect(xs.find('input').classes()).toContain('!pl-7')
+    expect(md.find('input').classes()).toContain('!pl-10')
+  })
+
   it('forwards inputmode and enterkeyhint to the native input', () => {
     const wrapper = mount(Input, {
       props: {
