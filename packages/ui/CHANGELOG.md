@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 2.1.4
+
+### Patch Changes
+
+- fix(inputgroup): ignore popover inputs ([`8b01c0a`](https://github.com/indielayer/ui/commit/8b01c0ab1576f126f78ddcf972cb2daf97d9f869))
+
 ## 2.1.3
 
 ### Patch Changes
