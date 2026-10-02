@@ -121,4 +121,38 @@ describe('TabGroup', () => {
 
     expect(wrapper.find('.icon-stub').attributes('data-size')).toBe('sm')
   })
+
+  it('sizes the clip wrapper to the tab list so overflow can scroll', async () => {
+    const wrapper = mount(TabGroup, {
+      props: {
+        modelValue: 'e',
+        fullWidth: false,
+      },
+      slots: {
+        default: () => [
+          h(Tab, { value: 'a', label: 'Tab A', removable: true }),
+          h(Tab, { value: 'b', label: 'Tab B', icon: 'smile' }),
+          h(Tab, { value: 'c', label: 'Tab c' }),
+          h(Tab, { value: 'd', label: 'Tab d' }),
+          h(Tab, { value: 'e', label: 'Tab e' }),
+        ],
+      },
+      global: {
+        stubs: {
+          XScroll: {
+            template: '<div class="scroll-stub"><slot /></div>',
+          },
+          XTooltip: { template: '<div><slot /></div>' },
+          XIcon: true,
+        },
+      },
+    })
+
+    await nextTick()
+
+    const clip = wrapper.find('.scroll-stub > .relative.overflow-x-clip')
+
+    expect(clip.exists()).toBe(true)
+    expect(clip.classes()).toEqual(expect.arrayContaining(['w-fit', 'min-w-full', 'overflow-x-clip']))
+  })
 })

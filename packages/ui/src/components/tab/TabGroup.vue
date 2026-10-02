@@ -251,7 +251,8 @@ const { styles, classes, className } = useTheme('TabGroup', {}, props)
         mousewheel
         :class="classes.scroller"
       >
-        <div class="relative overflow-x-clip">
+        <!-- Grow with tabs for scroll; clip absolute tracker so it cannot inflate scrollWidth. -->
+        <div class="relative w-fit min-w-full overflow-x-clip">
           <div
             ref="tabsRef"
             class="relative"
