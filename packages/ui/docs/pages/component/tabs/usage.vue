@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 
 const tab = ref('a')
-const linkTab = ref(null)
 const metric = ref('unique')
 const view = ref('grid')
 </script>
@@ -158,7 +157,7 @@ const view = ref('grid')
   </div>
 
   <p>Automatic link as value</p>
-  <x-tab-group v-model="linkTab" class="pb-10" exact>
+  <x-tab-group class="pb-10" exact>
     <x-tab to="/component/tabs" label="Tabs link">
       content a
     </x-tab>
