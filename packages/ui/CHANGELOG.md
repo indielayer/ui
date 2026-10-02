@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 2.1.5
+
+### Patch Changes
+
+- fix(tabs): restore horizontal scroll and scroll-to-active when tabs overflow ([`c238754`](https://github.com/indielayer/ui/commit/c23875432fe57a57b63d518063472b6f119d379b))
+
 ## 2.1.4
 
 ### Patch Changes
