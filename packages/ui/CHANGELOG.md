@@ -1,5 +1,11 @@
 # @indielayer/ui
 
+## 2.1.3
+
+### Patch Changes
+
+- fix(select): prefix alignment ([`c7705e8`](https://github.com/indielayer/ui/commit/c7705e8b4fe8fbff1d8ac0f093451f4d1be98c6d))
+
 ## 2.1.2
 
 ### Patch Changes
