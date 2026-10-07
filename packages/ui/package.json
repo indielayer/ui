@@ -42,7 +42,10 @@
     "./tailwind.css": "./exports/tailwind.css"
   },
   "sideEffects": [
-    "./exports/tailwind.css"
+    "*.css",
+    "./exports/tailwind.css",
+    "./lib/index.js",
+    "./lib/index.umd.js"
   ],
   "scripts": {
     "dev": "vite dev --mode docs --open",
