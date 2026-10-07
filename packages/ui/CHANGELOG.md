@@ -1,5 +1,15 @@
 # @indielayer/ui
 
+## 2.1.5
+
+### Patch Changes
+
+- fix(datepicker): make the clear control clickable without reopening the calendar ([`11c42d6`](https://github.com/indielayer/ui/commit/11c42d6c91853d36f0f929d3d5f516482167e7c1))
+- fix(input): match native time/date input height to text inputs at sm/xs sizes ([`11c42d6`](https://github.com/indielayer/ui/commit/11c42d6c91853d36f0f929d3d5f516482167e7c1))
+- fix(tabs): null active tab on unmount ([`ff25993`](https://github.com/indielayer/ui/commit/ff25993d7124c74a204fc63fb98b42a1813039c7))
+- fix(tabs): restore horizontal scroll and scroll-to-active when tabs overflow ([`c238754`](https://github.com/indielayer/ui/commit/c23875432fe57a57b63d518063472b6f119d379b))
+- fix: mark JS CSS injection as a side effect so Vite 8 / Rolldown keeps component styles in production ([`11cb034`](https://github.com/indielayer/ui/commit/11cb034d542f4adf0f79d4e410cc1097f1ffcc5c))
+
 ## 2.1.4
 
 ### Patch Changes
