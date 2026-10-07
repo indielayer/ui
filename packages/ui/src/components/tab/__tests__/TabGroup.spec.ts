@@ -155,4 +155,69 @@ describe('TabGroup', () => {
     expect(clip.exists()).toBe(true)
     expect(clip.classes()).toEqual(expect.arrayContaining(['w-fit', 'min-w-full', 'overflow-x-clip']))
   })
+
+  it('does not emit null when the tab group unmounts', async () => {
+    const Host = defineComponent({
+      components: { TabGroup, Tab },
+      data: () => ({ show: true, tab: 'a' as string | null }),
+      template: `
+        <TabGroup v-if="show" v-model="tab" variant="line">
+          <Tab value="a" label="A" />
+          <Tab value="b" label="B" />
+          <Tab value="c" label="C" />
+        </TabGroup>
+      `,
+    })
+
+    const wrapper = mount(Host, {
+      global: {
+        stubs: {
+          XScroll: { template: '<div><slot /></div>' },
+          XTooltip: { template: '<div><slot /></div>' },
+          XIcon: true,
+        },
+      },
+    })
+
+    await nextTick()
+    expect(wrapper.vm.tab).toBe('a')
+
+    wrapper.vm.show = false
+    await nextTick()
+
+    expect(wrapper.vm.tab).toBe('a')
+  })
+
+  it('falls back to a sibling when the active tab is removed while mounted', async () => {
+    const Host = defineComponent({
+      components: { TabGroup, Tab },
+      data: () => ({
+        tab: 'a' as string | null,
+        tabs: ['a', 'b', 'c'] as string[],
+      }),
+      template: `
+        <TabGroup v-model="tab" variant="line">
+          <Tab v-for="t in tabs" :key="t" :value="t" :label="t" />
+        </TabGroup>
+      `,
+    })
+
+    const wrapper = mount(Host, {
+      global: {
+        stubs: {
+          XScroll: { template: '<div><slot /></div>' },
+          XTooltip: { template: '<div><slot /></div>' },
+          XIcon: true,
+        },
+      },
+    })
+
+    await nextTick()
+    expect(wrapper.vm.tab).toBe('a')
+
+    wrapper.vm.tabs = ['b', 'c']
+    await nextTick()
+
+    expect(wrapper.vm.tab).toBe('b')
+  })
 })

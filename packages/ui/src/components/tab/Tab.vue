@@ -175,7 +175,13 @@ function onClickTab(e: MouseEvent) {
   if (!props.to && typeof computedValue.value !== 'undefined') tabs.activateTab(computedValue.value)
 }
 
-defineEmits(['remove'])
+const emit = defineEmits(['remove'])
+
+function onRemove(e: Event) {
+  e.preventDefault()
+  e.stopPropagation()
+  emit('remove', e)
+}
 
 const isBlockLike = computed(() => tabs.state.variant === 'block' || tabs.state.variant === 'compact')
 
@@ -260,7 +266,7 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
             size="sm"
             :icon="closeIcon"
             class="ml-2 cursor-pointer hover:text-secondary-700 dark:hover:text-secondary-500 transition-colors duration-150"
-            @click="(e: Event) => $emit('remove', e)"
+            @click="onRemove"
           />
         </div>
       </slot>

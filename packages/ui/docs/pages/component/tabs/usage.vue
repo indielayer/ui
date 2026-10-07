@@ -4,6 +4,29 @@ import { ref } from 'vue'
 const tab = ref('a')
 const metric = ref('unique')
 const view = ref('grid')
+
+let nextTabId = 4
+const dynamicTab = ref(1)
+const dynamicTabs = ref([
+  { value: 1, label: 'Tab 1' },
+  { value: 2, label: 'Tab 2' },
+  { value: 3, label: 'Tab 3' },
+])
+
+function addTab() {
+  const value = nextTabId++
+
+  dynamicTabs.value.push({ value, label: `Tab ${value}` })
+  dynamicTab.value = value
+}
+
+function removeTab(value: number) {
+  const index = dynamicTabs.value.findIndex((t) => t.value === value)
+
+  if (index === -1) return
+
+  dynamicTabs.value.splice(index, 1)
+}
 </script>
 
 <template>
@@ -108,6 +131,32 @@ const view = ref('grid')
       content e
     </x-tab>
   </x-tab-group>
+
+  <p>Add and remove tabs</p>
+  <div class="pb-10">
+    <div class="mb-3">
+      <x-button size="sm" @click="addTab">
+        Add tab
+      </x-button>
+    </div>
+    <x-tab-group
+      v-model="dynamicTab"
+      variant="block"
+      :full-width="false"
+    >
+      <x-tab
+        v-for="t in dynamicTabs"
+        :key="t.value"
+        :value="t.value"
+        :label="t.label"
+        removable
+        @remove="removeTab(t.value)"
+      >
+        Content for {{ t.label }}
+      </x-tab>
+    </x-tab-group>
+  </div>
+
   <x-tab-group
     v-model="tab"
     class="pb-10"

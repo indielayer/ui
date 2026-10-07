@@ -73,7 +73,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { reactive, computed, provide, type PropType, ref, watch, onMounted, watchEffect, type ExtractPublicPropTypes, type Ref, nextTick } from 'vue'
+import { reactive, computed, provide, type PropType, ref, watch, onMounted, onBeforeUnmount, watchEffect, type ExtractPublicPropTypes, type Ref, nextTick } from 'vue'
 import { useMutationObserver, useResizeObserver, useThrottleFn } from '@vueuse/core'
 import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
@@ -112,6 +112,7 @@ const state = reactive({
 
 const showTracker = ref(true)
 const registeredTabs: (string | number)[] = []
+const isUnmounting = ref(false)
 
 function activateTab(tab: string | number | null) {
   active.value = tab
@@ -128,6 +129,12 @@ function unregisterTab(tab: string | number) {
   if (index === -1) return
 
   registeredTabs.splice(index, 1)
+
+  if (isUnmounting.value) {
+    showTracker.value = false
+
+    return
+  }
 
   if (active.value !== tab) return
 
@@ -206,12 +213,23 @@ const updateTracker = useThrottleFn(async (value: string | number | undefined) =
 }, 100, true)
 
 function check() {
-  if (!tabsRef.value?.querySelector('.router-link-active')) {
-    activateTab(null)
-    showTracker.value = false
-  } else {
+  if (isUnmounting.value) return
+
+  if (tabsRef.value?.querySelector('.router-link-active')) {
     showTracker.value = true
+
+    return
   }
+
+  if (active.value !== undefined && active.value !== null && registeredTabs.includes(active.value)) {
+    showTracker.value = true
+    updateTracker(active.value)
+
+    return
+  }
+
+  activateTab(null)
+  showTracker.value = false
 }
 
 watch(() => active.value, (value) => {
@@ -226,6 +244,10 @@ onMounted(() => {
     })
   }
   updateTracker(active.value)
+})
+
+onBeforeUnmount(() => {
+  isUnmounting.value = true
 })
 
 useResizeObserver(tabsRef, () => { updateTracker(active.value) })
