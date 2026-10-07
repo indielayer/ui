@@ -16,6 +16,7 @@ export const injectTabGroupKey = Symbol() as InjectionKey<TabGroupInjection>
 export const injectFormKey = Symbol() as InjectionKey<FormInjection>
 export const injectFormGroupKey = Symbol() as InjectionKey<FormGroupInjection>
 export const injectInputGroupKey = Symbol() as InjectionKey<InputGroupInjection>
+export const injectDatepickerKey = Symbol() as InjectionKey<boolean>
 export const injectIconsKey = Symbol() as InjectionKey<IconInjection>
 export const injectButtonGroupKey = Symbol() as InjectionKey<ButtonGroupInjection>
 export const injectNotificationKey = Symbol() as InjectionKey<NotificationInjection>

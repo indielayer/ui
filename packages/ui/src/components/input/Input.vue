@@ -107,7 +107,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import type { Size } from '../../composables/useCommon'
-import { injectInputGroupKey } from '../../composables/keys'
+import { injectDatepickerKey, injectInputGroupKey } from '../../composables/keys'
 import { closeIcon, eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
@@ -129,6 +129,7 @@ const inputGroup = inject(injectInputGroupKey, {
 })
 
 const emit = defineEmits(useInputtable.emits())
+const isInsideDatepicker = inject(injectDatepickerKey, false)
 
 const fallthrough = useFallthroughNativeAttrs()
 
@@ -157,6 +158,24 @@ function onChange(e: Event) {
 
 function togglePasswordVisibility() {
   currentType.value = currentType.value === 'password' ? 'text' : 'password'
+}
+
+function onClearMouseDown(event: MouseEvent) {
+  if (!isInsideDatepicker) return
+
+  // The icon sits inside the field label, which would focus the input.
+  event.preventDefault()
+}
+
+function onClearClick(event: MouseEvent) {
+  if (isInsideDatepicker) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  reset()
+
+  if (isInsideDatepicker) elRef.value?.blur()
 }
 
 const showClearIcon = computed(() => resolvedProps.value.clearable && props.modelValue !== '')
@@ -317,7 +336,8 @@ defineExpose({ focus, blur, reset, validate, setError })
           :size="computedSize"
           :icon="closeIcon"
           :class="[classes.adornmentIcon, 'cursor-pointer']"
-          @click="reset()"
+          @mousedown="onClearMouseDown"
+          @click="onClearClick"
         />
         <x-icon
           v-if="iconRight"
@@ -345,3 +365,35 @@ defineExpose({ focus, blur, reset, validate, setError })
     />
   </x-label>
 </template>
+
+<style scoped>
+/* WebKit temporal inputs add shadow-DOM padding/indicator size that break sm/xs height parity. */
+[type="date"]::-webkit-datetime-edit,
+[type="time"]::-webkit-datetime-edit,
+[type="datetime-local"]::-webkit-datetime-edit,
+[type="month"]::-webkit-datetime-edit,
+[type="week"]::-webkit-datetime-edit {
+  line-height: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+[type="date"]::-webkit-datetime-edit-fields-wrapper,
+[type="time"]::-webkit-datetime-edit-fields-wrapper,
+[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper,
+[type="month"]::-webkit-datetime-edit-fields-wrapper,
+[type="week"]::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator,
+[type="time"]::-webkit-calendar-picker-indicator,
+[type="datetime-local"]::-webkit-calendar-picker-indicator,
+[type="month"]::-webkit-calendar-picker-indicator,
+[type="week"]::-webkit-calendar-picker-indicator {
+  height: 0.875em;
+  width: 0.875em;
+  padding: 0;
+  margin: 0;
+}
+</style>

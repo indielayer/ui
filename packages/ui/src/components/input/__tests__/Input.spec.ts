@@ -5,6 +5,7 @@ import Input from '../Input.vue'
 import Icon from '../../icon/Icon.vue'
 import Label from '../../label/Label.vue'
 import InputFooter from '../../inputFooter/InputFooter.vue'
+import { injectDatepickerKey } from '../../../composables/keys'
 
 describe('Input', () => {
   it('renders without errors', () => {
@@ -126,5 +127,29 @@ describe('Input', () => {
     await wrapper.find('[class*="cursor-pointer"]').trigger('click')
 
     expect(onClick).toHaveBeenCalled()
+  })
+
+  it('clears without bubbling the click when used inside a datepicker', async () => {
+    const onClick = vi.fn()
+    const wrapper = mount(Input, {
+      props: {
+        clearable: true,
+        modelValue: 'value',
+      },
+      attrs: {
+        onClick,
+      },
+      global: {
+        provide: {
+          [injectDatepickerKey as symbol]: true,
+        },
+        components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+      },
+    })
+
+    await wrapper.find('[class*="cursor-pointer"]').trigger('click')
+
+    expect(onClick).not.toHaveBeenCalled()
+    expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([''])
   })
 })

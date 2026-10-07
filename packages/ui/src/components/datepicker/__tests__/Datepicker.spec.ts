@@ -39,4 +39,28 @@ describe('Datepicker', () => {
     expect(dp.exists()).toBe(true)
     expect(dp.props('ui').menu).toContain(menuClass)
   })
+
+  it('routes clearable through XInput and clears via update:modelValue', async () => {
+    const start = new Date('2026-10-07T12:00:00')
+    const end = new Date('2026-10-14T12:00:00')
+    const wrapper = mount(Datepicker, {
+      ...themeProvide,
+      props: {
+        modelValue: [start, end],
+        clearable: true,
+        range: true,
+      },
+    })
+
+    const input = wrapper.findComponent({ name: 'XInput' })
+    const dp = wrapper.findComponent({ name: 'VueDatePicker' })
+
+    expect(input.props('clearable')).toBe(true)
+    expect(dp.props('clearable')).toBe(false)
+
+    await input.vm.$emit('update:modelValue', '')
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBeNull()
+  })
 })

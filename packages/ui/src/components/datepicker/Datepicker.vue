@@ -449,14 +449,14 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject, computed, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { ref, inject, provide, computed, type ExtractPublicPropTypes, type PropType } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type StyleValue, type ThemeComponent } from '../../composables/useTheme'
 import type { Size } from '../../composables/useCommon'
-import { injectInputGroupKey } from '../../composables/keys'
+import { injectDatepickerKey, injectInputGroupKey } from '../../composables/keys'
 import XInput from '../input/Input.vue'
 import type { Locale } from 'date-fns'
 import VueDatepicker, { type ModelValue, type TimeModel, type VueDatePickerProps } from '@vuepic/vue-datepicker'
@@ -510,6 +510,8 @@ const inputGroup = inject(injectInputGroupKey, {
 
 const emit = defineEmits(useInputtable.emits())
 
+provide(injectDatepickerKey, true)
+
 const isInsideInputGroup = computed(() => inputGroup.isInsideInputGroup)
 const computedSize = computed((): Size => inputGroup.groupProps?.size ?? props.size)
 const isDisabled = computed(() => props.disabled || props.loading || !!inputGroup.groupProps?.disabled)
@@ -521,6 +523,10 @@ function onSelect(value: Date | Date[]) {
   emit('update:modelValue', value)
 
   setTimeout(validate)
+}
+
+function onDpInputUpdate(value: string, onClear: (ev?: Event) => void) {
+  if (value === '' || value === null || value === undefined) onClear()
 }
 
 function blur() {
@@ -650,7 +656,8 @@ const menuThemeCss = computed(() => {
       :max-date="maxDate"
       :placeholder="placeholder"
       :hide-input-icon="hideInputIcon"
-      :clearable="clearable"
+      :clearable="false"
+      :always-clearable="alwaysClearable && !clearable"
       :state="state"
       :required="required"
       :autocomplete="autocomplete"
@@ -683,7 +690,7 @@ const menuThemeCss = computed(() => {
       :is-24="is24"
       @update:model-value="onSelect"
     >
-      <template #dp-input="{ value, onEnter, onTab }">
+      <template #dp-input="{ value, onEnter, onTab, onClear }">
         <x-input
           ref="inputRef"
           :readonly="textInput === false || readonly"
@@ -693,7 +700,7 @@ const menuThemeCss = computed(() => {
           :disabled="isDisabled"
           :helper="helper"
           :is-inside-input-group="isInsideInputGroup"
-          icon-right="calendar"
+          :clearable="clearable"
           :loading="loading"
           data-1p-ignore
           :name="name"
@@ -702,6 +709,7 @@ const menuThemeCss = computed(() => {
           :placeholder="placeholder"
           :required="required"
           :hide-footer="hideFooterInternal"
+          @update:model-value="onDpInputUpdate($event, onClear)"
           @keydown.prevent.enter="onEnter"
           @keydown.tab="onTab"
         />

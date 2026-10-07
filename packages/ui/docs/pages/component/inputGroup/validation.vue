@@ -22,6 +22,7 @@ const rules = {
         label="Date range"
         helper="Select date and time"
         :rules="[rules.required]"
+        size="sm"
       >
         <x-datepicker
           v-model="start"
