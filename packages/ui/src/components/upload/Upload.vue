@@ -381,38 +381,42 @@ defineExpose({ focus, blur, reset, validate, setError })
       <slot name="box" :is-over="isOverDropZone">
         <div
           ref="dropZoneRef"
-          class="border border-dashed rounded-md flex items-center justify-center gap-2 p-4 cursor-pointer transition-colors duration-500 hover:border-primary-500 dark:hover:border-primary-400"
+          class="border border-dashed border-secondary-300 dark:border-secondary-600 rounded-lg flex items-center justify-center gap-2 p-4 cursor-pointer transition-colors duration-500 hover:border-primary-500 dark:hover:border-primary-400"
           :class="{
             'border-primary-500 dark:border-primary-400': isOverDropZone,
           }"
         >
           <x-icon :icon="uploadIcon" />
           <span class="text-secondary-500 dark:text-secondary-400">{{ placeholder }}</span>
-          <span class="text-xs text-secondary-400 dark:text-secondary-500">or drag and drop</span>
+          <span class="text-xs text-secondary-400">or drag and drop</span>
         </div>
       </slot>
 
       <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
     </x-label>
     <slot name="files" :files="modelValue">
-      <div v-for="(uploadFile, i) in modelValue" :key="i" class="border rounded-md p-2 bg-secondary-100 my-2">
+      <div
+        v-for="(uploadFile, i) in modelValue"
+        :key="i"
+        class="border border-secondary-200 dark:border-secondary-700 rounded-lg p-2 bg-white dark:bg-secondary-800 my-2"
+      >
         <div class="flex items-center">
           <div
-            class="rounded-md w-9 h-9 flex items-center justify-center mr-2 border"
+            class="rounded-lg w-9 h-9 flex items-center justify-center mr-2 border border-secondary-200 dark:border-secondary-600"
             :class="{
-              'p-2 bg-white': !isImage(uploadFile.file),
+              'p-2 bg-white dark:bg-secondary-700': !isImage(uploadFile.file),
             }"
           >
             <img
               v-if="isImage(uploadFile.file)"
               :src="getImagePreview(uploadFile.file)"
-              class="w-full h-full object-cover rounded-md"
+              class="w-full h-full object-cover rounded-lg"
             />
             <x-icon v-else :icon="fileIcon"/>
           </div>
           <div class="truncate flex-1 pr-2">
             <div class="font-medium truncate">{{ uploadFile.file.name }}</div>
-            <div class="text-xs text-secondary-500">{{ calculateFileSize(uploadFile.file.size) }}</div>
+            <div class="text-xs text-secondary-500 dark:text-secondary-400">{{ calculateFileSize(uploadFile.file.size) }}</div>
           </div>
           <button type="button" class="shrink-0" @click="removeFile(uploadFile.file)">
             <slot name="removeIcon"><x-icon :icon="closeIcon"/></slot>

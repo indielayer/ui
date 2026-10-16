@@ -1,5 +1,5 @@
 # Upload
-File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters.
+File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters. Undeclared HTML attributes are forwarded to the native file input; class and style apply to the outer wrapper.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -181,6 +181,35 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
       <h2>Preview Image</h2>
       <img :src="previewImg" alt="preview" class="max-w-lg max-h-96" />
     </div>
+  </div>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { UploadFile } from '@indielayer/ui'
+
+const files = ref<UploadFile[]>([])
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      The outer ring is wrapper <code class="text-xs">class</code>. The hidden file input receives
+      <code class="text-xs">data-testid</code> — inspect
+      <code class="text-xs">&lt;input type=&quot;file&quot;&gt;</code> in devtools.
+    </p>
+    <x-upload
+      v-model="files"
+      label="Avatar"
+      accept="image/*"
+      placeholder="Choose an image"
+      helper="data-testid on the sr-only file input"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      data-testid="demo-avatar-upload"
+    />
   </div>
 </template>
 ```

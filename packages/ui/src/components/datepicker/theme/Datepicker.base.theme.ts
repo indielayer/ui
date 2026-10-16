@@ -31,6 +31,8 @@ const theme: DatepickerTheme = {
     --dp-overlay-col-padding:  3px; /*Padding in the overlay column*/
     --dp-time-inc-dec-button-size:  32px; /*Sizing for arrow buttons in the time picker*/
     --dp-menu-padding: 6px 8px; /*Menu padding*/
+    --dp-border-radius: 0.75rem; /*Match popover rounded-xl*/
+    --dp-cell-border-radius: 0.5rem;
 
     /*Font sizes*/
     --dp-font-size: 0.875rem; /*Default font-size*/
@@ -50,7 +52,7 @@ const theme: DatepickerTheme = {
       range: primary[100],
       icon: secondary[500],
       primary: primary[500],
-      border: secondary[100],
+      border: secondary[200],
       dark: {
         bg: secondary[800],
         text: secondary[100],
@@ -58,7 +60,7 @@ const theme: DatepickerTheme = {
         range: primary[900],
         icon: secondary[200],
         primary: primary[500],
-        border: secondary[800],
+        border: secondary[700],
       },
     }))
 

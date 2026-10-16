@@ -12,7 +12,7 @@ const selectProps = {
   },
   options: {
     type: Array as PropType<SelectOption[]>,
-    description: 'Available options (`value`, `label`, optional prefix/suffix/disabled).',
+    description: 'Available options (`value`, `label`, optional description/prefix/suffix/disabled).',
   },
   multiple: optionalBooleanProp('Allows selecting more than one option.'),
   multipleCheckbox: optionalBooleanProp('Multiple selection with checkbox-style items.'),
@@ -57,6 +57,7 @@ const selectProps = {
 export type SelectOption = {
   value: number | string;
   label: string;
+  description?: string;
   prefix?: string;
   suffix?: string;
   disabled?: boolean;
@@ -193,12 +194,13 @@ const optionsByValue = computed(() => {
 })
 
 const filterCache = computed(() => {
-  if (!props.options) return new Map<SelectOption, { label: string; prefix?: string; suffix?: string; }>()
+  if (!props.options) return new Map<SelectOption, { label: string; description?: string; prefix?: string; suffix?: string; }>()
 
   return new Map(props.options.map((option) => [
     option,
     {
       label: option.label.toLowerCase(),
+      description: option.description ? option.description.toLowerCase() : undefined,
       prefix: props.filterablePrefix && option.prefix ? option.prefix.toLowerCase() : undefined,
       suffix: props.filterableSuffix && option.suffix ? option.suffix.toLowerCase() : undefined,
     },
@@ -211,6 +213,7 @@ function matchesFilter(option: SelectOption, filterLower: string) {
   if (!cached) return false
 
   return cached.label.includes(filterLower)
+    || cached.description?.includes(filterLower)
     || cached.prefix?.includes(filterLower)
     || cached.suffix?.includes(filterLower)
 }
@@ -238,6 +241,7 @@ const internalOptions = computed(() => {
       return {
         value: option.value,
         label: option.label,
+        description: option.description,
         active: isActive,
         prefix: option.prefix,
         suffix: option.suffix,
@@ -771,7 +775,9 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     @click="() => !item.data.keepOpenOnClick && (!internalMultiple || multipleCheckbox) && popoverRef?.hide()"
                   >
                     <template v-if="$slots.prefix || item.data.prefix" #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
-                    <slot name="label" :item="item.data"></slot>
+                    <template v-if="$slots.label">
+                      <slot name="label" :item="item.data"></slot>
+                    </template>
                     <template v-if="$slots.suffix || item.data.suffix" #suffix><slot name="suffix" :item="item.data">{{ item.data.suffix }}</slot></template>
                   </x-menu-item>
                 </div>

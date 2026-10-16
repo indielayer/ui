@@ -45,6 +45,9 @@ Clickable controls for primary actions—submit, open dialogs, or run commands. 
     <x-button color="primary" icon-right="star">Submit</x-button>
     <x-button color="primary" light>Light</x-button>
     <x-button color="primary" ghost>Ghost</x-button>
+    <x-button color="primary" ghost outlined>Ghost</x-button>
+    <x-button color="primary" ghost outlined disabled>Ghost</x-button>
+    <x-button ghost outlined>Ghost</x-button>
     <x-button color="primary" outlined>Outlined</x-button>
     <x-button color="primary" loading loading-label="Uploading..">Loading</x-button>
     <x-button color="primary" rounded>filled Rounded</x-button>

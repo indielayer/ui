@@ -107,16 +107,16 @@ const rules = {
 </script>
 
 <template>
-  <x-form @submit="() => {}">
+  <x-form :auto-focus="false" @submit="() => {}">
     <div class="flex">
       <x-input-group
         label="Date range"
         helper="Select date and time"
         :rules="[rules.required]"
+        size="sm"
       >
         <x-datepicker
           v-model="start"
-          teleport="body"
           placeholder="Date"
           :enable-time-picker="false"
         />

@@ -7,9 +7,9 @@ const theme: TagTheme = {
 
       if (props.size === 'xs') c.push('px-2 py-0.5 text-xs')
       else if (props.size === 'sm') c.push(' px-2 py-0.5 text-sm')
-      else if (props.size === 'lg') c.push(' px-4 py-2 text-lg')
-      else if (props.size === 'xl') c.push(' px-5 py-3 text-xl')
-      else c.push(' px-3 py-1.5')
+      else if (props.size === 'lg') c.push(' px-4 py-1')
+      else if (props.size === 'xl') c.push(' px-5 py-1.5 text-base')
+      else c.push(' px-3 py-[3px]')
 
       if (props.outlined) {
         c.push('border-[color:var(--x-tag-border)] dark:border-[color:var(--x-tag-dark-border)]')

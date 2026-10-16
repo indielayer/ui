@@ -10,11 +10,11 @@ const theme: RadioButtonTheme = {
         'active:!shadow-none',
       ]
 
-      if (props.size === 'xs') classes.push('py-1 px-2 text-xs')
-      else if (props.size === 'sm') classes.push('py-1.5 px-3 text-sm')
-      else if (props.size === 'lg') classes.push('py-3 px-5 text-lg')
-      else if (props.size === 'xl') classes.push('py-4 px-6 text-xl')
-      else classes.push('py-2 px-4 text-sm')
+      if (props.size === 'xs') classes.push('h-7 px-2 text-xs')
+      else if (props.size === 'sm') classes.push('h-8 px-3 text-sm')
+      else if (props.size === 'lg') classes.push('h-[42px] px-5')
+      else if (props.size === 'xl') classes.push('h-[46px] px-6 text-base')
+      else classes.push('h-9 px-4 text-sm')
 
       if (!data.isInsideFormGroup) classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
 

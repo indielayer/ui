@@ -73,7 +73,7 @@ const textClasses = {
 
     <div>
       <div>Main font</div>
-      <div class="text-gray-500 dark:text-gray-400">Inter</div>
+      <div class="text-gray-500 dark:text-gray-400">Geist</div>
       <div class="text-6xl mt-4">AaBbCc</div>
     </div>
 

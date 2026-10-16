@@ -11,7 +11,7 @@ const theme: CheckboxTheme = {
     },
 
     box: ({ props }) => {
-      const classes = ['rounded flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
+      const classes = ['rounded-md flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
 
       if (props.size === 'lg') classes.push('h-5 w-5')
       else if (props.size === 'xl') classes.push('h-6 w-6')
@@ -48,8 +48,7 @@ const theme: CheckboxTheme = {
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')
-      else if (props.size === 'lg') classes.push('text-lg')
-      else if (props.size === 'xl') classes.push('text-xl')
+      else if (props.size === 'xl') classes.push('text-base')
 
       return classes
     },

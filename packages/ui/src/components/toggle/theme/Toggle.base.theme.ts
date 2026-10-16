@@ -9,8 +9,7 @@ const theme: ToggleTheme = {
 
       if (props.size === 'xs') return c + ' text-xs'
       else if (props.size === 'sm') return c + ' text-sm'
-      else if (props.size === 'lg') return c + ' text-lg'
-      else if (props.size === 'xl') return c + ' text-xl'
+      else if (props.size === 'xl') return c + ' text-base'
 
       return c + ' text-sm'
     },

@@ -65,7 +65,7 @@ describe('Popover', () => {
 
     expect(addNew?.classes().some((c) => c.includes('rounded-s'))).toBe(true)
     expect(more?.classes().some((c) => c.includes('rounded-e'))).toBe(true)
-    expect(option1?.classes().includes('rounded-md')).toBe(true)
+    expect(option1?.classes().includes('rounded-lg')).toBe(true)
   })
 
   it('keeps input group radius when popover filter input mounts', async () => {
@@ -96,9 +96,9 @@ describe('Popover', () => {
     const filterInput = wrapper.find('.filter-input input')
     const go = wrapper.findAll('button').find((b) => b.text() === 'Go')
 
-    expect(firstInput.classes()).toContain('rounded-l-md')
-    expect(go?.classes()).toContain('rounded-r-md')
-    expect(filterInput.classes()).toContain('rounded-md')
-    expect(filterInput.classes()).not.toContain('rounded-r-md')
+    expect(firstInput.classes()).toContain('rounded-l-lg')
+    expect(go?.classes()).toContain('rounded-r-lg')
+    expect(filterInput.classes()).toContain('rounded-lg')
+    expect(filterInput.classes()).not.toContain('rounded-r-lg')
   })
 })

@@ -181,8 +181,8 @@ const vueDatepickerProps = {
     description: VDP_DESC,
   },
   teleport: {
-    type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: null,
-    description: VDP_DESC,
+    type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: true,
+    description: 'Teleport the menu to body by default so it stacks above sticky headers and escapes overflow containers. Passed through to @vuepic/vue-datepicker.',
   },
   teleportCenter: {
     type: Boolean as PropType<boolean>, default: false,
@@ -727,6 +727,7 @@ const menuThemeCss = computed(() => {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
 
+  border-radius: var(--dp-border-radius, 0.75rem);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -776,7 +777,7 @@ const menuThemeCss = computed(() => {
   --dp-hover-icon-color: var(--x-datepicker-icon, #959595) !important;
   --dp-primary-color: var(--x-datepicker-primary, #1976d2) !important;
   --dp-primary-disabled-color: #6bacea;
-  --dp-primary-text-color: #f8f5f5;
+  --dp-primary-text-color: #fff;
   --dp-secondary-color: var(--x-datepicker-disabled, #c0c4cc) !important;
   --dp-border-color: var(--x-datepicker-border, #ddd) !important;
   --dp-menu-border-color: var(--x-datepicker-border, #ddd) !important;

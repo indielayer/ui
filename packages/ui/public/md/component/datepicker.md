@@ -101,7 +101,7 @@ Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it f
 | startDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
 | startTime | [Object, Array] | null | Passed through to @vuepic/vue-datepicker. |
 | state | Boolean VueDatePickerProps['state'] | null | Passed through to @vuepic/vue-datepicker. |
-| teleport | [String, Boolean, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| teleport | [String, Boolean, Object] | true | Teleport the menu to body by default so it stacks above sticky headers and escapes overflow containers. Passed through to @vuepic/vue-datepicker. |
 | teleportCenter | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
 | textInput | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
 | timePicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |

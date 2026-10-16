@@ -40,8 +40,7 @@ const theme: RadioTheme = {
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
-      else if (props.size === 'lg') c += ' text-lg'
-      else if (props.size === 'xl') c += ' text-xl'
+      else if (props.size === 'xl') c += ' text-base'
 
       return c
     },
@@ -51,8 +50,7 @@ const theme: RadioTheme = {
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
-      else if (props.size === 'lg') c += ' text-lg'
-      else if (props.size === 'xl') c += ' text-xl'
+      else if (props.size === 'xl') c += ' text-base'
 
       return c
     },

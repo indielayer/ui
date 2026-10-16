@@ -46,6 +46,10 @@ const menuItemProps = {
     type: String,
     description: 'Visible label text.',
   },
+  description: {
+    type: String,
+    description: 'Secondary text shown below the label.',
+  },
   icon: {
     type: String,
     description: 'Icon name shown before the label.',
@@ -90,7 +94,7 @@ const menuItemProps = {
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
 
-type InternalClasses = 'wrapper'
+type InternalClasses = 'wrapper' | 'description'
 type InternalExtraData = { isActive: Ref<boolean>; }
 export interface MenuItemTheme extends ThemeComponent<MenuItemProps, InternalClasses, InternalExtraData> {}
 
@@ -229,8 +233,18 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     </span>
     <x-icon v-else-if="computedProps.icon" :size="computedProps.size" :icon="computedProps.icon" class="mr-2"/>
 
-    <span v-if="!minimal" class="flex-1 truncate">
-      <slot :item="computedProps">{{ computedProps.label }}</slot>
+    <span
+      v-if="!minimal"
+      class="flex-1 min-w-0"
+      :class="{ truncate: !computedProps.description }"
+    >
+      <slot :item="computedProps">
+        <span class="block" :class="{ truncate: !!computedProps.description }">{{ computedProps.label }}</span>
+        <span
+          v-if="computedProps.description"
+          :class="classes.description"
+        >{{ computedProps.description }}</span>
+      </slot>
     </span>
 
     <span class="ml-1 shrink-0">

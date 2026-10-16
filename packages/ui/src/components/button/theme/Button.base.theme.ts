@@ -13,18 +13,18 @@ const theme: ButtonTheme = {
       } else if (data.isButtonGroup) {
         classes.push(...buttonGroupRadiusClasses(data.buttonGroupPosition, data.buttonGroupRounded))
       } else {
-        classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
+        classes.push(props.rounded ? 'rounded-full' : 'rounded-lg')
       }
 
       // shadow
       if (!props.flat && !props.light && !props.ghost && !props.disabled && !props.loading) classes.push('shadow-xs')
 
       // size
-      if (props.size === 'xs') classes.push(slots.default ? `py-1 text-xs ${props.icon ? 'px-2' : 'px-2'}` : 'leading-none p-1')
-      else if (props.size === 'sm') classes.push(slots.default ? `py-1.5 text-sm ${props.icon ? 'px-3' : 'px-3'}` : 'leading-none p-1.5')
-      else if (props.size === 'lg') classes.push(slots.default ? `py-3 text-lg ${props.icon ? 'px-4' : 'px-5'}` : 'leading-none p-3')
-      else if (props.size === 'xl') classes.push(slots.default ? 'py-4 text-xl px-6' : 'leading-none p-3.5')
-      else classes.push(slots.default ? 'py-2 px-4' : 'leading-none p-[0.532rem]')
+      if (props.size === 'xs') classes.push(slots.default ? 'h-7 px-2 text-xs' : 'h-7 w-7 leading-none')
+      else if (props.size === 'sm') classes.push(slots.default ? 'h-8 px-3 text-sm' : 'h-8 w-8 leading-none')
+      else if (props.size === 'lg') classes.push(slots.default ? `h-[42px] ${props.icon ? 'px-4' : 'px-5'}` : 'h-[42px] w-[42px] leading-none')
+      else if (props.size === 'xl') classes.push(slots.default ? 'h-[46px] text-base px-6' : 'h-[46px] w-[46px] leading-none')
+      else classes.push(slots.default ? 'h-9 px-4' : 'h-9 w-9 leading-none')
 
       // cursor
       if (props.disabled) classes.push('cursor-not-allowed')
@@ -40,7 +40,7 @@ const theme: ButtonTheme = {
   },
 
   styles({ props, colors, css, data }) {
-    const gray = colors.getPalette('gray')
+    const gray = colors.getPalette('secondary')
     const color = props.color ? colors.getPalette(props.color) : gray
     const vars = []
 
@@ -100,11 +100,13 @@ const theme: ButtonTheme = {
           hover: { bg: !props.loading ? color[100] : '' },
           active: { bg: !props.loading ? color[200] : '' },
           dark: {
-            bg: color[900],
+            bg: colors.getColorOpacity(color[500], 0.28),
             text: color[200],
-            border: props.outlined ? color[500] : 'transparent',
-            hover: { bg: !props.loading ? color[800] : '' },
-            active: { bg: !props.loading ? color[700] : '' },
+            border: props.outlined
+              ? colors.getColorOpacity(color[400], 0.45)
+              : colors.getColorOpacity(color[500], 0.1),
+            hover: { bg: !props.loading ? color[900] : '' },
+            active: { bg: !props.loading ? color[800] : '' },
           },
         }))
       }
@@ -115,9 +117,9 @@ const theme: ButtonTheme = {
       if (props.color) {
         if (props.disabled) {
           vars.push(css.variables({
-            text: color[200],
+            text: gray[200],
             dark: {
-              text: color[700],
+              text: gray[700],
             },
           }))
         } else {
@@ -149,8 +151,10 @@ const theme: ButtonTheme = {
         } else {
           vars.push(css.variables({
             text: gray[800],
+            border: props.outlined ? gray[300] : 'transparent',
             dark: {
-              text: 'white',
+              text: gray[200],
+              border: props.outlined ? gray[700] : 'transparent',
             },
           }))
           if (!props.loading) {
