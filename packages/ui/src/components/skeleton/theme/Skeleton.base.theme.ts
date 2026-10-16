@@ -6,7 +6,7 @@ const theme: SkeletonTheme = {
       const classes = ['animate-pulse bg-secondary-300 dark:bg-secondary-600']
 
       if (props.shape === 'circle') classes.push('w-8 h-8 rounded-full')
-      else classes.push('rounded-md')
+      else classes.push('rounded-lg')
 
       return classes
     },

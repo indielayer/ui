@@ -3,6 +3,12 @@ import { optionalBooleanProp } from '../../common/props'
 
 const paginationItemProps = {
   ...useCommon.props(),
+  size: {
+    type: String as PropType<Size>,
+    default: 'sm',
+    validator: (value: string) => useCommon.validators().size.includes(value),
+    description: 'Control size. One of xs, sm, md, lg, xl.',
+  },
   value: {
     type: Number,
     default: 0,
@@ -35,11 +41,11 @@ export default {
 
 <script setup lang="ts">
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { useCommon } from '../../composables/useCommon'
+import { useCommon, type Size } from '../../composables/useCommon'
 
 import XButton from '../button/Button.vue'
 
-import type { ExtractPublicPropTypes } from 'vue'
+import type { ExtractPublicPropTypes, PropType } from 'vue'
 
 const props = defineProps(paginationItemProps)
 

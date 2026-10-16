@@ -41,6 +41,7 @@ export default {
 
 <script setup lang="ts">
 import { computed, ref, type ExtractPublicPropTypes, type Ref, unref } from 'vue'
+import { scheduleAnimationFrame } from '../../common/utils'
 import { useCommon } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useColors } from '../../composables/useColors'
@@ -87,12 +88,26 @@ const selected = computed({
   },
 })
 
+/** One-shot motion; only set from user input so mount/SSR stay still. */
+const animate = ref(false)
+
+function bumpAnimate() {
+  animate.value = false
+  scheduleAnimationFrame(() => {
+    animate.value = true
+  })
+}
+
 function select() {
+  bumpAnimate()
   emit('update:modelValue', props.value)
   formGroup.setValue(props.value as any)
 }
 
 const listeners = {
+  click: () => {
+    bumpAnimate()
+  },
   input: () => {
     if (isInsideFormGroup) return
     setTimeout(() => {
@@ -138,22 +153,52 @@ defineExpose({ focus, blur, reset, validate, setError })
       />
       <div
         :class="[
-          $style['radio'],
           classes.circle,
+          $style.radio_control,
+          animate && selected ? $style['radio_control--animate'] : '',
           [glow && !disabled && !loading ? $style['radio--glow'] : ''],
         ]"
       >
-        <x-spinner v-if="loading" :size="size" class="absolute" />
+        <x-spinner v-if="loading" :size="size" class="absolute inset-0 m-auto" />
+        <!--
+          Single SVG draws fill + ring + center dot on the same coordinate
+          system so the indicator stays centered on 1x (CSS border on
+          rounded-full anti-aliases unevenly). Selected = solid fill + white
+          center; idle = thin ring.
+        -->
         <svg
           v-else
-          viewBox="0 0 20 20"
-          class="fill-current w-full"
-          :class="[
-            classes.circleIcon,
-            $style['radio_circle']
-          ]"
+          viewBox="0 0 16 16"
+          class="block h-full w-full"
+          aria-hidden="true"
         >
-          <circle cx="10" cy="10" r="10"/>
+          <circle
+            cx="8"
+            cy="8"
+            r="8"
+            fill="var(--x-radio-bg)"
+            :class="$style['radio_bg']"
+          />
+          <!-- 1px ring via evenodd (integer radii — avoids half-pixel stroke blur on 1x) -->
+          <path
+            fill="var(--x-radio-border)"
+            fill-rule="evenodd"
+            d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zm0 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1z"
+            :class="$style['radio_ring']"
+          />
+          <circle
+            cx="8"
+            cy="8"
+            r="3"
+            fill="currentColor"
+            :class="[
+              classes.circleIcon,
+              $style['radio_circle'],
+              $style.radio_dot,
+              selected ? $style['radio_dot--selected'] : '',
+              animate && selected ? $style['radio_dot--animate'] : '',
+            ]"
+          />
         </svg>
       </div>
       <div>
@@ -177,23 +222,76 @@ defineExpose({ focus, blur, reset, validate, setError })
 </template>
 
 <style module>
-.radio {
-  border-color: var(--x-radio-border);
-  background-color: var(--x-radio-bg);
+.radio--glow {
+  box-shadow: 0 10px 15px -3px var(--x-radio-glow), 0 4px 6px -4px var(--x-radio-glow);
 }
 
-.radio--glow {
-  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-radio-glow), 0 4px 6px -4px var(--x-radio-glow);
+.radio_control {
+  transform-origin: center;
+}
+
+.radio_control--animate {
+  animation: radio-pop 220ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.radio_bg,
+.radio_ring {
+  transition: fill 150ms ease;
 }
 
 .radio_circle {
   color: var(--x-radio-circle);
 }
 
-:global(.dark) .radio,
-.radio:global(.dark) {
-  border-color: var(--x-radio-dark-border);
-  background-color: var(--x-radio-dark-bg);
+.radio_dot {
+  transform-origin: center;
+  transform-box: fill-box;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.radio_dot--selected {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.radio_dot--animate {
+  animation: radio-dot-pop 200ms cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes radio-pop {
+  0% { transform: scale(1); }
+  35% { transform: scale(0.88); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes radio-dot-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radio_control--animate,
+  .radio_dot--animate {
+    animation: none;
+  }
+
+  .radio_dot--selected {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+:global(.dark) .radio_bg,
+.radio_bg:global(.dark) {
+  fill: var(--x-radio-dark-bg);
+}
+
+:global(.dark) .radio_ring,
+.radio_ring:global(.dark) {
+  fill: var(--x-radio-dark-border);
 }
 
 :global(.dark) .radio_circle,

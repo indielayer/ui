@@ -333,7 +333,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         </div>
         <x-icon
           v-if="showClearIcon"
-          :size="computedSize"
+          size="xs"
           :icon="closeIcon"
           :class="[classes.adornmentIcon, 'cursor-pointer']"
           @mousedown="onClearMouseDown"
@@ -367,6 +367,32 @@ defineExpose({ focus, blur, reset, validate, setError })
 </template>
 
 <style scoped>
+/* Hide native steppers — use custom +/- (e.g. x-input-group) or leave plain. */
+[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/*
+ * Edge/IE inject ::-ms-reveal (and ::-ms-clear) into password fields. That native
+ * control stacks on top of our clear + show-password-toggle adornments.
+ * Keep these as separate rules: a selector list is dropped entirely if any
+ * pseudo-element is unknown to the engine.
+ */
+[type="password"]::-ms-reveal {
+  display: none;
+}
+
+[type="password"]::-ms-clear {
+  display: none;
+}
+
 /* WebKit temporal inputs add shadow-DOM padding/indicator size that break sm/xs height parity. */
 [type="date"]::-webkit-datetime-edit,
 [type="time"]::-webkit-datetime-edit,

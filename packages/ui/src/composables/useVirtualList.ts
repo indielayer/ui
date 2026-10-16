@@ -30,9 +30,11 @@ export interface UseVirtualListItem<T> {
   index: number;
 }
 
+export type VirtualListScrollAlign = 'start' | 'nearest'
+
 export interface UseVirtualListReturn<T> {
   list: Ref<UseVirtualListItem<T>[]>;
-  scrollTo: (index: number) => void;
+  scrollTo: (index: number, align?: VirtualListScrollAlign) => void;
   reset: () => void;
 
   containerProps: {
@@ -230,12 +232,43 @@ const scrollToDictionaryForElementScrollKey = {
   vertical: 'scrollTop',
 } as const
 
-function createScrollTo<T>(type: 'horizontal' | 'vertical', calculateRange: () => void, getDistance: ReturnType<typeof createGetDistance>, containerRef: UseVirtualListResources<T>['containerRef']) {
-  return (index: number) => {
-    if (containerRef.value) {
-      containerRef.value[scrollToDictionaryForElementScrollKey[type]] = getDistance(index)
-      calculateRange()
+function createScrollTo<T>(
+  type: 'horizontal' | 'vertical',
+  calculateRange: () => void,
+  getDistance: ReturnType<typeof createGetDistance>,
+  containerRef: UseVirtualListResources<T>['containerRef'],
+  itemSize: UseVirtualListItemSize,
+) {
+  return (index: number, align: VirtualListScrollAlign = 'start') => {
+    const el = containerRef.value
+
+    if (!el) return
+
+    const key = scrollToDictionaryForElementScrollKey[type]
+    const itemStart = getDistance(index)
+    const size = typeof itemSize === 'number' ? itemSize : itemSize(index)
+
+    if (align === 'nearest') {
+      const viewStart = el[key]
+      const viewSize = type === 'vertical' ? el.clientHeight : el.clientWidth
+      const viewEnd = viewStart + viewSize
+      const itemEnd = itemStart + size
+
+      // Already fully visible — don't move (avoids racing ahead of keyboard highlight)
+      if (itemStart >= viewStart && itemEnd <= viewEnd) {
+        return
+      }
+
+      if (itemStart < viewStart) {
+        el[key] = itemStart
+      } else {
+        el[key] = itemEnd - viewSize
+      }
+    } else {
+      el[key] = itemStart
     }
+
+    calculateRange()
   }
 }
 
@@ -260,7 +293,7 @@ function useVerticalVirtualList<T>(options: UseVirtualListOptions, list: MaybeRe
 
   const totalHeight = createComputedTotalSize(itemHeight, source)
 
-  const scrollTo = createScrollTo('vertical', calculateRange, getDistanceTop, containerRef)
+  const scrollTo = createScrollTo('vertical', calculateRange, getDistanceTop, containerRef, itemHeight)
 
   useWatchForSizes(size, source, containerRef, calculateRange)
 

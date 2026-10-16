@@ -59,8 +59,12 @@ const hasMessage = computed(() => props.error || props.helper)
 </script>
 
 <template>
-  <div :class="[className, classes.wrapper]" :style="styles">
-    <div v-if="hasMessage || showCounter" :class="classes.container">
+  <div
+    v-if="hasMessage || showCounter"
+    :class="[className, classes.wrapper]"
+    :style="styles"
+  >
+    <div :class="classes.container">
       <div>
         <p v-if="error" :class="classes.errorText">{{ error }}</p>
         <p v-else-if="helper" :class="classes.helperText">{{ helper }}</p>

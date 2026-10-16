@@ -3,24 +3,30 @@ import { inputGroupRadiusClasses } from '../../../common/inputGroupRadius'
 
 const theme: SelectTheme = {
   classes: {
-    wrapper: '',
+    // Raise above adjacent InputGroup siblings so the open outline isn't covered
+    wrapper: ({ data }) => (data.isPopoverOpen ? 'z-10' : ''),
 
     box: ({ props, data }) => {
-      const classes = ['w-full border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out shadow-xs']
+      const classes = ['w-full flex items-center leading-none border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
 
-      if (!data.isInsideInputGroup) classes.push('rounded-md')
+      // Per-segment shadow bleeds into joined siblings — keep elevation only when standalone
+      if (!data.isInsideInputGroup) classes.push('rounded-lg', 'shadow-xs')
       else classes.push(...inputGroupRadiusClasses(data.inputGroupPosition))
 
       if (!data.errorInternal && !props.disabled) classes.push('hover:border-secondary-400 dark:hover:border-secondary-500')
 
-      if (props.size === 'xs') classes.push('px-2 py-1 text-xs')
-      else if (props.size === 'sm') classes.push('px-2 py-1.5 text-sm')
-      else if (props.size === 'lg') classes.push('px-4 py-3 text-lg')
-      else if (props.size === 'xl') classes.push('px-5 py-4 text-xl')
-      else classes.push('px-3 py-2')
+      // size @ 14px root: xs 26 / sm 30 / md 34 / lg 38 / xl 42
+      if (props.size === 'xs') classes.push('min-h-[calc(26/14*1rem)] px-2 text-xs')
+      else if (props.size === 'sm') classes.push('min-h-[calc(30/14*1rem)] px-2 text-sm')
+      else if (props.size === 'lg') classes.push('min-h-[calc(38/14*1rem)] px-4')
+      else if (props.size === 'xl') classes.push('min-h-12 px-5 text-base')
+      else classes.push('min-h-[calc(34/14*1rem)] px-3')
+
+      // Vertical padding so wrapped tags don't sit flush against the border
+      if (props.multiple || props.multipleCheckbox) classes.push('py-1')
 
       if (props.disabled) classes.push('bg-secondary-100 dark:bg-secondary-700 text-secondary-400 dark:text-secondary-600 cursor-not-allowed')
-      else classes.push('bg-white dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200')
+      else classes.push('bg-white dark:bg-secondary-700/40 text-secondary-700 dark:text-secondary-200')
 
       if (data.errorInternal) {
         classes.push('border-error-500 dark:border-error-400 group-focus:outline-error-500')
@@ -43,13 +49,14 @@ const theme: SelectTheme = {
       return classes
     },
 
-    truncateCounter: 'absolute right-0 cursor-pointer hover:bg-secondary-200 bg-secondary-100 text-secondary-800 rounded px-1 py-0.5 text-xs',
+    // Match XTag size="xs" (px-2 py-1 text-sm)
+    truncateCounter: 'shrink-0 inline-flex items-center self-center cursor-pointer hover:bg-secondary-200 dark:hover:bg-secondary-600 bg-secondary-100 dark:bg-secondary-700 text-secondary-800 dark:text-secondary-100 rounded-lg px-2 py-0.5 text-sm leading-tight',
 
-    content: 'p-1',
+    content: 'p-1 overflow-hidden',
 
     search: 'p-1 mb-0.5',
 
-    contentBody: 'overflow-y-auto max-h-64 min-w-[280px]',
+    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-0',
 
     iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none',
 

@@ -26,7 +26,6 @@ const rules = {
       >
         <x-datepicker
           v-model="start"
-          teleport="body"
           placeholder="Date"
           :enable-time-picker="false"
         />

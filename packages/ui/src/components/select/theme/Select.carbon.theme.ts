@@ -2,7 +2,7 @@ import { type SelectTheme } from '../Select.vue'
 
 const theme: SelectTheme = {
   classes: {
-    wrapper: '',
+    wrapper: ({ data }) => (data.isPopoverOpen ? 'z-10' : ''),
 
     box: ({ props, data }) => {
       const classes = ['w-full border-b text-sm px-4 border-secondary-300 dark:border-secondary-700 pr-8 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
@@ -32,11 +32,11 @@ const theme: SelectTheme = {
       return classes
     },
 
-    content: 'p-1',
+    content: 'p-1 overflow-hidden',
 
     search: 'p-1 mb-0.5',
 
-    contentBody: 'overflow-y-auto max-h-64',
+    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-0',
 
     iconWrapper: 'pointer-events-none absolute inset-y-0 right-0 flex items-center px-2',
 

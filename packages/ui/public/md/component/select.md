@@ -23,9 +23,10 @@ Dropdown for choosing one or more options from a predefined list. Use Select for
 | modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
 | multiple | Boolean |  | Allows selecting more than one option. |
 | multipleCheckbox | Boolean |  | Multiple selection with checkbox-style items. |
+| multipleColor | String | secondary | Theme or CSS color used for the multiple selection tags. |
 | name | String |  | Native name attribute for form submission. |
 | native | Boolean |  | Renders a native HTML select instead of the custom popover. |
-| options | Array SelectOption[] |  | Available options (`value`, `label`, optional prefix/suffix/disabled). |
+| options | Array SelectOption[] |  | Available options (`value`, `label`, optional description/prefix/suffix/disabled). |
 | placeholder | String |  | Placeholder shown when no option is selected. |
 | placement | String PopoverPlacement |  | Popover placement for the options menu. |
 | readonly | Boolean |  | Makes the field read-only without disabling it. |
@@ -82,12 +83,24 @@ const options = ref<SelectOption[]>([
   { value: 'C', label: 'Option C' },
 ])
 
-// function to generate
+const descriptions = [
+  'Lorem ipsum dolor sit amet.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+]
+
 function genOptions(x: number) {
   const options: SelectOption[] = []
 
   for (let i = 0; i < x; i++) {
-    options.push({ value: i.toString(), label: 'Option ' + i, prefix: 'bg-green-500', suffix: 'dude' + i.toString() })
+    options.push({
+      value: i.toString(),
+      label: 'Option ' + i,
+      description: descriptions[i % descriptions.length],
+      prefix: 'bg-green-500',
+      suffix: 'dude' + i.toString(),
+    })
   }
 
   return options
@@ -116,7 +129,7 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
       filterable-suffix
       clearable
       virtual-list
-      :virtual-list-item-height="33"
+      :virtual-list-item-height="88"
       :options="options2"
     >
       <template #prefix="{ item }">
@@ -142,6 +155,38 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
         >{{ label || 'Select an option' }}</button>
       </template>
     </x-select>
+  </div>
+</template>
+```
+
+#### Description
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { SelectOption } from '@indielayer/ui'
+
+const selected = ref('percentile')
+const options = ref<SelectOption[]>([
+  {
+    value: 'percentile',
+    label: 'By percentile',
+    description: 'Promote and demote by cohort placement percentages.',
+  },
+  {
+    value: 'rank',
+    label: 'By Rank',
+    description: 'Promote and demote using tier change on Rank-based Rewards.',
+  },
+])
+</script>
+
+<template>
+  <div class="max-w-sm">
+    <x-select
+      v-model="selected"
+      label="How players move between tiers"
+      :options="options"
+    />
   </div>
 </template>
 ```
@@ -193,6 +238,7 @@ const optionsWithColors = options.value.map((option) => {
       placeholder="Multiple"
       :options="options"
       multiple
+      multiple-color="primary"
       truncate
       clearable
     />

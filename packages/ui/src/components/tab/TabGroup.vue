@@ -8,7 +8,7 @@ const validators = {
 }
 const tabGroupProps = {
   ...useCommon.props(),
-  ...useColors.props('primary'),
+  ...useColors.props(),
   modelValue: {
     type: [String, Number],
     description: 'Active tab value (v-model).',
@@ -55,7 +55,7 @@ export type TabGroupVariant = typeof validators.variant[number]
 export type TabGroupAlign = typeof validators.align[number]
 export type TabGroupProps = ExtractPublicPropTypes<typeof tabGroupProps>
 
-type InternalClasses = 'wrapper' | 'list' | 'tracker' | 'scroller'
+type InternalClasses = 'wrapper' | 'list' | 'tracker' | 'scroller' | 'clip'
 export interface TabGroupTheme extends ThemeComponent<TabGroupProps, InternalClasses> {}
 
 export default {
@@ -90,6 +90,7 @@ const emit = defineEmits(['update:modelValue'])
 
 const scrollRef = ref<InstanceType<typeof XScroll> | null>(null)
 const wrapperRef = ref<HTMLElement | null>(null)
+const clipRef = ref<HTMLElement | null>(null)
 const trackerRef = ref<HTMLElement | null>(null)
 const tabsRef = ref<HTMLElement | null>(null)
 const tabsContentRef = ref<HTMLElement | null>(null)
@@ -165,27 +166,37 @@ const updateTracker = useThrottleFn(async (value: string | number | undefined) =
 
   await nextTick()
 
-  const tabEl = tabsRef.value?.querySelector(`[data-value="${value}"]`) as HTMLElement
+  const wrap = tabsRef.value?.querySelector(`[data-value="${value}"]`) as HTMLElement | undefined
+  // Prefer the interactive tab node over the tooltip wrapper for box metrics.
+  const tabEl = (wrap?.querySelector('[aria-selected]') as HTMLElement | null) || wrap
+  const clipEl = clipRef.value
 
-  if (!tabEl || !trackerRef.value) {
+  if (!tabEl || !trackerRef.value || !clipEl) {
     showTracker.value = false
 
     return
   }
 
   showTracker.value = true
-  trackerRef.value.style.left = `${tabEl.offsetLeft}px`
-  trackerRef.value.style.width = `${tabEl.offsetWidth}px`
 
-  if (!tabsRef.value || !scrollRef.value?.scrollEl) return
+  // Position against the clip (padding edge) via rects so clip `p-1` can’t desync offsetLeft math.
+  const clipRect = clipEl.getBoundingClientRect()
+  const tabRect = tabEl.getBoundingClientRect()
+
+  trackerRef.value.style.left = `${tabRect.left - clipRect.left}px`
+  trackerRef.value.style.width = `${tabRect.width}px`
+
+  if (!scrollRef.value?.scrollEl) return
 
   const scrollEl = scrollRef.value.scrollEl
-  // Measure overflow from the in-flow tabs list only (tracker is absolute and clipped).
-  const maxScroll = Math.max(0, tabsRef.value.scrollWidth - scrollEl.clientWidth)
+  // Measure overflow from the clip wrapper (includes padding; tracker is absolute and clipped).
+  const contentWidth = clipEl.offsetWidth
+  const maxScroll = Math.max(0, contentWidth - scrollEl.clientWidth)
   const viewLeft = scrollEl.scrollLeft
   const viewRight = viewLeft + scrollEl.clientWidth
-  const tabLeft = tabEl.offsetLeft
-  const tabRight = tabLeft + tabEl.offsetWidth
+  const scrollRect = scrollEl.getBoundingClientRect()
+  const tabLeft = tabRect.left - scrollRect.left + scrollEl.scrollLeft
+  const tabRight = tabLeft + tabRect.width
   const tabFullyVisible = tabLeft >= viewLeft && tabRight <= viewRight
 
   if (maxScroll <= 0) {
@@ -273,8 +284,13 @@ const { styles, classes, className } = useTheme('TabGroup', {}, props)
         mousewheel
         :class="classes.scroller"
       >
-        <!-- Grow with tabs for scroll; clip absolute tracker so it cannot inflate scrollWidth. -->
-        <div class="relative w-fit min-w-full overflow-x-clip">
+        <!-- Grow with tabs for scroll; clip absolute tracker so it cannot inflate scrollWidth.
+             Padding lives here (not on the scroller) so tracker shadows aren’t clipped on the edges. -->
+        <div
+          ref="clipRef"
+          class="relative w-fit min-w-full overflow-x-clip"
+          :class="classes.clip"
+        >
           <div
             ref="tabsRef"
             class="relative"

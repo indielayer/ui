@@ -43,6 +43,7 @@ const optionsWithColors = options.value.map((option) => {
       placeholder="Multiple"
       :options="options"
       multiple
+      multiple-color="primary"
       truncate
       clearable
     />

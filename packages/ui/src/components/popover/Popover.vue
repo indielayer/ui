@@ -103,6 +103,10 @@ const popoverProps = {
     type: [String, Array, Object],
     description: 'Extra class(es) on the floating popover element.',
   },
+  autoSize: {
+    type: [Boolean, String] as PropType<boolean | 'min' | 'max'>,
+    description: 'Match popper size to the trigger (`true`), or only min/max width.',
+  },
   computeTransformOrigin: {
     type: Boolean,
     description: 'Computes transform-origin for scale transitions.',
@@ -221,6 +225,7 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
       popperClass,
       hideArrow ? 'v-popper__popper--no-arrow' : '',
     ]"
+    :auto-size="autoSize"
     :compute-transform-origin="computeTransformOrigin"
     @show="() => { isOpen = true; $emit('show') }"
     @hide="() => { isOpen = false; $emit('hide') }"

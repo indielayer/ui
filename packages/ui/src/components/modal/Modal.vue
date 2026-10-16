@@ -25,6 +25,10 @@ const modalProps = {
     default: true,
     description: 'Shows a dimmed backdrop behind the dialog.',
   },
+  blurry: {
+    type: Boolean,
+    description: 'Applies a blur filter to the backdrop.',
+  },
   hasActions: {
     type: Boolean,
     default: true,
@@ -46,6 +50,10 @@ const modalProps = {
   label: {
     type: String,
     description: 'Small label above the title in the header.',
+  },
+  icon: {
+    type: String,
+    description: 'Icon name shown before the label and title in the header.',
   },
   loading: {
     type: Boolean,
@@ -97,7 +105,7 @@ export type ModalSize = typeof modalSize[number]
 export type ModalPosition = typeof modalPosition[number]
 export type ModalProps = ExtractPublicPropTypes<typeof modalProps>
 
-type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'modalWrapper' | 'closeIcon' | 'header' | 'content' | 'actions' | 'title' | 'description' | 'label'
+type InternalClasses = 'wrapper' | 'backdrop' | 'modal' | 'modalWrapper' | 'closeIcon' | 'header' | 'headerContent' | 'iconWrap' | 'icon' | 'content' | 'actions' | 'title' | 'description' | 'label'
 type InternaData = {
   visible: boolean;
 }
@@ -115,6 +123,7 @@ export default {
       image: 'Optional media above the header.',
       header: 'Replaces the default header region.',
       'header-content': 'Custom header content inside the default header layout.',
+      icon: 'Custom header icon; overrides the `icon` prop.',
       footer: 'Replaces the default actions footer.',
       actions: 'Custom actions row inside the default footer.',
       'cancel-action': 'Cancel / dismiss control in the actions row.',
@@ -142,6 +151,7 @@ import { useFocusTrap } from '../../composables/useFocusTrap'
 import { closeIcon } from '../../common/icons'
 
 import XButton from '../button/Button.vue'
+import XIcon from '../icon/Icon.vue'
 import XScroll from '../scroll/Scroll.vue'
 import XForm, { type FormError } from '../form/Form.vue'
 import { useSlots } from 'vue'
@@ -157,6 +167,17 @@ const modalWrapperRef = ref<HTMLElement | null>(null)
 
 const { initFocusTrap, clearFocusTrap } = useFocusTrap()
 
+// Teleported overlays (datepicker menu, floating-vue). Check composedPath with
+// matches() — vue-datepicker stopPropagation on menu pointerdown prevents
+// VueUse's ignore querySelectorAll path from running, so we also guard in the handler.
+const outsideIgnoreSelectors = ['.v-popper__popper', '.dp__menu', '.dp--menu-wrapper', '.dp__outer_menu_wrap']
+
+function isIgnoredOutsideEvent(event: Event) {
+  return event.composedPath().some((node) =>
+    node instanceof Element && outsideIgnoreSelectors.some((sel) => node.matches(sel)),
+  )
+}
+
 let stopClickOutside: undefined | (() => void) = undefined
 
 watch(value, (val) => {
@@ -168,7 +189,7 @@ watch(value, (val) => {
   if (val) {
     setTimeout(() => {
       stopClickOutside = onClickOutside(modalRef, clickOutsideCallback, {
-        ignore: ['.v-popper__popper', '.dp__menu', '.dp--menu-wrapper'],
+        ignore: outsideIgnoreSelectors,
       })
     })
   }
@@ -216,21 +237,17 @@ async function checkVisibility() {
 if (typeof window !== 'undefined') useEventListener(document, 'keydown', onKeyDown)
 
 const shouldIgnoreEvent = (event: KeyboardEvent) => {
-  return ['.v-popper__popper', '.x-datepicker', '.dp__menu', '.dp--menu-wrapper'].some((target) => {
-    if (typeof target === 'string') {
-      return Array.from(window.document.querySelectorAll(target))
-        .some((el) => el === event.target || event.composedPath().includes(el))
-    }
-
-    return false
-  })
+  return ['.x-datepicker', ...outsideIgnoreSelectors].some((sel) =>
+    event.composedPath().some((node) => node instanceof Element && node.matches(sel)),
+  )
 }
 
 function onKeyDown(event: KeyboardEvent) {
   if (event.key === 'Escape' && !shouldIgnoreEvent(event) && value.value && !props.persistent) close()
 }
 
-function clickOutsideCallback() {
+function clickOutsideCallback(event: Event) {
+  if (isIgnoredOutsideEvent(event)) return
   if (!props.persistent) close()
 }
 
@@ -299,10 +316,23 @@ defineExpose({ open, close })
           <slot name="image"></slot>
           <slot name="header">
             <div v-if="hasHeader" :class="classes.header">
-              <slot name="header-content">
-                <div v-if="label" :class="classes.label">{{ label }}</div>
-                <div v-if="title" :class="classes.title">{{ title }}</div>
+              <slot v-if="icon || $slots.icon" name="icon">
+                <div
+                  :class="classes.iconWrap"
+                >
+                  <x-icon
+                    v-if="icon"
+                    :icon="icon"
+                    :class="classes.icon"
+                  />
+                </div>
               </slot>
+              <div :class="classes.headerContent">
+                <slot name="header-content">
+                  <div v-if="label" :class="classes.label">{{ label }}</div>
+                  <div v-if="title" :class="classes.title">{{ title }}</div>
+                </slot>
+              </div>
             </div>
           </slot>
           <x-scroll

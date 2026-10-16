@@ -258,7 +258,7 @@ onBeforeUnmount(() => {
           v-model="radio"
           value="a"
           label="Credit card"
-          class="border p-3 rounded w-full"
+          class="border p-3 rounded-lg w-full"
           :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': radio === 'a'}"
         >
           <div class="text-gray-400 font-light text-sm">VISA · · · · 2592</div>
@@ -269,7 +269,7 @@ onBeforeUnmount(() => {
           v-model="radio"
           value="b"
           label="Bank account"
-          class="border p-3 rounded w-full"
+          class="border p-3 rounded-lg w-full"
           :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': radio === 'b'}"
         >
           <div class="text-gray-400 font-light text-sm">Santander · · · · 1580</div>

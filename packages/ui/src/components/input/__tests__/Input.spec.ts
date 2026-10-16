@@ -5,7 +5,17 @@ import Input from '../Input.vue'
 import Icon from '../../icon/Icon.vue'
 import Label from '../../label/Label.vue'
 import InputFooter from '../../inputFooter/InputFooter.vue'
-import { injectDatepickerKey } from '../../../composables/keys'
+import { injectDatepickerKey, injectThemeKey } from '../../../composables/keys'
+import BaseTheme from '../../../themes/base'
+
+const themeProvide = {
+  global: {
+    components: { XLabel: Label, XInputFooter: InputFooter, XIcon: Icon },
+    provide: {
+      [injectThemeKey as symbol]: BaseTheme,
+    },
+  },
+}
 
 describe('Input', () => {
   it('renders without errors', () => {
@@ -127,6 +137,37 @@ describe('Input', () => {
     await wrapper.find('[class*="cursor-pointer"]').trigger('click')
 
     expect(onClick).toHaveBeenCalled()
+  })
+
+  it('lays out clear and password toggle as flex siblings, not absolute-stacked', () => {
+    const wrapper = mount(Input, {
+      props: {
+        type: 'password',
+        clearable: true,
+        showPasswordToggle: true,
+        modelValue: 'secret',
+      },
+      ...themeProvide,
+    })
+
+    const icons = wrapper.findAllComponents({ name: 'XIcon' })
+
+    expect(icons.length).toBe(2)
+
+    const endAdornment = icons[0].element.parentElement
+
+    expect(endAdornment).toBeTruthy()
+    expect(endAdornment!.className).toMatch(/\bflex\b/)
+    expect(endAdornment!.className).toMatch(/\bgap-/)
+
+    for (const icon of icons) {
+      const cls = icon.classes().join(' ')
+
+      expect(cls).not.toMatch(/\babsolute\b/)
+      expect(cls).not.toMatch(/\bright-1\b/)
+    }
+
+    expect(wrapper.find('input').classes().join(' ')).toContain('!pr-16')
   })
 
   it('clears without bubbling the click when used inside a datepicker', async () => {

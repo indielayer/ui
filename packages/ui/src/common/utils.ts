@@ -1,5 +1,12 @@
 import { unref, isRef } from 'vue'
 
+/** SSR-safe `requestAnimationFrame` — returns `0` and skips the callback when unavailable. */
+export function scheduleAnimationFrame(cb: FrameRequestCallback): number {
+  if (typeof window === 'undefined' || typeof requestAnimationFrame === 'undefined') return 0
+
+  return requestAnimationFrame(cb)
+}
+
 export const isObject = (val: unknown): val is object => val !== null && typeof val === 'object'
 export const isArray = (val: unknown): val is [] => Array.isArray(val)
 // eslint-disable-next-line @typescript-eslint/ban-types

@@ -4,6 +4,7 @@ const show = ref(false)
 const show1 = ref(false)
 const show2 = ref(false)
 const show3 = ref(false)
+const show4 = ref(false)
 </script>
 
 <template>
@@ -55,8 +56,25 @@ const show3 = ref(false)
     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore! Doloremque facere aliquid facilis distinctio accusamus, dolorum eligendi consequuntur molestias sapiente non rem vero sed eos minus itaque sunt officiis iste ea repellendus possimus earum maiores? Quo laudantium fuga odit tenetur sint fugit deleniti dolores placeat, accusamus magni consectetur unde totam sunt labore dolor rem consequatur quaerat! Iure temporibus voluptatem cumque, dolore maiores rerum neque vero, iusto veritatis repellat eligendi amet! Molestiae cumque officiis eius harum iste, fuga corporis molestias.
   </x-modal>
 
+  <x-modal
+    v-model="show4"
+    title="Blurry backdrop"
+    show-close
+    backdrop
+    blurry
+    size="sm"
+  >
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iure praesentium non id dolores vitae. Nam ratione veritatis ab cumque voluptas porro illum, voluptate perferendis ducimus dolorem optio magni assumenda dolore!
+
+    <template #actions>
+      <x-button @click="show4 = false">Cancel</x-button>
+      <x-button color="success" @click="show4 = false">Confirm</x-button>
+    </template>
+  </x-modal>
+
   <x-button class="mr-2" @click="show = true">complete</x-button>
   <x-button class="mr-2" @click="show1 = true">persistent</x-button>
   <x-button class="mr-2" @click="show2 = true">title & footer</x-button>
   <x-button class="mr-2" @click="show3 = true">title & content</x-button>
+  <x-button class="mr-2" @click="show4 = true">blurry</x-button>
 </template>

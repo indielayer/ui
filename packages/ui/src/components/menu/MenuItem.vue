@@ -46,6 +46,10 @@ const menuItemProps = {
     type: String,
     description: 'Visible label text.',
   },
+  description: {
+    type: String,
+    description: 'Secondary text shown below the label.',
+  },
   icon: {
     type: String,
     description: 'Icon name shown before the label.',
@@ -90,7 +94,7 @@ const menuItemProps = {
 
 export type MenuItemProps = ExtractPublicPropTypes<typeof menuItemProps>
 
-type InternalClasses = 'wrapper'
+type InternalClasses = 'wrapper' | 'description'
 type InternalExtraData = { isActive: Ref<boolean>; }
 export interface MenuItemTheme extends ThemeComponent<MenuItemProps, InternalClasses, InternalExtraData> {}
 
@@ -115,7 +119,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, type ExtractPublicPropTypes, type PropType, type Ref } from 'vue'
+import { ref, computed, watch, onMounted, getCurrentInstance, type ExtractPublicPropTypes, type PropType, type Ref } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
@@ -133,11 +137,35 @@ const emit = defineEmits(['active', 'click', 'checkbox-click'])
 
 const elRef = ref()
 const isActive = ref(false)
+const instance = getCurrentInstance()
 
-const computedProps = computed(() => ({
-  ...props,
-  ...props.item,
-} as MenuItemProps))
+function wasPropPassed(key: string) {
+  const raw = instance?.vnode.props
+
+  if (!raw) return false
+
+  // Vue may expose camelCase and/or kebab-case on the vnode
+  if (key in raw) return true
+
+  const kebab = key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)
+
+  return kebab !== key && kebab in raw
+}
+
+// Item data first; explicitly passed props win (e.g. Select keyboard `selected` / `disabled`).
+// Omitted Boolean props are `false` in Vue 3 — don't let that wipe `item.active` / etc.
+const computedProps = computed(() => {
+  const item = (props.item || {}) as Partial<MenuItemProps>
+  const merged = { ...item, ...props } as MenuItemProps
+
+  ;(Object.keys(item) as (keyof MenuItemProps)[]).forEach((key) => {
+    if (key === 'item') return
+    if (wasPropPassed(key as string)) return
+    if (item[key] !== undefined) (merged as any)[key] = item[key]
+  })
+
+  return merged
+})
 
 const htmlTag = computed(() => {
   if (computedProps.value.to) return 'router-link'
@@ -165,7 +193,15 @@ function onItemClick(e: Event, eventName: 'click' | 'checkbox-click') {
     return
   }
 
-  computedProps.value.onClick && computedProps.value.onClick(e)
+  // `onClick` is a declared prop, so parent `@click` lands on props.onClick and would
+  // overwrite `item.onClick` (e.g. Select selection). Run both on row click when they differ.
+  // Checkbox clicks must not run props.onClick — Select uses that to close the popover.
+  const itemClick = props.item?.onClick
+  const propClick = props.onClick
+
+  if (itemClick) itemClick(e as MouseEvent)
+  if (eventName === 'click' && propClick && propClick !== itemClick) propClick(e as MouseEvent)
+
   emit(eventName, e)
 }
 
@@ -229,8 +265,18 @@ const { styles, classes, className } = useTheme('MenuItem', {}, computedProps, {
     </span>
     <x-icon v-else-if="computedProps.icon" :size="computedProps.size" :icon="computedProps.icon" class="mr-2"/>
 
-    <span v-if="!minimal" class="flex-1 truncate">
-      <slot :item="computedProps">{{ computedProps.label }}</slot>
+    <span
+      v-if="!minimal"
+      class="flex-1 min-w-0"
+      :class="{ truncate: !computedProps.description }"
+    >
+      <slot :item="computedProps">
+        <span class="block" :class="{ truncate: !!computedProps.description }">{{ computedProps.label }}</span>
+        <span
+          v-if="computedProps.description"
+          :class="classes.description"
+        >{{ computedProps.description }}</span>
+      </slot>
     </span>
 
     <span class="ml-1 shrink-0">

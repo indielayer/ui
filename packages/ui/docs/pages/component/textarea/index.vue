@@ -2,6 +2,8 @@
 import { XTextarea } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import ClearableDemoCode from './clearable.vue?raw'
+import ClearableDemo from './clearable.vue'
 import NativeAttrsDemoCode from './native-attrs.vue?raw'
 import NativeAttrsDemo from './native-attrs.vue'
 import VariantsDemoCode from './variants.vue?raw'
@@ -17,6 +19,11 @@ const demos = [{
   description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Clearable',
+  description: 'Shows a clear button when the value is not empty.',
+  code: ClearableDemoCode,
+  component: ClearableDemo,
 }, {
   name: 'Variants',
   description: 'Color and style variants.',

@@ -2,6 +2,10 @@
 import { XSlider } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import MarksDemoCode from './marks.vue?raw'
+import MarksDemo from './marks.vue'
+import TooltipDemoCode from './tooltip.vue?raw'
+import TooltipDemo from './tooltip.vue'
 import NativeAttrsDemoCode from './native-attrs.vue?raw'
 import NativeAttrsDemo from './native-attrs.vue'
 
@@ -13,6 +17,16 @@ const demos = [{
   description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Marks',
+  description: 'Tick labels via marks; use step="mark" to restrict selection to those values.',
+  code: MarksDemoCode,
+  component: MarksDemo,
+}, {
+  name: 'Tooltip',
+  description: 'Show the current value above the thumb on hover or focus; format with formatTooltip.',
+  code: TooltipDemoCode,
+  component: TooltipDemo,
 }, {
   name: 'Native attrs',
   description: 'aria-label and data-testid on the range input; class on the wrapper.',

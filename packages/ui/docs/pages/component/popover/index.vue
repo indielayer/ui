@@ -8,7 +8,7 @@ const description = 'Floating panel anchored to a trigger for extra content or a
 const components = [XPopover, XPopoverContainer]
 const demos = [{
   name: 'Usage',
-  description: 'Basic example with common props.',
+  description: 'Button trigger that opens a menu inside a popover container.',
   code: UsageDemoCode,
   component: UsageDemo,
 }]

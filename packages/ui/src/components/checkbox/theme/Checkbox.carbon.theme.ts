@@ -11,7 +11,10 @@ const theme: CheckboxTheme = {
     },
 
     box: ({ props }) => {
-      const classes = ['rounded-xs flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)] mt-0.5']
+      const classes = [
+        'relative shrink-0 mt-0.5 overflow-hidden rounded shadow-sm',
+        'outline-offset-2 outline-primary-500 group-focus-visible:outline-2 group-focus-visible:outline',
+      ]
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-3 w-3')
       else if (props.size === 'xl') classes.push('h-5 w-5')
@@ -21,21 +24,16 @@ const theme: CheckboxTheme = {
     },
 
     content: ({ props }) => {
-      const classes = ['flex']
+      const classes = ['flex group focus:outline-hidden focus-visible:outline-hidden']
 
       if (props.disabled) classes.push('cursor-not-allowed')
 
       return classes
     },
 
-    icon: ({ props }) => {
-      const classes = ['fill-current text-white dark:text-secondary-900']
-
-      if (props.size === 'xs' || props.size === 'sm') classes.push('h-2 w-2')
-      else if (props.size === 'xl') classes.push('h-3.5 w-3.5')
-      else classes.push('h-2.5 w-2.5')
-
-      return classes
+    icon: () => {
+      // Color only — size comes from the parent 16×16 SVG
+      return ['text-white dark:text-secondary-900']
     },
 
     label: ({ props }) => {

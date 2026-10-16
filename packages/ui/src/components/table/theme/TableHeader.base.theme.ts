@@ -23,7 +23,7 @@ const theme: TableHeaderTheme = {
     },
 
     sortIcon: ({ props }) => {
-      const classes = ['stroke-2 w-3 h-3']
+      const classes = ['stroke-2 size-4']
 
       return classes
     },

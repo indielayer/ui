@@ -6,22 +6,28 @@ const theme: CheckboxTheme = {
       const classes = ['inline-block relative cursor-pointer align-middle']
 
       if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-5')
+      else if (data.isInsideFormGroup) classes.push('mt-1')
 
       return classes
     },
 
     box: ({ props }) => {
-      const classes = ['rounded flex justify-center items-center shrink-0 border border-[color:var(--x-checkbox-border)] bg-[color:var(--x-checkbox-bg)] dark:border-[color:var(--x-checkbox-dark-border)] dark:bg-[color:var(--x-checkbox-dark-bg)]']
+      const classes = [
+        'relative shrink-0 overflow-hidden rounded shadow-xs',
+        'outline-offset-2 outline-primary-500 group-focus-visible:outline-2 group-focus-visible:outline',
+      ]
 
-      if (props.size === 'lg') classes.push('h-5 w-5')
-      else if (props.size === 'xl') classes.push('h-6 w-6')
-      else classes.push('h-4 w-4')
+      if (props.size === 'xs') classes.push('size-4')
+      else if (props.size === 'sm') classes.push('size-4.5')
+      else if (props.size === 'lg') classes.push('size-5.5')
+      else if (props.size === 'xl') classes.push('size-6')
+      else classes.push('size-5')
 
       return classes
     },
 
     content: ({ props }) => {
-      const classes = ['flex items-center']
+      const classes = ['flex items-center group focus:outline-hidden focus-visible:outline-hidden']
 
       if (props.disabled) classes.push('cursor-not-allowed')
 
@@ -29,14 +35,11 @@ const theme: CheckboxTheme = {
     },
 
     icon: ({ props }) => {
-      const classes = ['fill-current']
+      // Color only — size comes from the parent 16×16 SVG
+      const classes = []
 
       if (props.disabled) classes.push('text-secondary-400 dark:text-secondary-500')
       else classes.push('text-white')
-
-      if (props.size === 'lg') classes.push('h-3 w-3')
-      else if (props.size === 'xl') classes.push('h-4 w-4')
-      else classes.push('h-2.5 w-2.5')
 
       return classes
     },
@@ -48,8 +51,8 @@ const theme: CheckboxTheme = {
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')
-      else if (props.size === 'lg') classes.push('text-lg')
-      else if (props.size === 'xl') classes.push('text-xl')
+      else if (props.size === 'xl') classes.push('text-base')
+      else classes.push('text-sm')
 
       return classes
     },
@@ -57,6 +60,7 @@ const theme: CheckboxTheme = {
 
   styles({ props, colors, css, data }) {
     const gray = colors.getPalette('gray')
+    const secondary = colors.getPalette('secondary')
     const color = colors.getPalette(props.color)
     const vars = []
 
@@ -76,8 +80,8 @@ const theme: CheckboxTheme = {
         bg: gray[100],
         border: gray[200],
         dark: {
-          bg: gray[800],
-          border: gray[700],
+          bg: gray[600],
+          border: gray[500],
         },
       }))
     } else {
@@ -95,8 +99,8 @@ const theme: CheckboxTheme = {
           bg: '#fff',
           border: props.glow ? color[300] : gray[300],
           dark: {
-            bg: gray[900],
-            border: props.glow ? color[300] : gray[400],
+            bg: secondary[800],
+            border: props.glow ? color[300] : secondary[600],
           },
         }))
       }

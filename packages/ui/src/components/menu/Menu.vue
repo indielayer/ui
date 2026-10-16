@@ -49,6 +49,7 @@ export type MenuArrayItem = {
   color?: string;
   size?: Size;
   label?: string;
+  description?: string;
   icon?: string;
   iconRight?: string;
   loading?: boolean;

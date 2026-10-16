@@ -8,9 +8,9 @@ export function buttonGroupRadiusClasses(
 ) {
   if (!position) return []
 
-  if (position === 'only') return [pill ? 'rounded-full' : 'rounded-md']
-  if (position === 'first') return [pill ? 'rounded-s-full' : 'rounded-s-md']
-  if (position === 'last') return [pill ? 'rounded-e-full' : 'rounded-e-md']
+  if (position === 'only') return [pill ? 'rounded-full' : 'rounded-lg']
+  if (position === 'first') return [pill ? 'rounded-s-full' : 'rounded-s-lg']
+  if (position === 'last') return [pill ? 'rounded-e-full' : 'rounded-e-lg']
 
   return ['rounded-none']
 }

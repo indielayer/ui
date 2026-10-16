@@ -181,8 +181,8 @@ const vueDatepickerProps = {
     description: VDP_DESC,
   },
   teleport: {
-    type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: null,
-    description: VDP_DESC,
+    type: [String, Boolean, Object] as PropType<string | boolean | HTMLElement>, default: true,
+    description: 'Teleport the menu to body by default so it stacks above sticky headers and escapes overflow containers. Passed through to @vuepic/vue-datepicker.',
   },
   teleportCenter: {
     type: Boolean as PropType<boolean>, default: false,
@@ -427,7 +427,7 @@ const datepickerProps = {
 export type DatepickerProps = ExtractPublicPropTypes<typeof datepickerProps>
 
 type InternalClasses = 'wrapper'
-type InternalExtraData = { isInsideInputGroup: boolean; }
+type InternalExtraData = { isInsideInputGroup: boolean; isMenuOpen: Ref<boolean>; }
 export interface DatepickerTheme extends ThemeComponent<DatepickerProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -449,7 +449,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, inject, provide, computed, type ExtractPublicPropTypes, type PropType } from 'vue'
+import { ref, inject, provide, computed, type ExtractPublicPropTypes, type PropType, type Ref } from 'vue'
 import { useMutationObserver } from '@vueuse/core'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -518,11 +518,20 @@ const isDisabled = computed(() => props.disabled || props.loading || !!inputGrou
 const computedLabel = computed(() => (inputGroup.isInsideInputGroup ? undefined : props.label))
 
 const inputRef = ref<InstanceType<typeof XInput> | null>(null)
+const isMenuOpen = ref(false)
 
 function onSelect(value: Date | Date[]) {
   emit('update:modelValue', value)
 
   setTimeout(validate)
+}
+
+function onMenuOpen() {
+  isMenuOpen.value = true
+}
+
+function onMenuClosed() {
+  isMenuOpen.value = false
 }
 
 function onDpInputUpdate(value: string, onClear: (ev?: Event) => void) {
@@ -556,7 +565,7 @@ const { hideFooterInternal } = useInputtable(props, { focus, emit })
 
 defineExpose({ focus, blur, validate })
 
-const { styles, classes, className } = useTheme('Datepicker', {}, props, { isInsideInputGroup })
+const { styles, classes, className } = useTheme('Datepicker', {}, props, { isInsideInputGroup, isMenuOpen })
 
 // Teleported menus leave the wrapper, so theme CSS vars must travel with the menu.
 const menuThemeClass = `x-datepicker-menu-${++datepickerThemeSeq}`
@@ -689,10 +698,13 @@ const menuThemeCss = computed(() => {
       :year-first="yearFirst"
       :is-24="is24"
       @update:model-value="onSelect"
+      @open="onMenuOpen"
+      @closed="onMenuClosed"
     >
       <template #dp-input="{ value, onEnter, onTab, onClear }">
         <x-input
           ref="inputRef"
+          :class="isMenuOpen ? '[&_input]:outline-[color:var(--x-input-border)]!' : undefined"
           :readonly="textInput === false || readonly"
           :model-value="value"
           :label="computedLabel"
@@ -724,10 +736,9 @@ const menuThemeCss = computed(() => {
 
 <style>
 .dp__menu {
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 10%), 0 4px 6px -4px rgb(0 0 0 / 10%);
-  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  /* Match PopoverContainer shadow-lg → --ui-shadow-lg (incl. dark) */
+  border-radius: var(--dp-border-radius, 0.75rem);
+  box-shadow: var(--ui-shadow-lg);
 }
 
 .dp--clear-btn {
@@ -776,7 +787,7 @@ const menuThemeCss = computed(() => {
   --dp-hover-icon-color: var(--x-datepicker-icon, #959595) !important;
   --dp-primary-color: var(--x-datepicker-primary, #1976d2) !important;
   --dp-primary-disabled-color: #6bacea;
-  --dp-primary-text-color: #f8f5f5;
+  --dp-primary-text-color: #fff;
   --dp-secondary-color: var(--x-datepicker-disabled, #c0c4cc) !important;
   --dp-border-color: var(--x-datepicker-border, #ddd) !important;
   --dp-menu-border-color: var(--x-datepicker-border, #ddd) !important;
@@ -811,5 +822,10 @@ const menuThemeCss = computed(() => {
 .dp__action_row {
   border-top: 1px solid var(--dp-border-color, #eee);
   margin-top: 10px;
+}
+
+/* Match x-button rounded-lg (~7px); menu keeps --dp-border-radius */
+.dp__action_button {
+  border-radius: 7px;
 }
 </style>

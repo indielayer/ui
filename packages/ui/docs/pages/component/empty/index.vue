@@ -2,6 +2,8 @@
 import { XEmpty } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import SizeDemoCode from './size.vue?raw'
+import SizeDemo from './size.vue'
 import ActionsDemoCode from './actions.vue?raw'
 import ActionsDemo from './actions.vue'
 import BorderedDemoCode from './bordered.vue?raw'
@@ -15,6 +17,11 @@ const demos = [{
   description: 'Title, description, and optional icon for empty content.',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Size',
+  description: 'Scale padding, typography, and icon for denser or more prominent empty states.',
+  code: SizeDemoCode,
+  component: SizeDemo,
 }, {
   name: 'Actions',
   description: 'Empty state with call-to-action buttons.',

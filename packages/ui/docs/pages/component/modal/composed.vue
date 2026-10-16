@@ -40,38 +40,40 @@ function onSubmit(isValid: boolean) {
     description="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente, fugit."
     @submit="onSubmit"
   >
-    <x-input
-      v-model="email"
-      :rules="[rules.isRequired, rules.isEmail]"
-      name="email"
-      label="Email"
-      placeholder="Enter your email"
-    />
-    <x-input
-      v-model="password"
-      type="password"
-      :rules="[rules.isRequired]"
-      name="password"
-      label="Password"
-      placeholder="Enter your password"
-      helper="Must be between 8 and 10 characters"
-    />
-    <x-textarea
-      v-model="description"
-      name="description"
-      label="Description"
-      placeholder="Description"
-      hide-footer
-    />
-    <x-select
-      v-model="selected"
-      filterable
-      :options="options"
-      label="Country"
-      :rules="[rules.isRequired]"
-    />
+    <x-card class="p-4">
+      <x-input
+        v-model="email"
+        :rules="[rules.isRequired, rules.isEmail]"
+        name="email"
+        label="Email"
+        placeholder="Enter your email"
+      />
+      <x-input
+        v-model="password"
+        type="password"
+        :rules="[rules.isRequired]"
+        name="password"
+        label="Password"
+        placeholder="Enter your password"
+        helper="Must be between 8 and 10 characters"
+      />
+      <x-textarea
+        v-model="description"
+        name="description"
+        label="Description"
+        placeholder="Description"
+        hide-footer
+      />
+      <x-select
+        v-model="selected"
+        filterable
+        :options="options"
+        label="Country"
+        :rules="[rules.isRequired]"
+      />
 
-    <x-datepicker v-model="datetime" label="Start date" :rules="[rules.isRequired]"/>
+      <x-datepicker v-model="datetime" label="Start date" :rules="[rules.isRequired]"/>
+    </x-card>
 
     <!-- <template #tertiary-action>
       <x-button color="gray" size="lg">Tertiary</x-button>

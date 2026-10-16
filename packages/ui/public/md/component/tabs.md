@@ -4,7 +4,7 @@ Tabbed navigation that switches between related views in the same region. Use x-
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | align | String 'left'  \|  'center'  \|  'right' | left | Horizontal alignment of tabs in the list. |
-| color | String | primary | Theme or CSS color used for the control accents. |
+| color | String |  | Theme or CSS color used for the control accents. |
 | exact | Boolean |  | Default exact route matching for linked tabs. |
 | fullWidth | Boolean | true | Stretches the tab list to the container width. |
 | ghost | Boolean |  | Subtle styling with less background emphasis. |
@@ -26,13 +26,42 @@ Tabbed navigation that switches between related views in the same region. Use x-
 import { ref } from 'vue'
 
 const tab = ref('a')
-const linkTab = ref(null)
 const metric = ref('unique')
 const view = ref('grid')
+const level = ref('all')
+
+let nextTabId = 4
+const dynamicTab = ref(1)
+const dynamicTabs = ref([
+  { value: 1, label: 'Tab 1' },
+  { value: 2, label: 'Tab 2' },
+  { value: 3, label: 'Tab 3' },
+])
+
+function addTab() {
+  const value = nextTabId++
+
+  dynamicTabs.value.push({ value, label: `Tab ${value}` })
+  dynamicTab.value = value
+}
+
+function removeTab(value: number) {
+  const index = dynamicTabs.value.findIndex((t) => t.value === value)
+
+  if (index === -1) return
+
+  dynamicTabs.value.splice(index, 1)
+}
 </script>
 
 <template>
-  <x-tab-group v-model="tab" class="pb-10" variant="line" :full-width="false">
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="line"
+    :full-width="false"
+    color="primary"
+  >
     <x-tab value="a" label="Tab A" icon="smile">
       content a
     </x-tab>
@@ -133,6 +162,32 @@ const view = ref('grid')
       content e
     </x-tab>
   </x-tab-group>
+
+  <p>Add and remove tabs</p>
+  <div class="pb-10">
+    <div class="mb-3">
+      <x-button size="sm" @click="addTab">
+        Add tab
+      </x-button>
+    </div>
+    <x-tab-group
+      v-model="dynamicTab"
+      variant="block"
+      :full-width="false"
+    >
+      <x-tab
+        v-for="t in dynamicTabs"
+        :key="t.value"
+        :value="t.value"
+        :label="t.label"
+        removable
+        @remove="removeTab(t.value)"
+      >
+        Content for {{ t.label }}
+      </x-tab>
+    </x-tab-group>
+  </div>
+
   <x-tab-group
     v-model="tab"
     class="pb-10"
@@ -158,11 +213,9 @@ const view = ref('grid')
   </x-tab-group>
 
   <p>Compact</p>
-  <div class="flex gap-4 items-start">
+  <div class="flex flex-wrap gap-4 items-start pb-10">
     <x-tab-group
       v-model="metric"
-      color="indigo"
-      class="pb-10"
       variant="compact"
     >
       <x-tab value="unique" label="Unique" />
@@ -171,18 +224,29 @@ const view = ref('grid')
 
     <x-tab-group
       v-model="view"
-      color="indigo"
-      class="pb-10"
-      size="md"
+      size="sm"
       variant="compact"
     >
       <x-tab value="grid" icon="sun" tooltip="Grid view" />
       <x-tab value="list" icon="moon" tooltip="List view" />
     </x-tab-group>
+
+    <x-tab-group
+      v-model="level"
+      size="sm"
+      ghost
+      variant="compact"
+    >
+      <x-tab value="all" label="All" />
+      <x-tab value="debug" label="Debug" />
+      <x-tab value="info" label="Info" color="sky" />
+      <x-tab value="warn" label="Warn" color="warning" />
+      <x-tab value="error" label="Error" color="error" />
+    </x-tab-group>
   </div>
 
   <p>Automatic link as value</p>
-  <x-tab-group v-model="linkTab" class="pb-10" exact>
+  <x-tab-group class="pb-10" exact>
     <x-tab to="/component/tabs" label="Tabs link">
       content a
     </x-tab>

@@ -3,6 +3,7 @@ import { optionalBooleanProp } from '../../common/props'
 
 const tabProps = {
   ...useCommon.props(),
+  ...useColors.props(),
   size: {
     type: String as PropType<Size>,
     validator: (value: string) => useCommon.validators().size.includes(value),
@@ -81,6 +82,7 @@ import { inject, reactive, computed, ref, onMounted, onBeforeUnmount, type Extra
 import { useMutationObserver } from '@vueuse/core'
 import { injectTabGroupKey } from '../../composables/keys'
 import { useCommon, type Size } from '../../composables/useCommon'
+import { useColors } from '../../composables/useColors'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useResolvedComponentProps } from '../../composables/resolveComponentDefaults'
 
@@ -162,7 +164,7 @@ function check() {
 
 const selected = computed(() => tabs.state.active === computedValue.value)
 
-const color = computed(() => tabs.state.color)
+const color = computed(() => props.color || tabs.state.color)
 
 function onClickTab(e: MouseEvent) {
   if (props.disabled) {
@@ -230,7 +232,8 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
         'flex items-center justify-center',
         {
           'w-full': tabs.state.grow,
-          'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected,
+          'text-[color:var(--x-tab-group-text)] dark:text-[color:var(--x-tab-group-dark-text)]': selected && !props.color,
+          'text-[color:var(--x-tab-text)] dark:text-[color:var(--x-tab-dark-text)]': !!props.color,
           'cursor-pointer': !disabled,
           'cursor-not-allowed': disabled,
           'cursor-not-allowed text-secondary-500': disabled && !selected,

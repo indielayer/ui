@@ -26,6 +26,7 @@ Inline notices for system, feature, or page status—success, warning, error, or
   <div class="grid gap-4">
     <x-alert>Default</x-alert>
     <x-alert color="primary" outlined>Outlined</x-alert>
+    <x-alert color="primary" outlined light>Outlined</x-alert>
     <x-alert color="sky" type="info" light removable>Hello</x-alert>
     <x-alert color="error" outlined type="error" light>Error</x-alert>
     <x-alert color="warning" light type="warning" removable>Warning</x-alert>

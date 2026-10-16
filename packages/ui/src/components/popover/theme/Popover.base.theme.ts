@@ -4,7 +4,7 @@ const theme: PopoverTheme = {
   classes: {
     wrapper: 'relative',
 
-    content: 'max-w-xs',
+    content: 'max-w-lg',
   },
 }
 

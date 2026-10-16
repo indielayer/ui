@@ -4,11 +4,19 @@ const theme: ModalTheme = {
   classes: {
     wrapper: 'fixed z-40 inset-0 overflow-y-auto transition-all',
 
-    backdrop: ({ data }) => {
-      const classes = ['fixed inset-0 bg-secondary-500 dark:bg-black transition-opacity']
+    backdrop: ({ props, data }) => {
+      // Element opacity < 1 disables backdrop-filter; use alpha backgrounds when blurry.
+      const classes = ['fixed inset-0 transition-opacity']
 
-      if (data.visible) classes.push('ease-out duration-200 opacity-30 dark:opacity-70')
-      else classes.push('ease-in duration-100 opacity-0')
+      if (props.blurry) classes.push('backdrop-blur-sm bg-secondary-700/30 dark:bg-black/70')
+      else classes.push('bg-secondary-700 dark:bg-black')
+
+      if (data.visible) {
+        if (props.blurry) classes.push('ease-out duration-200 opacity-100')
+        else classes.push('ease-out duration-200 opacity-30 dark:opacity-70')
+      } else {
+        classes.push('ease-in duration-100 opacity-0')
+      }
 
       return classes
     },
@@ -16,7 +24,7 @@ const theme: ModalTheme = {
     modalWrapper: ({ props }) => {
       const classes = [
         'flex justify-center h-dvh',
-        'px-4 pt-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:p-8',
+        'p-4 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:p-8',
       ]
 
       if (props.position === 'top') classes.push('items-start')
@@ -27,7 +35,7 @@ const theme: ModalTheme = {
     },
 
     modal: ({ props, data }) => {
-      const classes = ['relative flex flex-col z-10 bg-white dark:bg-secondary-900 rounded-md shadow-lg transform transition-all overflow-hidden max-h-full w-full min-h-0']
+      const classes = ['relative flex flex-col z-10 bg-secondary-50 dark:bg-secondary-900 rounded-xl shadow-lg transform transition-all overflow-hidden max-h-full w-full min-h-0']
 
       if (data.visible) classes.push('ease-out duration-200 opacity-100 translate-y-0 sm:scale-100')
       else classes.push('ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95')
@@ -42,22 +50,24 @@ const theme: ModalTheme = {
       return classes
     },
 
-    closeIcon: '!absolute top-2 z-10 right-2',
+    closeIcon: '!absolute top-3 z-10 right-3',
 
-    header: 'text-lg pl-6 py-4 border-b pr-12',
+    header: 'flex items-center gap-3 text-lg pl-6 py-4 pr-12 bg-white dark:bg-secondary-800 dark:border-secondary-700 border-secondary-100 dark:border-secondary-700',
+
+    headerContent: 'min-w-0 flex-1 flex flex-col justify-center gap-0.5',
+
+    iconWrap: 'flex items-center justify-center shrink-0 size-11 rounded-xl border border-secondary-300 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-900/50',
+
+    icon: 'text-secondary-500 dark:text-secondary-400',
 
     content: 'px-6 py-4',
-    actions: ({ props, slots }) => {
-      const classes = ['flex gap-4 bg-secondary-50 dark:bg-secondary-800 p-4 justify-end']
+    actions: 'flex gap-4 bg-white dark:bg-secondary-800 py-3 px-4 justify-end border-t border-secondary-100 dark:border-secondary-700',
 
-      return classes
-    },
+    label: 'text-xs text-secondary-500 dark:text-secondary-400 leading-none',
 
-    label: 'text-xs text-secondary-500 mb-1',
+    title: 'text-xl font-semibold leading-snug',
 
-    title: 'text-xl font-semibold',
-
-    description: 'text-sm mb-8',
+    description: 'text-sm text-secondary-500 dark:text-secondary-400 mb-8',
   },
 }
 

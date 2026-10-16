@@ -7,7 +7,7 @@ const theme: RadioButtonTheme = {
       const classes = [
         'relative inline-flex items-center justify-center cursor-pointer select-none',
         'transition duration-150 font-light whitespace-nowrap border text-sm tracking-wide',
-        'active:!shadow-none',
+        'active:shadow-none',
       ]
 
       if (props.size === 'xs') classes.push('py-1 px-2')
