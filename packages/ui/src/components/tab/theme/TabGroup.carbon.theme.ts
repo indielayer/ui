@@ -10,7 +10,11 @@ const theme: TabGroupTheme = {
       if (!props.fullWidth || props.variant === 'compact') c.push('!w-fit')
       if (props.variant === 'block') c.push('')
       if (props.variant === 'block' && !props.ghost) c.push('bg-secondary-200 dark:bg-secondary-800')
-      if (props.variant === 'compact' && !props.ghost) c.push('bg-secondary-200 dark:bg-secondary-800')
+      // if (props.variant === 'compact' && props.ghost) {
+      //   c.push('bg-secondary-50 dark:bg-secondary-950 border border-secondary-200 dark:border-secondary-700')
+      if (props.variant === 'compact' && !props.ghost) {
+        c.push('bg-secondary-200 dark:bg-secondary-800')
+      }
 
       return c
     },
@@ -43,14 +47,16 @@ const theme: TabGroupTheme = {
 
   styles: ({ props, colors, css }) => {
     const gray = colors.getPalette('gray')
+    const secondary = colors.getPalette('secondary')
     const color = colors.getPalette(props.color)
+    const compactGhost = props.variant === 'compact' && props.ghost
 
     return css.variables({
-      text: color[600],
-      bg: props.ghost ? color[50] : '#fff',
+      text: compactGhost ? secondary[900] : color[600],
+      bg: compactGhost ? '#fff' : props.ghost ? color[50] : '#fff',
       dark: {
-        text: color[400],
-        bg: props.ghost ? color[900] : gray[700],
+        text: compactGhost ? secondary[50] : color[400],
+        bg: compactGhost ? secondary[600] : props.ghost ? color[900] : gray[700],
       },
     })
   },

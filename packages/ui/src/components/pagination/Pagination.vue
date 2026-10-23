@@ -4,6 +4,12 @@ import { optionalBooleanProp } from '../../common/props'
 const paginationVariant = ['simple', 'quick', 'dots'] as const
 const paginationProps = {
   ...useCommon.props(),
+  size: {
+    type: String as PropType<Size>,
+    default: 'sm',
+    validator: (value: string) => useCommon.validators().size.includes(value),
+    description: 'Control size. One of xs, sm, md, lg, xl.',
+  },
   links: optionalBooleanProp('Renders page buttons as links (`?page=` query).'),
   totalPages: {
     type: Number,
@@ -45,7 +51,7 @@ export default {
 <script setup lang="ts">
 import { computed, ref, watch, type PropType, type ExtractPublicPropTypes } from 'vue'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
-import { useCommon } from '../../composables/useCommon'
+import { useCommon, type Size } from '../../composables/useCommon'
 import { dotsIcon, prevIcon, nextIcon } from '../../common/icons'
 
 import XIcon from '../../components/icon/Icon.vue'
@@ -93,15 +99,6 @@ function nextPage() {
   if (props.modelValue < props.totalPages) emit('update:modelValue', props.modelValue + 1)
 }
 
-const quickButtonSize = computed(() => {
-  if (props.size === 'xs') return 'xs'
-  else if (props.size === 'sm') return 'sm'
-  else if (props.size === 'lg') return 'md'
-  else if (props.size === 'xl') return 'lg'
-
-  return 'sm'
-})
-
 const { styles, classes, className } = useTheme('Pagination', {}, props)
 </script>
 
@@ -116,7 +113,7 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
     <template v-if="variant === 'quick'">
       <x-button
         :icon-left="prevIcon"
-        :size="quickButtonSize"
+        :size="size"
         :disabled="modelValue <= 1"
         @click="prevPage"
       />
@@ -133,7 +130,7 @@ const { styles, classes, className } = useTheme('Pagination', {}, props)
       </div>
       <x-button
         :icon-left="nextIcon"
-        :size="quickButtonSize"
+        :size="size"
         :disabled="modelValue >= totalPages"
         @click="nextPage"
       />

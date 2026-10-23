@@ -13,8 +13,8 @@ const compactSizeClasses = (size: string | undefined, iconOnly: boolean) => {
 
   if (size === 'xs') return 'text-xs min-h-6'
   if (size === 'sm') return 'text-sm min-h-7'
-  if (size === 'lg') return 'text-lg min-h-10'
-  if (size === 'xl') return 'text-xl min-h-11'
+  if (size === 'lg') return 'min-h-10'
+  if (size === 'xl') return 'text-base min-h-11'
 
   return 'text-sm min-h-7'
 }
@@ -30,21 +30,40 @@ const theme: TabTheme = {
       if (data.variant === 'compact') {
         if (data.showLabel) c.push('px-2.5')
         c.push(compactSizeClasses(props.size, !data.showLabel))
+        if (data.ghost && !props.color) c.push('text-secondary-800 dark:text-secondary-100')
       } else if (props.size === 'xs') c.push('text-xs')
       else if (props.size === 'sm') c.push('text-sm')
-      else if (props.size === 'lg') c.push('text-lg')
-      else if (props.size === 'xl') c.push('text-xl')
+      else if (props.size === 'xl') c.push('text-base')
 
       return c
     },
 
-    content: 'flex items-center justify-center',
+    content: ({ data }) => {
+      const c = ['flex items-center justify-center']
+
+      if (!data.selected) c.push('opacity-75')
+
+      return c
+    },
 
     label: 'font-medium',
 
     icon: ({ data }) => (data.showLabel ? 'mr-1.5' : ''),
 
     tabpanel: 'py-2',
+  },
+
+  styles: ({ props, colors, css }) => {
+    if (!props.color) return []
+
+    const color = colors.getPalette(props.color)
+
+    return css.variables({
+      text: color[600],
+      dark: {
+        text: color[400],
+      },
+    })
   },
 }
 

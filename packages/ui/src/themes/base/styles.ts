@@ -33,8 +33,8 @@ export default `
 }
 
 :root {
-  --font-family-sans: Inter, -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
-  --font-family-mono: ui-monospace, monospace;
+  --font-family-sans: Geist, -apple-system, BlinkMacSystemFont, ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: "Geist Mono", ui-monospace, monospace;
   --border-color: 226, 232, 240;
   --primary-color-50: 236, 253, 245;
   --primary-color-100: 209, 250, 229;

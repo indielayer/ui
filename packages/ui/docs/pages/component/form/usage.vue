@@ -53,6 +53,7 @@ function onSubmit(isValid: string) {
       v-model="email"
       :rules="[rules.isRequired, rules.isEmail]"
       name="email"
+      size="lg"
       label="Email"
       required
       placeholder="Enter your email"
@@ -136,7 +137,7 @@ function onSubmit(isValid: string) {
     />
 
     <template #secondary-action>
-      <x-button ghost>Cancel</x-button>
+      <x-button ghost outlined color="secondary">Cancel</x-button>
     </template>
     <template #primary-action>
       <x-button color="primary" type="submit">Submit</x-button>

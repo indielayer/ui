@@ -322,6 +322,7 @@ Inline notices for system, feature, or page status—success, warning, error, or
   <div class="grid gap-4">
     <x-alert>Default</x-alert>
     <x-alert color="primary" outlined>Outlined</x-alert>
+    <x-alert color="primary" outlined light>Outlined</x-alert>
     <x-alert color="sky" type="info" light removable>Hello</x-alert>
     <x-alert color="error" outlined type="error" light>Error</x-alert>
     <x-alert color="warning" light type="warning" removable>Warning</x-alert>
@@ -566,6 +567,9 @@ Clickable controls for primary actions—submit, open dialogs, or run commands. 
     <x-button color="primary" icon-right="star">Submit</x-button>
     <x-button color="primary" light>Light</x-button>
     <x-button color="primary" ghost>Ghost</x-button>
+    <x-button color="primary" ghost outlined>Ghost</x-button>
+    <x-button color="primary" ghost outlined disabled>Ghost</x-button>
+    <x-button ghost outlined>Ghost</x-button>
     <x-button color="primary" outlined>Outlined</x-button>
     <x-button color="primary" loading loading-label="Uploading..">Loading</x-button>
     <x-button color="primary" rounded>filled Rounded</x-button>
@@ -678,10 +682,51 @@ A bordered content container for grouping related information, media, and action
 ### Demos
 #### Usage
 ```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const name = ref('John Smith')
+const email = ref('jsmith@indielayer.com')
+</script>
+
 <template>
-  <div class="space-y-4">
-    <x-card class="p-4">I'm a normal card</x-card>
-    <x-card class="p-4" flat>I'm a flat card</x-card>
+  <div class="space-y-4 max-w-sm">
+    <x-card class="p-4 flex items-center">
+      <x-avatar name="John Smith" rounded />
+      <div class="ml-4">
+        <div class="font-bold">John Smith</div>
+        <div class="text-secondary-500 text-sm">jsmith@indielayer.com</div>
+      </div>
+    </x-card>
+
+    <x-card flat class="border">
+      <div class="p-4">
+        <div class="font-semibold">Project update</div>
+        <p class="text-secondary-500 text-sm mt-1">
+          The dashboard redesign is ready for review. Feedback is due by Friday.
+        </p>
+      </div>
+      <x-divider />
+      <div class="p-3 flex justify-end gap-2">
+        <x-button size="sm" ghost>Dismiss</x-button>
+        <x-button size="sm" color="primary">Review</x-button>
+      </div>
+    </x-card>
+
+    <x-card class="p-4">
+      <div class="font-semibold mb-3">Edit profile</div>
+      <x-input v-model="name" label="Name" hide-footer />
+      <x-input
+        v-model="email"
+        label="Email"
+        type="email"
+        hide-footer
+        class="mt-2"
+      />
+      <div class="flex justify-end mt-4">
+        <x-button size="sm" color="primary">Save</x-button>
+      </div>
+    </x-card>
   </div>
 </template>
 ```
@@ -725,7 +770,7 @@ A sliding viewport for cycling through images or content panels. Use carousels f
 ```
 ---
 ## Checkbox
-Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active.
+Multi-select controls for choosing one or more options independently. Use checkboxes for settings and lists where more than one choice can be active. Undeclared HTML attributes are forwarded to the native checkbox; class and style apply to the wrapper label.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -777,6 +822,40 @@ const checked = ref(true)
 
 <template>
   <x-checkbox v-model="checked" label="Checkbox label" color="primary" />
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const terms = ref(false)
+const newsletter = ref(true)
+</script>
+
+<template>
+  <div class="grid gap-4 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Wrapper <code class="text-xs">class</code> rings the whole control.
+      <code class="text-xs">aria-label</code> and <code class="text-xs">data-testid</code> sit on the hidden checkbox input.
+    </p>
+    <x-checkbox
+      v-model="terms"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3 w-fit"
+      aria-label="Accept terms and conditions"
+      data-testid="demo-terms-checkbox"
+    >
+      Accept terms (accessible name from native aria-label)
+    </x-checkbox>
+    <x-checkbox
+      v-model="newsletter"
+      label="Email updates"
+      class="ring-2 ring-sky-400/50 rounded-lg p-3 w-fit"
+      data-testid="demo-newsletter-checkbox"
+      title="Native checkbox title"
+    />
+  </div>
 </template>
 ```
 
@@ -943,7 +1022,7 @@ Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it f
 | startDate | [Date, String] | null | Passed through to @vuepic/vue-datepicker. |
 | startTime | [Object, Array] | null | Passed through to @vuepic/vue-datepicker. |
 | state | Boolean VueDatePickerProps['state'] | null | Passed through to @vuepic/vue-datepicker. |
-| teleport | [String, Boolean, Object] | null | Passed through to @vuepic/vue-datepicker. |
+| teleport | [String, Boolean, Object] | true | Teleport the menu to body by default so it stacks above sticky headers and escapes overflow containers. Passed through to @vuepic/vue-datepicker. |
 | teleportCenter | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
 | textInput | [Boolean, Object] | false | Passed through to @vuepic/vue-datepicker. |
 | timePicker | Boolean boolean | false | Passed through to @vuepic/vue-datepicker. |
@@ -1171,8 +1250,8 @@ Empty states communicate when there is no content to show. Use them in tables, l
 ```vue
 <template>
   <x-empty
-    title="No items yet"
-    description="Get started by creating your first item."
+    title="No logs in the last 7 days"
+    description="Nothing matched these filters on either node. Widen the time range, or check the Graphs tab to confirm the servers are taking traffic."
   />
 </template>
 ```
@@ -1186,7 +1265,7 @@ Empty states communicate when there is no content to show. Use them in tables, l
   >
     <template #actions>
       <x-button color="primary">Clear filters</x-button>
-      <x-button ghost>Learn more</x-button>
+      <x-button ghost outlined>Learn more</x-button>
     </template>
   </x-empty>
 </template>
@@ -1288,6 +1367,7 @@ function onSubmit(isValid: string) {
       v-model="email"
       :rules="[rules.isRequired, rules.isEmail]"
       name="email"
+      size="lg"
       label="Email"
       required
       placeholder="Enter your email"
@@ -1371,7 +1451,7 @@ function onSubmit(isValid: string) {
     />
 
     <template #secondary-action>
-      <x-button ghost>Cancel</x-button>
+      <x-button ghost outlined color="secondary">Cancel</x-button>
     </template>
     <template #primary-action>
       <x-button color="primary" type="submit">Submit</x-button>
@@ -2119,7 +2199,7 @@ onMounted(() => {
 ```
 ---
 ## Input
-Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data.
+Single-line text field for entering and editing short values. Use x-input in forms for names, emails, search, and other one-line data. Undeclared HTML attributes (autocomplete, aria-*, data-*, spellcheck, etc.) are forwarded to the native input; class and style apply to the field wrapper.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -2218,6 +2298,38 @@ const amount = ref('')
       enterkeyhint="done"
       helper="Virtual keyboard uses decimal inputmode"
       placeholder="0.00"
+    />
+  </div>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const email = ref('')
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      The ring and padding come from <code class="text-xs">class</code> on the wrapper.
+      Hover the field for the native <code class="text-xs">title</code> tooltip; inspect to see
+      <code class="text-xs">autocomplete</code> and <code class="text-xs">data-testid</code> on the
+      <code class="text-xs">&lt;input&gt;</code>.
+    </p>
+    <x-input
+      v-model="email"
+      label="Email"
+      name="email"
+      placeholder="you@example.com"
+      helper="autocomplete=&quot;email&quot; on the native input"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      autocomplete="email"
+      title="Native input title — hover shows this tooltip"
+      data-testid="demo-email-input"
+      spellcheck="false"
     />
   </div>
 </template>
@@ -2399,16 +2511,16 @@ const rules = {
 </script>
 
 <template>
-  <x-form @submit="() => {}">
+  <x-form :auto-focus="false" @submit="() => {}">
     <div class="flex">
       <x-input-group
         label="Date range"
         helper="Select date and time"
         :rules="[rules.required]"
+        size="sm"
       >
         <x-datepicker
           v-model="start"
-          teleport="body"
           placeholder="Date"
           :enable-time-picker="false"
         />
@@ -2888,7 +3000,7 @@ Controls for moving through large result sets page by page. Use pagination with 
 |------|------|---------|-------------|
 | links | Boolean |  | Renders page buttons as links (`?page=` query). |
 | modelValue | Number | 1 | Current page (v-model). |
-| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| size | String Size | sm | Control size. One of xs, sm, md, lg, xl. |
 | totalPages | Number | 1 | Total number of pages. |
 | variant | String PaginationVariant | simple | Layout style (simple, quick, or dots). |
 
@@ -3104,7 +3216,7 @@ const options = [
 ```
 ---
 ## Radio
-Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control.
+Radios allow the user to select one option from a set. Use classic radios for standard options, or x-radio-button for a button-shaped variant. Place several x-radio-button options inside x-form-group for a joined segmented control. Undeclared HTML attributes are forwarded to the native radio input; class and style apply to the wrapper label.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -3161,6 +3273,68 @@ const selected = ref('a')
 </template>
 ```
 
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const plan = ref('pro')
+const theme = ref('light')
+</script>
+
+<template>
+  <div class="grid gap-6 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Undeclared attrs reach the native <code class="text-xs">&lt;input type=&quot;radio&quot;&gt;</code>.
+      Wrapper <code class="text-xs">class</code> styles the label around each option.
+    </p>
+
+    <div class="grid gap-2">
+      <p class="text-sm font-medium">x-radio</p>
+      <div class="flex flex-wrap gap-3">
+        <x-radio
+          v-model="plan"
+          name="demo-plan"
+          value="free"
+          label="Free"
+          class="ring-2 ring-secondary-300/60 rounded-lg p-2"
+          data-testid="demo-plan-free"
+        />
+        <x-radio
+          v-model="plan"
+          name="demo-plan"
+          value="pro"
+          label="Pro"
+          class="ring-2 ring-primary-400/50 rounded-lg p-2"
+          aria-label="Pro plan"
+          data-testid="demo-plan-pro"
+          title="Native radio title on Pro"
+        />
+      </div>
+    </div>
+
+    <div class="grid gap-2">
+      <p class="text-sm font-medium">x-radio-button</p>
+      <div class="flex gap-0">
+        <x-radio-button
+          v-model="theme"
+          value="light"
+          label="Light"
+          class="ring-2 ring-inset ring-primary-400/40"
+          data-testid="demo-theme-light"
+        />
+        <x-radio-button
+          v-model="theme"
+          value="dark"
+          label="Dark"
+          data-testid="demo-theme-dark"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+```
+
 #### Payment Method
 ```vue
 <script setup lang="ts">
@@ -3175,7 +3349,7 @@ const selected = ref('a')
       v-model="selected"
       value="a"
       label="Credit card"
-      class="border p-3 rounded w-full"
+      class="border p-3 rounded-lg w-full"
       :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': selected === 'a' }"
     >
       <div class="text-gray-400 font-light text-sm">VISA · · · · 2592</div>
@@ -3184,7 +3358,7 @@ const selected = ref('a')
       v-model="selected"
       value="b"
       label="Bank account"
-      class="border p-3 rounded w-full"
+      class="border p-3 rounded-lg w-full"
       :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': selected === 'b' }"
     >
       <div class="text-gray-400 font-light text-sm">Santander · · · · 1580</div>
@@ -3365,7 +3539,7 @@ Dropdown for choosing one or more options from a predefined list. Use Select for
 | multipleCheckbox | Boolean |  | Multiple selection with checkbox-style items. |
 | name | String |  | Native name attribute for form submission. |
 | native | Boolean |  | Renders a native HTML select instead of the custom popover. |
-| options | Array SelectOption[] |  | Available options (`value`, `label`, optional prefix/suffix/disabled). |
+| options | Array SelectOption[] |  | Available options (`value`, `label`, optional description/prefix/suffix/disabled). |
 | placeholder | String |  | Placeholder shown when no option is selected. |
 | placement | String PopoverPlacement |  | Popover placement for the options menu. |
 | readonly | Boolean |  | Makes the field read-only without disabling it. |
@@ -3422,12 +3596,24 @@ const options = ref<SelectOption[]>([
   { value: 'C', label: 'Option C' },
 ])
 
-// function to generate
+const descriptions = [
+  'Lorem ipsum dolor sit amet.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+]
+
 function genOptions(x: number) {
   const options: SelectOption[] = []
 
   for (let i = 0; i < x; i++) {
-    options.push({ value: i.toString(), label: 'Option ' + i, prefix: 'bg-green-500', suffix: 'dude' + i.toString() })
+    options.push({
+      value: i.toString(),
+      label: 'Option ' + i,
+      description: descriptions[i % descriptions.length],
+      prefix: 'bg-green-500',
+      suffix: 'dude' + i.toString(),
+    })
   }
 
   return options
@@ -3456,7 +3642,7 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
       filterable-suffix
       clearable
       virtual-list
-      :virtual-list-item-height="33"
+      :virtual-list-item-height="88"
       :options="options2"
     >
       <template #prefix="{ item }">
@@ -3482,6 +3668,38 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
         >{{ label || 'Select an option' }}</button>
       </template>
     </x-select>
+  </div>
+</template>
+```
+
+#### Description
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { SelectOption } from '@indielayer/ui'
+
+const selected = ref('percentile')
+const options = ref<SelectOption[]>([
+  {
+    value: 'percentile',
+    label: 'By percentile',
+    description: 'Promote and demote by cohort placement percentages.',
+  },
+  {
+    value: 'rank',
+    label: 'By Rank',
+    description: 'Promote and demote using tier change on Rank-based Rewards.',
+  },
+])
+</script>
+
+<template>
+  <div class="max-w-sm">
+    <x-select
+      v-model="selected"
+      label="How players move between tiers"
+      :options="options"
+    />
   </div>
 </template>
 ```
@@ -3639,7 +3857,7 @@ Placeholder shapes that mirror content layout while data loads. Use skeletons to
 ```
 ---
 ## Slider
-Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings.
+Track with a draggable handle for picking a numeric value or range. Use sliders for volume, brightness, price filters, and similar continuous settings. Undeclared HTML attributes are forwarded to the native range input; class and style apply to the field wrapper.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -3699,6 +3917,33 @@ const value = ref(30)
     </template>
   </x-slider>
   <x-slider v-model="value" label="Slider 2" helper="Slide me" class="mt-10"/>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const volume = ref(40)
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Wrapper styling vs native range attrs — inspect the slider thumb’s
+      <code class="text-xs">&lt;input type=&quot;range&quot;&gt;</code> for
+      <code class="text-xs">aria-label</code> and <code class="text-xs">data-testid</code>.
+    </p>
+    <x-slider
+      v-model="volume"
+      label="Volume"
+      helper="aria-label on the native range input"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      aria-label="Volume level"
+      data-testid="demo-volume-slider"
+    />
+  </div>
 </template>
 ```
 ---
@@ -4268,9 +4513,8 @@ const items = ref([])
 <template>
   <x-table :headers="headers" :items="items">
     <template #empty>
-      <div class="p-4">
+      <div class="p-4 bg-secondary-200/50 dark:bg-secondary-800/50">
         <x-empty
-          bordered
           title="No data"
           description="There are no rows to display."
         />
@@ -4362,7 +4606,7 @@ Tabbed navigation that switches between related views in the same region. Use x-
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
 | align | String 'left'  \|  'center'  \|  'right' | left | Horizontal alignment of tabs in the list. |
-| color | String | primary | Theme or CSS color used for the control accents. |
+| color | String |  | Theme or CSS color used for the control accents. |
 | exact | Boolean |  | Default exact route matching for linked tabs. |
 | fullWidth | Boolean | true | Stretches the tab list to the container width. |
 | ghost | Boolean |  | Subtle styling with less background emphasis. |
@@ -4384,13 +4628,42 @@ Tabbed navigation that switches between related views in the same region. Use x-
 import { ref } from 'vue'
 
 const tab = ref('a')
-const linkTab = ref(null)
 const metric = ref('unique')
 const view = ref('grid')
+const level = ref('all')
+
+let nextTabId = 4
+const dynamicTab = ref(1)
+const dynamicTabs = ref([
+  { value: 1, label: 'Tab 1' },
+  { value: 2, label: 'Tab 2' },
+  { value: 3, label: 'Tab 3' },
+])
+
+function addTab() {
+  const value = nextTabId++
+
+  dynamicTabs.value.push({ value, label: `Tab ${value}` })
+  dynamicTab.value = value
+}
+
+function removeTab(value: number) {
+  const index = dynamicTabs.value.findIndex((t) => t.value === value)
+
+  if (index === -1) return
+
+  dynamicTabs.value.splice(index, 1)
+}
 </script>
 
 <template>
-  <x-tab-group v-model="tab" class="pb-10" variant="line" :full-width="false">
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="line"
+    :full-width="false"
+    color="primary"
+  >
     <x-tab value="a" label="Tab A" icon="smile">
       content a
     </x-tab>
@@ -4491,6 +4764,32 @@ const view = ref('grid')
       content e
     </x-tab>
   </x-tab-group>
+
+  <p>Add and remove tabs</p>
+  <div class="pb-10">
+    <div class="mb-3">
+      <x-button size="sm" @click="addTab">
+        Add tab
+      </x-button>
+    </div>
+    <x-tab-group
+      v-model="dynamicTab"
+      variant="block"
+      :full-width="false"
+    >
+      <x-tab
+        v-for="t in dynamicTabs"
+        :key="t.value"
+        :value="t.value"
+        :label="t.label"
+        removable
+        @remove="removeTab(t.value)"
+      >
+        Content for {{ t.label }}
+      </x-tab>
+    </x-tab-group>
+  </div>
+
   <x-tab-group
     v-model="tab"
     class="pb-10"
@@ -4516,11 +4815,9 @@ const view = ref('grid')
   </x-tab-group>
 
   <p>Compact</p>
-  <div class="flex gap-4 items-start">
+  <div class="flex flex-wrap gap-4 items-start pb-10">
     <x-tab-group
       v-model="metric"
-      color="indigo"
-      class="pb-10"
       variant="compact"
     >
       <x-tab value="unique" label="Unique" />
@@ -4529,18 +4826,29 @@ const view = ref('grid')
 
     <x-tab-group
       v-model="view"
-      color="indigo"
-      class="pb-10"
-      size="md"
+      size="sm"
       variant="compact"
     >
       <x-tab value="grid" icon="sun" tooltip="Grid view" />
       <x-tab value="list" icon="moon" tooltip="List view" />
     </x-tab-group>
+
+    <x-tab-group
+      v-model="level"
+      size="sm"
+      ghost
+      variant="compact"
+    >
+      <x-tab value="all" label="All" />
+      <x-tab value="debug" label="Debug" />
+      <x-tab value="info" label="Info" color="sky" />
+      <x-tab value="warn" label="Warn" color="warning" />
+      <x-tab value="error" label="Error" color="error" />
+    </x-tab-group>
   </div>
 
   <p>Automatic link as value</p>
-  <x-tab-group v-model="linkTab" class="pb-10" exact>
+  <x-tab-group class="pb-10" exact>
     <x-tab to="/component/tabs" label="Tabs link">
       content a
     </x-tab>
@@ -4634,7 +4942,7 @@ const notifications = useNotifications()
 ```
 ---
 ## Textarea
-Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough.
+Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough. Undeclared HTML attributes (autocomplete, aria-*, data-*, spellcheck, etc.) are forwarded to the native textarea; class and style apply to the field wrapper.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -4730,6 +5038,37 @@ const comment = ref('')
 </template>
 ```
 
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const notes = ref('')
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Wrapper <code class="text-xs">class</code> adds the ring; native
+      <code class="text-xs">title</code>, <code class="text-xs">spellcheck</code>, and
+      <code class="text-xs">data-testid</code> bind to the <code class="text-xs">&lt;textarea&gt;</code>.
+    </p>
+    <x-textarea
+      v-model="notes"
+      label="Notes"
+      name="notes"
+      rows="3"
+      placeholder="Type here…"
+      helper="spellcheck=&quot;false&quot; on the native textarea"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      title="Native textarea title — hover inside the field"
+      data-testid="demo-notes-textarea"
+      spellcheck="false"
+    />
+  </div>
+</template>
+```
+
 #### States
 ```vue
 <script setup lang="ts">
@@ -4765,7 +5104,7 @@ const sizes = ref('Text size')
 ```
 ---
 ## Toggle
-Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible.
+Binary switch for on/off settings and mutually exclusive states. Use toggles when the choice should feel instant and reversible. Undeclared HTML attributes are forwarded to the native checkbox; class and style apply to the wrapper label.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -4816,6 +5155,31 @@ const checked = ref(true)
   <div class="grid grid-cols-2 gap-4">
     <x-toggle v-model="checked" label="Primary" />
     <x-toggle v-model="checked" color="sky" label="Sky" />
+  </div>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const darkMode = ref(false)
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Wrapper ring from <code class="text-xs">class</code>; native checkbox gets
+      <code class="text-xs">aria-label</code> and <code class="text-xs">data-testid</code>.
+    </p>
+    <x-toggle
+      v-model="darkMode"
+      label="Dark mode"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3 w-fit"
+      aria-label="Enable dark mode"
+      data-testid="demo-dark-mode-toggle"
+    />
   </div>
 </template>
 ```
@@ -4946,7 +5310,7 @@ const placements = ['top', 'bottom', 'left', 'right'] as const
 ```
 ---
 ## Upload
-File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters.
+File picker with drag-and-drop for selecting one or more files to upload. Use Upload when forms need images, documents, or other file input with accept filters. Undeclared HTML attributes are forwarded to the native file input; class and style apply to the outer wrapper.
 ### Props
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
@@ -5128,6 +5492,35 @@ const action = 'https://run.mocky.io/v3/6904ae0b-3cfa-4ae1-bbf2-243a4dd32a3c'
       <h2>Preview Image</h2>
       <img :src="previewImg" alt="preview" class="max-w-lg max-h-96" />
     </div>
+  </div>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { UploadFile } from '@indielayer/ui'
+
+const files = ref<UploadFile[]>([])
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      The outer ring is wrapper <code class="text-xs">class</code>. The hidden file input receives
+      <code class="text-xs">data-testid</code> — inspect
+      <code class="text-xs">&lt;input type=&quot;file&quot;&gt;</code> in devtools.
+    </p>
+    <x-upload
+      v-model="files"
+      label="Avatar"
+      accept="image/*"
+      placeholder="Choose an image"
+      helper="data-testid on the sr-only file input"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      data-testid="demo-avatar-upload"
+    />
   </div>
 </template>
 ```

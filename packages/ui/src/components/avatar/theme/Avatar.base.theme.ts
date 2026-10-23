@@ -6,7 +6,7 @@ const theme: AvatarTheme = {
       const classes = ['relative inline-flex items-center justify-center overflow-hidden align-middle border box-content']
 
       // radius
-      classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
+      classes.push(props.rounded ? 'rounded-full' : 'rounded-lg')
 
       // size
       if (props.size === 'xs') classes.push('h-6 w-6 text-xs')

@@ -5,7 +5,7 @@
   >
     <template #actions>
       <x-button color="primary">Clear filters</x-button>
-      <x-button ghost>Learn more</x-button>
+      <x-button ghost outlined>Learn more</x-button>
     </template>
   </x-empty>
 </template>

@@ -10,12 +10,24 @@ const options = ref<SelectOption[]>([
   { value: 'C', label: 'Option C' },
 ])
 
-// function to generate
+const descriptions = [
+  'Lorem ipsum dolor sit amet.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+]
+
 function genOptions(x: number) {
   const options: SelectOption[] = []
 
   for (let i = 0; i < x; i++) {
-    options.push({ value: i.toString(), label: 'Option ' + i, prefix: 'bg-green-500', suffix: 'dude' + i.toString() })
+    options.push({
+      value: i.toString(),
+      label: 'Option ' + i,
+      description: descriptions[i % descriptions.length],
+      prefix: 'bg-green-500',
+      suffix: 'dude' + i.toString(),
+    })
   }
 
   return options
@@ -44,7 +56,7 @@ const options2 = ref<SelectOption[]>(genOptions(1000))
       filterable-suffix
       clearable
       virtual-list
-      :virtual-list-item-height="33"
+      :virtual-list-item-height="88"
       :options="options2"
     >
       <template #prefix="{ item }">

@@ -19,10 +19,11 @@ describe('Datepicker', () => {
     expect(wrapper.vm).toBeTruthy()
   })
 
-  it('exposes teleport prop for the menu (null uses VueDatePicker default)', () => {
+  it('teleports the menu to body by default so it stacks above sticky headers', () => {
     const wrapper = mount(Datepicker)
 
-    expect(wrapper.props('teleport')).toBe(null)
+    expect(wrapper.props('teleport')).toBe(true)
+    expect(wrapper.findComponent({ name: 'VueDatePicker' }).props('teleport')).toBe(true)
   })
 
   it('applies a theme class to the menu for teleported styles', () => {

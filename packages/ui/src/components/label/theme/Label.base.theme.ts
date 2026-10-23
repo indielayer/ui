@@ -16,8 +16,7 @@ const theme: LabelTheme = {
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')
-      else if (props.size === 'lg') classes.push('text-lg')
-      else if (props.size === 'xl') classes.push('text-xl')
+      else if (props.size === 'xl') classes.push('text-base')
 
       if (props.required) classes.push('[&_span]:after:content-["*"] [&_span]:after:ml-0.5 [&_span]:after:text-error-500')
 

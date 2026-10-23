@@ -8,7 +8,7 @@ const validators = {
 }
 const tabGroupProps = {
   ...useCommon.props(),
-  ...useColors.props('primary'),
+  ...useColors.props(),
   modelValue: {
     type: [String, Number],
     description: 'Active tab value (v-model).',

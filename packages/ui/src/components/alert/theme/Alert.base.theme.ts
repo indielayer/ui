@@ -2,13 +2,13 @@ import type { AlertTheme } from '../Alert.vue'
 
 const theme: AlertTheme = {
   classes: {
-    wrapper: 'flex items-center rounded-md space-x-2 px-4 py-2 border',
+    wrapper: 'flex items-center rounded-xl space-x-4 px-4 py-2.5 border',
   },
   styles: ({ props, colors, css }) => {
     const color = colors.getPalette(props.color)
     const vars = []
 
-    if (props.glow) vars.push(css.get('glow', colors.getColorOpacity(color[500], 0.5)))
+    if (props.glow) vars.push(css.get('glow', colors.getColorOpacity(color[500], 0.35)))
 
     if (props.color) {
       if (props.light) {
@@ -18,10 +18,13 @@ const theme: AlertTheme = {
           icon: color[600],
           border: props.outlined ? color[600] : color[50],
           dark: {
-            bg: color[200],
-            text: color[800],
-            icon: color[600],
-            border: props.outlined ? color[500] : color[200],
+            // Soft tinted surface — avoid pastel color[200] washes on dark backgrounds
+            bg: colors.getColorOpacity(color[500], 0.12),
+            text: color[200],
+            icon: color[300],
+            border: props.outlined
+              ? colors.getColorOpacity(color[400], 0.45)
+              : colors.getColorOpacity(color[500], 0.28),
           },
         }))
       } else {
@@ -31,8 +34,10 @@ const theme: AlertTheme = {
           icon: props.outlined ? color[600] : color[50],
           border: color[600],
           dark: {
-            border: color[400],
-            text: props.outlined ? color[400] : color[50],
+            bg: props.outlined ? 'transparent' : colors.getColorOpacity(color[500], 0.2),
+            border: colors.getColorOpacity(color[400], 0.4),
+            text: props.outlined ? color[300] : color[100],
+            icon: props.outlined ? color[300] : color[100],
           },
         }))
       }
@@ -45,9 +50,9 @@ const theme: AlertTheme = {
       text: color[500],
       border: color[300],
       dark: {
-        bg: 'transparent',
+        bg: colors.getColorOpacity(color[500], 0.08),
         text: color[300],
-        border: color[500],
+        border: colors.getColorOpacity(color[400], 0.35),
       },
     }))
 
