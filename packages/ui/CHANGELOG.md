@@ -1,5 +1,17 @@
 # @indielayer/ui
 
+## 2.2.0
+
+### Minor Changes
+
+- feat(select): support optional description text on select options ([#155](https://github.com/indielayer/ui/pull/155)) ([`b07d8af`](https://github.com/indielayer/ui/commit/b07d8af3cdd55585f4ab481a8f3d3a73dca70444))
+- feat(slider): add marks ticks/labels, step="mark" snapping, and optional value tooltip ([#155](https://github.com/indielayer/ui/pull/155)) ([`b07d8af`](https://github.com/indielayer/ui/commit/b07d8af3cdd55585f4ab481a8f3d3a73dca70444))
+
+### Patch Changes
+
+- fix(datepicker): teleport menu to body by default so it stacks above sticky headers ([#155](https://github.com/indielayer/ui/pull/155)) ([`b07d8af`](https://github.com/indielayer/ui/commit/b07d8af3cdd55585f4ab481a8f3d3a73dca70444))
+- style(base): adjust base theme for dark ([#155](https://github.com/indielayer/ui/pull/155)) ([`b07d8af`](https://github.com/indielayer/ui/commit/b07d8af3cdd55585f4ab481a8f3d3a73dca70444))
+
 ## 2.1.5
 
 ### Patch Changes
