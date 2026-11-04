@@ -22,6 +22,13 @@ const theme: AvatarTheme = {
   styles({ props, colors, css, data }) {
     const color = colors.getPalette(props.color)
 
+    if (data.source) {
+      return css.variables({
+        bg: 'transparent',
+        border: props.outlined ? color[600] : 'transparent',
+      })
+    }
+
     return css.variables({
       bg: color[100],
       text: color[500],
