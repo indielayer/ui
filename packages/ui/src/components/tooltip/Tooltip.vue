@@ -237,7 +237,7 @@ const { classes, className } = useTheme('Tooltip', {}, props)
         >
           <slot name="tooltip">{{ tooltip }}</slot>
           <div
-            :class="['absolute overflow-hidden shadow-lg z-10', arrowPositionClasses]"
+            :class="['absolute overflow-hidden z-10', arrowPositionClasses]"
             :style="actualPosition === 'top' || actualPosition === 'bottom' ? { left: 'var(--arrow-offset-x)', transform: 'translateX(-50%)' } : { top: 'var(--arrow-offset-y)', transform: 'translateY(-50%)' }"
           >
             <div :class="['h-2.5 w-2.5 bg-secondary-700 transform border border-secondary-800', arrowRotationClasses]"></div>
