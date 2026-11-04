@@ -25,9 +25,17 @@ const theme: TextareaTheme = {
     },
 
     icon: 'text-secondary-600 dark:text-secondary-300 absolute my-auto inset-y-0',
-    adornment: 'absolute inset-y-0 z-10 flex items-center gap-1.5 pointer-events-none',
-    adornmentStart: 'left-0 pl-2',
-    adornmentEnd: 'right-0 pr-2 top-2 items-start',
+    adornment: 'absolute z-10 flex items-start gap-1.5 pointer-events-none',
+    adornmentStart: ({ props }) => {
+      const top = (props.size === 'xs' || props.size === 'sm') ? 'top-1.5' : (props.size === 'lg' || props.size === 'xl') ? 'top-3.5' : 'top-2.5'
+
+      return `left-0 pl-2 ${top}`
+    },
+    adornmentEnd: ({ props }) => {
+      const top = (props.size === 'xs' || props.size === 'sm') ? 'top-1.5' : (props.size === 'lg' || props.size === 'xl') ? 'top-3.5' : 'top-2.5'
+
+      return `right-0 pr-2 ${top}`
+    },
     adornmentIcon: 'shrink-0 text-secondary-600 dark:text-secondary-300 pointer-events-auto',
     adornmentSlot: 'shrink-0 pointer-events-auto text-secondary-600 dark:text-secondary-300 text-sm',
   },

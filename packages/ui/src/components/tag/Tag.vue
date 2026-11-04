@@ -108,7 +108,7 @@ const { styles, classes, className } = useTheme('Tag', {}, props)
           :size="closeIconSize"
           :icon="closeIcon"
           class="cursor-pointer transition-colors duration-150"
-          :class="[disabled ? 'text-secondary-400' : 'hover:text-secondary-500']"
+          :class="[disabled ? 'text-secondary-400' : 'text-secondary-400 dark:text-secondary-300 hover:text-secondary-600 dark:hover:text-secondary-50']"
           @click.prevent="(e: Event) => !disabled && $emit('remove', e)"
         />
       </div>

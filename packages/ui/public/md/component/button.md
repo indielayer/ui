@@ -45,6 +45,9 @@ Clickable controls for primary actions—submit, open dialogs, or run commands. 
     <x-button color="primary" icon-right="star">Submit</x-button>
     <x-button color="primary" light>Light</x-button>
     <x-button color="primary" ghost>Ghost</x-button>
+    <x-button color="primary" ghost outlined>Ghost</x-button>
+    <x-button color="primary" ghost outlined disabled>Ghost</x-button>
+    <x-button ghost outlined>Ghost</x-button>
     <x-button color="primary" outlined>Outlined</x-button>
     <x-button color="primary" loading loading-label="Uploading..">Loading</x-button>
     <x-button color="primary" rounded>filled Rounded</x-button>
@@ -96,11 +99,11 @@ Clickable controls for primary actions—submit, open dialogs, or run commands. 
 ```vue
 <template>
   <div class="space-x-4">
-    <x-button size="xs">xs</x-button>
-    <x-button size="sm">sm</x-button>
-    <x-button>md</x-button>
-    <x-button size="lg">lg</x-button>
-    <x-button size="xl">xl</x-button>
+    <x-button size="xs" icon="plus">Adicionar Fundos</x-button>
+    <x-button icon="plus" size="sm">sm</x-button>
+    <x-button icon="plus">md</x-button>
+    <x-button icon="plus" size="lg">lg</x-button>
+    <x-button icon="plus" size="xl">xl</x-button>
   </div>
 </template>
 ```

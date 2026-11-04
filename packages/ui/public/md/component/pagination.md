@@ -5,7 +5,7 @@ Controls for moving through large result sets page by page. Use pagination with 
 |------|------|---------|-------------|
 | links | Boolean |  | Renders page buttons as links (`?page=` query). |
 | modelValue | Number | 1 | Current page (v-model). |
-| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| size | String Size | sm | Control size. One of xs, sm, md, lg, xl. |
 | totalPages | Number | 1 | Total number of pages. |
 | variant | String PaginationVariant | simple | Layout style (simple, quick, or dots). |
 

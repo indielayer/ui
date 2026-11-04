@@ -17,7 +17,13 @@ const comment = ref('')
         tooltip="Tooltip here"
         clearable
       />
-      <x-textarea v-model="multiline" label="Multiline adjust" adjust-to-text clearable />
+      <x-textarea
+        v-model="multiline"
+        label="Multiline adjust"
+        adjust-to-text
+        rows="1"
+        clearable
+      />
     </div>
 
     <x-textarea

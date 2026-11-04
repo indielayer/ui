@@ -2,6 +2,8 @@
 import { XSelect } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import DescriptionDemoCode from './description.vue?raw'
+import DescriptionDemo from './description.vue'
 import MultipleDemoCode from './multiple.vue?raw'
 import MultipleDemo from './multiple.vue'
 import SizeDemoCode from './size.vue?raw'
@@ -17,6 +19,11 @@ const demos = [{
   description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Description',
+  description: 'Options with a secondary description under the label.',
+  code: DescriptionDemoCode,
+  component: DescriptionDemo,
 }, {
   name: 'Multiple',
   description: 'Selecting more than one option at once.',

@@ -3,7 +3,7 @@ import type { RadioTheme } from '../Radio.vue'
 const theme: RadioTheme = {
   classes: {
     wrapper: ({ data }) => {
-      const classes = ['inline-block relative cursor-pointer focus:outline-hidden group']
+      const classes = ['inline-block relative cursor-pointer focus:outline-hidden focus-visible:outline-hidden group']
 
       if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-5')
 
@@ -11,27 +11,21 @@ const theme: RadioTheme = {
     },
 
     circle: ({ props }) => {
-      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus-visible:outline-1 group-focus-visible:outline']
+      const classes = [
+        'relative shrink-0 overflow-hidden rounded-full shadow-xs',
+        'outline-offset-2 outline-primary-500 group-focus-visible:outline-2 group-focus-visible:outline',
+      ]
 
-      if (props.size === 'lg') classes.push('h-5 w-5')
-      else if (props.size === 'xl') classes.push('h-6 w-6')
-      else classes.push('h-4 w-4')
+      if (props.size === 'xs') classes.push('size-4')
+      else if (props.size === 'sm') classes.push('size-4.5')
+      else if (props.size === 'lg') classes.push('size-5.5')
+      else if (props.size === 'xl') classes.push('size-6')
+      else classes.push('size-5')
 
       return classes
     },
 
-    circleIcon: ({ props, data }) => {
-      const c = []
-
-      if (!data.selected) c.push('opacity-0')
-
-      if (props.size === 'sm' || props.size === 'xs') c.push('h-2')
-      else if (props.size === 'lg') c.push('h-2.5')
-      else if (props.size === 'xl') c.push('h-3')
-      else c.push('h-2')
-
-      return c
-    },
+    circleIcon: '',
 
     label: ({ props, data }) => {
       let c = 'text-secondary-800 dark:text-secondary-200 pl-2'
@@ -40,8 +34,7 @@ const theme: RadioTheme = {
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
-      else if (props.size === 'lg') c += ' text-lg'
-      else if (props.size === 'xl') c += ' text-xl'
+      else if (props.size === 'xl') c += ' text-base'
 
       return c
     },
@@ -51,8 +44,7 @@ const theme: RadioTheme = {
 
       if (props.size === 'xs') c += ' text-xs'
       else if (props.size === 'sm') c += ' text-sm'
-      else if (props.size === 'lg') c += ' text-lg'
-      else if (props.size === 'xl') c += ' text-xl'
+      else if (props.size === 'xl') c += ' text-base'
 
       return c
     },
@@ -60,6 +52,7 @@ const theme: RadioTheme = {
 
   styles: ({ props, colors, css, data }) => {
     const gray = colors.getPalette('gray')
+    const secondary = colors.getPalette('secondary')
     const color = colors.getPalette(props.color)
     const vars = []
 
@@ -77,13 +70,13 @@ const theme: RadioTheme = {
     if (props.disabled) {
       if (data.selected) {
         vars.push(css.variables({
-          bg: 'transparent',
+          bg: gray[200],
           border: gray[200],
-          circle: gray[200],
+          circle: '#fff',
           dark: {
-            bg: 'transparent',
+            bg: gray[700],
             border: gray[700],
-            circle: gray[700],
+            circle: gray[300],
           },
         }))
       } else {
@@ -99,13 +92,13 @@ const theme: RadioTheme = {
     } else {
       if (data.selected) {
         vars.push(css.variables({
-          bg: 'transparent',
+          bg: color[500],
           border: color[500],
-          circle: color[500],
+          circle: '#fff',
           dark: {
-            bg: 'transparent',
+            bg: color[500],
             border: color[500],
-            circle: color[500],
+            circle: '#fff',
           },
         }))
       } else {
@@ -113,8 +106,8 @@ const theme: RadioTheme = {
           bg: '#fff',
           border: props.glow ? color[300] : gray[300],
           dark: {
-            bg: gray[900],
-            border: props.glow ? color[300] : gray[400],
+            bg: secondary[800],
+            border: props.glow ? color[300] : secondary[600],
           },
         }))
       }

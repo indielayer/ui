@@ -4,15 +4,12 @@ export default `
     color: #111827;
     background-color: white;
     color-scheme: light;
+    font-size: 14px;
   }
 
   html.dark {
     color: #f3f4f6;
-    background-color: #111827;
-  }
-
-  body {
-    font-size: 14px;
+    background-color: rgb(var(--secondary-color-900));
   }
 
   *,

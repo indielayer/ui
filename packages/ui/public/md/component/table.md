@@ -263,9 +263,8 @@ const items = ref([])
 <template>
   <x-table :headers="headers" :items="items">
     <template #empty>
-      <div class="p-4">
+      <div class="p-4 bg-secondary-200/50 dark:bg-secondary-800/50">
         <x-empty
-          bordered
           title="No data"
           description="There are no rows to display."
         />

@@ -94,7 +94,7 @@ const { styles, classes, className } = useTheme('Label', {}, themeProps)
       :class="classes.label"
     >
       <span>{{ label }}</span>
-      <x-toggle-tip v-if="tooltip" :content="tooltip"/>
+      <x-toggle-tip v-if="tooltip" :content="tooltip" class="-mt-0.5"/>
     </component>
     <slot></slot>
   </component>

@@ -22,7 +22,7 @@ body,
 
 html.dark,
 html.dark body {
-  background-color: var(--color-gray-900, #111827);
+  background-color: var(--color-secondary-900, #0f172a);
   color-scheme: dark;
 }
 

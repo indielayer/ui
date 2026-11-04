@@ -1,35 +1,42 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import type { MenuArrayItem } from '@indielayer/ui'
+
+const open = ref(false)
+
+const items: MenuArrayItem[] = [{
+  label: 'Edit',
+  icon: 'edit',
+  onClick: () => { open.value = false },
+}, {
+  label: 'Duplicate',
+  icon: 'copy',
+  onClick: () => { open.value = false },
+}, {
+  divider: true,
+}, {
+  label: 'Delete',
+  icon: 'trash',
+  color: 'error',
+  onClick: () => { open.value = false },
+}]
+</script>
+
 <template>
-  <div class="grid gap-4">
-    <x-popover placement="top-start">
-      <x-button>Click me to open popover</x-button>
-      <template #content>
-        <x-popover-container class="p-2">
-          example
-        </x-popover-container>
-      </template>
-    </x-popover>
-
-    <x-popover>
-      <x-avatar class="cursor-pointer shadow relative" name="John Smith" />
-      <template #content>
-        <x-popover-container class="p-2">
-          another one
-        </x-popover-container>
-      </template>
-    </x-popover>
-
-    <x-button-group>
-      <x-button icon="plus" tooltip="Add New">Add New</x-button>
-      <x-popover>
-        <x-button icon="chevron-down" tooltip="More Options"/>
-        <template #content>
-          <x-popover-container class="p-2">
-            <x-button>Option 1</x-button>
-            <x-button>Option 2</x-button>
-            <x-button>Option 3</x-button>
-          </x-popover-container>
-        </template>
-      </x-popover>
-    </x-button-group>
-  </div>
+  <x-popover
+    v-model:shown="open"
+    placement="bottom-start"
+  >
+    <x-button icon-right="chevron-down">
+      Actions
+    </x-button>
+    <template #content>
+      <x-popover-container class="w-48 p-1">
+        <x-menu
+          size="sm"
+          :items="items"
+        />
+      </x-popover-container>
+    </template>
+  </x-popover>
 </template>

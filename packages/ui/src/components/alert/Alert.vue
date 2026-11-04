@@ -92,7 +92,7 @@ const { styles, classes, className } = useTheme('Alert', {}, resolvedProps)
     </div>
     <template v-if="resolvedProps.removable">
       <div class="grow"></div>
-      <button type="button" class="shrink-0" :aria-label="resolvedProps.closeLabel" @click="(e: Event) => $emit('remove', e)">
+      <button type="button" class="shrink-0 cursor-pointer hover:opacity-70" :aria-label="resolvedProps.closeLabel" @click="(e: Event) => $emit('remove', e)">
         <slot name="removeIcon">
           <x-icon :icon="closeIcon"/>
         </slot>

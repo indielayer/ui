@@ -127,6 +127,16 @@ function onSubmit(isValid: string) {
       :enable-time-picker="false"
     />
 
+    <div class="mb-4">
+      <x-toggle
+        v-model="agree"
+        :rules="[rules.isRequired]"
+        name="agree"
+        label="Agree with all the terms"
+        helper="Have you read them?"
+      />
+    </div>
+
     <x-checkbox
       v-model="agree"
       :rules="[rules.isRequired]"
@@ -136,7 +146,7 @@ function onSubmit(isValid: string) {
     />
 
     <template #secondary-action>
-      <x-button ghost>Cancel</x-button>
+      <x-button ghost outlined>Cancel</x-button>
     </template>
     <template #primary-action>
       <x-button color="primary" type="submit">Submit</x-button>

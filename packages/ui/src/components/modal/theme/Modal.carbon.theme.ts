@@ -4,11 +4,19 @@ const theme: ModalTheme = {
   classes: {
     wrapper: 'fixed z-40 inset-0 overflow-y-auto transition-all',
 
-    backdrop: ({ data }) => {
-      const classes = ['fixed inset-0 bg-secondary-500 dark:bg-black transition-opacity']
+    backdrop: ({ props, data }) => {
+      // Element opacity < 1 disables backdrop-filter; use alpha backgrounds when blurry.
+      const classes = ['fixed inset-0 transition-opacity']
 
-      if (data.visible) classes.push('ease-out duration-200 opacity-70 dark:opacity-70')
-      else classes.push('ease-in duration-100 opacity-0')
+      if (props.blurry) classes.push('backdrop-blur-sm bg-secondary-500/70 dark:bg-black/70')
+      else classes.push('bg-secondary-500 dark:bg-black')
+
+      if (data.visible) {
+        if (props.blurry) classes.push('ease-out duration-200 opacity-100')
+        else classes.push('ease-out duration-200 opacity-70 dark:opacity-70')
+      } else {
+        classes.push('ease-in duration-100 opacity-0')
+      }
 
       return classes
     },
@@ -44,7 +52,13 @@ const theme: ModalTheme = {
 
     closeIcon: '!absolute top-0 z-10 right-0',
 
-    header: 'text-lg pl-4 pt-4 pr-12',
+    header: 'flex items-center gap-3 text-lg pl-4 pt-4 pr-12 mb-4',
+
+    headerContent: 'min-w-0 flex-1 flex flex-col justify-center gap-0.5',
+
+    iconWrap: 'flex items-center justify-center shrink-0 size-11 rounded-xl border border-secondary-300 dark:border-secondary-700 bg-secondary-50 dark:bg-secondary-800/80',
+
+    icon: 'text-secondary-500 dark:text-secondary-400',
 
     content: ({ props }) => {
       const classes = ['pb-8']
@@ -63,9 +77,9 @@ const theme: ModalTheme = {
       return classes
     },
 
-    label: 'text-xs text-secondary-500 mb-1',
+    label: 'text-xs text-secondary-500 leading-none',
 
-    title: 'text-xl mb-4',
+    title: 'text-xl leading-snug',
 
     description: 'text-sm mb-4',
   },

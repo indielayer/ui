@@ -141,8 +141,14 @@ function onEnter(e: KeyboardEvent) {
 
 function resize() {
   if (props.adjustToText && elRef.value) {
-    elRef.value.style.height = '1px'
-    elRef.value.style.height = (2 + elRef.value.scrollHeight) + 'px'
+    const el = elRef.value
+
+    // Reset to auto so scrollHeight includes padding; never shrink below CSS min-height
+    // (setting height to 1px first collapses border-box padding and pins the caret to the top).
+    el.style.height = 'auto'
+    const minHeight = Number.parseFloat(getComputedStyle(el).minHeight) || 0
+
+    el.style.height = `${Math.max(minHeight, el.scrollHeight)}px`
   }
 }
 
@@ -278,7 +284,7 @@ defineExpose({ focus, blur, reset, validate, setError })
         </div>
         <x-icon
           v-if="showClearIcon"
-          :size="computedSize"
+          size="xs"
           :icon="closeIcon"
           :class="[classes.adornmentIcon, 'cursor-pointer']"
           @click="reset()"

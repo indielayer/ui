@@ -23,7 +23,7 @@ const drawer = ref(false)
       <docs-menu class="flex-1" @close="drawer = false" />
     </x-drawer>
     <x-notifications>
-      <div id="main" class="flex-1 overflow-y-scroll bg-secondary-50 dark:bg-gray-900">
+      <div id="main" class="flex-1 overflow-y-scroll bg-secondary-50 dark:bg-secondary-900">
         <router-view />
       </div>
     </x-notifications>

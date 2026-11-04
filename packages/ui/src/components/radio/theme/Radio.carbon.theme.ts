@@ -3,7 +3,7 @@ import type { RadioTheme } from  '../Radio.vue'
 const theme: RadioTheme = {
   classes: {
     wrapper: ({ data }) => {
-      const classes = ['inline-block relative cursor-pointer focus:outline-hidden group']
+      const classes = ['inline-block relative cursor-pointer focus:outline-hidden focus-visible:outline-hidden group']
 
       if (data.isInsideForm && !data.isInsideFormGroup) classes.push('mb-8')
 
@@ -11,7 +11,10 @@ const theme: RadioTheme = {
     },
 
     circle: ({ props }) => {
-      const classes = ['rounded-full flex justify-center items-center shrink-0 border outline-offset-2 outline-slate-300 dark:outline-slate-500 group-focus:outline-1 group-focus:outline']
+      const classes = [
+        'relative shrink-0 overflow-hidden rounded-full shadow-sm',
+        'outline-offset-2 outline-primary-500 group-focus-visible:outline-2 group-focus-visible:outline',
+      ]
 
       if (props.size === 'xs' || props.size === 'sm') classes.push('h-3 w-3')
       else if (props.size === 'xl') classes.push('h-5 w-5')
@@ -20,17 +23,7 @@ const theme: RadioTheme = {
       return classes
     },
 
-    circleIcon: ({ props, data }) => {
-      const c = []
-
-      if (!data.selected) c.push('opacity-0')
-
-      else if (props.size === 'lg') c.push('h-2.5')
-      else if (props.size === 'xl') c.push('h-3')
-      else c.push('h-2')
-
-      return c
-    },
+    circleIcon: '',
 
     label: 'text-sm text-secondary-800 dark:text-secondary-200 pl-2',
 
@@ -56,13 +49,13 @@ const theme: RadioTheme = {
     if (props.disabled) {
       if (data.selected) {
         vars.push(css.variables({
-          bg: 'transparent',
+          bg: gray[200],
           border: gray[200],
-          circle: gray[200],
+          circle: '#fff',
           dark: {
-            bg: 'transparent',
+            bg: gray[700],
             border: gray[700],
-            circle: gray[700],
+            circle: gray[300],
           },
         }))
       } else {
@@ -78,13 +71,13 @@ const theme: RadioTheme = {
     } else {
       if (data.selected) {
         vars.push(css.variables({
-          bg: 'transparent',
+          bg: color[500],
           border: color[500],
-          circle: color[500],
+          circle: '#fff',
           dark: {
-            bg: 'transparent',
+            bg: color[500],
             border: color[500],
-            circle: color[500],
+            circle: '#fff',
           },
         }))
       } else {

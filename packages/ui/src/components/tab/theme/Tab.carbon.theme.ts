@@ -27,6 +27,7 @@ const theme: TabTheme = {
       if (data.variant === 'compact') {
         if (data.showLabel) c.push('px-2.5')
         c.push(compactSizeClasses(props.size, !data.showLabel))
+        if (data.ghost && !props.color) c.push('text-secondary-500 dark:text-secondary-400')
       } else {
         c.push('py-2 px-4')
 
@@ -51,6 +52,19 @@ const theme: TabTheme = {
     icon: ({ data }) => (data.showLabel ? 'mr-1.5' : ''),
 
     tabpanel: 'py-4',
+  },
+
+  styles: ({ props, colors, css }) => {
+    if (!props.color) return []
+
+    const color = colors.getPalette(props.color)
+
+    return css.variables({
+      text: color[600],
+      dark: {
+        text: color[400],
+      },
+    })
   },
 }
 

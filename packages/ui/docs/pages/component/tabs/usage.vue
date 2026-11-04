@@ -4,6 +4,7 @@ import { ref } from 'vue'
 const tab = ref('a')
 const metric = ref('unique')
 const view = ref('grid')
+const level = ref('all')
 
 let nextTabId = 4
 const dynamicTab = ref(1)
@@ -30,7 +31,13 @@ function removeTab(value: number) {
 </script>
 
 <template>
-  <x-tab-group v-model="tab" class="pb-10" variant="line" :full-width="false">
+  <x-tab-group
+    v-model="tab"
+    class="pb-10"
+    variant="line"
+    :full-width="false"
+    color="primary"
+  >
     <x-tab value="a" label="Tab A" icon="smile">
       content a
     </x-tab>
@@ -182,11 +189,9 @@ function removeTab(value: number) {
   </x-tab-group>
 
   <p>Compact</p>
-  <div class="flex gap-4 items-start">
+  <div class="flex flex-wrap gap-4 items-start pb-10">
     <x-tab-group
       v-model="metric"
-      color="indigo"
-      class="pb-10"
       variant="compact"
     >
       <x-tab value="unique" label="Unique" />
@@ -195,13 +200,24 @@ function removeTab(value: number) {
 
     <x-tab-group
       v-model="view"
-      color="indigo"
-      class="pb-10"
-      size="md"
+      size="sm"
       variant="compact"
     >
       <x-tab value="grid" icon="sun" tooltip="Grid view" />
       <x-tab value="list" icon="moon" tooltip="List view" />
+    </x-tab-group>
+
+    <x-tab-group
+      v-model="level"
+      size="sm"
+      ghost
+      variant="compact"
+    >
+      <x-tab value="all" label="All" />
+      <x-tab value="debug" label="Debug" />
+      <x-tab value="info" label="Info" color="sky" />
+      <x-tab value="warn" label="Warn" color="warning" />
+      <x-tab value="error" label="Error" color="error" />
     </x-tab-group>
   </div>
 

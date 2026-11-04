@@ -170,7 +170,10 @@ function onEnter(el: Element, done: () => void) {
 
   el.addEventListener('transitionend', handler)
   setTimeout(() => {
-    if (props.backdrop) el.classList.add('bg-slate-500/30')
+    if (props.backdrop)  {
+      el.classList.add('bg-slate-700/30')
+      el.classList.add('dark:bg-black/30')
+    }
     if (props.position === 'top') (el as HTMLElement).style.top = '0'
     else if (props.position === 'bottom') (el as HTMLElement).style.bottom = '0'
     else if (props.position === 'left') (el as HTMLElement).style.left = '0'

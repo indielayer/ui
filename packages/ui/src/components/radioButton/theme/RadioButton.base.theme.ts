@@ -5,16 +5,18 @@ const theme: RadioButtonTheme = {
     wrapper({ props, data }) {
       const classes = [
         'relative inline-flex items-center justify-center cursor-pointer select-none',
-        'transition duration-150 font-medium whitespace-nowrap border',
+        'transition duration-150 font-medium leading-none whitespace-nowrap border',
         'focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-2 focus-visible:outline-secondary-300',
-        'active:!shadow-none',
+        // no `!` — important on --tw-shadow is dropped by Chrome and leaves shadow-xs
+        'active:shadow-none',
       ]
 
-      if (props.size === 'xs') classes.push('py-1 px-2 text-xs')
-      else if (props.size === 'sm') classes.push('py-1.5 px-3 text-sm')
-      else if (props.size === 'lg') classes.push('py-3 px-5 text-lg')
-      else if (props.size === 'xl') classes.push('py-4 px-6 text-xl')
-      else classes.push('py-2 px-4 text-sm')
+      // size @ 14px root: xs 26 / sm 30 / md 34 / lg 38 / xl 42
+      if (props.size === 'xs') classes.push('h-[calc(26/14*1rem)] px-2 text-xs')
+      else if (props.size === 'sm') classes.push('h-[calc(30/14*1rem)] px-3 text-sm')
+      else if (props.size === 'lg') classes.push('h-[calc(38/14*1rem)] px-5')
+      else if (props.size === 'xl') classes.push('h-12 px-6 text-base')
+      else classes.push('h-[calc(34/14*1rem)] px-4 text-sm')
 
       if (!data.isInsideFormGroup) classes.push(props.rounded ? 'rounded-full' : 'rounded-md')
 

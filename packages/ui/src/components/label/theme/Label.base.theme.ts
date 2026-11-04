@@ -12,12 +12,12 @@ const theme: LabelTheme = {
     },
 
     label: ({ props }) => {
-      const classes = ['flex items-center gap-2 font-medium text-secondary-800 dark:text-secondary-200 mb-1']
+      const classes = ['flex items-center gap-2 font-medium text-secondary-800 dark:text-secondary-200 mb-1 font-sans!']
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')
-      else if (props.size === 'lg') classes.push('text-lg')
-      else if (props.size === 'xl') classes.push('text-xl')
+      else if (props.size === 'xl') classes.push('text-base')
+      else classes.push('text-sm')
 
       if (props.required) classes.push('[&_span]:after:content-["*"] [&_span]:after:ml-0.5 [&_span]:after:text-error-500')
 

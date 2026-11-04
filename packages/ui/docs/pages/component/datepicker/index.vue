@@ -2,6 +2,8 @@
 import { XDatepicker } from '@indielayer/ui'
 import UsageDemoCode from './usage.vue?raw'
 import UsageDemo from './usage.vue'
+import TextInputDemoCode from './text-input.vue?raw'
+import TextInputDemo from './text-input.vue'
 
 const title = 'Datepicker'
 const description = 'Date and time picker styled as a wrapper around @vuepic/vue-datepicker. Use it for forms that need calendar or datetime selection with Indielayer look and feel.'
@@ -11,6 +13,11 @@ const demos = [{
   description: 'Basic example with common props.',
   code: UsageDemoCode,
   component: UsageDemo,
+}, {
+  name: 'Text input',
+  description: 'Editable input so dates can be typed as well as picked from the calendar.',
+  code: TextInputDemoCode,
+  component: TextInputDemo,
 }]
 </script>
 

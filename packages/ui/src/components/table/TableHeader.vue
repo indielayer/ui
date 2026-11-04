@@ -58,7 +58,7 @@ const { styles, classes, className } = useTheme('TableHeader', {}, props)
     <div :class="classes.header">
       <div class="flex items-center gap-1">
         <slot></slot>
-        <x-toggle-tip v-if="tooltip" :content="tooltip"/>
+        <x-toggle-tip v-if="tooltip" :content="tooltip" class="-mt-0.5"/>
       </div>
 
       <svg

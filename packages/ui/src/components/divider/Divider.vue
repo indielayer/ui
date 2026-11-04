@@ -52,7 +52,7 @@ const { styles, classes, className } = useTheme('Divider', {}, props)
         classes.label,
         {
           'my-2': vertical,
-          'mx-4': !vertical
+          'mx-2.5': !vertical
         }]"
       v-text="label"
     ></div>

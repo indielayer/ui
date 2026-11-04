@@ -22,17 +22,16 @@ export default {
 import { computed, type ExtractPublicPropTypes } from 'vue'
 import XTooltip from './Tooltip.vue'
 import XIcon from '../icon/Icon.vue'
-
-import { infoIcon } from '../../common/icons'
+import { questionIcon } from '../../common/icons'
 
 const props = defineProps(toggleTipProps)
 
-const computedIcon = computed(() => props.icon || infoIcon)
+const computedIcon = computed(() => props.icon || questionIcon)
 </script>
 
 <template>
   <x-tooltip position="right">
-    <x-icon :icon="computedIcon" class="text-secondary-500 dark:text-secondary-300 cursor-pointer" />
+    <x-icon :icon="computedIcon" class="text-secondary-400 cursor-pointer" size="xs" />
     <template #tooltip>
       <div v-html="content"></div>
     </template>

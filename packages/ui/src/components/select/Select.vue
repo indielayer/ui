@@ -12,9 +12,14 @@ const selectProps = {
   },
   options: {
     type: Array as PropType<SelectOption[]>,
-    description: 'Available options (`value`, `label`, optional prefix/suffix/disabled).',
+    description: 'Available options (`value`, `label`, optional description/prefix/suffix/disabled).',
   },
   multiple: optionalBooleanProp('Allows selecting more than one option.'),
+  multipleColor: {
+    type: String,
+    default: 'secondary',
+    description: 'Theme or CSS color used for the multiple selection tags.',
+  },
   multipleCheckbox: optionalBooleanProp('Multiple selection with checkbox-style items.'),
   truncate: optionalBooleanProp('Truncates selected labels when space is limited.'),
   flat: optionalBooleanProp('Removes elevation and border emphasis on the trigger.'),
@@ -57,6 +62,7 @@ const selectProps = {
 export type SelectOption = {
   value: number | string;
   label: string;
+  description?: string;
   prefix?: string;
   suffix?: string;
   disabled?: boolean;
@@ -103,8 +109,9 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, inject, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, type ComputedRef, nextTick, unref, onUnmounted } from 'vue'
-import { useEventListener, useResizeObserver, useThrottleFn } from '@vueuse/core'
+import { computed, inject, ref, watch, type PropType, type ExtractPublicPropTypes, type Ref, type ComputedRef, nextTick, unref, onUnmounted, onMounted } from 'vue'
+import { useEventListener, useResizeObserver } from '@vueuse/core'
+import { scheduleAnimationFrame } from '../../common/utils'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
@@ -193,12 +200,13 @@ const optionsByValue = computed(() => {
 })
 
 const filterCache = computed(() => {
-  if (!props.options) return new Map<SelectOption, { label: string; prefix?: string; suffix?: string; }>()
+  if (!props.options) return new Map<SelectOption, { label: string; description?: string; prefix?: string; suffix?: string; }>()
 
   return new Map(props.options.map((option) => [
     option,
     {
       label: option.label.toLowerCase(),
+      description: option.description ? option.description.toLowerCase() : undefined,
       prefix: props.filterablePrefix && option.prefix ? option.prefix.toLowerCase() : undefined,
       suffix: props.filterableSuffix && option.suffix ? option.suffix.toLowerCase() : undefined,
     },
@@ -211,6 +219,7 @@ function matchesFilter(option: SelectOption, filterLower: string) {
   if (!cached) return false
 
   return cached.label.includes(filterLower)
+    || cached.description?.includes(filterLower)
     || cached.prefix?.includes(filterLower)
     || cached.suffix?.includes(filterLower)
 }
@@ -238,6 +247,7 @@ const internalOptions = computed(() => {
       return {
         value: option.value,
         label: option.label,
+        description: option.description,
         active: isActive,
         prefix: option.prefix,
         suffix: option.suffix,
@@ -282,8 +292,8 @@ watch(isOpen, (isOpenValue) => {
     }
 
     setTimeout(() => {
-      requestAnimationFrame(() => {
-        scrollToIndex(selectedIndex.value || 0)
+      scheduleAnimationFrame(() => {
+        scrollToIndex(selectedIndex.value || 0, 'start')
 
         if (props.filterable) filterRef.value?.focus()
       })
@@ -310,13 +320,67 @@ function findSelectedIndex() {
   }
 }
 
-function scrollToIndex(index: number) {
-  if (props.virtualList) scrollToVirtualList(index)
-  else if (itemsRef.value) itemsRef.value[index]?.$el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+let pendingVirtualScrollIndex: number | undefined
+let virtualScrollRaf = 0
+
+function getOptionEl(index: number): HTMLElement | undefined {
+  const container = containerProps.ref?.value as HTMLElement | null | undefined
+
+  return container?.querySelector<HTMLElement>(`[data-select-option-index="${index}"]`) || undefined
+}
+
+function ensureVirtualIndexVisible(index: number) {
+  const el = getOptionEl(index)
+
+  // Prefer real layout — fixed itemHeight drifts with variable option content
+  if (el) {
+    el.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+
+    return
+  }
+
+  // Not mounted yet: jump by estimate so the row enters the window, then refine
+  scrollToVirtualList(index, 'start')
+  nextTick(() => {
+    scheduleAnimationFrame(() => {
+      getOptionEl(index)?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    })
+  })
+}
+
+function scrollToIndex(index: number, align: 'start' | 'nearest' = 'nearest') {
+  if (!props.virtualList) {
+    itemsRef.value?.[index]?.$el?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+
+    return
+  }
+
+  if (align === 'start') {
+    scrollToVirtualList(index, 'start')
+    nextTick(() => {
+      getOptionEl(index)?.scrollIntoView({ block: 'nearest', inline: 'nearest' })
+    })
+
+    return
+  }
+
+  // Coalesce key-repeat to one scroll per frame (always the latest index)
+  pendingVirtualScrollIndex = index
+  if (virtualScrollRaf) return
+
+  virtualScrollRaf = scheduleAnimationFrame(() => {
+    virtualScrollRaf = 0
+    const target = pendingVirtualScrollIndex
+
+    pendingVirtualScrollIndex = undefined
+    if (typeof target === 'undefined') return
+    ensureVirtualIndexVisible(target)
+  })
 }
 
 watch(selectedIndex, (index) => {
-  if (typeof index !== 'undefined' && itemsRef.value) scrollToIndex(index)
+  if (typeof index === 'undefined') return
+  if (props.virtualList || itemsRef.value) scrollToIndex(index, 'nearest')
 })
 
 function findSelectableIndex(start: number | undefined, direction = 'down') {
@@ -498,6 +562,7 @@ watch([isFocused, isOpen], ([isFocusedValue, isOpenValue]) => {
 
 onUnmounted(() => {
   if (keyNavigationListener) keyNavigationListener()
+  if (virtualScrollRaf) cancelAnimationFrame(virtualScrollRaf)
 })
 
 function handleKeyNavigation(e: KeyboardEvent) {
@@ -551,59 +616,155 @@ function handleKeyNavigation(e: KeyboardEvent) {
 }
 
 const tagsRef = ref<HTMLElement | null>(null)
+const boxRef = ref<HTMLElement | null>(null)
 const multipleHiddenRef = ref<InstanceType<typeof XPopover> | null>(null)
 const showCountTag = ref(false)
 const hiddenTags = ref(0)
+let truncateRetry = 0
+let truncateQueued = false
+let lastTruncateKey = ''
 
-const handleTruncate = useThrottleFn(() => {
-  if (internalMultiple.value && props.truncate) {
-    nextTick(() => {
-      const maxTags = calcMaxTags()
+function applyTruncate() {
+  truncateQueued = false
+  if (!internalMultiple.value || !props.truncate) return
 
-      if (maxTags < selected.value.length) {
-        showCountTag.value = true
-        hiddenTags.value = selected.value.length - maxTags
-      } else {
-        showCountTag.value = false
-        hiddenTags.value = 0
-      }
-    })
+  const maxTags = calcMaxTags()
+
+  // Not laid out yet — retry a few frames (old throttle swallowed these)
+  if (maxTags < 0) {
+    if (truncateRetry < 10) {
+      truncateRetry++
+      scheduleAnimationFrame(() => applyTruncate())
+    }
+
+    return
   }
-}, 100, true)
 
-useResizeObserver(tagsRef, () => { handleTruncate() })
+  truncateRetry = 0
+
+  const key = `${maxTags}:${selected.value.length}:${boxRef.value?.clientWidth || 0}`
+
+  if (key === lastTruncateKey) return
+  lastTruncateKey = key
+
+  if (maxTags < selected.value.length) {
+    showCountTag.value = true
+    hiddenTags.value = selected.value.length - maxTags
+  } else {
+    showCountTag.value = false
+    hiddenTags.value = 0
+  }
+}
+
+function handleTruncate() {
+  if (typeof window === 'undefined') return
+  if (!internalMultiple.value || !props.truncate) return
+  if (truncateQueued) return
+  truncateQueued = true
+  truncateRetry = 0
+  nextTick(() => {
+    scheduleAnimationFrame(() => applyTruncate())
+  })
+}
+
+// Observe the box — stable width; observing tagsRef loops when we toggle display
+useResizeObserver(boxRef, () => {
+  lastTruncateKey = ''
+  handleTruncate()
+})
+
+function getTagsAvailableWidth() {
+  if (boxRef.value) {
+    const style = getComputedStyle(boxRef.value)
+    const content = boxRef.value.clientWidth
+      - parseFloat(style.paddingLeft)
+      - parseFloat(style.paddingRight)
+
+    // tagsRef is flex-1 min-w-0 inside the content box; use it when laid out
+    if (tagsRef.value && tagsRef.value.clientWidth > 0) {
+      return Math.min(tagsRef.value.clientWidth, content)
+    }
+
+    return content
+  }
+
+  return tagsRef.value?.clientWidth || 0
+}
 
 // Calculate max tags that can be displayed, and display: none the rest
 function calcMaxTags() {
-  if (!tagsRef.value) return 0
+  if (!tagsRef.value) return -1
 
-  const tags = tagsRef.value.querySelectorAll('.x-tag')
-  const tagsArray = Array.from(tags)
+  const available = getTagsAvailableWidth()
 
-  let totalWidth = 0
-  let tagsCount = 1
+  if (available <= 0) return -1
 
-  const maxWidth = tagsRef.value.offsetWidth - 30
+  const tags = Array.from(tagsRef.value.querySelectorAll('.x-tag')) as HTMLElement[]
 
-  for (let i = 0; i < tagsArray.length; i++) {
-    const tag = tagsArray[i] as HTMLElement
+  if (tags.length === 0) return 0
+
+  const gap = 4 // gap-1
+  // Reserve space for +N counter (chevron sits in box padding via pr-8/pr-14)
+  const reserve = 40
+  const maxWidth = Math.max(available - reserve, 0)
+
+  // Measure intrinsic widths (flex-shrink would otherwise make every tag "fit")
+  const widths = tags.map((tag) => {
+    const prevShrink = tag.style.flexShrink
+    const prevDisplay = tag.style.display
 
     tag.style.display = 'flex'
+    tag.style.flexShrink = '0'
+    const width = tag.offsetWidth
 
-    totalWidth += tag.offsetWidth
+    tag.style.flexShrink = prevShrink
+    tag.style.display = prevDisplay
 
-    if (i > 0) {
-      if (totalWidth < maxWidth) tagsCount++
-      else tag.style.display = 'none'
+    return width
+  })
+
+  let totalWidth = 0
+  let tagsCount = 0
+
+  for (let i = 0; i < widths.length; i++) {
+    const next = totalWidth + widths[i]! + (tagsCount > 0 ? gap : 0)
+
+    if (tagsCount === 0 || next <= maxWidth) {
+      totalWidth = next
+      tagsCount++
+    } else {
+      break
     }
+  }
+
+  for (let i = 0; i < tags.length; i++) {
+    tags[i]!.style.display = i < tagsCount ? '' : 'none'
   }
 
   return tagsCount
 }
 
-watch(selected, (val) => {
+watch(selected, () => {
+  lastTruncateKey = ''
   handleTruncate()
 }, { immediate: true, deep: true })
+
+watch(() => props.truncate, (enabled) => {
+  lastTruncateKey = ''
+  if (!enabled && tagsRef.value) {
+    tagsRef.value.querySelectorAll('.x-tag').forEach((tag) => {
+      (tag as HTMLElement).style.display = ''
+    })
+    showCountTag.value = false
+    hiddenTags.value = 0
+  }
+  handleTruncate()
+})
+
+onMounted(() => {
+  lastTruncateKey = ''
+  handleTruncate()
+})
 
 const { styles, classes, className } = useTheme('Select', {}, themeProps, {
   errorInternal,
@@ -650,6 +811,8 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
           ref="popoverRef"
           :disabled="isDisabled"
           :placement="placement"
+          auto-size
+          popper-class="x-select-popper"
         >
           <slot
             name="input"
@@ -658,24 +821,25 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
             :disabled="isDisabled"
             :label="getLabel(selected)"
           >
-            <div :class="[classes.box]">
+            <div ref="boxRef" :class="[classes.box]">
               <template v-if="internalMultiple && Array.isArray(selected) && selected.length > 0">
                 <div
                   ref="tagsRef"
-                  class="flex gap-1 relative"
+                  class="flex items-center gap-1 relative min-w-0 flex-1"
                   :class="{
                     'flex-wrap': !truncate,
-                    'overflow-hidden': truncate,
+                    'flex-nowrap overflow-hidden': truncate,
                   }"
                 >
                   <x-tag
-                    v-for="(value, valueIndex) in selected"
+                    v-for="value in selected"
                     :key="value"
                     size="xs"
+                    filled
+                    :color="multipleColor"
                     removable
                     :outlined="!(isDisabled || getItem(value)?.disabled)"
                     :disabled="isDisabled || getItem(value)?.disabled"
-                    :style="{ 'max-width': valueIndex === 0 && hiddenTagsCounterRef ? `calc(100% - ${hiddenTagsCounterRef.offsetWidth + 6 + 'px'})` : undefined }"
                     @remove="(e: Event) => { handleRemove(e, value) }"
                   >
                     <template v-if="!hideSelectedOptionSlots">
@@ -708,16 +872,16 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
               </template>
               <template v-else-if="!internalMultiple && !isEmpty(selected) && getLabel(selected) !== ''">
                 <template v-if="!hideSelectedOptionSlots">
-                  <div class="flex items-center">
+                  <div class="flex items-center w-full min-w-0">
                     <span v-if="$slots.prefix || getItem(selected)?.prefix" class="mr-2 shrink-0 flex">
                       <slot name="prefix" :item="getItem(selected) || fallbackSelectOption(selected)">{{ getItem(selected)?.prefix }}</slot>
                     </span>
 
-                    <span class="flex-1 truncate">
+                    <span class="flex-1 min-w-0 truncate">
                       {{ getLabel(selected) }}
                     </span>
 
-                    <span v-if="$slots.suffix || getItem(selected)?.suffix" class="ml-1 shrink-0 flex">
+                    <span v-if="$slots.suffix || getItem(selected)?.suffix" class="ml-2 shrink-0 flex">
                       <slot name="suffix" :item="getItem(selected) || fallbackSelectOption(selected)">{{ getItem(selected)?.suffix }}</slot>
                     </span>
                   </div>
@@ -761,6 +925,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     v-for="item in list"
                     :key="item.index"
                     ref="itemsRef"
+                    :data-select-option-index="item.index"
                     :item="item.data"
                     :size="size"
                     :disabled="item.data.disabled"
@@ -771,7 +936,9 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                     @click="() => !item.data.keepOpenOnClick && (!internalMultiple || multipleCheckbox) && popoverRef?.hide()"
                   >
                     <template v-if="$slots.prefix || item.data.prefix" #prefix><slot name="prefix" :item="item.data">{{ item.data.prefix }}</slot></template>
-                    <slot name="label" :item="item.data"></slot>
+                    <template v-if="$slots.label">
+                      <slot name="label" :item="item.data"></slot>
+                    </template>
                     <template v-if="$slots.suffix || item.data.suffix" #suffix><slot name="suffix" :item="item.data">{{ item.data.suffix }}</slot></template>
                   </x-menu-item>
                 </div>
@@ -797,6 +964,8 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                 v-for="value in selected?.slice(selected.length - hiddenTags)"
                 :key="value"
                 size="xs"
+                :color="multipleColor"
+                filled
                 removable
                 :outlined="!(isDisabled || getItem(value)?.disabled)"
                 :disabled="isDisabled || getItem(value)?.disabled"
@@ -859,6 +1028,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
       >
         <x-icon
           :icon="closeIcon"
+          size="xs"
           :class="[classes.icon, 'cursor-pointer']"
         />
       </button>
@@ -876,3 +1046,14 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>
+
+<style>
+/*
+  floating-vue `autoSize: true` sets inline `width` on `.v-popper__inner` to the
+  trigger width. Put the floor on that node so short triggers (e.g. "All") still
+  get a readable options panel, while wide triggers keep matching width.
+*/
+.v-popper__popper.x-select-popper .v-popper__inner {
+  min-width: 280px;
+}
+</style>

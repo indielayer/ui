@@ -60,10 +60,16 @@ const itemsSorted = computed<Book[]>(() => {
     return 0
   })
 })
+
+const filter = ref('')
 </script>
 
 <template>
   <div class="grid gap-4">
+    <div class="flex gap-2">
+      <x-input v-model="filter" placeholder="Filter" block />
+      <x-button color="primary">Filter</x-button>
+    </div>
     <x-card>
       <x-table
         v-model:sort="sort"
@@ -97,21 +103,19 @@ const itemsSorted = computed<Book[]>(() => {
       </x-table>
     </x-card>
 
-    <x-card>
-      <x-table
-        v-model:sort="sort"
-        key-prop="id"
-        dense
-        pointer
-        striped
-        :headers="headers"
-        :items="itemsSorted"
-        @click-row="(event, index) => { notifications?.log(event); }"
-      >
-        <template #item-published="{ item }">
-          {{ formatDate(item.published) }}
-        </template>
-      </x-table>
-    </x-card>
+    <x-table
+      v-model:sort="sort"
+      key-prop="id"
+      dense
+      pointer
+      striped
+      :headers="headers"
+      :items="itemsSorted"
+      @click-row="(event, index) => { notifications?.log(event); }"
+    >
+      <template #item-published="{ item }">
+        {{ formatDate(item.published) }}
+      </template>
+    </x-table>
   </div>
 </template>

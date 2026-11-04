@@ -24,8 +24,8 @@ Empty states communicate when there is no content to show. Use them in tables, l
 ```vue
 <template>
   <x-empty
-    title="No items yet"
-    description="Get started by creating your first item."
+    title="No logs in the last 7 days"
+    description="Nothing matched these filters on either node. Widen the time range, or check the Graphs tab to confirm the servers are taking traffic."
   />
 </template>
 ```
@@ -39,7 +39,7 @@ Empty states communicate when there is no content to show. Use them in tables, l
   >
     <template #actions>
       <x-button color="primary">Clear filters</x-button>
-      <x-button ghost>Learn more</x-button>
+      <x-button ghost outlined>Learn more</x-button>
     </template>
   </x-empty>
 </template>
@@ -53,6 +53,43 @@ Empty states communicate when there is no content to show. Use them in tables, l
     title="Nothing here"
     description="This area is empty. Add content to get started."
   />
+</template>
+```
+
+#### Size
+```vue
+<template>
+  <div class="space-y-4">
+    <x-empty
+      size="xs"
+      bordered
+      title="xs — No results"
+      description="Try a different search or clear your filters."
+    />
+    <x-empty
+      size="sm"
+      bordered
+      title="sm — No results"
+      description="Try a different search or clear your filters."
+    />
+    <x-empty
+      bordered
+      title="md — No results"
+      description="Try a different search or clear your filters."
+    />
+    <x-empty
+      size="lg"
+      bordered
+      title="lg — No results"
+      description="Try a different search or clear your filters."
+    />
+    <x-empty
+      size="xl"
+      bordered
+      title="xl — No results"
+      description="Try a different search or clear your filters."
+    />
+  </div>
 </template>
 ```
 

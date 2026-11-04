@@ -22,7 +22,7 @@ const emptyProps = {
 
 export type EmptyProps = ExtractPublicPropTypes<typeof emptyProps>
 
-type InternalClasses = 'wrapper' | 'bordered' | 'icon' | 'title' | 'description' | 'actions'
+type InternalClasses = 'wrapper' | 'bordered' | 'iconWrap' | 'icon' | 'title' | 'description' | 'actions'
 export interface EmptyTheme extends ThemeComponent<EmptyProps, InternalClasses> {}
 
 export default {
@@ -56,9 +56,9 @@ const resolvedProps = useResolvedComponentProps('Empty', props)
 const iconSize = computed(() => {
   const size = resolvedProps.value.size ?? 'md'
   const index = sizeOrder.indexOf(size)
-  const nextIndex = index < 0 ? sizeOrder.indexOf('md') + 1 : Math.min(index + 1, sizeOrder.length - 1)
+  const prevIndex = index < 0 ? sizeOrder.indexOf('md') - 1 : Math.max(index - 1, 0)
 
-  return sizeOrder[nextIndex]
+  return sizeOrder[prevIndex]
 })
 
 const { styles, classes, className } = useTheme('Empty', {}, resolvedProps)
@@ -73,14 +73,18 @@ const { styles, classes, className } = useTheme('Empty', {}, resolvedProps)
       resolvedProps.bordered ? classes.bordered : '',
     ]"
   >
-    <slot name="icon">
-      <x-icon
-        v-if="resolvedProps.icon"
-        :icon="resolvedProps.icon"
-        :size="iconSize"
-        :class="classes.icon"
-      />
-    </slot>
+    <div
+      v-if="resolvedProps.icon || $slots.icon"
+      :class="classes.iconWrap"
+    >
+      <slot name="icon">
+        <x-icon
+          :icon="resolvedProps.icon"
+          :size="iconSize"
+          :class="classes.icon"
+        />
+      </slot>
+    </div>
 
     <slot name="title">
       <p v-if="resolvedProps.title" :class="classes.title">
