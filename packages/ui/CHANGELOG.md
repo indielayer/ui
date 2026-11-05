@@ -1,5 +1,13 @@
 # @indielayer/ui
 
+## 2.2.1
+
+### Patch Changes
+
+- fix(tooltip): shadow overlapping ([`d7fb721`](https://github.com/indielayer/ui/commit/d7fb721d716db2533bfd9cc4c06bdc8e1296c449))
+- style: minor adjustments to dark mode ([#158](https://github.com/indielayer/ui/pull/158)) ([`49b5cf2`](https://github.com/indielayer/ui/commit/49b5cf2fb39ed96c239cc4d1e92892f48bbf0107))
+- fix(avatar): border around source image ([`f08346d`](https://github.com/indielayer/ui/commit/f08346d7811f2c795cc96208e1715601c11761d9))
+
 ## 2.2.0
 
 ### Minor Changes
