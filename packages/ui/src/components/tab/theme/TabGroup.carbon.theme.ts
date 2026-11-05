@@ -50,15 +50,22 @@ const theme: TabGroupTheme = {
   styles: ({ props, colors, css }) => {
     const gray = colors.getPalette('gray')
     const secondary = colors.getPalette('secondary')
-    const color = colors.getPalette(props.color)
+    const primary = colors.getPalette('primary')
+    const color = props.color ? colors.getPalette(props.color) : null
     const compactGhost = props.variant === 'compact' && props.ghost
+    // Selected text: light → color (else primary); dark → white (ghost compact keeps secondary)
+    const selectedText = compactGhost
+      ? secondary[900]
+      : color ? color[600] : primary[600]
+    const selectedTextDark = compactGhost ? secondary[50] : 'white'
+    const surface = color || primary
 
     return css.variables({
-      text: compactGhost ? secondary[900] : color[600],
-      bg: compactGhost ? '#fff' : props.ghost ? color[50] : '#fff',
+      text: selectedText,
+      bg: compactGhost ? '#fff' : props.ghost ? surface[50] : '#fff',
       dark: {
-        text: compactGhost ? secondary[50] : color[400],
-        bg: compactGhost ? secondary[600] : props.ghost ? color[900] : gray[700],
+        text: selectedTextDark,
+        bg: compactGhost ? secondary[600] : props.ghost ? surface[900] : gray[700],
       },
     })
   },

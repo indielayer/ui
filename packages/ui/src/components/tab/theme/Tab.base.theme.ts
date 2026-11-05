@@ -58,7 +58,7 @@ const theme: TabTheme = {
     tabpanel: 'py-2',
   },
 
-  styles: ({ props, colors, css }) => {
+  styles: ({ props, colors, css, data }) => {
     if (!props.color) return []
 
     const color = colors.getPalette(props.color)
@@ -66,7 +66,8 @@ const theme: TabTheme = {
     return css.variables({
       text: color[600],
       dark: {
-        text: color[400],
+        // Selected tabs use white in dark mode; idle colored tabs keep the tone
+        text: data.selected ? 'white' : color[400],
       },
     })
   },

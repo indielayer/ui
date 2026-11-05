@@ -185,8 +185,6 @@ function onRemove(e: Event) {
   emit('remove', e)
 }
 
-const isBlockLike = computed(() => tabs.state.variant === 'block' || tabs.state.variant === 'compact')
-
 const themeProps = computed(() => ({
   ...props,
   size: computedSize.value,
@@ -197,6 +195,21 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
   ...tabs.state,
   selected,
   showLabel,
+})
+
+// XLink CSS vars beat Tailwind text classes — mirror tab selected colors onto the link.
+const selectedLinkStyle = computed(() => {
+  if (!props.to || !selected.value) return ''
+
+  const text = props.color ? 'var(--x-tab-text)' : 'var(--x-tab-group-text)'
+  const darkText = props.color ? 'var(--x-tab-dark-text)' : 'var(--x-tab-group-dark-text)'
+
+  return [
+    `--x-link-text: ${text}`,
+    `--x-link-text-hover: ${text}`,
+    `--x-link-dark-text: ${darkText}`,
+    `--x-link-dark-text-hover: ${darkText}`,
+  ].join('; ')
 })
 </script>
 
@@ -220,12 +233,7 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
       :type="tag === 'button' ? 'button' : undefined"
       :to="to"
       :color="props.color || selected ? color : undefined"
-      :style="[
-        styles,
-        to && selected && isBlockLike
-          ? '--x-link-text: var(--x-tab-group-text); --x-link-text-hover: var(--x-tab-group-text);'
-          : ''
-      ]"
+      :style="[styles, selectedLinkStyle]"
       :class="[
         className,
         classes.wrapper,

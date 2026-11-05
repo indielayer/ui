@@ -61,23 +61,18 @@ const theme: TabGroupTheme = {
     const primary = colors.getPalette('primary')
     const color = props.color ? colors.getPalette(props.color) : null
     const compactGhost = props.variant === 'compact' && props.ghost
-    // Line selected text: color[500]/[100]; indicator uses `color` (else primary)
-    const line = props.variant === 'line'
+    // Selected text: light → color (else primary); dark → white (ghost compact keeps secondary)
+    const selectedText = compactGhost
+      ? secondary[900]
+      : color ? color[600] : primary[600]
+    const selectedTextDark = compactGhost ? secondary[100] : 'white'
 
     return css.variables({
-      text: line
-        ? (color ? color[600] : secondary[900])
-        : compactGhost
-          ? secondary[900]
-          : color ? color[600] : secondary[900],
+      text: selectedText,
       indicator: color ? color[500] : primary[500],
       bg: compactGhost ? '#fff' : props.ghost ? secondary[100] : '#fff',
       dark: {
-        text: line
-          ? (color ? 'white' : secondary[100])
-          : compactGhost
-            ? secondary[100]
-            : color ? color[300] : secondary[100],
+        text: selectedTextDark,
         indicator: color ? color[500] : primary[500],
         bg: secondary[600],
       },
