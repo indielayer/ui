@@ -13,12 +13,14 @@ const theme: SelectTheme = {
       else if (props.size === 'lg' || props.size === 'xl') classes.push('py-3.5')
       else classes.push('py-2.5')
 
+      const darkBg = data.isInsideCard ? 'dark:bg-secondary-700' : 'dark:bg-secondary-800'
+
       if (props.disabled) {
         classes.push('bg-secondary-100 dark:bg-secondary-900 text-secondary-300 cursor-not-allowed')
       } else if (props.readonly) {
         classes.push('bg-white dark:bg-secondary-900 text-secondary-700')
       } else {
-        classes.push('bg-secondary-50 dark:bg-secondary-800 text-secondary-700 dark:text-secondary-200')
+        classes.push(`bg-secondary-50 ${darkBg} text-secondary-700 dark:text-secondary-200`)
       }
 
       if (data.errorInternal) {
@@ -53,7 +55,8 @@ const theme: SelectTheme = {
   styles: ({ colors, css }) => {
     const color = colors.getPalette('primary')
 
-    return css.get('border', color[500])
+    // Match Input/Textarea focus ring (primary-400)
+    return css.get('border', color[400])
   },
 }
 

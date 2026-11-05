@@ -16,6 +16,8 @@ export const injectTabGroupKey = Symbol() as InjectionKey<TabGroupInjection>
 export const injectFormKey = Symbol() as InjectionKey<FormInjection>
 export const injectFormGroupKey = Symbol() as InjectionKey<FormGroupInjection>
 export const injectInputGroupKey = Symbol() as InjectionKey<InputGroupInjection>
+/** Provided by `XCard` so nested fields can lift dark surfaces vs the card panel. */
+export const injectCardKey = Symbol() as InjectionKey<boolean>
 export const injectDatepickerKey = Symbol() as InjectionKey<boolean>
 export const injectIconsKey = Symbol() as InjectionKey<IconInjection>
 export const injectButtonGroupKey = Symbol() as InjectionKey<ButtonGroupInjection>

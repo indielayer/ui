@@ -77,6 +77,7 @@ type InternalExtraData = {
   errorInternal: Ref<boolean>;
   isInsideInputGroup: boolean;
   inputGroupPosition: InputGroupPosition | undefined;
+  isInsideCard: boolean;
   isPopoverOpen: ComputedRef<boolean>;
 }
 export interface SelectTheme extends ThemeComponent<SelectProps, InternalClasses, InternalExtraData> {}
@@ -119,7 +120,7 @@ import { useInteractive } from '../../composables/useInteractive'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 import { useVirtualList } from '../../composables/useVirtualList'
 import type { Size } from '../../composables/useCommon'
-import { injectInputGroupKey } from '../../composables/keys'
+import { injectCardKey, injectInputGroupKey } from '../../composables/keys'
 import { checkIcon, selectIcon, closeIcon } from '../../common/icons'
 import type { InputGroupPosition } from '../../common/inputGroupRadius'
 
@@ -174,7 +175,7 @@ const inputGroup = inject(injectInputGroupKey, {
   isInsideInputGroup: false,
   groupProps: {},
 })
-
+const isInsideCard = inject(injectCardKey, false)
 const isDisabled = computed(() => props.disabled || props.loading || props.readonly || !!inputGroup.groupProps?.disabled)
 const isClearIconVisible = computed(() => !props.loading && !props.readonly && !props.disabled && props.clearable && !isEmpty(selected.value))
 
@@ -770,6 +771,7 @@ const { styles, classes, className } = useTheme('Select', {}, themeProps, {
   errorInternal,
   isInsideInputGroup,
   inputGroupPosition,
+  isInsideCard,
   isPopoverOpen,
 })
 
@@ -800,7 +802,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
           {{ getLabel(selected) }}
         </template>
         <template v-else>
-          <div v-if="placeholder" class="text-secondary-400 dark:text-secondary-500">
+          <div v-if="placeholder" class="text-secondary-400 dark:text-secondary-300/70">
             {{ placeholder }}
           </div>
           <div v-else>&nbsp;</div>
@@ -894,7 +896,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
               <template v-else>
                 <div
                   v-if="placeholder"
-                  class="text-secondary-400 dark:text-secondary-500"
+                  class="text-secondary-400 dark:text-secondary-300/70"
                 >
                   {{ placeholder }}
                 </div>

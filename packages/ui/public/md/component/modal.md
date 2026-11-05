@@ -258,10 +258,10 @@ function onSubmit(isValid: boolean) {
   <x-modal
     v-model="show"
     title="Confirm Deletion"
-    icon="trash"
     show-close
     backdrop
     blurry
+    icon="trash"
     is-form
     size="sm"
     @submit="onSubmit"

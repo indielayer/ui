@@ -331,6 +331,7 @@ defineExpose({ open, close })
                 <slot name="header-content">
                   <div v-if="label" :class="classes.label">{{ label }}</div>
                   <div v-if="title" :class="classes.title">{{ title }}</div>
+                  <div v-if="description" :class="classes.description">{{ description }}</div>
                 </slot>
               </div>
             </div>
@@ -344,7 +345,6 @@ defineExpose({ open, close })
             vertical
           >
             <div :class="classes.content">
-              <div v-if="description" :class="classes.description">{{ description }}</div>
               <slot></slot>
             </div>
           </x-scroll>

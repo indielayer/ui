@@ -12,7 +12,7 @@ const theme: LabelTheme = {
     },
 
     label: ({ props }) => {
-      const classes = ['flex items-center gap-2 font-medium text-secondary-800 dark:text-secondary-200 mb-1 font-sans!']
+      const classes = ['flex items-center gap-2 font-medium text-secondary-800 dark:text-secondary-100 mb-1 font-sans!']
 
       if (props.size === 'xs') classes.push('text-xs')
       else if (props.size === 'sm') classes.push('text-sm')

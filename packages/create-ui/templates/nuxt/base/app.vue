@@ -5,21 +5,21 @@
     <div class="flex flex-col space-y-8 my-6 text-center">
       <x-link
         href="https://nuxt.com/docs/4.x/getting-started/introduction"
-        color="emerald"
+        color="primary"
         shadow
         external
         target="_blank"
       >Nuxt 4</x-link>
       <x-link
         href="https://vuejs.org/"
-        color="emerald"
+        color="primary"
         shadow
         external
         target="_blank"
       >Vue 3</x-link>
       <x-link
         href="https://indielayer.com/ui"
-        color="emerald"
+        color="primary"
         shadow
         external
         target="_blank"

@@ -16,7 +16,7 @@ const radioProps = {
 export type RadioProps = ExtractPublicPropTypes<typeof radioProps>
 
 type InternalClasses = 'wrapper' | 'circle' | 'circleIcon' | 'label' | 'content'
-type InternalExtraData = { selected: Ref<boolean>; isInsideForm: boolean; isInsideFormGroup: boolean; }
+type InternalExtraData = { selected: Ref<boolean>; isInsideForm: boolean; isInsideFormGroup: boolean; isInsideCard: boolean; }
 export interface RadioTheme extends ThemeComponent<RadioProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed, ref, type ExtractPublicPropTypes, type Ref, unref } from 'vue'
+import { computed, inject, ref, type ExtractPublicPropTypes, type Ref, unref } from 'vue'
 import { scheduleAnimationFrame } from '../../common/utils'
 import { useCommon } from '../../composables/useCommon'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
@@ -48,11 +48,13 @@ import { useColors } from '../../composables/useColors'
 import { useInteractive } from '../../composables/useInteractive'
 import { useInputtable } from '../../composables/useInputtable'
 import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
+import { injectCardKey } from '../../composables/keys'
 
 import XSpinner from '../../components/spinner/Spinner.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
 
 const props = defineProps(radioProps)
+const isInsideCard = inject(injectCardKey, false)
 
 const emit = defineEmits(useInputtable.emits(false))
 
@@ -116,7 +118,7 @@ const listeners = {
   },
 }
 
-const { styles, classes, className } = useTheme('Radio', {}, props, { selected, isInsideForm, isInsideFormGroup })
+const { styles, classes, className } = useTheme('Radio', {}, props, { selected, isInsideForm, isInsideFormGroup, isInsideCard })
 
 defineExpose({ focus, blur, reset, validate, setError })
 </script>

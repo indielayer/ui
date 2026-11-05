@@ -6,7 +6,7 @@ const theme: TextareaTheme = {
     wrapper: '',
 
     input: ({ props, data }) => {
-      const classes = ['appearance-none block w-full leading-snug placeholder-secondary-400 dark:placeholder-secondary-500 outline-transparent outline outline-2 outline-offset-[-1px] transition duration-150 ease-in-out border-secondary-300 dark:border-secondary-700 border']
+      const classes = ['appearance-none block w-full leading-snug placeholder-secondary-400 dark:placeholder-secondary-300/70 outline-transparent outline outline-2 outline-offset-[-1px] transition duration-150 ease-in-out border-secondary-300 dark:border-secondary-600 border']
 
       // Per-segment shadow bleeds into joined siblings — keep elevation only when standalone
       if (!data.isInsideInputGroup) classes.push('rounded-lg', 'shadow-xs')
@@ -22,9 +22,11 @@ const theme: TextareaTheme = {
       else if (props.size === 'xl') classes.push('px-4 py-2.5 min-h-12')
       else classes.push('px-3 py-2 min-h-[calc(34/14*1rem)]')
 
+      const darkBg = data.isInsideCard ? 'dark:bg-secondary-700' : 'dark:bg-secondary-800'
+
       classes.push(props.disabled
-        ? 'bg-secondary-100 dark:bg-secondary-700 text-secondary-400 dark:text-secondary-600 cursor-not-allowed'
-        : 'bg-white dark:bg-secondary-700/40 text-secondary-700 dark:text-secondary-200')
+        ? 'bg-secondary-100 dark:bg-secondary-900 text-secondary-400 dark:text-secondary-600 cursor-not-allowed'
+        : `bg-white ${darkBg} text-secondary-700 dark:text-secondary-50`)
 
       return classes
     },

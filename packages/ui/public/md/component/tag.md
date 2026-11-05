@@ -35,7 +35,7 @@ const notifications = useNotifications()
     <x-tag color="purple">Hello</x-tag>
     <x-tag
       color="green"
-      size="sm"
+      size="xs"
       filled
       rounded
       outlined

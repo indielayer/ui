@@ -62,8 +62,13 @@ function removeTab(value: number) {
     :full-width="false"
     color="primary"
   >
-    <x-tab value="a" label="Tab A" icon="smile">
+    <x-tab value="a" label="Teams">
       content a
+      <template #suffix>
+        <x-tag size="xs" color="primary" rounded>
+          12
+        </x-tag>
+      </template>
     </x-tab>
     <x-tab value="b" label="Tab B">
       content b
@@ -218,7 +223,7 @@ function removeTab(value: number) {
       v-model="metric"
       variant="compact"
     >
-      <x-tab value="unique" label="Unique" />
+      <x-tab value="unique" label="Unique"/>
       <x-tab value="total" label="Total" />
     </x-tab-group>
 

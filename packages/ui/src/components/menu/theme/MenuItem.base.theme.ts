@@ -1,4 +1,5 @@
 import type { MenuItemTheme } from '../MenuItem.vue'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: MenuItemTheme = {
   classes: {
@@ -33,8 +34,16 @@ const theme: MenuItemTheme = {
   },
 
   styles: ({ colors, props, css, data }) => {
-    const color = colors.getPalette(props.color || 'gray')
-    const secondary = colors.getPalette('secondary')
+    const secondary = secondaryCssPalette
+    const isSecondary = !props.color || props.color === 'secondary'
+    // Default color is secondary — use CSS tokens so html.dark overrides apply
+    const color = isSecondary
+      ? secondary
+      : colors.getPalette(props.color)
+    // Soft wash for chromatic dark hover (mirrors light color[100]); secondary stays solid
+    const darkAccentHoverBg = isSecondary
+      ? color[600]
+      : colors.getColorOpacity(color[500], 0.28)
 
     if (props.disabled) return css.variables({
       text: secondary[300],
@@ -50,6 +59,9 @@ const theme: MenuItemTheme = {
       if (highlighted) {
         // Checked (isActive) always tinted; keyboard `selected` uses a stronger fill
         const keyboard = Boolean(props.selected)
+        const darkHighlightBg = isSecondary
+          ? color[700]
+          : colors.getColorOpacity(color[500], keyboard ? 0.4 : 0.28)
 
         return css.variables({
           bg: keyboard ? color[200] : color[100],
@@ -59,10 +71,10 @@ const theme: MenuItemTheme = {
             text: color[800],
           },
           dark: {
-            bg: keyboard ? color[700] : color[700],
+            bg: darkHighlightBg,
             text: color[100],
             hover: {
-              bg: color[700],
+              bg: darkHighlightBg,
               text: color[100],
             },
           },
@@ -78,10 +90,10 @@ const theme: MenuItemTheme = {
         },
         dark: {
           bg: 'transparent',
-          text: color[200],
+          text: isSecondary ? color[200] : color[400],
           hover: {
-            bg: color[600],
-            text: color[100],
+            bg: darkAccentHoverBg,
+            text: isSecondary ? color[100] : color[200],
           },
         },
       })

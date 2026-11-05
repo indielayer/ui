@@ -1,12 +1,14 @@
 import type { ButtonTheme } from '../Button.vue'
 import { inputGroupRadiusClasses } from '../../../common/inputGroupRadius'
 import { buttonGroupRadiusClasses } from '../../../common/buttonGroupRadius'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: ButtonTheme = {
   classes: {
     wrapper({ props, slots, data }) {
       // active:shadow-none — no `!`; important on --tw-shadow is dropped by Chrome and leaves shadow-xs
-      const classes = ['relative transition duration-150 focus-visible:outline-secondary-300 outline-transparent outline outline-1 outline-offset-2 inline-flex items-center justify-center font-medium leading-none whitespace-nowrap overflow-hidden align-middle active:shadow-none! border appearance-none shrink-0']
+      // no overflow-hidden — colored filled buttons use an outer glow that must not be clipped
+      const classes = ['relative transition duration-150 focus-visible:outline-secondary-300 outline-transparent outline outline-1 outline-offset-2 inline-flex items-center justify-center font-medium leading-none whitespace-nowrap align-middle active:shadow-none! border appearance-none shrink-0']
 
       // radius
       if (data.isInsideInputGroup) {
@@ -18,6 +20,9 @@ const theme: ButtonTheme = {
       }
 
       // shadow (skip inside InputGroup — segment shadows bleed across shared edges)
+      // filled colored buttons use `--x-button-glow` + `.button--glow` instead of shadow-xs
+      const isFilledColor = !!(props.color && !props.outlined && !props.light && !props.ghost)
+
       if (
         !data.isInsideInputGroup
         && !props.flat
@@ -25,6 +30,7 @@ const theme: ButtonTheme = {
         && !props.ghost
         && !props.disabled
         && !props.loading
+        && !isFilledColor
       ) classes.push('shadow-xs')
 
       // size @ 14px root: xs 26 / sm 30 / md 34 / lg 38 / xl 42
@@ -49,40 +55,48 @@ const theme: ButtonTheme = {
   },
 
   styles({ props, colors, css, data }) {
-    const gray = colors.getPalette('secondary')
-    const color = props.color ? colors.getPalette(props.color) : gray
+    const secondaryHex = colors.getPalette('secondary')
+    const secondary = secondaryCssPalette
+    const color = props.color ? colors.getPalette(props.color) : secondary
     const vars = []
 
     const isLight = props.color && props.light
     const isDefault = !props.color && !props.ghost
 
-    if (props.glow) vars.push(css.get('glow', colors.getColorOpacity(props.color ? color[500] : gray[500], 0.5)))
+    // filled colored: inset highlight + color-matched glow (see `.button--glow`)
+    const isFilledColor = !!(props.color && !props.outlined && !props.light && !props.ghost && !props.flat)
+
+    if (isFilledColor && !props.disabled && !props.loading && !data.isInsideInputGroup) {
+      vars.push(css.get('glow', colors.getColorOpacity(color[500], 0.5)))
+    } else if (props.glow) {
+      vars.push(css.get('glow', colors.getColorOpacity(props.color ? color[500] : secondaryHex[500], 0.3)))
+    }
 
     if (isDefault) {
       if (props.disabled) {
         vars.push(css.variables({
-          bg: gray[50],
-          text: gray[300],
-          border: gray[200],
+          bg: secondary[50],
+          text: secondary[300],
+          border: secondary[200],
           dark: {
-            bg: gray[900],
-            text: gray[600],
-            border: gray[700],
+            bg: secondary[900],
+            text: secondary[600],
+            border: secondary[700],
           },
         }))
       } else {
         vars.push(css.variables({
           bg: 'white',
-          text: gray[800],
-          border: gray[300],
-          hover: { bg: !props.loading ? gray[100] : '' },
-          active: { bg: !props.loading ? gray[200] : '' },
+          text: secondary[800],
+          border: secondary[300],
+          hover: { bg: !props.loading ? secondary[100] : '' },
+          active: { bg: !props.loading ? secondary[200] : '' },
           dark: {
-            bg: gray[800],
+            bg: secondary[800],
             text: 'white',
-            border: gray[700],
-            hover: { bg: !props.loading ? gray[700] : '', border: gray[600] },
-            active: { bg: !props.loading ? gray[600] : '', border: gray[500] },
+            border: secondary[700],
+            hover: { bg: !props.loading ? secondary[700] : '', border: secondary[600] },
+            active: { bg: !props.loading ? secondary[600] : '', border: secondary[500] },
           },
         }))
       }
@@ -96,7 +110,7 @@ const theme: ButtonTheme = {
           text: color[200],
           border: 'transparent',
           dark: {
-            bg: gray[800],
+            bg: secondary[800],
             text: color[900],
             border: 'transparent',
           },
@@ -126,17 +140,18 @@ const theme: ButtonTheme = {
       if (props.color) {
         if (props.disabled) {
           vars.push(css.variables({
-            text: gray[200],
+            text: secondary[200],
             dark: {
-              text: gray[700],
+              text: secondary[700],
             },
           }))
         } else {
           vars.push(css.variables({
             text: color[600],
+            border: props.outlined ? secondary[300] : 'transparent',
             dark: {
-              text: color[500],
-              border: props.outlined ? color[900] : 'transparent',
+              text: color[200],
+              border: props.outlined ? secondary[700] : 'transparent',
             },
           }))
           if (!props.loading) {
@@ -144,8 +159,8 @@ const theme: ButtonTheme = {
               hover: { bg: color[50] },
               active: { bg: color[100] },
               dark: {
-                hover: { bg: color[950] },
-                active: { bg: color[900] },
+                hover: { bg: secondary[700] },
+                active: { bg: secondary[600] },
               },
             }))
           }
@@ -153,27 +168,27 @@ const theme: ButtonTheme = {
       } else {
         if (props.disabled) {
           vars.push(css.variables({
-            text: gray[200],
+            text: secondary[200],
             dark: {
-              text: gray[700],
+              text: secondary[700],
             },
           }))
         } else {
           vars.push(css.variables({
-            text: gray[800],
-            border: props.outlined ? gray[300] : 'transparent',
+            text: props.outlined ? secondary[800] : secondary[600],
+            border: props.outlined ? secondary[300] : 'transparent',
             dark: {
-              text: gray[200],
-              border: props.outlined ? gray[700] : 'transparent',
+              text: props.outlined ? secondary[200] : secondary[400],
+              border: props.outlined ? secondary[700] : 'transparent',
             },
           }))
           if (!props.loading) {
             vars.push(css.variables({
-              hover: { bg: gray[100] },
-              active: { bg: gray[200] },
+              hover: { bg: secondary[100] },
+              active: { bg: secondary[200] },
               dark: {
-                hover: { bg: gray[700] },
-                active: { bg: gray[600] },
+                hover: { bg: secondary[700] },
+                active: { bg: secondary[600] },
               },
             }))
           }
@@ -196,8 +211,8 @@ const theme: ButtonTheme = {
             text: color[600],
             border: color[600],
             dark: {
-              text: color[500],
-              border: color[900],
+              text: color[200],
+              border: colors.getColorOpacity(color[500], 0.6),
             },
           }))
           if (!props.loading) {
@@ -205,8 +220,8 @@ const theme: ButtonTheme = {
               hover: { bg: color[100] },
               active: { bg: color[200] },
               dark: {
-                hover: { bg: color[950] },
-                active: { bg: color[900] },
+                hover: { bg: colors.getColorOpacity(color[500], 0.1) },
+                active: { bg: colors.getColorOpacity(color[500], 0.2) },
               },
             }))
           }
@@ -223,13 +238,13 @@ const theme: ButtonTheme = {
         }))
         if (props.disabled) {
           vars.push(css.variables({
-            bg: gray[100],
-            border: gray[300],
-            text: gray[400],
+            bg: secondary[100],
+            border: secondary[300],
+            text: secondary[400],
             dark: {
-              text: gray[700],
-              border: gray[700],
-              bg: gray[800],
+              text: secondary[700],
+              border: secondary[700],
+              bg: secondary[800],
             },
           }))
         } else {

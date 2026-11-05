@@ -3,8 +3,8 @@ import ToolbarColorToggle from './ToolbarColorToggle.vue'
 </script>
 
 <template>
-  <x-container fluid class="bg-gray-900 dark">
-    <div class="flex justify-items-center items-center py-2 text-slate-500 dark:text-slate-300 h-10 text-sm">
+  <x-container fluid class="bg-secondary-950 dark">
+    <div class="flex justify-items-center items-center py-2 text-secondary-400 dark:text-secondary-300 h-10 text-sm">
       <toolbar-color-toggle class="shrink-0" />
       <p class="text-secondary-300 font-semibold mx-2 truncate">
         Indielayer UI - Vue.js 3 / Nuxt.js 3 UI Library with Tailwind CSS 4. ⚡️ &nbsp;Build and prototype fast web applications.

@@ -137,6 +137,16 @@ app.use(UI, {
 
 ## Customization
 
+### Dark mode / `color-scheme`
+
+Indielayer uses a class toggle (`html.dark`). Advertise both schemes in the document head so browsers (including Safari Adaptive Dark Mode) skip auto-transforming light pages:
+
+```html
+<meta name="color-scheme" content="light dark" />
+```
+
+Nuxt: `app.head.meta` → `{ name: 'color-scheme', content: 'light dark' }`. Declare this in static HTML / Nuxt config — not after JS. Theme CSS still sets active `color-scheme: light` / `dark` from the class so native controls match.
+
 ### Colors
 
 Override CSS variables or Tailwind `@theme` tokens. See the [Colors](https://indielayer.com/colors) guide on the docs site.

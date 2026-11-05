@@ -8,7 +8,8 @@ export default `
 
   html.dark {
     color: #f3f4f6;
-    background-color: #111827;
+    background-color: rgb(var(--secondary-color-900));
+    color-scheme: dark;
   }
 
   *,
@@ -20,11 +21,7 @@ export default `
   .dark *,
   .dark ::before,
   .dark ::after {
-    border-color: #374151;
-  }
-
-  .dark {
-    color-scheme: dark;
+    border-color: rgba(var(--border-color), var(--border-opacity, 1));
   }
 }
 
@@ -87,5 +84,21 @@ export default `
   --error-color-800: 153, 27, 27;
   --error-color-900: 127, 29, 29;
   --error-color-950: 69, 10, 10;
+}
+
+html.dark {
+  --border-color: 20, 18, 36;
+  --border-opacity: 1;
+  --secondary-color-50: 242, 240, 248;
+  --secondary-color-100: 224, 221, 236;
+  --secondary-color-200: 202, 197, 220;
+  --secondary-color-300: 172, 167, 198;
+  --secondary-color-400: 140, 132, 172;
+  --secondary-color-500: 94, 89, 122;
+  --secondary-color-600: 50, 46, 72;
+  --secondary-color-700: 34, 31, 52;
+  --secondary-color-800: 20, 18, 36;
+  --secondary-color-900: 12, 10, 24;
+  --secondary-color-950: 7, 5, 15;
 }
 `

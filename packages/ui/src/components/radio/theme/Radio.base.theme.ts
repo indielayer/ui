@@ -1,4 +1,5 @@
 import type { RadioTheme } from '../Radio.vue'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: RadioTheme = {
   classes: {
@@ -52,7 +53,6 @@ const theme: RadioTheme = {
 
   styles: ({ props, colors, css, data }) => {
     const gray = colors.getPalette('gray')
-    const secondary = colors.getPalette('secondary')
     const color = colors.getPalette(props.color)
     const vars = []
 
@@ -74,9 +74,9 @@ const theme: RadioTheme = {
           border: gray[200],
           circle: '#fff',
           dark: {
-            bg: gray[700],
-            border: gray[700],
-            circle: gray[300],
+            bg: secondaryCssPalette[900],
+            border: secondaryCssPalette[900],
+            circle: secondaryCssPalette[400],
           },
         }))
       } else {
@@ -84,8 +84,8 @@ const theme: RadioTheme = {
           bg: gray[200],
           border: gray[200],
           dark: {
-            bg: gray[700],
-            border: gray[700],
+            bg: secondaryCssPalette[900],
+            border: secondaryCssPalette[800],
           },
         }))
       }
@@ -106,8 +106,8 @@ const theme: RadioTheme = {
           bg: '#fff',
           border: props.glow ? color[300] : gray[300],
           dark: {
-            bg: secondary[800],
-            border: props.glow ? color[300] : secondary[600],
+            bg: data.isInsideCard ? secondaryCssPalette[700] : secondaryCssPalette[800],
+            border: props.glow ? color[300] : secondaryCssPalette[600],
           },
         }))
       }

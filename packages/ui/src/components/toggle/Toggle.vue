@@ -93,8 +93,8 @@ defineExpose({ focus, blur, reset, validate, setError })
         :style="styles"
         :class="{
           [`shadow-lg shadow-${color}-500/50`]: glow && modelValue,
-          'bg-secondary-200 dark:bg-secondary-600': !disabled && !checked && !loading,
-          'bg-secondary-100 dark:bg-secondary-700': disabled || loading,
+          'bg-secondary-200 dark:bg-secondary-700': !disabled && !checked && !loading,
+          'bg-secondary-100 dark:bg-secondary-900': disabled || loading,
           'bg-[color:var(--x-toggle-bg)] dark:bg-[color:var(--x-toggle-dark-bg)]': !disabled && checked,
         }"
       >
@@ -120,7 +120,7 @@ defineExpose({ focus, blur, reset, validate, setError })
                 'translate-x-full': checked,
                 'shadow-sm': !disabled
               },
-              disabled ? 'bg-secondary-50 dark:bg-secondary-800' : 'bg-white'
+              disabled ? 'bg-secondary-50 dark:bg-secondary-600' : 'bg-white'
             ]"
           ></div>
         </div>

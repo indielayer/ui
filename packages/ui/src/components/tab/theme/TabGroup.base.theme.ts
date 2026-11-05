@@ -1,4 +1,5 @@
 import type { TabGroupTheme } from '../TabGroup.vue'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: TabGroupTheme = {
   classes: {
@@ -13,7 +14,7 @@ const theme: TabGroupTheme = {
       if (props.variant === 'block' && !props.ghost) c.push('bg-secondary-100 dark:bg-secondary-800')
 
       if (props.variant === 'compact' && !props.ghost) {
-        c.push('bg-secondary-100 dark:bg-secondary-900/40')
+        c.push('bg-secondary-100 dark:bg-secondary-600/40')
       }
 
       return c
@@ -41,11 +42,14 @@ const theme: TabGroupTheme = {
     tracker: ({ props }) => {
       const c = ['absolute transition-all duration-150']
 
-      if (props.variant === 'line') c.push('h-[2px] -mt-[2px] bg-[color:var(--x-tab-group-text)] dark:bg-[color:var(--x-tab-group-dark-text)]')
+      if (props.variant === 'line') {
+        // Indicator follows `color` (e.g. primary); falls back to secondary when unset
+        c.push('h-[2px] -mt-[2px] bg-[color:var(--x-tab-group-indicator)] dark:bg-[color:var(--x-tab-group-dark-indicator)]')
+      }
 
       if (props.variant === 'block' || props.variant === 'compact') {
         // inset-y-1 matches clip `p-1`; left/width are set from the active tab’s rect
-        c.push('rounded-md inset-y-1 bg-[color:var(--x-tab-group-bg)] dark:bg-[color:var(--x-tab-group-dark-bg)] shadow-sm')
+        c.push('rounded-md inset-y-1 bg-[color:var(--x-tab-group-bg)] dark:bg-[color:var(--x-tab-group-dark-bg)] shadow-xs')
       }
 
       return c
@@ -53,16 +57,29 @@ const theme: TabGroupTheme = {
   },
 
   styles: ({ props, colors, css }) => {
-    const secondary = colors.getPalette('secondary')
-    const color = colors.getPalette(props.color)
+    const secondary = secondaryCssPalette
+    const primary = colors.getPalette('primary')
+    const color = props.color ? colors.getPalette(props.color) : null
     const compactGhost = props.variant === 'compact' && props.ghost
+    // Line selected text: color[500]/[100]; indicator uses `color` (else primary)
+    const line = props.variant === 'line'
 
     return css.variables({
-      text: compactGhost ? secondary[900] : props.color ? color[600] : secondary[900],
+      text: line
+        ? (color ? color[600] : secondary[900])
+        : compactGhost
+          ? secondary[900]
+          : color ? color[600] : secondary[900],
+      indicator: color ? color[500] : primary[500],
       bg: compactGhost ? '#fff' : props.ghost ? secondary[100] : '#fff',
       dark: {
-        text: compactGhost ? secondary[100] : props.color ? color[300] : '#fff',
-        bg: secondary[700],
+        text: line
+          ? (color ? 'white' : secondary[100])
+          : compactGhost
+            ? secondary[100]
+            : color ? color[300] : secondary[100],
+        indicator: color ? color[500] : primary[500],
+        bg: secondary[600],
       },
     })
   },

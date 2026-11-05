@@ -3,7 +3,7 @@ import type { TableHeaderTheme } from '../TableHeader.vue'
 const theme: TableHeaderTheme = {
   classes: {
     th: ({ props }) => {
-      const classes = ['relative p-2.5 font-medium']
+      const classes = ['relative px-2.5 first:px-5 py-2 font-medium']
 
       if (props.sortable) classes.push('cursor-pointer hover:text-secondary-800 dark:hover:text-secondary-300 transition-colors duration-150 ease-in-out')
 
@@ -11,7 +11,7 @@ const theme: TableHeaderTheme = {
     },
 
     header: ({ props }) => {
-      const classes = ['flex items-center gap-1 select-none']
+      const classes = ['flex items-center gap-1 select-none dark:text-secondary-300']
 
       if (props.textAlign === 'left') classes.push('justify-start')
       else if (props.textAlign === 'right') {

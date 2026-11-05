@@ -80,6 +80,7 @@ const theme: BreadcrumbsTheme = {
 Copy `themes/base/styles.ts` or `themes/carbon/styles.ts`. Keep:
 
 - `@layer base` rules for `html`, `html.dark`, `*`, `.dark`
+- Active `color-scheme: light` on `html` and `color-scheme: dark` on `html.dark` (native controls). Dual-scheme capability for Safari Adaptive Dark Mode is declared via `<meta name="color-scheme" content="light dark">` in app HTML — do not set `color-scheme: light dark` on `:root` here
 - `:root` RGB triplets (`--primary-color-50: 236, 253, 245` — not `rgb()`)
 - semantic scales: primary, secondary, success, warning, error (`50`–`950`)
 - `--font-family-sans` / `--font-family-mono` / `--border-color`

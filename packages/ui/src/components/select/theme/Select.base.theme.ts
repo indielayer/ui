@@ -7,7 +7,7 @@ const theme: SelectTheme = {
     wrapper: ({ data }) => (data.isPopoverOpen ? 'z-10' : ''),
 
     box: ({ props, data }) => {
-      const classes = ['w-full flex items-center leading-none border border-secondary-300 dark:border-secondary-700 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
+      const classes = ['w-full flex items-center leading-none border border-secondary-300 dark:border-secondary-600 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
 
       // Per-segment shadow bleeds into joined siblings — keep elevation only when standalone
       if (!data.isInsideInputGroup) classes.push('rounded-lg', 'shadow-xs')
@@ -25,8 +25,10 @@ const theme: SelectTheme = {
       // Vertical padding so wrapped tags don't sit flush against the border
       if (props.multiple || props.multipleCheckbox) classes.push('py-1')
 
-      if (props.disabled) classes.push('bg-secondary-100 dark:bg-secondary-700 text-secondary-400 dark:text-secondary-600 cursor-not-allowed')
-      else classes.push('bg-white dark:bg-secondary-700/40 text-secondary-700 dark:text-secondary-200')
+      const darkBg = data.isInsideCard ? 'dark:bg-secondary-700' : 'dark:bg-secondary-800'
+
+      if (props.disabled) classes.push('bg-secondary-100 dark:bg-secondary-900 text-secondary-400 dark:text-secondary-600 cursor-not-allowed')
+      else classes.push(`bg-white ${darkBg} text-secondary-700 dark:text-secondary-50`)
 
       if (data.errorInternal) {
         classes.push('border-error-500 dark:border-error-400 group-focus:outline-error-500')
@@ -79,7 +81,8 @@ const theme: SelectTheme = {
   styles: ({ colors, css }) => {
     const color = colors.getPalette('primary')
 
-    return css.get('border', color[500])
+    // Match Input/Textarea focus ring (primary-400)
+    return css.get('border', color[400])
   },
 }
 

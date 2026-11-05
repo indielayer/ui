@@ -4,6 +4,7 @@
     <x-button color="primary" icon-right="star">Submit</x-button>
     <x-button color="primary" light>Light</x-button>
     <x-button color="primary" ghost>Ghost</x-button>
+    <x-button ghost>Ghost</x-button>
     <x-button color="primary" ghost outlined>Ghost Outlined Color</x-button>
     <x-button color="primary" ghost outlined disabled>Ghost Outlined Disabled</x-button>
     <x-button ghost outlined>Ghost Outlined</x-button>

@@ -84,7 +84,7 @@ const items: MenuArrayItem[] = [{
       Actions
     </x-button>
     <template #content>
-      <x-popover-container class="w-48 p-1.5">
+      <x-popover-container class="w-48 p-1">
         <x-menu
           size="sm"
           :items="items"

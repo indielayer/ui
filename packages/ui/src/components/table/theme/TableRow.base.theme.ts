@@ -3,7 +3,7 @@ import type { TableRowTheme } from '../TableRow.vue'
 const theme: TableRowTheme = {
   classes: {
     row: ({ props }) => {
-      const classes = []
+      const classes = ['text-sm']
 
       if (props.selected && props.singleSelect) {
         classes.push('shadow-[inset_2px_0] shadow-primary-500 bg-secondary-100 dark:bg-secondary-600/50')
@@ -12,7 +12,7 @@ const theme: TableRowTheme = {
       if (props.striped) {
         classes.push('even:bg-secondary-100 dark:even:bg-secondary-700/50')
       } else {
-        classes.push('border-b border-secondary-100 dark:border-secondary-700')
+        classes.push('border-t border-secondary-100 dark:border-secondary-700')
       }
 
       if (props.pointer) {

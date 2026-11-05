@@ -73,7 +73,7 @@ const inputProps = {
 export type InputProps = ExtractPublicPropTypes<typeof inputProps>
 
 type InternalClasses = 'wrapper' | 'input' | 'icon' | 'adornment' | 'adornmentStart' | 'adornmentEnd' | 'adornmentIcon' | 'adornmentSlot'
-type InternalExtraData = { errorInternal: any; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
+type InternalExtraData = { errorInternal: any; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; isInsideCard: boolean; }
 export interface InputTheme extends ThemeComponent<InputProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -107,7 +107,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import type { Size } from '../../composables/useCommon'
-import { injectDatepickerKey, injectInputGroupKey } from '../../composables/keys'
+import { injectCardKey, injectDatepickerKey, injectInputGroupKey } from '../../composables/keys'
 import { closeIcon, eyeIcon, eyeVisibleIcon } from '../../common/icons'
 
 import XLabel from '../label/Label.vue'
@@ -127,6 +127,7 @@ const inputGroup = inject(injectInputGroupKey, {
   isInsideInputGroup: false,
   groupProps: {},
 })
+const isInsideCard = inject(injectCardKey, false)
 
 const emit = defineEmits(useInputtable.emits())
 const isInsideDatepicker = inject(injectDatepickerKey, false)
@@ -255,6 +256,7 @@ const { styles, classes, className } = useTheme('Input', {}, themeProps, {
   errorInternal,
   isInsideInputGroup,
   inputGroupPosition,
+  isInsideCard,
 })
 
 defineExpose({ focus, blur, reset, validate, setError })

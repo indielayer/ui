@@ -11,7 +11,7 @@ const theme: AccordionItemTheme = {
         if (props.iconAlign === 'left') classes.push('pl-8 pr-3')
         else classes.push('pr-8 pl-3')
         classes.push('py-2')
-        if (!props.disabled) classes.push('hover:bg-secondary-100 dark:hover:bg-secondary-600')
+        if (!props.disabled) classes.push('hover:bg-secondary-100 dark:hover:bg-secondary-700')
       }
 
       if (!props.disabled) classes.push('cursor-pointer')

@@ -105,16 +105,16 @@ describe('Button with UI defaults', () => {
     const withDefault = mountButton({ color: 'primary' }, { ghost: true })
     const without = mountButton({ color: 'primary' })
 
-    expect(withDefault.classes().join(' ')).not.toContain('shadow-xs')
-    expect(without.classes().join(' ')).toContain('shadow-xs')
+    expect(withDefault.classes().join(' ')).not.toMatch(/button--glow/)
+    expect(without.classes().join(' ')).toMatch(/button--glow/)
   })
 
   it('respects explicit ghost=false over defaults', () => {
     const withDefault = mountButton({ color: 'primary' }, { ghost: true })
     const explicit = mountButton({ color: 'primary', ghost: false }, { ghost: true })
 
-    expect(withDefault.classes().join(' ')).not.toContain('shadow-xs')
-    expect(explicit.classes().join(' ')).toContain('shadow-xs')
+    expect(withDefault.classes().join(' ')).not.toMatch(/button--glow/)
+    expect(explicit.classes().join(' ')).toMatch(/button--glow/)
   })
 })
 
