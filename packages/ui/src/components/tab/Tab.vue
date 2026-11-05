@@ -219,7 +219,7 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
       ref="elRef"
       :type="tag === 'button' ? 'button' : undefined"
       :to="to"
-      :color="selected ? color : undefined"
+      :color="props.color || selected ? color : undefined"
       :style="[
         styles,
         to && selected && isBlockLike
@@ -262,7 +262,9 @@ const { styles, classes, className } = useTheme('Tab', {}, themeProps, {
             v-if="showLabel"
             :class="classes.label"
           >
+            <slot name="prefix"></slot>
             {{ computedLabel }}
+            <slot name="suffix"></slot>
           </div>
           <x-icon
             v-if="resolvedProps.removable"

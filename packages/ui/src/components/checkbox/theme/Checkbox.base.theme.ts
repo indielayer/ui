@@ -1,4 +1,5 @@
 import type { CheckboxTheme } from '../Checkbox.vue'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: CheckboxTheme = {
   classes: {
@@ -60,7 +61,6 @@ const theme: CheckboxTheme = {
 
   styles({ props, colors, css, data }) {
     const gray = colors.getPalette('gray')
-    const secondary = colors.getPalette('secondary')
     const color = colors.getPalette(props.color)
     const vars = []
 
@@ -80,8 +80,8 @@ const theme: CheckboxTheme = {
         bg: gray[100],
         border: gray[200],
         dark: {
-          bg: gray[600],
-          border: gray[500],
+          bg: secondaryCssPalette[900],
+          border: secondaryCssPalette[800],
         },
       }))
     } else {
@@ -99,8 +99,8 @@ const theme: CheckboxTheme = {
           bg: '#fff',
           border: props.glow ? color[300] : gray[300],
           dark: {
-            bg: secondary[800],
-            border: props.glow ? color[300] : secondary[600],
+            bg: data.isInsideCard ? secondaryCssPalette[700] : secondaryCssPalette[800],
+            border: props.glow ? color[300] : secondaryCssPalette[600],
           },
         }))
       }

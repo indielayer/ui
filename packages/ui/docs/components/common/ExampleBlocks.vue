@@ -194,13 +194,13 @@ onBeforeUnmount(() => {
           hide-footer
         />
       </div>
-      <x-card class="p-4 flex items-center mt-4">
+      <x-card class="p-4 flex items-center gap-3 mt-4">
         <x-badge outlined position="bottom">
           <x-avatar :image="exampleAvatar" rounded/>
         </x-badge>
-        <div class="ml-4">
-          <div class="font-bold">John Smith</div>
-          <div class="text-gray-400 text-sm">jsmith@indielayer.com</div>
+        <div class="min-w-0">
+          <div class="font-medium text-secondary-900 dark:text-secondary-100">John Smith</div>
+          <div class="text-secondary-500 dark:text-secondary-400 text-sm truncate">jsmith@indielayer.com</div>
         </div>
       </x-card>
       <div class="flex space-x-2 mt-4">
@@ -215,12 +215,12 @@ onBeforeUnmount(() => {
           <x-button color="primary" light>Light</x-button>
         </div>
       </div>
-      <x-card flat class="border mt-4">
-        <div class="p-2 flex items-center">
-          <x-avatar :image="exampleAvatar" size="lg"/>
-          <div class="ml-4">
-            <div class="font-bold">{{ nowPlaying.title }}</div>
-            <div class="text-gray-400 text-sm">{{ nowPlaying.artist }}</div>
+      <x-card class="mt-4">
+        <div class="p-3 flex items-center">
+          <x-avatar :image="exampleAvatar" size="lg" rounded/>
+          <div class="ml-4 min-w-0">
+            <div class="font-medium text-secondary-900 dark:text-secondary-100">{{ nowPlaying.title }}</div>
+            <div class="text-secondary-500 dark:text-secondary-400 text-sm">{{ nowPlaying.artist }}</div>
           </div>
         </div>
         <x-divider/>
@@ -259,7 +259,7 @@ onBeforeUnmount(() => {
           value="a"
           label="Credit card"
           class="border p-3 rounded-lg w-full"
-          :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': radio === 'a'}"
+          :class="{ 'bg-primary-50 dark:bg-gray-800 border-primary-400 dark:border-primary-800': radio === 'a'}"
         >
           <div class="text-gray-400 font-light text-sm">VISA · · · · 2592</div>
         </x-radio>
@@ -270,13 +270,13 @@ onBeforeUnmount(() => {
           value="b"
           label="Bank account"
           class="border p-3 rounded-lg w-full"
-          :class="{ 'bg-emerald-50 dark:bg-gray-800 border-emerald-400 dark:border-emerald-800': radio === 'b'}"
+          :class="{ 'bg-primary-50 dark:bg-gray-800 border-primary-400 dark:border-primary-800': radio === 'b'}"
         >
           <div class="text-gray-400 font-light text-sm">Santander · · · · 1580</div>
         </x-radio>
       </div>
       <div class="my-3">
-        <x-alert type="success" color="success" outlined>User details updated!</x-alert>
+        <x-alert type="success" color="primary" outlined>User details updated!</x-alert>
       </div>
       <div>
         <x-form :auto-focus="false">

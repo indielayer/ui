@@ -3,7 +3,7 @@ import type { AvatarTheme } from '../Avatar.vue'
 const theme: AvatarTheme = {
   classes: {
     wrapper({ props }) {
-      const classes = ['relative inline-flex items-center justify-center overflow-hidden align-middle border box-content']
+      const classes = ['relative inline-flex items-center justify-center overflow-hidden align-middle border box-content font-medium']
 
       // radius
       classes.push(props.rounded ? 'rounded-full' : 'rounded-lg')
@@ -34,7 +34,8 @@ const theme: AvatarTheme = {
       text: color[500],
       border: props.outlined ? color[600] : 'transparent',
       dark: {
-        bg: color[900],
+        bg: color[950],
+        text: color[300],
       },
     })
   },

@@ -1,4 +1,5 @@
 import type { DatepickerTheme } from '../Datepicker.vue'
+import { secondaryCssPalette } from '../../../common/secondaryTokens'
 
 const theme: DatepickerTheme = {
   classes: {
@@ -6,9 +7,9 @@ const theme: DatepickerTheme = {
     wrapper: ({ data }) => (data.isMenuOpen ? 'z-10' : ''),
   },
 
-  styles({ props, colors, css, data }) {
+  styles({ colors, css }) {
     const primary = colors.getPalette('primary')
-    const secondary = colors.getPalette('secondary')
+    // One step darker than form fields (secondary-700) so the menu sits recessed on the canvas
     const vars: Array<Record<string, string> | string> = [`
     /*General*/
     --dp-font-family: var(--font-family-sans);
@@ -48,20 +49,21 @@ const theme: DatepickerTheme = {
 
     vars.push(css.variables({
       bg: '#fff',
-      text: secondary[800],
-      disabled: secondary[300],
+      text: secondaryCssPalette[800],
+      disabled: secondaryCssPalette[300],
       range: primary[100],
-      icon: secondary[500],
+      icon: secondaryCssPalette[500],
       primary: primary[500],
-      border: secondary[200],
+      border: secondaryCssPalette[200],
       dark: {
-        bg: secondary[800],
-        text: secondary[100],
-        disabled: secondary[600],
-        range: primary[900],
-        icon: secondary[200],
+        bg: secondaryCssPalette[800],
+        text: secondaryCssPalette[50],
+        disabled: secondaryCssPalette[500],
+        // Soft primary wash — mirrors light primary[100], readable on secondary-800
+        range: colors.getColorOpacity(primary[500], 0.28),
+        icon: secondaryCssPalette[400],
         primary: primary[500],
-        border: secondary[700],
+        border: secondaryCssPalette[700],
       },
     }))
 

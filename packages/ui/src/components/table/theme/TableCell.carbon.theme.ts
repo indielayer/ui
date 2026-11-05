@@ -2,15 +2,18 @@ import type { TableCellTheme } from '../TableCell.vue'
 
 const theme: TableCellTheme = {
   classes: {
+    // Padding/`last:` must live on `<td>` so pseudo-classes are row-scoped
     wrapper: ({ props }) => {
       const c = ['last:pr-0 px-3']
 
       c.push(props.dense ? 'py-2' : 'py-4')
 
-      if (props.textAlign === 'left') c.push('text-left')
-      else if (props.textAlign === 'center') c.push('text-center')
-      else if (props.textAlign === 'right') c.push('text-right')
-      else if (props.textAlign === 'justify') c.push('text-justify')
+      if (!(props.to || props.href)) {
+        if (props.textAlign === 'left') c.push('text-left')
+        else if (props.textAlign === 'center') c.push('text-center')
+        else if (props.textAlign === 'right') c.push('text-right')
+        else if (props.textAlign === 'justify') c.push('text-justify')
+      }
 
       if (props.verticalAlign === 'baseline') c.push('align-baseline')
       else if (props.verticalAlign === 'bottom') c.push('align-bottom')
@@ -18,6 +21,19 @@ const theme: TableCellTheme = {
       else if (props.verticalAlign === 'text-bottom') c.push('align-text-bottom')
       else if (props.verticalAlign === 'text-top') c.push('align-text-top')
       else if (props.verticalAlign === 'top') c.push('align-top')
+
+      if (props.truncate && !(props.to || props.href)) c.push('truncate')
+
+      return c
+    },
+
+    link: ({ props }) => {
+      const c = ['flex items-center min-w-0 w-full h-full']
+
+      if (props.textAlign === 'left') c.push('justify-start text-left')
+      else if (props.textAlign === 'center') c.push('justify-center text-center')
+      else if (props.textAlign === 'right') c.push('justify-end text-right')
+      else if (props.textAlign === 'justify') c.push('justify-center text-justify')
 
       if (props.truncate) c.push('truncate')
 

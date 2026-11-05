@@ -92,7 +92,7 @@
   --color-error-900: rgb(var(--error-color-900));
   --color-error-950: rgb(var(--error-color-950));
 
-  --color-border: rgb(var(--border-color));
+  --color-border: rgba(var(--border-color), var(--border-opacity, 1));
 
   --font-sans: var(--font-family-sans);
   --font-mono: var(--font-family-mono);

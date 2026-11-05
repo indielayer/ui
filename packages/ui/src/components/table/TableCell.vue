@@ -41,7 +41,7 @@ export type TableCellTextAlign = typeof validators.textAlign[number]
 export type TableCellVerticalAlign = typeof validators.verticalAlign[number]
 export type TableCellProps = ExtractPublicPropTypes<typeof tableCellProps>
 
-type InternalClasses = 'wrapper'
+type InternalClasses = 'wrapper' | 'link'
 export interface TableCellTheme extends ThemeComponent<TableCellProps, InternalClasses> {}
 
 export default {
@@ -70,7 +70,7 @@ const { styles, classes, className } = useTheme('TableCell', {}, props)
   <td
     v-if="to || href"
     class="relative"
-    :class="className"
+    :class="[className, classes.wrapper]"
     :style="[{ width: computedWidth, minWidth: computedWidth, maxWidth: computedWidth }]"
   >
     <component
@@ -79,9 +79,9 @@ const { styles, classes, className } = useTheme('TableCell', {}, props)
       :target="target"
       :to="to"
       :style="styles"
-      :class="classes.wrapper"
+      :class="classes.link"
     >
-      <div :class="[truncate ? 'truncate' : '']">
+      <div :class="[truncate ? 'truncate min-w-0' : '']">
         <slot></slot>
       </div>
     </component>

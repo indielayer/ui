@@ -54,7 +54,7 @@ const textareaProps = {
 export type TextareaProps = ExtractPublicPropTypes<typeof textareaProps>
 
 type InternalClasses = 'wrapper' | 'input' | 'icon' | 'adornment' | 'adornmentStart' | 'adornmentEnd' | 'adornmentIcon' | 'adornmentSlot'
-type InternalExtraData = { errorInternal: Ref<boolean>; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; }
+type InternalExtraData = { errorInternal: Ref<boolean>; isInsideInputGroup: boolean; inputGroupPosition: import('../../common/inputGroupRadius').InputGroupPosition | undefined; isInsideCard: boolean; }
 
 export interface TextareaTheme extends ThemeComponent<TextareaProps, InternalClasses, InternalExtraData> {}
 
@@ -90,7 +90,7 @@ import { useInputtable } from '../../composables/useInputtable'
 import { useInteractive } from '../../composables/useInteractive'
 import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import type { Size } from '../../composables/useCommon'
-import { injectInputGroupKey } from '../../composables/keys'
+import { injectCardKey, injectInputGroupKey } from '../../composables/keys'
 
 import XLabel from '../label/Label.vue'
 import XInputFooter from '../inputFooter/InputFooter.vue'
@@ -109,7 +109,7 @@ const inputGroup = inject(injectInputGroupKey, {
   isInsideInputGroup: false,
   groupProps: {},
 })
-
+const isInsideCard = inject(injectCardKey, false)
 const emit = defineEmits(useInputtable.emits())
 
 const fallthrough = useFallthroughNativeAttrs()
@@ -211,6 +211,7 @@ const { styles, classes, className } = useTheme('Textarea', {}, themeProps, {
   errorInternal,
   isInsideInputGroup,
   inputGroupPosition,
+  isInsideCard,
 })
 
 defineExpose({ focus, blur, reset, validate, setError })

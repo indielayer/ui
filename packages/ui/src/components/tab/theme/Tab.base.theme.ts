@@ -23,37 +23,35 @@ const theme: TabTheme = {
   classes: {
     wrapper: ({ props, data }) => {
       const c = ['transition-colors duration-150 ease-in-out whitespace-nowrap text-center']
-      const hasAccent = !!(props.color || data.color)
 
-      if (data.variant === 'line') c.push('py-2')
+      if (data.variant === 'line') c.push('py-2 px-3')
       if (data.variant === 'block') c.push('py-1 px-8')
 
       if (data.variant === 'compact') {
         if (data.showLabel) c.push('px-2.5')
         c.push(compactSizeClasses(props.size, !data.showLabel))
-        if (data.ghost && !props.color) c.push('text-secondary-800 dark:text-secondary-100')
+        if (data.ghost && !props.color && data.selected) c.push('text-secondary-800 dark:text-secondary-100')
       } else if (props.size === 'xs') c.push('text-xs')
       else if (props.size === 'sm') c.push('text-sm')
       else if (props.size === 'xl') c.push('text-base')
 
-      if (!data.selected && !hasAccent) {
-        c.push('text-secondary-700 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-200')
+      // Colored tabs keep their semantic color when idle; neutrals use secondary
+      if (!data.selected && !props.color) {
+        c.push('text-secondary-800 dark:text-secondary-300 hover:text-secondary-700 dark:hover:text-secondary-200')
       }
 
       return c
     },
 
-    content: ({ data, props }) => {
-      const c = ['flex items-center justify-center']
-      const hasAccent = !!(props.color || data.color)
-
-      // Accent tabs still dim inactive via opacity
-      if (!data.selected && hasAccent) c.push('opacity-75')
-
-      return c
+    content: () => {
+      return ['flex items-center justify-center']
     },
 
-    label: ({ data }) => (data.selected ? '' : ''),
+    label: ({ data }) => {
+      const classes = ['flex items-center justify-center gap-1.5']
+
+      return classes
+    },
 
     icon: ({ data }) => (data.showLabel ? 'mr-1.5' : ''),
 

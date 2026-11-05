@@ -751,32 +751,32 @@ const menuThemeCss = computed(() => {
 }
 
 .dp__theme_dark {
-  --dp-background-color: var(--x-datepicker-dark-bg, #212121) !important;
-  --dp-text-color: var(--x-datepicker-dark-text, #fff) !important;
-  --dp-hover-color: var(--x-datepicker-dark-range, #484848) !important;
-  --dp-hover-text-color: #fff;
-  --dp-hover-icon-color: var(--x-datepicker-dark-icon, #959595) !important;
+  --dp-background-color: var(--x-datepicker-dark-bg, rgb(var(--secondary-color-900))) !important;
+  --dp-text-color: var(--x-datepicker-dark-text, rgb(var(--secondary-color-50))) !important;
+  --dp-hover-color: var(--x-datepicker-dark-range, rgb(var(--primary-color-500) / 0.28)) !important;
+  --dp-hover-text-color: rgb(var(--secondary-color-50));
+  --dp-hover-icon-color: var(--x-datepicker-dark-icon, rgb(var(--secondary-color-400))) !important;
   --dp-primary-color: var(--x-datepicker-dark-primary, #1976d2) !important;
   --dp-primary-disabled-color: #61a8ea;
   --dp-primary-text-color: #fff;
-  --dp-secondary-color: var(--x-datepicker-dark-disabled, #a9a9a9) !important;
-  --dp-border-color: var(--x-datepicker-dark-border, #2d2d2d) !important;
-  --dp-menu-border-color: var(--x-datepicker-dark-border, #2d2d2d) !important;
-  --dp-border-color-hover: #aaaeb7;
-  --dp-disabled-color: #737373;
-  --dp-disabled-color-text: var(--x-datepicker-dark-disabled, #d0d0d0) !important;
-  --dp-scroll-bar-background: #212121;
-  --dp-scroll-bar-color: var(--x-datepicker-dark-range, #484848) !important;
+  --dp-secondary-color: var(--x-datepicker-dark-disabled, rgb(var(--secondary-color-500))) !important;
+  --dp-border-color: var(--x-datepicker-dark-border, rgb(var(--secondary-color-700))) !important;
+  --dp-menu-border-color: var(--x-datepicker-dark-border, rgb(var(--secondary-color-700))) !important;
+  --dp-border-color-hover: rgb(var(--secondary-color-600));
+  --dp-disabled-color: rgb(var(--secondary-color-800));
+  --dp-disabled-color-text: var(--x-datepicker-dark-disabled, rgb(var(--secondary-color-500))) !important;
+  --dp-scroll-bar-background: var(--x-datepicker-dark-bg, rgb(var(--secondary-color-900)));
+  --dp-scroll-bar-color: var(--x-datepicker-dark-range, rgb(var(--primary-color-500) / 0.28)) !important;
   --dp-success-color: #00701a;
   --dp-success-color-disabled: #428f59;
-  --dp-icon-color: var(--x-datepicker-dark-icon, #959595) !important;
+  --dp-icon-color: var(--x-datepicker-dark-icon, rgb(var(--secondary-color-400))) !important;
   --dp-danger-color: #e53935;
   --dp-marker-color: #e53935;
-  --dp-tooltip-color: #3e3e3e;
+  --dp-tooltip-color: rgb(var(--secondary-color-800));
   --dp-highlight-color: rgb(0 92 178 / 20%);
-  --dp-range-between-dates-background-color: var(--x-datepicker-dark-range, #484848) !important;
-  --dp-range-between-dates-text-color: var(--x-datepicker-dark-text, #fff) !important;
-  --dp-range-between-border-color: var(--x-datepicker-dark-text, #fff) !important;
+  --dp-range-between-dates-background-color: var(--x-datepicker-dark-range, rgb(var(--primary-color-500) / 0.28)) !important;
+  --dp-range-between-dates-text-color: var(--x-datepicker-dark-text, rgb(var(--secondary-color-50))) !important;
+  --dp-range-between-border-color: var(--x-datepicker-dark-range, rgb(var(--primary-color-500) / 0.28)) !important;
 }
 
 .dp__theme_light {

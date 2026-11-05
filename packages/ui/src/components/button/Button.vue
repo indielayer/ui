@@ -205,6 +205,19 @@ const { className, classes, styles } = useTheme('Button', {}, computedProps, {
   inputGroupPosition,
 })
 
+const hasGlowShadow = computed(() => {
+  if (computedDisabled.value || props.loading || isInsideInputGroup.value) return false
+  if (resolvedProps.value.glow) return true
+
+  const color = computedColor.value
+  const flat = computedFlat.value
+  const ghost = computedGhost.value
+  const light = computedLight.value
+  const outlined = computedOutlined.value
+
+  return !!(color && !flat && !ghost && !light && !outlined)
+})
+
 const { focus, blur } = useInteractive(elRef)
 
 defineExpose({ focus, blur })
@@ -228,7 +241,7 @@ defineExpose({ focus, blur })
       :class="[
         className,
         $style['button'],
-        (resolvedProps.glow && !computedDisabled && !loading) ? $style['button--glow'] : '',
+        hasGlowShadow ? $style['button--glow'] : '',
         classes.wrapper,
         {
           'w-full': resolvedProps.block,
@@ -281,7 +294,7 @@ defineExpose({ focus, blur })
     :class="[
       className,
       $style['button'],
-      (resolvedProps.glow && !computedDisabled && !loading) ? $style['button--glow'] : '',
+      hasGlowShadow ? $style['button--glow'] : '',
       classes.wrapper,
       { 'w-full': resolvedProps.block }
     ]"
@@ -331,7 +344,13 @@ defineExpose({ focus, blur })
 }
 
 .button--glow {
-  box-shadow: 0 0 #000, 0 0 #000, 0 10px 15px -3px var(--x-button-glow), 0 4px 6px -4px var(--x-button-glow);
+  box-shadow:
+    rgba(255, 255, 255, 0.22) 0 0.5px 0 inset,
+    var(--x-button-glow) 0 10px 28px -12px;
+}
+
+.button--glow:active {
+  box-shadow: none;
 }
 
 .button:hover {

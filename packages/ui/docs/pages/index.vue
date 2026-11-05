@@ -22,6 +22,8 @@ const tailwindSetupSnippet = `/* src/assets/tailwind.css */
   --color-primary-500: var(--color-emerald-500);
   --color-secondary-500: var(--color-slate-500);
 }`
+
+const colorSchemeMetaSnippet = '<meta name="color-scheme" content="light dark" />'
 </script>
 
 <template>
@@ -80,7 +82,18 @@ const tailwindSetupSnippet = `/* src/assets/tailwind.css */
       <p class="my-4 text-sm text-gray-600 dark:text-gray-400">
         Add <code>@tailwindcss/postcss</code> to your PostCSS config (Vite <code>css.postcss.plugins</code> or Nuxt <code>postcss.plugins</code>). See the <x-link href="https://tailwindcss.com/docs/upgrade-guide" external shadow color="primary">upgrade guide</x-link> when migrating from v3.
       </p>
-      <h3 class="text-2xl mt-8 mb-4">3. Load the UI in your project</h3>
+      <h3 class="text-2xl mt-8 mb-4">3. Declare light and dark color schemes</h3>
+      <p class="my-4">
+        Indielayer uses a class toggle (<code class="text-sm">html.dark</code>). Advertise both schemes in the document head so browsers (including Safari Adaptive Dark Mode) know the app supplies its own dark styles — do this in static HTML, not after JS runs:
+      </p>
+      <code-snippet
+        lang="html"
+        :code="colorSchemeMetaSnippet"
+      />
+      <p class="my-4 text-sm text-gray-600 dark:text-gray-400">
+        Nuxt: set the same meta under <code>app.head.meta</code> in <code>nuxt.config</code>. Theme CSS still sets <code>color-scheme: light</code> / <code>dark</code> from the class so native controls match the active theme.
+      </p>
+      <h3 class="text-2xl mt-8 mb-4">4. Load the UI in your project</h3>
       <h4 class="text-xl mt-8 mb-4">Load on a Vue 3 project</h4>
       <code-snippet
         lang="js"
@@ -131,7 +144,7 @@ app.use(UI, {
   },
 })`"
       />
-      <h3 class="text-2xl mt-8 mb-4">4. (optional) Load only the components you want</h3>
+      <h3 class="text-2xl mt-8 mb-4">5. (optional) Load only the components you want</h3>
       <code-snippet
         lang="js"
         :code="`import { createApp } from 'vue'

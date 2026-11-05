@@ -1,5 +1,5 @@
 import { ViteSSG } from 'vite-ssg'
-import UI, { BaseTheme } from '@indielayer/ui'
+import UI, { BaseTheme, type UIOptions } from '@indielayer/ui'
 import App from './App.vue'
 import { routes, scrollBehavior } from './router'
 import icons from './icons'
@@ -28,8 +28,10 @@ export const createApp = ViteSSG(
       prefix: 'X',
       icons,
       theme: BaseTheme,
-      defaults: {},
-    })
+      defaults: {
+        // TabGroup: { color: 'primary' },
+      },
+    } satisfies UIOptions)
 
     app.component('CopyButton', CopyButton)
     app.component('CodeSnippet', CodeSnippet)

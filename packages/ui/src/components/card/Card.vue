@@ -26,10 +26,13 @@ export default {
 </script>
 
 <script setup lang="ts">
-import type { ExtractPublicPropTypes } from 'vue'
+import { provide, type ExtractPublicPropTypes } from 'vue'
+import { injectCardKey } from '../../composables/keys'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 const props = defineProps(cardProps)
+
+provide(injectCardKey, true)
 
 const { styles, classes, className } = useTheme('Card', {}, props)
 </script>
@@ -37,7 +40,7 @@ const { styles, classes, className } = useTheme('Card', {}, props)
 <template>
   <component
     :is="tag"
-    :styles="styles"
+    :style="styles"
     :class="[
       className,
       classes.wrapper

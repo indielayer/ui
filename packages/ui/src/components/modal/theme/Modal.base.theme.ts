@@ -35,7 +35,7 @@ const theme: ModalTheme = {
     },
 
     modal: ({ props, data }) => {
-      const classes = ['relative flex flex-col z-10 bg-secondary-50 dark:bg-secondary-900 rounded-xl shadow-lg transform transition-all overflow-hidden max-h-full w-full min-h-0']
+      const classes = ['relative flex flex-col z-10 bg-secondary-50 dark:bg-secondary-950 rounded-xl shadow-lg transform transition-all overflow-hidden max-h-full w-full min-h-0']
 
       if (data.visible) classes.push('ease-out duration-200 opacity-100 translate-y-0 sm:scale-100')
       else classes.push('ease-in duration-200 opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95')
@@ -52,7 +52,7 @@ const theme: ModalTheme = {
 
     closeIcon: '!absolute top-3 z-10 right-3',
 
-    header: 'flex items-center gap-3 text-lg pl-6 py-4 pr-12 bg-white dark:bg-secondary-800 dark:border-secondary-700 border-secondary-100 dark:border-secondary-700',
+    header: 'flex items-center gap-3 text-lg pl-5 py-4 pr-12 bg-white dark:bg-secondary-800 dark:border-secondary-700',
 
     headerContent: 'min-w-0 flex-1 flex flex-col justify-center gap-0.5',
 
@@ -60,14 +60,14 @@ const theme: ModalTheme = {
 
     icon: 'text-secondary-500 dark:text-secondary-400',
 
-    content: 'px-6 py-4',
+    content: 'px-5 py-4',
     actions: 'flex gap-4 bg-white dark:bg-secondary-800 py-3 px-4 justify-end border-t border-secondary-100 dark:border-secondary-700',
 
     label: 'text-xs text-secondary-500 dark:text-secondary-400 leading-none',
 
     title: 'text-xl font-semibold leading-snug',
 
-    description: 'text-sm text-secondary-500 dark:text-secondary-400 mb-8',
+    description: 'text-sm text-secondary-500 dark:text-secondary-400',
   },
 }
 

@@ -20,7 +20,7 @@ const checkboxProps = {
 export type CheckboxProps = ExtractPublicPropTypes<typeof checkboxProps>
 
 type InternalClasses = 'wrapper' | 'content' | 'box' | 'icon' | 'label'
-type InternalExtraData = { checked: Ref<boolean>; isInsideForm: boolean; isInsideFormGroup: boolean;}
+type InternalExtraData = { checked: Ref<boolean>; isInsideForm: boolean; isInsideFormGroup: boolean; isInsideCard: boolean; }
 export interface CheckboxTheme extends ThemeComponent<CheckboxProps, InternalClasses, InternalExtraData> {}
 
 export default {
@@ -46,19 +46,21 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, unref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
+import { inject, ref, unref, watch, type ExtractPublicPropTypes, type Ref } from 'vue'
 import { scheduleAnimationFrame } from '../../common/utils'
 import { useColors } from '../../composables/useColors'
 import { useCommon } from '../../composables/useCommon'
 import { useInputtable } from '../../composables/useInputtable'
 import { useFallthroughNativeAttrs } from '../../composables/useFallthroughNativeAttrs'
 import { useInteractive } from '../../composables/useInteractive'
+import { injectCardKey } from '../../composables/keys'
 import { useTheme, type ThemeComponent } from '../../composables/useTheme'
 
 import XInputFooter from '../inputFooter/InputFooter.vue'
 import XSpinner from '../spinner/Spinner.vue'
 
 const props = defineProps(checkboxProps)
+const isInsideCard = inject(injectCardKey, false)
 
 const emit = defineEmits(useInputtable.emits(false))
 
@@ -151,7 +153,7 @@ const listeners = {
   },
 }
 
-const { styles, classes, className } = useTheme('Checkbox', {}, props, { checked, isInsideForm, isInsideFormGroup })
+const { styles, classes, className } = useTheme('Checkbox', {}, props, { checked, isInsideForm, isInsideFormGroup, isInsideCard })
 
 defineExpose({ focus, blur, toggle, reset, validate, setError })
 </script>
