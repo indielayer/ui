@@ -53,10 +53,12 @@ const theme: TabGroupTheme = {
     const primary = colors.getPalette('primary')
     const color = props.color ? colors.getPalette(props.color) : null
     const compactGhost = props.variant === 'compact' && props.ghost
-    // Selected text: light → color (else primary); dark → white (ghost compact keeps secondary)
+    const line = props.variant === 'line'
+    // Selected text (light): color, else primary on line only / secondary otherwise
+    // Selected text (dark): white (ghost compact keeps secondary)
     const selectedText = compactGhost
       ? secondary[900]
-      : color ? color[600] : primary[600]
+      : color ? color[600] : line ? primary[600] : secondary[900]
     const selectedTextDark = compactGhost ? secondary[50] : 'white'
     const surface = color || primary
 
