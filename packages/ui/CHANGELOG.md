@@ -1,5 +1,14 @@
 # @indielayer/ui
 
+## 2.2.2
+
+### Patch Changes
+
+- fix(tabs): ahref link colors ([`8f6adbd`](https://github.com/indielayer/ui/commit/8f6adbd44d246b1fb5516d0cf067eb1d71399444))
+- fix(tab): selected tab link color ([`312bc29`](https://github.com/indielayer/ui/commit/312bc29726dd412097811571f4f28bf458da031b))
+- fix(avatar): keep palette background with images (avoid transparent chip) ([`0823127`](https://github.com/indielayer/ui/commit/0823127f35060cd46f9f6f30c34b0a7e641a7cc9))
+- fix(select): narrow widths ([`0823127`](https://github.com/indielayer/ui/commit/0823127f35060cd46f9f6f30c34b0a7e641a7cc9))
+
 ## 2.2.1
 
 ### Patch Changes
