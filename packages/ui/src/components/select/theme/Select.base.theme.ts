@@ -7,7 +7,9 @@ const theme: SelectTheme = {
     wrapper: ({ data }) => (data.isPopoverOpen ? 'z-10' : ''),
 
     box: ({ props, data }) => {
-      const classes = ['w-full flex items-center leading-none border border-secondary-300 dark:border-secondary-600 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
+      // Avoid leading-none + overflow:hidden — that clips descenders (g, y, p).
+      // Horizontal ellipsis lives on the selected-label span in Select.vue.
+      const classes = ['w-full flex items-center border border-secondary-300 dark:border-secondary-600 outline-transparent outline outline-2 outline-offset-[-1px] transition-all duration-150 ease-in-out']
 
       // Per-segment shadow bleeds into joined siblings — keep elevation only when standalone
       if (!data.isInsideInputGroup) classes.push('rounded-lg', 'shadow-xs')
@@ -38,10 +40,6 @@ const theme: SelectTheme = {
         if (data.isPopoverOpen) classes.push('outline-[color:var(--x-select-border)]!')
       }
 
-      if (!props.multiple && !props.multipleCheckbox) {
-        classes.push('truncate')
-      }
-
       if (props.clearable) {
         classes.push('pr-14')
       } else {
@@ -58,7 +56,9 @@ const theme: SelectTheme = {
 
     search: 'p-1 mb-0.5',
 
-    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-0',
+    // min-w-[280px]: readable options when the trigger is narrow (e.g. "All").
+    // Pair with auto-size="min" so the popper can grow past a short trigger.
+    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-[280px]',
 
     iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none',
 

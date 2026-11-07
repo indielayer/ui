@@ -813,8 +813,7 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
           ref="popoverRef"
           :disabled="isDisabled"
           :placement="placement"
-          auto-size
-          popper-class="x-select-popper"
+          auto-size="min"
         >
           <slot
             name="input"
@@ -879,7 +878,11 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
                       <slot name="prefix" :item="getItem(selected) || fallbackSelectOption(selected)">{{ getItem(selected)?.prefix }}</slot>
                     </span>
 
-                    <span class="flex-1 min-w-0 truncate">
+                    <!--
+                      Ellipsis needs overflow, which clips descenders when leading is too tight.
+                      leading-normal + slight padding keeps g/y/p inside the clip box.
+                    -->
+                    <span class="flex-1 min-w-0 truncate leading-normal py-px -my-px">
                       {{ getLabel(selected) }}
                     </span>
 
@@ -1048,14 +1051,3 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>
-
-<style>
-/*
-  floating-vue `autoSize: true` sets inline `width` on `.v-popper__inner` to the
-  trigger width. Put the floor on that node so short triggers (e.g. "All") still
-  get a readable options panel, while wide triggers keep matching width.
-*/
-.v-popper__popper.x-select-popper .v-popper__inner {
-  min-width: 280px;
-}
-</style>

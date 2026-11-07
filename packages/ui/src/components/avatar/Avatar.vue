@@ -91,21 +91,22 @@ const { styles, classes, className } = useTheme('Avatar', {}, props, { source })
       classes.wrapper,
     ]"
   >
+    <span
+      v-if="name"
+      class="leading-none"
+    >{{ initials }}</span>
+
+    <slot v-else name="avatarIcon">
+      <x-icon :size="size" :icon="avatarIcon"/>
+    </slot>
+
+    <!-- After fallbacks so opaque photos cover them; blank/transparent images keep the chip. -->
     <img
       v-if="source"
       :alt="alt"
       :src="image"
       class="absolute top-0 left-0 h-full w-full"
     />
-
-    <span
-      v-if="name"
-      class="leading-none"
-    >{{ initials }}</span>
-
-    <slot v-else-if="!name" name="avatarIcon">
-      <x-icon :size="size" :icon="avatarIcon"/>
-    </slot>
   </component>
 </template>
 

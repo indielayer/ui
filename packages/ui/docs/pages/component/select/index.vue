@@ -6,6 +6,8 @@ import DescriptionDemoCode from './description.vue?raw'
 import DescriptionDemo from './description.vue'
 import MultipleDemoCode from './multiple.vue?raw'
 import MultipleDemo from './multiple.vue'
+import NarrowDemoCode from './narrow.vue?raw'
+import NarrowDemo from './narrow.vue'
 import SizeDemoCode from './size.vue?raw'
 import SizeDemo from './size.vue'
 import StatesDemoCode from './states.vue?raw'
@@ -29,6 +31,11 @@ const demos = [{
   description: 'Selecting more than one option at once.',
   code: MultipleDemoCode,
   component: MultipleDemo,
+}, {
+  name: 'Narrow trigger',
+  description: 'Short triggers with prefix/suffix slots still open a readable options panel (min 280px) so labels are not clipped.',
+  code: NarrowDemoCode,
+  component: NarrowDemo,
 }, {
   name: 'Size',
   description: 'Size options from xs to lg.',

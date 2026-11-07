@@ -31,7 +31,7 @@ const theme: TabGroupTheme = {
       const c = ['flex min-w-full w-fit']
 
       if (props.variant === 'line') c.push('border-b border-secondary-200 dark:border-secondary-700')
-      if (props.variant === 'line' && !props.grow) c.push('space-x-8')
+      if (props.variant === 'line' && !props.grow) c.push('space-x-1.5')
       if (props.variant === 'block' || props.variant === 'compact') c.push('z-[1] space-x-1')
       if (props.align === 'center') c.push('justify-center')
       if (props.align === 'right') c.push('justify-end')
