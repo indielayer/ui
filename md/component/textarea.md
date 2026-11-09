@@ -1,0 +1,223 @@
+# Textarea
+Multi-line text field for longer content such as comments and descriptions. Use Textarea when a single-line input is not enough. Undeclared HTML attributes (autocomplete, aria-*, data-*, spellcheck, etc.) are forwarded to the native textarea; class and style apply to the field wrapper.
+### Props
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| adjustToText | Boolean |  | Auto-grows the height to fit the content. |
+| block | Boolean |  | Stretches to the full width of the parent. |
+| clearable | Boolean |  | Shows a clear button when the value is not empty. |
+| dir | String | ltr | Text direction for the textarea (`ltr` or `rtl`). |
+| disabled | Boolean |  | Disables interaction and applies disabled styling. |
+| enterkeyhint | String 'enter'  \|  'done'  \|  'go'  \|  'next'  \|  'previous'  \|  'search'  \|  'send' |  | Native `enterkeyhint` for the virtual keyboard action key. |
+| error | String |  | External error message; overrides rule errors when set. |
+| helper | String |  | Helper text shown below the field. |
+| hideFooter | Boolean |  | Hides the footer area (helper / error). |
+| id | String |  | Native id attribute for the input element. |
+| inputmode | String 'none'  \|  'text'  \|  'decimal'  \|  'numeric'  \|  'tel'  \|  'search'  \|  'email'  \|  'url' |  | Native `inputmode` hint for virtual keyboards. |
+| label | String |  | Visible label text for the field. |
+| loading | Boolean |  | Shows a loading indicator and blocks interaction. |
+| loadingLabel | String |  | Accessible label announced while loading. |
+| loadingStatus | String LoaderStatus | active | Loader visual status (for example active or indeterminate). |
+| max | [Number, String] |  | Native `max` attribute when applicable. |
+| maxlength | [Number, String] |  | Maximum character length for the value. |
+| min | [Number, String] |  | Native `min` attribute when applicable. |
+| minlength | [Number, String] |  | Minimum character length for the value. |
+| modelValue | [String, Number, Boolean, Object, Array] |  | Bound value (v-model). |
+| name | String |  | Native name attribute for form submission. |
+| placeholder | String |  | Placeholder text shown when the value is empty. |
+| preventEnter | Boolean |  | Prevents the Enter key from inserting a newline. |
+| readonly | Boolean |  | Makes the field read-only without disabling it. |
+| required | Boolean |  | Marks the field as required for validation. |
+| resizable | Boolean |  | Allows the user to resize the textarea. |
+| rows | [Number, String] | 2 | Visible number of text lines. |
+| rules | Array | [] | Validation rule functions or rule descriptors. |
+| showCounter | Boolean |  | Shows a character counter in the footer. |
+| size | String Size | md | Control size. One of xs, sm, md, lg, xl. |
+| skipFormRegistry | Boolean |  | Skips registering this field with a parent x-form. |
+| tooltip | String |  | Optional tooltip text next to the label. |
+| validateOnInput | Boolean | true | Runs validation on each input event when true. |
+
+### Slots
+- `default`
+- `prefix`: Content before the textarea (left adornment).
+- `suffix`: Content after the textarea (right adornment).
+
+### Events
+- `blur`: Emitted when the field loses focus.
+- `change`: Emitted when the value is committed (change).
+- `focus`: Emitted when the field receives focus.
+- `input`: Emitted on native input events.
+- `update:modelValue`: Emitted when the bound value changes (v-model).
+
+### Methods
+- `blur`: Remove focus from the underlying control.
+- `focus`: Focus the underlying control.
+- `reset`: Reset the field value and validation state.
+- `setError`: Set an external error message on the field.
+- `validate`: Run validation rules and return whether the field is valid.
+
+### Demos
+#### Usage
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const multiline = ref('')
+const comment = ref('')
+</script>
+
+<template>
+  <div class="grid gap-6">
+    <div class="grid grid-cols-2 gap-4">
+      <x-textarea
+        v-model="multiline"
+        label="Normal textarea"
+        helper="Helper text"
+        resizable
+        placeholder="Placeholder"
+        tooltip="Tooltip here"
+        clearable
+      />
+      <x-textarea
+        v-model="multiline"
+        label="Multiline adjust"
+        adjust-to-text
+        rows="1"
+        clearable
+      />
+    </div>
+
+    <x-textarea
+      v-model="comment"
+      label="Comment with character counter"
+      maxlength="200"
+      show-counter
+      helper="Maximum 200 characters"
+      placeholder="Enter your comment"
+      rows="4"
+      enterkeyhint="send"
+    />
+  </div>
+</template>
+```
+
+#### Clearable
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const notes = ref('Click the clear icon to reset this value.')
+const feedback = ref('Optional longer feedback that can be cleared.')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <x-textarea
+      v-model="notes"
+      label="Notes"
+      clearable
+      rows="3"
+      placeholder="Write something…"
+    />
+    <x-textarea
+      v-model="feedback"
+      label="Feedback"
+      clearable
+      adjust-to-text
+      rows="1"
+      helper="Clearable with adjust-to-text"
+    />
+  </div>
+</template>
+```
+
+#### Native Attrs
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const notes = ref('')
+</script>
+
+<template>
+  <div class="grid gap-3 max-w-md">
+    <p class="text-sm text-secondary-500 dark:text-secondary-400">
+      Wrapper <code class="text-xs">class</code> adds the ring; native
+      <code class="text-xs">title</code>, <code class="text-xs">spellcheck</code>, and
+      <code class="text-xs">data-testid</code> bind to the <code class="text-xs">&lt;textarea&gt;</code>.
+    </p>
+    <x-textarea
+      v-model="notes"
+      label="Notes"
+      name="notes"
+      rows="3"
+      placeholder="Type here…"
+      helper="spellcheck=&quot;false&quot; on the native textarea"
+      class="ring-2 ring-primary-400/50 rounded-lg p-3"
+      title="Native textarea title — hover inside the field"
+      data-testid="demo-notes-textarea"
+      spellcheck="false"
+    />
+  </div>
+</template>
+```
+
+#### States
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const name = ref('invalid input')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-textarea disabled label="Disabled"/>
+    <x-textarea readonly label="Read only"/>
+    <x-textarea v-model="name" label="Error" error="Invalid input" />
+  </div>
+</template>
+```
+
+#### Variants
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+const sizes = ref('Text size')
+</script>
+
+<template>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <x-textarea
+      v-model="sizes"
+      label="xs"
+      size="xs"
+      rows="1"
+      clearable
+    />
+    <x-textarea
+      v-model="sizes"
+      label="sm"
+      size="sm"
+      rows="1"
+      clearable
+    />
+    <x-textarea v-model="sizes" label="md" rows="1" clearable />
+    <x-textarea
+      v-model="sizes"
+      label="lg"
+      size="lg"
+      rows="1"
+      clearable
+    />
+    <x-textarea
+      v-model="sizes"
+      label="xl"
+      size="xl"
+      rows="1"
+      clearable
+    />
+  </div>
+</template>
+```
+
+HTML docs: https://indielayer.com/component/textarea
