@@ -107,6 +107,14 @@ const popoverProps = {
     type: [Boolean, String] as PropType<boolean | 'min' | 'max'>,
     description: 'Match popper size to the trigger (`true`), or only min/max width.',
   },
+  autoBoundaryMaxSize: {
+    type: Boolean,
+    description: 'Clamps popper size to the available space within the overflow boundary.',
+  },
+  overflowPadding: {
+    type: Number,
+    description: 'Padding (px) from the overflow boundary used by flip/shift.',
+  },
   computeTransformOrigin: {
     type: Boolean,
     description: 'Computes transform-origin for scale transitions.',
@@ -226,6 +234,8 @@ const { styles, classes, className } = useTheme('Popover', {}, props)
       hideArrow ? 'v-popper__popper--no-arrow' : '',
     ]"
     :auto-size="autoSize"
+    :auto-boundary-max-size="autoBoundaryMaxSize"
+    :overflow-padding="overflowPadding"
     :compute-transform-origin="computeTransformOrigin"
     @show="() => { isOpen = true; $emit('show') }"
     @hide="() => { isOpen = false; $emit('hide') }"

@@ -12,7 +12,7 @@ const theme: TableRowTheme = {
       if (props.striped) {
         classes.push('even:bg-secondary-100 dark:even:bg-secondary-700/50')
       } else {
-        classes.push('border-t border-secondary-100 dark:border-secondary-700')
+        classes.push('border-b border-secondary-100 dark:border-secondary-700')
       }
 
       if (props.pointer) {

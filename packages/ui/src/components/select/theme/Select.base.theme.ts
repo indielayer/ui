@@ -56,9 +56,7 @@ const theme: SelectTheme = {
 
     search: 'p-1 mb-0.5',
 
-    // min-w-[280px]: readable options when the trigger is narrow (e.g. "All").
-    // Pair with auto-size="min" so the popper can grow past a short trigger.
-    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-[280px]',
+    contentBody: 'overflow-y-auto overflow-x-hidden max-h-64 w-full min-w-0',
 
     iconWrapper: 'absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none',
 

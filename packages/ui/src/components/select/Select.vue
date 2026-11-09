@@ -57,6 +57,7 @@ const selectProps = {
     type: String as PropType<PopoverPlacement>,
     description: 'Popover placement for the options menu.',
   },
+  fitContent: optionalBooleanProp('Shrink-wrap the popover trigger to its content instead of stretching full width.'),
 }
 
 export type SelectOption = {
@@ -792,11 +793,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
     :class="[
       className,
       classes.wrapper,
+      fitContent ? '!inline-flex max-w-full' : '',
     ]"
     :tooltip="tooltip"
     v-on="labelListeners"
   >
-    <div class="relative">
+    <div class="relative" :class="{ 'inline-flex max-w-full': fitContent }">
       <div v-if="native && !internalMultiple" :class="classes.box" @click="elRef?.click()">
         <template v-if="!isEmpty(selected)">
           {{ getLabel(selected) }}
@@ -811,9 +813,12 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
       <template v-else>
         <x-popover
           ref="popoverRef"
+          :class="{ 'inline-flex max-w-full': fitContent }"
           :disabled="isDisabled"
           :placement="placement"
-          auto-size="min"
+          auto-boundary-max-size
+          :overflow-padding="8"
+          popper-class="x-select-popper"
         >
           <slot
             name="input"
@@ -1051,3 +1056,14 @@ defineExpose({ focus, blur, reset, validate, setError, filterRef })
     <x-input-footer v-if="!hideFooterInternal" :error="errorInternal" :helper="helper"/>
   </x-label>
 </template>
+
+<style>
+/*
+  Floor for short triggers (e.g. "All" / label Edit). Cap to the viewport so
+  end-aligned menus near the right edge cannot paint off-screen.
+*/
+.v-popper__popper.x-select-popper .v-popper__inner {
+  min-width: 280px;
+  max-width: min(32rem, calc(100vw - 1rem));
+}
+</style>
